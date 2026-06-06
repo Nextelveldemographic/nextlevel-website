@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>NextLevel Demographic — El Salvador</title>
+<style>
+:root{
+  --w:#fff;
+  --b:#000;
+  --b2:#06070a;
+  --b3:#0d0f14;
+  --b4:#13161e;
+  --g1:rgba(255,255,255,.04);
+  --g2:rgba(255,255,255,.08);
+  --g3:rgba(255,255,255,.16);
+  --g4:rgba(255,255,255,.36);
+  --g5:rgba(255,255,255,.55);
+  --g6:rgba(255,255,255,.78);
+  --blue:#0066FF;
+  --blue2:#3D8BFF;
+  --blue3:#7BB5FF;
+  --blue-glow:rgba(0,102,255,.35);
+  --green:#00D26A;
+  --gold:#FFAA00;
+  --red:#FF453A;
+  --max:1280px;
+  /* APPLE-LIKE TIMING — slow & gentle */
+  --t-slow:1.8s;
+  --t-med:1.2s;
+  --t-fast:.8s;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-soft:cubic-bezier(.16,1,.3,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{font-size:16px;background:var(--b);scroll-behavior:smooth}
+body{
+  font-family:-apple-system,'SF Pro Display','Segoe UI',system-ui,sans-serif;
+  background:var(--b);color:var(--g6);
+  line-height:1.5;-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;font-feature-settings:'kern','liga','calt';
+}
+
+/* ══ TICKER ══ */
+.ticker{
+  background:var(--b2);color:var(--g4);height:30px;display:flex;align-items:center;
+  overflow:hidden;font-family:'SF Mono','Courier New',monospace;font-size:10px;
+  letter-spacing:.8px;position:fixed;top:0;left:0;right:0;z-index:101;
+  border-bottom:1px solid var(--g2);
+}
+.ticker-track{display:flex;width:max-content;animation:tick 45s linear infinite}
+.ti{padding:0 28px;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.ti-val{color:var(--green);font-weight:700}
+.ti-sep{color:var(--g3)}
+@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:30px;left:0;right:0;z-index:100;height:52px;
+  background:rgba(6,7,10,.72);backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border-bottom:1px solid var(--g2);
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+}
+.logo-w{display:flex;align-items:center;gap:10px;text-decoration:none}
+.logo-sq{
+  width:30px;height:30px;background:var(--w);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;color:var(--b);letter-spacing:.5px;border-radius:6px;
+}
+.logo-tx{font-size:12px;font-weight:600;color:var(--w);line-height:1.2}
+.logo-sx{font-size:9px;color:var(--g4);letter-spacing:1.8px;text-transform:uppercase}
+.nav-c{display:flex;gap:0;list-style:none}
+.nav-c a{color:var(--g5);font-size:12px;font-weight:500;text-decoration:none;padding:7px 14px;transition:color .25s}
+.nav-c a:hover{color:var(--w)}
+.nav-r{display:flex;gap:8px;align-items:center}
+.n-ghost{font-size:12px;font-weight:500;color:var(--g6);text-decoration:none;padding:7px 16px;border:1px solid var(--g3);border-radius:99px;transition:all .25s}
+.n-ghost:hover{background:var(--g1);color:var(--w);border-color:var(--g4)}
+.n-fill{font-size:12px;font-weight:600;color:var(--w);background:var(--blue);text-decoration:none;padding:8px 18px;border-radius:99px;transition:all .25s}
+.n-fill:hover{background:var(--blue2);transform:translateY(-1px)}
+.ham{display:none;flex-direction:column;gap:4px;cursor:pointer}
+.ham span{display:block;width:20px;height:1.5px;background:var(--w)}
+.mob{display:none;position:fixed;top:82px;left:0;right:0;background:rgba(6,7,10,.96);backdrop-filter:blur(20px);border-bottom:1px solid var(--g2);padding:14px 5%;flex-direction:column;z-index:99}
+.mob.open{display:flex}
+.mob a{color:var(--g6);padding:11px 0;font-size:14px;text-decoration:none;border-bottom:1px solid var(--g2)}
+.mob a:last-child{border:none;background:var(--blue);color:#fff;padding:11px 20px;text-align:center;font-weight:700;margin-top:8px;border-radius:99px}
+
+/* ══ SCROLL PROGRESS ══ */
+.scroll-prog{position:fixed;top:82px;left:0;height:2px;background:var(--blue);z-index:102;transition:width .3s ease-out;width:0;box-shadow:0 0 12px var(--blue-glow)}
+
+/* ══ GRAIN BG ══ */
+.bg-grain{
+  position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.35;
+  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ══════════════════════════════════
+   SECTIONS — natural scroll
+═══════════════════════════════════ */
+section.scene{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;padding:96px 0;
+}
+#scene-hero{margin-top:82px}
+
+/* ══ ANIMATION SYSTEM ══════════════════
+   Elements start hidden, animate in when
+   section becomes visible. Pure CSS transitions.
+═══════════════════════════════════════ */
+.anim{opacity:0;transition:opacity var(--t-slow) var(--ease-soft),transform var(--t-slow) var(--ease-soft);will-change:opacity,transform}
+.anim-up{transform:translateY(50px)}
+.anim-down{transform:translateY(-30px)}
+.anim-left{transform:translateX(-50px)}
+.anim-right{transform:translateX(50px)}
+.anim-scale{transform:scale(.92)}
+.anim-blur{filter:blur(8px)}
+
+/* When parent section is active, animate children in */
+.active .anim{opacity:1;transform:translate(0,0) scale(1);filter:blur(0)}
+
+/* Stagger delays */
+.d0{transition-delay:0s}
+.d1{transition-delay:.15s}
+.d2{transition-delay:.30s}
+.d3{transition-delay:.45s}
+.d4{transition-delay:.60s}
+.d5{transition-delay:.75s}
+.d6{transition-delay:.90s}
+.d7{transition-delay:1.05s}
+.d8{transition-delay:1.20s}
+
+/* ─── HERO ─── */
+.hero-stage{background:var(--b);width:100%;min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative}
+.hero-stage::before{
+  content:'';position:absolute;width:800px;height:800px;
+  background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);
+  filter:blur(60px);top:20%;left:50%;transform:translate(-50%,-50%);
+  z-index:0;opacity:.4;
+  animation:orbDrift 12s ease-in-out infinite alternate;
+}
+@keyframes orbDrift{from{transform:translate(-50%,-50%) translate(-30px,-20px)}to{transform:translate(-50%,-50%) translate(30px,20px)}}
+.hero-stage::after{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 60%,transparent 0%,var(--b) 75%);
+  z-index:1;pointer-events:none;
+}
+.hero-wrap{max-width:var(--max);padding:0 5%;width:100%;text-align:center;position:relative;z-index:2}
+.hero-eb{
+  display:inline-flex;align-items:center;gap:10px;
+  font-family:'SF Mono','Courier New',monospace;font-size:11px;
+  color:var(--g4);letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:32px;padding:6px 14px;
+  background:var(--g1);border:1px solid var(--g2);border-radius:99px;
+}
+.hero-eb .dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 10px var(--green);animation:blink 1.8s infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1.mega{
+  font-size:clamp(3.2rem,9.5vw,9rem);font-weight:800;line-height:.9;
+  letter-spacing:-5px;color:var(--w);margin-bottom:32px;
+}
+h1.mega .blue{color:var(--blue2);text-shadow:0 0 60px var(--blue-glow)}
+h1.mega .stroke{-webkit-text-stroke:2.5px var(--w);-webkit-text-fill-color:transparent;color:transparent}
+.hero-sub{font-size:1.15rem;color:var(--g5);line-height:1.7;max-width:520px;margin:0 auto 40px;font-weight:400}
+.hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.btn-a{background:var(--w);color:var(--b);padding:15px 32px;font-size:13px;font-weight:600;text-decoration:none;letter-spacing:.4px;border-radius:99px;transition:all .3s var(--ease);display:inline-flex;align-items:center;gap:8px}
+.btn-a:hover{background:var(--blue);color:var(--w);transform:translateY(-2px);box-shadow:0 12px 32px var(--blue-glow)}
+.btn-b{background:var(--g1);color:var(--w);padding:15px 32px;font-size:13px;font-weight:500;text-decoration:none;border:1px solid var(--g3);border-radius:99px;transition:all .3s var(--ease)}
+.btn-b:hover{background:var(--g2);border-color:var(--g4)}
+.scroll-hint{position:absolute;bottom:48px;left:50%;transform:translateX(-50%);font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);letter-spacing:2.5px;text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:12px;z-index:3}
+.scroll-hint::after{content:'';width:1px;height:32px;background:linear-gradient(to bottom,var(--g4),transparent);animation:scrollLine 2.2s ease-in-out infinite}
+@keyframes scrollLine{0%,100%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}50.01%{transform-origin:bottom}}
+
+/* ─── DATA SCENE ─── */
+.data-stage{background:var(--b2);position:relative}
+.data-stage::before{
+  content:'';position:absolute;width:120%;height:120%;left:-10%;top:-10%;
+  background:radial-gradient(circle at 80% 30%,var(--blue-glow) 0%,transparent 40%),
+             radial-gradient(circle at 20% 70%,rgba(255,170,0,.08) 0%,transparent 40%);
+  z-index:0;pointer-events:none;
+  animation:bgFloat 18s ease-in-out infinite alternate;
+}
+@keyframes bgFloat{from{transform:translate(-20px,-15px)}to{transform:translate(20px,15px)}}
+.data-wrap{width:100%;max-width:var(--max);padding:0 5%;position:relative;z-index:2}
+.data-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:24px;display:inline-flex;align-items:center;gap:10px}
+.data-eb::before{content:'';width:32px;height:1px;background:var(--blue)}
+h2.data-h{font-size:clamp(2.4rem,6vw,5.5rem);font-weight:800;line-height:.95;letter-spacing:-2.5px;color:var(--w);max-width:1000px;margin-bottom:64px}
+h2.data-h .blue{color:var(--blue2);text-shadow:0 0 40px var(--blue-glow)}
+.data-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--g2)}
+.dn{padding:36px 28px 0 0;border-right:1px solid var(--g2)}
+.dn:last-child{border-right:none}
+.dn-val{font-size:clamp(3rem,5.5vw,5rem);font-weight:800;letter-spacing:-2.5px;line-height:1;color:var(--w);font-variant-numeric:tabular-nums}
+.dn-val.accent{color:var(--blue2);text-shadow:0 0 30px var(--blue-glow)}
+.dn-unit{font-size:.4em;font-weight:400;color:var(--blue2);vertical-align:super}
+.dn-lbl{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--g4);letter-spacing:1.5px;text-transform:uppercase;margin-top:14px;line-height:1.5}
+
+/* ─── PROBLEM ─── */
+.prob-stage{background:var(--b3);position:relative}
+.prob-stage::before{
+  content:'';position:absolute;width:600px;height:600px;left:-200px;top:-200px;
+  background:radial-gradient(circle,rgba(255,170,0,.06) 0%,transparent 50%);
+  filter:blur(40px);z-index:0;
+  animation:orbDrift2 16s ease-in-out infinite alternate;
+}
+@keyframes orbDrift2{from{transform:translate(0,0)}to{transform:translate(60px,40px)}}
+.prob-wrap{width:100%;max-width:var(--max);padding:0 5%;position:relative;z-index:2}
+.prob-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px}
+.prob-eb::before{content:'';width:24px;height:1px;background:var(--gold)}
+h2.prob-h{font-size:clamp(2rem,5vw,4rem);font-weight:800;line-height:1.0;letter-spacing:-2px;color:var(--w);margin-bottom:64px;max-width:820px}
+.prob-cards{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--g2)}
+.prob-card{background:var(--b3);padding:36px 32px;position:relative;overflow:hidden;transition:background .6s var(--ease-soft)}
+.prob-card::before{content:'';position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,var(--blue),transparent);transform:scaleX(0);transform-origin:left;transition:transform .6s}
+.prob-card:hover{background:var(--b4)}
+.prob-card:hover::before{transform:scaleX(1)}
+.pc-idx{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue2);letter-spacing:2px;margin-bottom:18px}
+.pc-title{font-size:1.25rem;font-weight:700;color:var(--w);margin-bottom:12px;line-height:1.3;letter-spacing:-.3px}
+.pc-desc{font-size:.95rem;color:var(--g5);line-height:1.7}
+
+/* ─── PROCESS (horizontal carousel, drag/auto) ─── */
+.proc-stage{background:var(--b);position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:120px 0}
+.proc-stage::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--b3) 0%,var(--b) 50%,var(--b3) 100%);z-index:0;pointer-events:none}
+.proc-header{text-align:center;padding:0 5%;z-index:3;position:relative;margin-bottom:64px}
+.proc-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;display:inline-flex;align-items:center;gap:10px}
+.proc-eb::before{content:'';width:24px;height:1px;background:var(--blue)}
+h2.proc-h{font-size:clamp(1.8rem,3.8vw,3.2rem);font-weight:800;line-height:1.0;letter-spacing:-1.5px;color:var(--w);max-width:680px;margin:0 auto}
+.proc-track-wrap{overflow:hidden;padding:20px 0;position:relative;z-index:2}
+.proc-track{display:flex;gap:32px;padding:0 5%;transition:transform 1.2s var(--ease-soft);will-change:transform}
+.proc-card{flex-shrink:0;width:380px;background:var(--b3);padding:44px 36px;border:1px solid var(--g2);position:relative;border-radius:4px;overflow:hidden;transition:opacity .8s var(--ease-soft),transform .8s var(--ease-soft)}
+.proc-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(0,102,255,.04) 0%,transparent 50%);pointer-events:none}
+.proc-n{font-size:6rem;font-weight:800;color:var(--g2);line-height:.85;letter-spacing:-4px;margin-bottom:24px;position:relative}
+.proc-n::after{content:'';position:absolute;bottom:8px;left:0;width:32px;height:2px;background:var(--blue)}
+.proc-tag{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--blue2);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.proc-t{font-size:1.35rem;font-weight:700;color:var(--w);margin-bottom:12px;letter-spacing:-.3px}
+.proc-d{font-size:.92rem;color:var(--g5);line-height:1.7;margin-bottom:20px}
+.proc-pill{display:inline-block;font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--green);border:1px solid rgba(0,210,106,.25);background:rgba(0,210,106,.06);padding:5px 12px;letter-spacing:.5px;border-radius:99px}
+.proc-controls{display:flex;align-items:center;justify-content:space-between;padding:32px 5% 0;max-width:var(--max);margin:0 auto;width:100%;position:relative;z-index:3}
+.proc-dots{display:flex;gap:10px}
+.proc-dot{width:32px;height:3px;background:var(--g2);border:none;cursor:pointer;padding:0;transition:background .4s var(--ease)}
+.proc-dot.on{background:var(--blue);box-shadow:0 0 12px var(--blue-glow)}
+.proc-counter{font-family:'SF Mono','Courier New',monospace;font-size:12px;color:var(--g4);letter-spacing:1.5px}
+.proc-counter .cur{color:var(--blue2);font-weight:700;font-size:14px;text-shadow:0 0 20px var(--blue-glow)}
+.proc-arrows{display:flex;gap:8px}
+.proc-arrow{width:42px;height:42px;background:var(--g1);border:1px solid var(--g3);color:var(--w);cursor:pointer;border-radius:50%;font-size:16px;display:flex;align-items:center;justify-content:center;transition:all .25s var(--ease)}
+.proc-arrow:hover{background:var(--blue);border-color:var(--blue)}
+.proc-arrow:disabled{opacity:.3;cursor:not-allowed}
+
+/* ─── PROJECTS ─── */
+.proj-stage{background:var(--b2);position:relative}
+.proj-stage::before{content:'';position:absolute;width:80vw;height:80vw;background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);filter:blur(80px);top:50%;left:30%;transform:translate(-50%,-50%);z-index:0;opacity:.5}
+.proj-wrap{width:100%;max-width:var(--max);padding:0 5%;position:relative;z-index:2}
+.proj-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px}
+.proj-eb::before{content:'';width:24px;height:1px;background:var(--blue)}
+h2.proj-h{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.0;letter-spacing:-2px;color:var(--w);margin-bottom:64px;max-width:780px}
+h2.proj-h .blue{color:var(--blue2);text-shadow:0 0 30px var(--blue-glow)}
+.proj-display{display:grid;grid-template-columns:1.2fr 1fr;gap:64px;align-items:center}
+.proj-visual{position:relative;height:440px;border-radius:8px;overflow:hidden}
+.proj-vbox{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:8rem;opacity:0;border:1px solid var(--g2);border-radius:8px;transition:opacity 1s var(--ease-soft),transform 1s var(--ease-soft);transform:scale(.95)}
+.proj-vbox.show{opacity:1;transform:scale(1)}
+.proj-info{display:flex;flex-direction:column;gap:24px}
+.proj-counter-x{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--g4);letter-spacing:2px;display:flex;align-items:center;gap:8px}
+.proj-counter-x .cur{color:var(--blue2);font-weight:700;font-size:14px;text-shadow:0 0 12px var(--blue-glow)}
+.proj-name{font-size:2.2rem;font-weight:800;line-height:1.05;letter-spacing:-1px;color:var(--w);transition:opacity .6s var(--ease)}
+.proj-loc{font-family:'SF Mono','Courier New',monospace;font-size:12px;color:var(--g4);letter-spacing:1px;text-transform:uppercase;transition:opacity .6s var(--ease)}
+.proj-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--g2);border-bottom:1px solid var(--g2)}
+.ps-cell{padding:20px 0;border-right:1px solid var(--g2)}
+.ps-cell:last-child{border-right:none;padding-left:20px}
+.ps-cell:nth-child(2){padding-left:20px}
+.ps-val{font-size:1.5rem;font-weight:800;color:var(--w);letter-spacing:-.5px;line-height:1;transition:opacity .6s var(--ease)}
+.ps-unit{font-size:.6em;color:var(--blue2);font-weight:400}
+.ps-lbl{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);letter-spacing:1px;text-transform:uppercase;margin-top:8px}
+.proj-cta{display:inline-flex;width:fit-content;background:var(--blue);color:var(--w);padding:14px 28px;font-size:12px;font-weight:600;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;transition:all .3s;align-items:center;gap:8px;border-radius:99px}
+.proj-cta:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 8px 24px var(--blue-glow)}
+.proj-tabs{display:flex;gap:8px;margin-top:8px}
+.proj-tab{background:var(--g1);border:1px solid var(--g3);color:var(--g5);padding:8px 16px;font-size:11px;font-weight:600;letter-spacing:.5px;cursor:pointer;border-radius:99px;transition:all .25s var(--ease);font-family:inherit}
+.proj-tab.on{background:var(--blue);border-color:var(--blue);color:var(--w);box-shadow:0 4px 16px var(--blue-glow)}
+.proj-tab:hover:not(.on){background:var(--g2);color:var(--w)}
+
+/* ─── SERVICES ─── */
+.svc-stage{background:var(--b3);position:relative;padding:120px 0}
+.svc-stage::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,var(--b3) 0%,var(--b2) 100%);z-index:0}
+.svc-wrap{width:100%;max-width:var(--max);padding:0 5%;position:relative;z-index:2}
+.svc-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;display:inline-flex;align-items:center;gap:10px}
+.svc-eb::before{content:'';width:24px;height:1px;background:var(--blue)}
+h2.svc-h{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.05;letter-spacing:-2px;color:var(--w);max-width:780px;margin-bottom:56px}
+.svc-h .blue{color:var(--blue2)}
+.svc-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--g2)}
+.sc-card{padding:32px 28px;background:var(--b3);position:relative;overflow:hidden;transition:background .5s var(--ease-soft)}
+.sc-card:hover{background:var(--b4)}
+.sc-card::before{content:'';position:absolute;top:0;left:50%;width:0;height:1px;background:var(--blue);transition:width .5s,left .5s}
+.sc-card:hover::before{width:100%;left:0}
+.sc-n{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);margin-bottom:18px;letter-spacing:1.5px}
+.sc-icon{font-size:1.7rem;margin-bottom:14px}
+.sc-title{font-size:1rem;font-weight:700;color:var(--w);margin-bottom:10px;letter-spacing:-.2px}
+.sc-desc{font-size:.85rem;color:var(--g5);line-height:1.65}
+.sc-tag{display:inline-block;margin-top:14px;font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--blue2);letter-spacing:1px}
+
+/* ─── CTA ─── */
+#scene-cta{min-height:auto;padding:120px 0;background:var(--b);position:relative;overflow:hidden}
+#scene-cta::before{content:'';position:absolute;width:120%;height:120%;left:-10%;top:-10%;background:radial-gradient(circle at 50% 50%,var(--blue-glow) 0%,transparent 50%);filter:blur(80px);z-index:0}
+.cta-bg-text{position:absolute;font-size:clamp(120px,18vw,260px);font-weight:800;color:rgba(255,255,255,.018);line-height:.85;letter-spacing:-10px;top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;text-align:center;white-space:nowrap;z-index:1;font-family:-apple-system,'SF Pro Display',sans-serif}
+.cta-inner{text-align:center;position:relative;z-index:2;max-width:var(--max);margin:0 auto;padding:0 5%}
+.cta-tag{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--g4);letter-spacing:3px;text-transform:uppercase;margin-bottom:28px;display:flex;align-items:center;justify-content:center;gap:14px}
+.cta-tag::before,.cta-tag::after{content:'';flex:1;max-width:60px;height:1px;background:var(--g3)}
+h2.cta-h{font-size:clamp(2.6rem,6.5vw,6.5rem);font-weight:800;color:var(--w);line-height:.95;letter-spacing:-3.5px;margin-bottom:24px}
+h2.cta-h em{font-style:normal;-webkit-text-stroke:2px var(--blue2);-webkit-text-fill-color:transparent;color:transparent}
+.cta-sub{font-size:1.1rem;color:var(--g5);max-width:520px;margin:0 auto 48px;line-height:1.7}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:40px}
+.btn-blue{background:var(--blue);color:var(--w);padding:17px 40px;font-size:13px;font-weight:700;text-decoration:none;letter-spacing:.6px;border-radius:99px;transition:all .3s;display:inline-flex;align-items:center;gap:10px;box-shadow:0 8px 32px var(--blue-glow)}
+.btn-blue:hover{background:var(--blue2);transform:translateY(-2px);box-shadow:0 16px 48px var(--blue-glow)}
+.btn-wa-c{background:#25D366;color:#fff;padding:17px 36px;font-size:13px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:10px;letter-spacing:.4px;border-radius:99px;transition:all .3s}
+.btn-wa-c:hover{background:#1DB954;transform:translateY(-2px)}
+.cta-gs{display:flex;gap:28px;justify-content:center;flex-wrap:wrap;border-top:1px solid var(--g2);padding-top:32px}
+.cg{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--g4);display:flex;align-items:center;gap:6px;letter-spacing:.5px}
+.cg::before{content:'✓';color:var(--green)}
+
+/* ─── CONTACTO ─── */
+#contacto{background:var(--b3);padding:120px 0;min-height:auto}
+.contact-grid{max-width:var(--max);margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--g2);background:var(--b2)}
+.cg-l{padding:56px 48px;border-right:1px solid var(--g2)}
+.cg-l h3{font-size:1.4rem;font-weight:700;color:var(--w);letter-spacing:-.4px;margin-bottom:12px}
+.cg-l p{font-size:.92rem;color:var(--g5);line-height:1.75;margin-bottom:24px}
+.ci-list{list-style:none;display:flex;flex-direction:column;gap:11px;margin-bottom:28px}
+.ci-list li{display:flex;align-items:center;gap:10px;font-size:.88rem;color:var(--g6)}
+.ci-chk{width:18px;height:18px;background:rgba(0,210,106,.1);border:1px solid rgba(0,210,106,.3);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--green);flex-shrink:0;font-family:'SF Mono',monospace;border-radius:4px}
+.wa-strip{background:var(--b);border:1px solid var(--g2);padding:20px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;border-radius:4px}
+.wa-strip p{font-size:.83rem;color:var(--g5);line-height:1.5;margin:0}
+.wa-strip a{display:inline-flex;align-items:center;gap:7px;background:#25D366;color:#fff;padding:10px 18px;font-size:11px;font-weight:700;text-decoration:none;text-transform:uppercase;letter-spacing:1px;transition:.2s;border-radius:99px}
+.wa-strip a:hover{background:#1DB954}
+.cg-r{padding:56px 48px}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);letter-spacing:2px;text-transform:uppercase;margin-bottom:6px}
+.fg input,.fg select,.fg textarea{width:100%;padding:12px 14px;border:1px solid var(--g3);background:var(--b);font-size:14px;color:var(--w);font-family:inherit;outline:none;transition:.2s;border-radius:6px;appearance:none}
+.fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,102,255,.15)}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--g4)}
+.fg select{cursor:pointer}
+.fg select option{background:var(--b2);color:var(--w)}
+.fg-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-sub{width:100%;background:var(--blue);color:var(--w);padding:15px;border:none;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:2px;text-transform:uppercase;font-family:inherit;transition:.25s;border-radius:99px;box-shadow:0 4px 20px var(--blue-glow)}
+.btn-sub:hover{background:var(--blue2);transform:translateY(-1px)}
+.form-note{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);text-align:center;margin-top:10px;letter-spacing:.5px}
+.form-ok{display:none;background:rgba(0,210,106,.08);border:1px solid rgba(0,210,106,.3);padding:16px;font-family:'SF Mono','Courier New',monospace;font-size:12px;color:var(--green);margin-bottom:14px;line-height:1.6;border-radius:6px}
+
+/* ─── FOOTER ─── */
+footer{background:var(--b);padding:56px 0 24px;border-top:1px solid var(--g2)}
+.ft-grid{max-width:var(--max);margin:0 auto;padding:0 5%;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.ft-b p{font-size:11px;color:var(--g4);margin-top:14px;max-width:220px;line-height:1.7;font-family:'SF Mono','Courier New',monospace}
+.ft-col h5{font-family:'SF Mono','Courier New',monospace;font-size:9px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--g4);margin-bottom:16px}
+.ft-col a{display:block;color:var(--g5);font-size:12px;text-decoration:none;margin-bottom:9px;transition:.15s}
+.ft-col a:hover{color:var(--w)}
+.soc-r{display:flex;gap:6px;margin-top:14px}
+.sc-soc{width:30px;height:30px;border:1px solid var(--g3);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--g4);text-decoration:none;transition:.15s;font-family:'SF Mono',monospace;border-radius:99px}
+.sc-soc:hover{background:var(--blue);border-color:var(--blue);color:var(--w)}
+.ft-bot{max-width:var(--max);margin:0 auto;padding:18px 5% 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);border-top:1px solid var(--g2)}
+.ft-bot a{color:var(--g4);text-decoration:none}
+.ft-bot a:hover{color:var(--w)}
+
+/* WA FLOAT */
+.wa-fl{position:fixed;bottom:28px;right:28px;z-index:998;width:54px;height:54px;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 24px rgba(37,211,102,.45);transition:.25s;border-radius:50%}
+.wa-fl:hover{transform:scale(1.1)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:960px){
+  .data-grid{grid-template-columns:repeat(2,1fr)}
+  .dn:nth-child(2n){border-right:none}
+  .prob-cards{grid-template-columns:1fr}
+  .svc-cards{grid-template-columns:repeat(2,1fr)}
+  .proj-display{grid-template-columns:1fr}
+  .proj-visual{height:280px}
+  .contact-grid{grid-template-columns:1fr}
+  .cg-l{border-right:none;border-bottom:1px solid var(--g2)}
+  .ft-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-c,.nav-r{display:none}
+  .ham{display:flex}
+  .proc-card{width:300px;padding:32px 26px}
+  .ft-grid{grid-template-columns:1fr}
+  h1.mega{letter-spacing:-2.5px}
+  .svc-cards{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .fg-row{grid-template-columns:1fr}
+  .data-grid{grid-template-columns:1fr}
+  .dn{border-right:none;border-bottom:1px solid var(--g2);padding-bottom:24px}
+  .proj-stats{grid-template-columns:1fr 1fr}
+  .ps-cell:nth-child(2){padding-left:0}
+  .cg-l,.cg-r{padding:36px 24px}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-grain"></div>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ttrack"></div>
+</div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#top" class="logo-w"><div class="logo-sq">NL</div><div><div class="logo-tx">NextLevel Demographic</div><div class="logo-sx">Investment Advisory</div></div></a>
+  <ul class="nav-c">
+    <li><a href="#scene-data">Mercado</a></li>
+    <li><a href="#scene-problem">Problema</a></li>
+    <li><a href="#scene-process">Proceso</a></li>
+    <li><a href="#scene-projects">Proyectos</a></li>
+    <li><a href="#scene-services">Servicios</a></li>
+  </ul>
+  <div class="nav-r">
+    <a href="https://wa.me/50375724726" target="_blank" class="n-ghost">WhatsApp</a>
+    <a href="#contacto" class="n-fill">Consulta gratuita</a>
+  </div>
+  <div class="ham" onclick="hm()"><span></span><span></span><span></span></div>
+</nav>
+<div class="mob" id="mob">
+  <a href="#scene-data" onclick="hm()">Mercado</a>
+  <a href="#scene-problem" onclick="hm()">Problema</a>
+  <a href="#scene-process" onclick="hm()">Proceso</a>
+  <a href="#scene-projects" onclick="hm()">Proyectos</a>
+  <a href="#scene-services" onclick="hm()">Servicios</a>
+  <a href="#contacto" onclick="hm()">Consulta gratuita →</a>
+</div>
+<div class="scroll-prog" id="scroll-prog"></div>
+
+<div id="top"></div>
+
+<!-- HERO -->
+<section class="scene" id="scene-hero" data-scene>
+  <div class="hero-stage">
+    <div class="hero-wrap">
+      <div class="hero-eb anim anim-up d0"><span class="dot"></span>Investment Advisory · El Salvador · EE.UU.</div>
+      <h1 class="mega anim anim-up d1">Tu dinero<br>trabaja en<br><span class="blue">El</span> <span class="stroke">Salvador.</span></h1>
+      <p class="hero-sub anim anim-up d2">Asesoría inmobiliaria para la diáspora salvadoreña en EE.UU. Proceso en español, sin costo de asesoría, equipo con red local probada.</p>
+      <div class="hero-btns anim anim-up d3">
+        <a href="#contacto" class="btn-a">Iniciar consulta →</a>
+        <a href="#scene-projects" class="btn-b">Ver proyectos</a>
+      </div>
+    </div>
+    <div class="scroll-hint anim d4">Scroll para descubrir</div>
+  </div>
+</section>
+
+<!-- DATA -->
+<section class="scene" id="scene-data" data-scene>
+  <div class="data-stage" style="width:100%">
+    <div class="data-wrap">
+      <div class="data-eb anim anim-up d0">Inteligencia de mercado</div>
+      <h2 class="data-h anim anim-up d1">El Salvador,<br>hoy.<br>Un mercado <span class="blue">transformado.</span></h2>
+      <div class="data-grid">
+        <div class="dn anim anim-up d2"><div class="dn-val" data-target="150" data-suffix="+">0</div><div class="dn-lbl">FAMILIAS<br>ASESORADAS</div></div>
+        <div class="dn anim anim-up d3"><div class="dn-val accent" data-target="12" data-suffix="">0</div><div class="dn-lbl">DESARROLLADORAS<br>ALIADAS</div></div>
+        <div class="dn anim anim-up d4"><div class="dn-val" data-target="92" data-suffix="%">0</div><div class="dn-lbl">SEGURIDAD<br>EN CENTROAMÉRICA</div></div>
+        <div class="dn anim anim-up d5"><div class="dn-val accent" data-target="8" data-suffix="%" data-prefix="+">0</div><div class="dn-lbl">VALORIZACIÓN<br>ANUAL EST.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="scene" id="scene-problem" data-scene>
+  <div class="prob-stage" style="width:100%">
+    <div class="prob-wrap">
+      <div class="prob-eb anim anim-up d0">El problema</div>
+      <h2 class="prob-h anim anim-up d1">Invertir desde lejos<br>no debería ser tan<br>complicado.</h2>
+      <div class="prob-cards">
+        <div class="prob-card anim anim-up d2"><div class="pc-idx">01 / RIESGO</div><div class="pc-title">Miedo a la estafa desde la distancia</div><div class="pc-desc">Sin red local de confianza, la posibilidad de una estafa paraliza la decisión por años.</div></div>
+        <div class="prob-card anim anim-up d3"><div class="pc-idx">02 / INFORMACIÓN</div><div class="pc-title">Mercado desconocido y desactualizado</div><div class="pc-desc">El Salvador que recuerdas ya no existe. Sin datos reales, es fácil pagar de más o elegir mal.</div></div>
+        <div class="prob-card anim anim-up d4"><div class="pc-idx">03 / LEGAL</div><div class="pc-title">Proceso legal opaco desde el exterior</div><div class="pc-desc">Escrituras, poderes notariales, contratos técnicos. Sin guía clara, el proceso se vuelve un laberinto.</div></div>
+        <div class="prob-card anim anim-up d5"><div class="pc-idx">04 / TIEMPO</div><div class="pc-title">Distancia como excusa permanente</div><div class="pc-desc">No puedes viajar. El trato se pospone indefinidamente. Una decisión que podría tomarse hoy espera años.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="scene" id="scene-process" data-scene>
+  <div class="proc-stage">
+    <div class="proc-header">
+      <div class="proc-eb anim anim-up d0">Metodología</div>
+      <h2 class="proc-h anim anim-up d1">Cuatro fases.<br>Un resultado sin sorpresas.</h2>
+    </div>
+    <div class="proc-track-wrap anim anim-up d2">
+      <div class="proc-track" id="proc-track">
+        <div class="proc-card"><div class="proc-n">01</div><div class="proc-tag">Fase 1</div><div class="proc-t">Diagnóstico gratuito</div><div class="proc-d">30 minutos para entender tu situación, metas y presupuesto. Sin compromiso, sin presión, en español.</div><span class="proc-pill">→ mapa de opciones</span></div>
+        <div class="proc-card"><div class="proc-n">02</div><div class="proc-tag">Fase 2</div><div class="proc-t">Propuesta curada</div><div class="proc-d">Seleccionamos 2–4 proyectos verificados con análisis de zona, precio por m² y rentabilidad estimada.</div><span class="proc-pill">→ análisis comparativo</span></div>
+        <div class="proc-card"><div class="proc-n">03</div><div class="proc-tag">Fase 3</div><div class="proc-t">Reserva y legal</div><div class="proc-d">Revisamos el contrato contigo antes de firmarlo. Coordinamos con abogados y notarios locales.</div><span class="proc-pill">→ contrato revisado</span></div>
+        <div class="proc-card"><div class="proc-n">04</div><div class="proc-tag">Fase 4</div><div class="proc-t">Escritura y entrega</div><div class="proc-d">Acompañamiento hasta el cierre. Con poder notarial puedes escriturar sin salir de EE.UU.</div><span class="proc-pill">→ escritura firmada</span></div>
+      </div>
+    </div>
+    <div class="proc-controls anim anim-up d3">
+      <div class="proc-counter"><span class="cur" id="proc-cur">01</span> / 04 — <span id="proc-name">Diagnóstico gratuito</span></div>
+      <div class="proc-dots" id="proc-dots">
+        <button class="proc-dot on" onclick="setProc(0)" aria-label="Fase 1"></button>
+        <button class="proc-dot" onclick="setProc(1)" aria-label="Fase 2"></button>
+        <button class="proc-dot" onclick="setProc(2)" aria-label="Fase 3"></button>
+        <button class="proc-dot" onclick="setProc(3)" aria-label="Fase 4"></button>
+      </div>
+      <div class="proc-arrows">
+        <button class="proc-arrow" onclick="navProc(-1)" id="proc-prev" aria-label="Anterior">←</button>
+        <button class="proc-arrow" onclick="navProc(1)" id="proc-next" aria-label="Siguiente">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="scene" id="scene-projects" data-scene>
+  <div class="proj-stage" style="width:100%">
+    <div class="proj-wrap">
+      <div class="proj-eb anim anim-up d0">Portafolio activo</div>
+      <h2 class="proj-h anim anim-up d1">Proyectos verificados<br>en <span class="blue">El Salvador.</span></h2>
+      <div class="proj-display">
+        <div class="proj-visual anim anim-scale d2" id="proj-visual">
+          <div class="proj-vbox show" style="background:linear-gradient(135deg,#0a1628,#1a3a6b)" data-pv="0">🏡</div>
+          <div class="proj-vbox" style="background:linear-gradient(135deg,#0a3320,#1a5c3a)" data-pv="1">🏢</div>
+          <div class="proj-vbox" style="background:linear-gradient(135deg,#28160a,#5c3200)" data-pv="2">🌿</div>
+        </div>
+        <div class="proj-info">
+          <div class="proj-counter-x anim anim-up d3"><span class="cur" id="proj-cur">01</span><span>/ 03 ·</span><span id="proj-zone">LA LIBERTAD</span></div>
+          <div class="proj-name anim anim-up d3" id="proj-name">Residencial Costa del Pacífico</div>
+          <div class="proj-loc anim anim-up d4" id="proj-loc">📍 LA LIBERTAD, EL SALVADOR · CASAS & APTOS</div>
+          <div class="proj-stats anim anim-up d5">
+            <div class="ps-cell"><div class="ps-val" id="ps-1">$89K</div><div class="ps-lbl">Desde</div></div>
+            <div class="ps-cell"><div class="ps-val" id="ps-2">~7<span class="ps-unit">%</span></div><div class="ps-lbl">Retorno est.</div></div>
+            <div class="ps-cell"><div class="ps-val" id="ps-3">140<span class="ps-unit">m²</span></div><div class="ps-lbl">Hasta</div></div>
+          </div>
+          <div class="proj-tabs anim anim-up d6">
+            <button class="proj-tab on" onclick="setProj(0)">01</button>
+            <button class="proj-tab" onclick="setProj(1)">02</button>
+            <button class="proj-tab" onclick="setProj(2)">03</button>
+          </div>
+          <div class="anim anim-up d7"><a href="#contacto" class="proj-cta">Solicitar información →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="scene" id="scene-services" data-scene>
+  <div class="svc-stage" style="width:100%">
+    <div class="svc-wrap">
+      <div class="svc-eb anim anim-up d0">Capacidades</div>
+      <h2 class="svc-h anim anim-up d1">Lo que hacemos<br>por <span class="blue">ti.</span></h2>
+      <div class="svc-cards">
+        <div class="sc-card anim anim-up d2"><div class="sc-n">// 01</div><div class="sc-icon">🎯</div><div class="sc-title">Asesoría de inversión</div><div class="sc-desc">Diagnóstico de perfil financiero, metas y horizonte. Antes de ver proyectos, entendemos qué necesitas.</div><div class="sc-tag">→ SIN_COSTO</div></div>
+        <div class="sc-card anim anim-up d3"><div class="sc-n">// 02</div><div class="sc-icon">🔍</div><div class="sc-title">Curación de proyectos</div><div class="sc-desc">Solo presentamos desarrollos evaluados en persona. Due diligence propio, no de terceros.</div><div class="sc-tag">→ DUE_DILIGENCE</div></div>
+        <div class="sc-card anim anim-up d4"><div class="sc-n">// 03</div><div class="sc-icon">⚖️</div><div class="sc-title">Coordinación legal</div><div class="sc-desc">Revisión de contratos, gestión de poderes para cerrar desde EE.UU. con abogados locales.</div><div class="sc-tag">→ 100%_REMOTO</div></div>
+        <div class="sc-card anim anim-up d5"><div class="sc-n">// 04</div><div class="sc-icon">🌴</div><div class="sc-title">Plan de retiro</div><div class="sc-desc">Visa, comunidad, costo de vida real y planificación completa desde EE.UU.</div><div class="sc-tag">→ VIDA_+_INVERSIÓN</div></div>
+        <div class="sc-card anim anim-up d6"><div class="sc-n">// 05</div><div class="sc-icon">📊</div><div class="sc-title">Análisis por zona</div><div class="sc-desc">Retorno estimado, precio por m² y tendencias de valorización antes de comprometerte.</div><div class="sc-tag">→ DATA_DRIVEN</div></div>
+        <div class="sc-card anim anim-up d7"><div class="sc-n">// 06</div><div class="sc-icon">🤝</div><div class="sc-title">Programa de referidos</div><div class="sc-desc">Refiere a alguien que cierre con NextLevel y ambos reciben beneficios documentados.</div><div class="sc-tag">→ BENEFICIOS_REALES</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="scene-cta" data-scene>
+  <div class="cta-bg-text" id="cta-bg-text">NEXTLEVEL</div>
+  <div class="cta-inner">
+    <div class="cta-tag anim anim-up d0">El momento es ahora</div>
+    <h2 class="cta-h anim anim-up d1">Una conversación.<br><em>Un patrimonio.</em></h2>
+    <p class="cta-sub anim anim-up d2">Sin compromiso. Sin presión. Un asesor real te responde en español el mismo día.</p>
+    <div class="cta-btns anim anim-up d3">
+      <a href="https://wa.me/50375724726?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20invertir%20en%20El%20Salvador." target="_blank" class="btn-wa-c"><svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.527 5.847L0 24l6.285-1.648A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.359-.214-3.731.978.996-3.638-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>WhatsApp ahora</a>
+      <a href="#contacto" class="btn-blue">Agendar consulta →</a>
+    </div>
+    <div class="cta-gs anim anim-up d4">
+      <span class="cg">Sin costo de asesoría</span>
+      <span class="cg">Respuesta en 24h</span>
+      <span class="cg">100% en español</span>
+      <span class="cg">Proceso remoto posible</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACTO -->
+<section id="contacto" data-scene>
+  <div class="contact-grid">
+    <div class="cg-l">
+      <div class="anim anim-up d0" style="font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px">// consulta gratuita</div>
+      <h3 class="anim anim-up d1">Comienza tu proceso hoy.</h3>
+      <p class="anim anim-up d2">Un asesor revisará tu consulta y te contactará en español por WhatsApp, llamada o videollamada dentro de 24 horas.</p>
+      <ul class="ci-list anim anim-up d3">
+        <li><span class="ci-chk">✓</span>Consulta sin costo ni compromiso</li>
+        <li><span class="ci-chk">✓</span>Propuesta personalizada según presupuesto</li>
+        <li><span class="ci-chk">✓</span>Acceso a proyectos no publicados</li>
+        <li><span class="ci-chk">✓</span>Tu información es privada</li>
+        <li><span class="ci-chk">✓</span>Respuesta el mismo día normalmente</li>
+      </ul>
+      <div class="wa-strip anim anim-up d4"><p>¿Prefiere respuesta inmediata?<br>Escríbenos por WhatsApp ahora.</p><a href="https://wa.me/50375724726?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20invertir%20en%20El%20Salvador." target="_blank">Abrir WA →</a></div>
+    </div>
+    <div class="cg-r anim anim-up d2">
+      <div class="form-ok" id="fok">// CONSULTA_RECIBIDA ✓<br>Un asesor te contactará en ≤24h. Inmediato: +503 7572-4726</div>
+      <div id="ff">
+        <div class="fg-row"><div class="fg"><label>Nombre</label><input type="text" id="fn" placeholder="Tu nombre"></div><div class="fg"><label>Apellido</label><input type="text" placeholder="Tu apellido"></div></div>
+        <div class="fg-row"><div class="fg"><label>Email</label><input type="email" id="fe" placeholder="tu@email.com"></div><div class="fg"><label>WhatsApp</label><input type="tel" id="fp" placeholder="+1 (555) 000-0000"></div></div>
+        <div class="fg"><label>Objetivo</label><select><option value="">Selecciona...</option><option>Jubilarme en El Salvador</option><option>Invertir / comprar propiedad</option><option>Generar renta desde EE.UU.</option><option>Comprar para mi familia</option><option>Explorar opciones</option></select></div>
+        <div class="fg"><label>Presupuesto</label><select><option value="">Selecciona...</option><option>Menos de $80,000</option><option>$80,000 – $120,000</option><option>$120,000 – $200,000</option><option>Más de $200,000</option><option>Aún no lo tengo claro</option></select></div>
+        <div class="fg"><label>Mensaje (opcional)</label><textarea rows="3" placeholder="// Cuéntanos tu situación..."></textarea></div>
+        <button class="btn-sub" onclick="sub()">Enviar consulta</button>
+        <p class="form-note">// privacidad garantizada · sin spam</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-grid">
+    <div class="ft-b"><a href="#top" class="logo-w"><div class="logo-sq">NL</div><div><div class="logo-tx">NextLevel Demographic</div><div class="logo-sx">Investment Advisory</div></div></a><p>// Asesoría estratégica para la diáspora salvadoreña en EE.UU. Proceso en español.</p><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc">Tk</a></div></div>
+    <div class="ft-col"><h5>Navegar</h5><a href="#scene-data">Mercado</a><a href="#scene-problem">Problema</a><a href="#scene-process">Proceso</a><a href="#scene-projects">Proyectos</a><a href="#scene-services">Servicios</a></div>
+    <div class="ft-col"><h5>Servicios</h5><a href="#scene-services">Inversión</a><a href="#scene-services">Plan retiro</a><a href="#scene-services">Legal</a><a href="#scene-services">Análisis</a><a href="#scene-services">Referidos</a></div>
+    <div class="ft-col"><h5>Contacto</h5><a href="https://wa.me/50375724726" target="_blank">WA +503 7572-4726</a><a href="#contacto">Formulario</a><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank">Facebook</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank">Instagram</a></div>
+  </div>
+  <div class="ft-bot"><span>© 2026 NextLevel Demographic. All rights reserved.</span><span><a href="#">Privacy</a> · <a href="#">Terms</a></span></div>
+</footer>
+
+<a href="https://wa.me/50375724726?text=Hola,%20quiero%20informaci%C3%B3n%20sobre%20propiedades%20en%20El%20Salvador." target="_blank" class="wa-fl">
+  <svg viewBox="0 0 24 24" fill="white" width="28" height="28"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.527 5.847L0 24l6.285-1.648A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.359-.214-3.731.978.996-3.638-.234-.374A9.818 9.818 0 1112 21.818z"/></svg>
+</a>
+
+<script>
+/* ════════════════════════════════════
+   SECTION-TRIGGERED ANIMATION ENGINE
+   
+   How it works:
+   - When a <section data-scene> enters the viewport (>30% visible),
+     it gets .active class.
+   - The .active class triggers CSS transitions on all .anim children.
+   - Stagger via .d0...d8 delay classes.
+   - Animations have FIXED duration (1.8s for slow, 1.2s med, .8s fast).
+   - Scroll speed doesn't affect animation timing.
+═══════════════════════════════════════ */
+
+const scenes=document.querySelectorAll('[data-scene]');
+
+/* IntersectionObserver — fires when section is 30% visible */
+const sceneObserver=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('active');
+      // Special: trigger number count-up for data section
+      if(e.target.id==='scene-data'){
+        countUpNumbers();
+      }
+    }
+  });
+},{threshold:0.3,rootMargin:'0px 0px -10% 0px'});
+
+scenes.forEach(s=>sceneObserver.observe(s));
+
+/* ── Number count-up (only runs once) ── */
+let countDone=false;
+function countUpNumbers(){
+  if(countDone)return;
+  countDone=true;
+  const els=document.querySelectorAll('#scene-data .dn-val');
+  els.forEach((el,i)=>{
+    const target=parseInt(el.dataset.target);
+    const sfx=el.dataset.suffix||'';
+    const pfx=el.dataset.prefix||'';
+    const duration=2200; // long & slow
+    const startDelay=400+i*200; // wait for entrance + stagger
+    setTimeout(()=>{
+      const start=performance.now();
+      function tick(now){
+        const t=Math.min((now-start)/duration,1);
+        // easeOutExpo for satisfying count
+        const e=t===1?1:1-Math.pow(2,-10*t);
+        const v=Math.round(target*e);
+        el.innerHTML=pfx+v+(sfx?`<span class="dn-unit">${sfx}</span>`:'');
+        if(t<1)requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    },startDelay);
+  });
+}
+
+/* ════════════════════════════════════
+   PROCESS CAROUSEL — autoplay + manual
+═══════════════════════════════════════ */
+let procIdx=0;
+const procNames=['Diagnóstico gratuito','Propuesta curada','Reserva y legal','Escritura y entrega'];
+const procTotal=4;
+let procAuto=null;
+
+function setProc(i){
+  procIdx=((i%procTotal)+procTotal)%procTotal;
+  const track=document.getElementById('proc-track');
+  const card=track.querySelector('.proc-card');
+  const cardW=card?card.offsetWidth:380;
+  const gap=32;
+  // Center the active card
+  const wrapW=document.querySelector('.proc-track-wrap').offsetWidth;
+  const offset=Math.max(0,procIdx*(cardW+gap)-(wrapW/2-cardW/2-window.innerWidth*0.05));
+  track.style.transform=`translateX(-${offset}px)`;
+  
+  // Update card styles
+  document.querySelectorAll('.proc-card').forEach((c,i)=>{
+    const dist=Math.abs(i-procIdx);
+    c.style.opacity=dist===0?1:dist===1?.5:.25;
+    c.style.transform=`scale(${dist===0?1:.9})`;
+  });
+  
+  // Update controls
+  document.querySelectorAll('.proc-dot').forEach((d,i)=>d.classList.toggle('on',i===procIdx));
+  document.getElementById('proc-cur').textContent=String(procIdx+1).padStart(2,'0');
+  document.getElementById('proc-name').textContent=procNames[procIdx];
+  document.getElementById('proc-prev').disabled=false;
+  document.getElementById('proc-next').disabled=false;
+}
+function navProc(dir){
+  setProc(procIdx+dir);
+  resetProcAuto();
+}
+function resetProcAuto(){
+  if(procAuto)clearInterval(procAuto);
+  procAuto=setInterval(()=>setProc(procIdx+1),5000);
+}
+
+/* Init carousel when process section is active */
+const procObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      setTimeout(()=>setProc(0),100);
+      resetProcAuto();
+    }else{
+      if(procAuto){clearInterval(procAuto);procAuto=null}
+    }
+  });
+},{threshold:0.4});
+const procSec=document.getElementById('scene-process');
+if(procSec)procObs.observe(procSec);
+
+/* ════════════════════════════════════
+   PROJECTS — tabs + autoplay
+═══════════════════════════════════════ */
+const PROJECTS=[
+  {name:'Residencial Costa del Pacífico',loc:'📍 LA LIBERTAD, EL SALVADOR · CASAS & APTOS',zone:'LA LIBERTAD',price:'$89K',ret:'~7<span class="ps-unit">%</span>',m:'140',u:'m²'},
+  {name:'Condominio Montecarlo Escalón',loc:'📍 COL. ESCALÓN, SAN SALVADOR · APARTAMENTOS',zone:'ESCALÓN',price:'$115K',ret:'~6.5<span class="ps-unit">%</span>',m:'135',u:'m²'},
+  {name:'Parque Residencial Santa Tecla',loc:'📍 SANTA TECLA, LA LIBERTAD · CASAS',zone:'SANTA TECLA',price:'$125K',ret:'Retiro',m:'200',u:'m²'},
+];
+let projIdx=0;
+let projAuto=null;
+
+function setProj(i){
+  projIdx=((i%PROJECTS.length)+PROJECTS.length)%PROJECTS.length;
+  const proj=PROJECTS[projIdx];
+  
+  // Crossfade visual
+  document.querySelectorAll('.proj-vbox').forEach((v,k)=>v.classList.toggle('show',k===projIdx));
+  
+  // Brief fade-out, then update + fade-in for text elements
+  const els=['proj-name','proj-loc','ps-1','ps-2','ps-3'];
+  els.forEach(id=>{const e=document.getElementById(id);if(e)e.style.opacity=0});
+  
+  setTimeout(()=>{
+    document.getElementById('proj-cur').textContent=String(projIdx+1).padStart(2,'0');
+    document.getElementById('proj-zone').textContent=proj.zone;
+    document.getElementById('proj-name').textContent=proj.name;
+    document.getElementById('proj-loc').textContent=proj.loc;
+    document.getElementById('ps-1').innerHTML=proj.price;
+    document.getElementById('ps-2').innerHTML=proj.ret;
+    document.getElementById('ps-3').innerHTML=proj.m+'<span class="ps-unit">'+proj.u+'</span>';
+    els.forEach(id=>{const e=document.getElementById(id);if(e)e.style.opacity=1});
+  },300);
+  
+  document.querySelectorAll('.proj-tab').forEach((t,k)=>t.classList.toggle('on',k===projIdx));
+}
+function resetProjAuto(){
+  if(projAuto)clearInterval(projAuto);
+  projAuto=setInterval(()=>setProj(projIdx+1),5500);
+}
+// Wrap setProj to reset auto on manual interaction
+const _setProj=setProj;
+setProj=function(i){_setProj(i);resetProjAuto()};
+
+const projObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      resetProjAuto();
+    }else{
+      if(projAuto){clearInterval(projAuto);projAuto=null}
+    }
+  });
+},{threshold:0.4});
+const projSec=document.getElementById('scene-projects');
+if(projSec)projObs.observe(projSec);
+
+/* ════════════════════════════════════
+   MISC
+═══════════════════════════════════════ */
+
+/* Ticker */
+const TICK=[
+  {l:'ES_SECURITY_INDEX',v:'+92%'},{l:'USD_ADOPTION',v:'100%'},
+  {l:'PROPERTY_GROWTH_2025',v:'+8%'},{l:'RENTAL_YIELD_AVG',v:'~7%'},
+  {l:'DIASPORA_US_TOTAL',v:'2.3M'},{l:'FLIGHT_TIME_MIA',v:'2.5H'},
+  {l:'ADVISORY_COST',v:'$0'},{l:'FAMILIES_ADVISED',v:'150+'},
+  {l:'DEV_PARTNERS',v:'12'},{l:'AVG_RATING',v:'5.0★'},
+];
+const tt=document.getElementById('ttrack');
+[...TICK,...TICK].forEach(t=>{const d=document.createElement('span');d.className='ti';d.innerHTML=`${t.l} <span class="ti-val">${t.v}</span><span class="ti-sep">|</span>`;tt.appendChild(d)});
+
+/* Mobile menu */
+function hm(){document.getElementById('mob').classList.toggle('open')}
+document.addEventListener('click',e=>{if(!e.target.closest('nav')&&!e.target.closest('#mob'))document.getElementById('mob').classList.remove('open')});
+
+/* Smooth anchor scroll */
+document.querySelectorAll('a[href^="#"]').forEach(a=>a.addEventListener('click',e=>{
+  const href=a.getAttribute('href');
+  if(href==='#'||href==='')return;
+  const t=document.querySelector(href);
+  if(t){
+    e.preventDefault();
+    const top=t.offsetTop-90;
+    window.scrollTo({top,behavior:'smooth'});
+  }
+}));
+
+/* Form */
+function sub(){
+  const fn=document.getElementById('fn').value.trim();
+  const fe=document.getElementById('fe').value.trim();
+  const fp=document.getElementById('fp').value.trim();
+  if(!fn||!fe||!fp){alert('Por favor completa nombre, email y teléfono.');return}
+  document.getElementById('ff').style.display='none';
+  document.getElementById('fok').style.display='block';
+}
+
+/* Scroll progress bar */
+window.addEventListener('scroll',()=>{
+  const docH=document.documentElement.scrollHeight-window.innerHeight;
+  const sp=(window.scrollY/docH)*100;
+  document.getElementById('scroll-prog').style.width=sp+'%';
+});
+
+/* CTA bg text gentle parallax */
+window.addEventListener('scroll',()=>{
+  const bg=document.getElementById('cta-bg-text');
+  if(!bg)return;
+  const rect=bg.getBoundingClientRect();
+  const center=window.innerHeight/2;
+  const off=(rect.top+rect.height/2-center)*-0.15;
+  bg.style.transform=`translate(-50%,calc(-50% + ${off}px))`;
+});
+</script>
+</body>
+</html>

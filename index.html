@@ -472,6 +472,37 @@ h2.life-h{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.05;le
 .case-card:nth-child(2) .case-avatar::before{content:'🏞️'}
 .case-card:nth-child(3) .case-avatar::before{content:'🌴'}
 
+/* ════ MARKETPLACE de proyectos (estilo Airbnb) ════ */
+.proj-market{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;position:relative;z-index:2}
+.proj-card{background:var(--b3);border:1px solid var(--g2);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;transition:transform .45s var(--ease),border-color .35s var(--ease),box-shadow .45s var(--ease);position:relative}
+.proj-card:hover{transform:translateY(-6px);border-color:var(--blue);box-shadow:0 24px 48px rgba(0,102,255,.22),0 0 0 1px var(--blue)}
+.proj-card-photo{position:relative;aspect-ratio:16/10;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.proj-photo-fallback{font-size:5rem;opacity:.65;position:relative;z-index:0;line-height:1}
+.proj-card-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease);z-index:1}
+.proj-card:hover .proj-card-photo img{transform:scale(1.05)}
+.proj-card-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 0%,transparent 55%,rgba(0,0,0,.45) 100%);z-index:2;pointer-events:none}
+.proj-tag{position:absolute;top:14px;left:14px;background:rgba(13,15,20,.85);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:var(--blue2);font-family:'SF Mono','Courier New',monospace;font-size:10px;letter-spacing:1.5px;padding:6px 12px;border-radius:99px;border:1px solid var(--g3);z-index:3;text-transform:uppercase;font-weight:700}
+.proj-card-body{padding:22px;display:flex;flex-direction:column;gap:12px;flex:1}
+.proj-card-name{font-size:1.18rem;font-weight:800;color:var(--w);letter-spacing:-.3px;line-height:1.25;margin:0}
+.proj-card-loc{font-family:'SF Mono','Courier New',monospace;font-size:10.5px;color:var(--g4);letter-spacing:.5px;line-height:1.4}
+.proj-card-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--g2);border-bottom:1px solid var(--g2);padding:14px 0;margin:4px 0 6px}
+.pcs{padding:0 6px;border-right:1px solid var(--g2)}
+.pcs:first-child{padding-left:0}
+.pcs:last-child{border-right:none}
+.pcs-val{font-size:1.05rem;font-weight:800;color:var(--w);letter-spacing:-.3px;line-height:1}
+.pcs-unit{font-size:.55em;color:var(--blue2);font-weight:400}
+.pcs-lbl{font-family:'SF Mono','Courier New',monospace;font-size:9px;color:var(--g4);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+.proj-card-cta{margin-top:auto;background:var(--blue);color:#fff;padding:12px 18px;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;text-decoration:none;border-radius:99px;text-align:center;transition:background .25s,box-shadow .25s,transform .25s;display:block}
+.proj-card-cta:hover{background:var(--blue2);box-shadow:0 8px 24px var(--blue-glow);transform:translateY(-1px)}
+
+@media(max-width:960px){
+  .proj-market{grid-template-columns:1fr;gap:18px}
+  .proj-card-photo{aspect-ratio:16/9}
+}
+@media(max-width:768px){
+  #scene-projects .anim{opacity:1!important;transform:none!important;filter:none!important}
+}
+
 @media(max-width:1100px){.nav-c a{padding:7px 8px;font-size:11.5px}}
 @media(max-width:960px){
   .data-grid{grid-template-columns:repeat(2,1fr)}
@@ -740,31 +771,63 @@ h2.life-h{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.05;le
     <div class="proj-wrap">
       <div class="proj-eb anim anim-up d0" data-i18n="projects.eyebrow">Portafolio activo</div>
       <h2 class="proj-h anim anim-up d1" data-i18n="projects.title" data-i18n-html>Proyectos verificados<br>en <span class="blue">El Salvador.</span></h2>
-      <div class="proj-display">
-        <!-- ✱ FOTOS DE PROYECTOS: sube los archivos a una carpeta /projects/ en tu repo.
-             Nombres EXACTOS: proyecto1.jpg, proyecto2.jpg, proyecto3.jpg
-             Si una imagen no carga, se muestra el emoji de respaldo. -->
-        <div class="proj-visual anim anim-scale d2" id="proj-visual">
-          <div class="proj-vbox show" style="background:linear-gradient(135deg,#0a1628,#1a3a6b)" data-pv="0"><span class="pv-fallback">🏡</span><img src="projects/proyecto1.jpg" alt="Proyecto 1" loading="lazy" onerror="this.remove()"></div>
-          <div class="proj-vbox" style="background:linear-gradient(135deg,#0a3320,#1a5c3a)" data-pv="1"><span class="pv-fallback">🏢</span><img src="projects/proyecto2.jpg" alt="Proyecto 2" loading="lazy" onerror="this.remove()"></div>
-          <div class="proj-vbox" style="background:linear-gradient(135deg,#28160a,#5c3200)" data-pv="2"><span class="pv-fallback">🌿</span><img src="projects/proyecto3.jpg" alt="Proyecto 3" loading="lazy" onerror="this.remove()"></div>
-        </div>
-        <div class="proj-info">
-          <div class="proj-counter-x anim anim-up d3"><span class="cur" id="proj-cur">01</span><span>/ 03 ·</span><span id="proj-zone">LA LIBERTAD</span></div>
-          <div class="proj-name anim anim-up d3" id="proj-name">Residencial Costa del Pacífico</div>
-          <div class="proj-loc anim anim-up d4" id="proj-loc">📍 LA LIBERTAD, EL SALVADOR</div>
-          <div class="proj-stats anim anim-up d5">
-            <div class="ps-cell"><div class="ps-val" id="ps-1">$120K</div><div class="ps-lbl" data-i18n="projects.lbl_from">Desde</div></div>
-            <div class="ps-cell"><div class="ps-val" id="ps-2">~7<span class="ps-unit">%</span></div><div class="ps-lbl" data-i18n="projects.lbl_roi">Retorno est.</div></div>
-            <div class="ps-cell"><div class="ps-val" id="ps-3">140<span class="ps-unit">m²</span></div><div class="ps-lbl" data-i18n="projects.lbl_size">Hasta</div></div>
+      <!-- ✱ FOTOS DE PROYECTOS: sube los archivos a una carpeta /projects/ en tu repo.
+           Nombres EXACTOS: proyecto1.jpg, proyecto2.jpg, proyecto3.jpg
+           Si una imagen no carga, se muestra el emoji de respaldo. -->
+      <div class="proj-market">
+        <article class="proj-card anim anim-up d2">
+          <div class="proj-card-photo" style="background:linear-gradient(135deg,#0a1628,#1a3a6b)">
+            <span class="proj-photo-fallback">🏡</span>
+            <img src="projects/proyecto1.jpg" alt="Residencial Costa del Pacífico" loading="lazy" onerror="this.remove()">
+            <div class="proj-tag">La Libertad</div>
           </div>
-          <div class="proj-tabs anim anim-up d6">
-            <button class="proj-tab on" onclick="setProj(0)">01</button>
-            <button class="proj-tab" onclick="setProj(1)">02</button>
-            <button class="proj-tab" onclick="setProj(2)">03</button>
+          <div class="proj-card-body">
+            <h3 class="proj-card-name">Residencial Costa del Pacífico</h3>
+            <div class="proj-card-loc">📍 La Libertad, El Salvador</div>
+            <div class="proj-card-stats">
+              <div class="pcs"><div class="pcs-val">$120K</div><div class="pcs-lbl" data-i18n="projects.lbl_from">Desde</div></div>
+              <div class="pcs"><div class="pcs-val">~7<span class="pcs-unit">%</span></div><div class="pcs-lbl" data-i18n="projects.lbl_roi">Retorno est.</div></div>
+              <div class="pcs"><div class="pcs-val">140<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="projects.lbl_size">Hasta</div></div>
+            </div>
+            <a href="#contacto" class="proj-card-cta" data-i18n="projects.cta">Solicitar información →</a>
           </div>
-          <div class="anim anim-up d7"><a href="#contacto" class="proj-cta" data-i18n="projects.cta">Solicitar información →</a></div>
-        </div>
+        </article>
+
+        <article class="proj-card anim anim-up d3">
+          <div class="proj-card-photo" style="background:linear-gradient(135deg,#0a3320,#1a5c3a)">
+            <span class="proj-photo-fallback">🏢</span>
+            <img src="projects/proyecto2.jpg" alt="Condominio Montecarlo Escalón" loading="lazy" onerror="this.remove()">
+            <div class="proj-tag">Escalón</div>
+          </div>
+          <div class="proj-card-body">
+            <h3 class="proj-card-name">Condominio Montecarlo Escalón</h3>
+            <div class="proj-card-loc">📍 Col. Escalón, San Salvador</div>
+            <div class="proj-card-stats">
+              <div class="pcs"><div class="pcs-val">$115K</div><div class="pcs-lbl" data-i18n="projects.lbl_from">Desde</div></div>
+              <div class="pcs"><div class="pcs-val">~6.5<span class="pcs-unit">%</span></div><div class="pcs-lbl" data-i18n="projects.lbl_roi">Retorno est.</div></div>
+              <div class="pcs"><div class="pcs-val">135<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="projects.lbl_size">Hasta</div></div>
+            </div>
+            <a href="#contacto" class="proj-card-cta" data-i18n="projects.cta">Solicitar información →</a>
+          </div>
+        </article>
+
+        <article class="proj-card anim anim-up d4">
+          <div class="proj-card-photo" style="background:linear-gradient(135deg,#28160a,#5c3200)">
+            <span class="proj-photo-fallback">🌿</span>
+            <img src="projects/proyecto3.jpg" alt="Parque Residencial Santa Tecla" loading="lazy" onerror="this.remove()">
+            <div class="proj-tag">Santa Tecla</div>
+          </div>
+          <div class="proj-card-body">
+            <h3 class="proj-card-name">Parque Residencial Santa Tecla</h3>
+            <div class="proj-card-loc">📍 Santa Tecla, La Libertad</div>
+            <div class="proj-card-stats">
+              <div class="pcs"><div class="pcs-val">$125K</div><div class="pcs-lbl" data-i18n="projects.lbl_from">Desde</div></div>
+              <div class="pcs"><div class="pcs-val">Retiro</div><div class="pcs-lbl" data-i18n="projects.lbl_roi">Retorno est.</div></div>
+              <div class="pcs"><div class="pcs-val">200<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="projects.lbl_size">Hasta</div></div>
+            </div>
+            <a href="#contacto" class="proj-card-cta" data-i18n="projects.cta">Solicitar información →</a>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -1591,41 +1654,7 @@ const procObs=new IntersectionObserver((entries)=>{
 const procSec=document.getElementById('scene-process');
 if(procSec)procObs.observe(procSec);
 
-/* ════ PROJECTS ════ */
-const PROJECTS=[
-  {name:'Residencial Costa del Pacífico',loc:'📍 LA LIBERTAD, EL SALVADOR · CASAS & APTOS',zone:'LA LIBERTAD',price:'$120K',ret:'~7<span class="ps-unit">%</span>',m:'140',u:'m²'},
-  {name:'Condominio Montecarlo Escalón',loc:'📍 COL. ESCALÓN, SAN SALVADOR · APARTAMENTOS',zone:'ESCALÓN',price:'$115K',ret:'~6.5<span class="ps-unit">%</span>',m:'135',u:'m²'},
-  {name:'Parque Residencial Santa Tecla',loc:'📍 SANTA TECLA, LA LIBERTAD · CASAS',zone:'SANTA TECLA',price:'$125K',ret:'Retiro',m:'200',u:'m²'},
-];
-let projIdx=0, projAuto=null;
-function _renderProj(i){
-  projIdx=((i%PROJECTS.length)+PROJECTS.length)%PROJECTS.length;
-  const proj=PROJECTS[projIdx];
-  document.querySelectorAll('.proj-vbox').forEach((v,k)=>v.classList.toggle('show',k===projIdx));
-  const els=['proj-name','proj-loc','ps-1','ps-2','ps-3'];
-  els.forEach(id=>{const e=document.getElementById(id);if(e)e.style.opacity=0});
-  setTimeout(()=>{
-    document.getElementById('proj-cur').textContent=String(projIdx+1).padStart(2,'0');
-    document.getElementById('proj-zone').textContent=proj.zone;
-    document.getElementById('proj-name').textContent=proj.name;
-    document.getElementById('proj-loc').textContent=proj.loc;
-    document.getElementById('ps-1').innerHTML=proj.price;
-    document.getElementById('ps-2').innerHTML=proj.ret;
-    document.getElementById('ps-3').innerHTML=proj.m+'<span class="ps-unit">'+proj.u+'</span>';
-    els.forEach(id=>{const e=document.getElementById(id);if(e)e.style.opacity=1});
-  },300);
-  document.querySelectorAll('.proj-tab').forEach((t,k)=>t.classList.toggle('on',k===projIdx));
-}
-function setProj(i){ _renderProj(i); resetProjAuto(); }
-function resetProjAuto(){ if(projAuto)clearInterval(projAuto); projAuto=setInterval(()=>_renderProj(projIdx+1),5500); }
-const projObs=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) resetProjAuto();
-    else if(projAuto){clearInterval(projAuto);projAuto=null}
-  });
-},{threshold:0.4});
-const projSec=document.getElementById('scene-projects');
-if(projSec)projObs.observe(projSec);
+/* ════ PROJECTS (marketplace estático — sin carrusel) ════ */
 
 /* ════ FAQ ACCORDION ════ */
 document.querySelectorAll('.faq-item').forEach(item=>{

@@ -380,6 +380,92 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
 .wa-fl{position:fixed;bottom:28px;right:28px;z-index:998;width:54px;height:54px;background:#25D366;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 24px rgba(37,211,102,.45);transition:.25s;border-radius:50%}
 .wa-fl:hover{transform:scale(1.1)}
 
+/* ════ LIFESTYLE COMPARISON (Tu cheque, dos vidas) ════ */
+.life-stage{background:var(--b2);position:relative;width:100%;overflow:hidden}
+.life-stage::before{content:'';position:absolute;width:70%;height:70%;background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);filter:blur(80px);top:30%;right:-10%;z-index:0;opacity:.5}
+.life-stage::after{content:'';position:absolute;width:50%;height:50%;background:radial-gradient(circle,rgba(255,170,0,.05) 0%,transparent 60%);filter:blur(60px);bottom:0;left:-10%;z-index:0}
+.life-wrap{width:100%;max-width:var(--max);padding:0 5%;position:relative;z-index:2;margin:0 auto}
+.life-eb{font-family:'SF Mono','Courier New',monospace;font-size:11px;color:var(--blue3);letter-spacing:3px;text-transform:uppercase;margin-bottom:18px;display:inline-flex;align-items:center;gap:10px}
+.life-eb::before{content:'';width:24px;height:1px;background:var(--blue)}
+h2.life-h{font-size:clamp(2rem,4.5vw,3.6rem);font-weight:800;line-height:1.05;letter-spacing:-2px;color:var(--w);margin-bottom:20px}
+.life-h .blue{color:var(--blue2);text-shadow:0 0 30px var(--blue-glow)}
+.life-sub{font-size:1.05rem;color:var(--g5);max-width:720px;margin-bottom:48px;line-height:1.7}
+.life-sub strong{color:var(--w);font-weight:700}
+.life-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--g2);margin-bottom:36px;border:1px solid var(--g2);border-radius:8px;overflow:hidden}
+.life-col{background:var(--b3);padding:32px 28px;position:relative;overflow:hidden}
+.life-col.us{opacity:.78}
+.life-col.sv::before{content:'';position:absolute;top:0;left:0;width:3px;height:100%;background:var(--blue);box-shadow:0 0 16px var(--blue-glow)}
+.life-flag{font-family:'SF Mono','Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--g4);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.life-flag .em{font-size:14px}
+.life-col.sv .life-flag{color:var(--blue2)}
+.life-title{font-size:1.5rem;font-weight:800;color:var(--w);letter-spacing:-.5px;margin-bottom:28px;line-height:1.2}
+.life-col.sv .life-title{color:var(--blue2);text-shadow:0 0 20px var(--blue-glow)}
+.life-row{padding:18px 0;border-bottom:1px solid var(--g2)}
+.life-row:last-child{border-bottom:none}
+.life-row-lbl{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--g4);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+.life-row-val{font-size:1.5rem;font-weight:800;color:var(--w);letter-spacing:-.5px;line-height:1.15}
+.life-col.sv .life-row-val{color:var(--blue2)}
+.life-row-sub{font-size:.78rem;color:var(--g5);margin-top:6px;line-height:1.5}
+
+.life-geo{background:var(--b3);border:1px solid var(--g2);border-radius:8px;padding:36px 32px;margin-bottom:36px;position:relative;overflow:hidden}
+.life-geo::before{content:'';position:absolute;width:300px;height:300px;background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);filter:blur(50px);top:-100px;right:-100px;opacity:.5;pointer-events:none}
+.life-geo-head{font-family:'SF Mono','Courier New',monospace;font-size:10px;letter-spacing:2.5px;text-transform:uppercase;color:var(--blue2);margin-bottom:10px;position:relative;z-index:1}
+.life-geo-h{font-size:clamp(1.3rem,2.5vw,1.7rem);font-weight:800;color:var(--w);letter-spacing:-.5px;margin-bottom:28px;position:relative;z-index:1;line-height:1.3}
+.life-geo-h .blue{color:var(--blue2)}
+.life-geo-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;position:relative;z-index:1}
+.life-geo-card{padding:22px 12px;background:var(--b);border:1px solid var(--g2);border-radius:6px;text-align:center;transition:all .35s var(--ease)}
+.life-geo-card:hover{border-color:var(--blue);transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,102,255,.18)}
+.life-geo-icon{font-size:1.9rem;margin-bottom:12px;line-height:1}
+.life-geo-name{font-size:.85rem;font-weight:700;color:var(--w);margin-bottom:5px;letter-spacing:-.2px;line-height:1.2}
+.life-geo-time{font-family:'SF Mono','Courier New',monospace;font-size:10px;color:var(--blue2);letter-spacing:1px}
+
+.life-close{padding:38px 36px;background:linear-gradient(135deg,rgba(0,102,255,.08) 0%,transparent 60%);border:1px solid var(--g3);border-radius:8px;position:relative;overflow:hidden}
+.life-close::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--blue);box-shadow:0 0 16px var(--blue-glow)}
+.life-close-q{font-size:clamp(1.4rem,3vw,2rem);font-weight:800;color:var(--w);line-height:1.3;letter-spacing:-.7px;margin-bottom:14px}
+.life-close-q em{font-style:normal;color:var(--blue2);text-shadow:0 0 24px var(--blue-glow)}
+.life-close-sub{font-size:1rem;color:var(--g5);line-height:1.7;font-style:italic}
+
+@media(max-width:960px){
+  .life-grid{grid-template-columns:1fr}
+  .life-geo-grid{grid-template-columns:repeat(3,1fr)}
+}
+@media(max-width:768px){
+  .life-geo-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:480px){
+  .life-col{padding:26px 22px}
+  .life-row-val{font-size:1.25rem}
+  .life-title{font-size:1.25rem;margin-bottom:22px}
+  .life-geo{padding:28px 22px}
+  .life-close{padding:28px 24px}
+}
+
+/* Callout flotante (pregunta de propiedad) */
+.life-callout{display:flex;align-items:center;gap:24px;padding:32px 36px;background:linear-gradient(135deg,rgba(0,102,255,.14) 0%,rgba(0,102,255,.03) 100%);border:1px solid var(--blue);border-radius:8px;margin-bottom:36px;position:relative;overflow:hidden;box-shadow:0 0 0 1px rgba(0,102,255,.15),0 12px 32px rgba(0,102,255,.18)}
+.life-callout::before{content:'';position:absolute;top:-50%;right:-10%;width:320px;height:320px;background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);filter:blur(40px);opacity:.5;pointer-events:none}
+.life-callout-icon{font-size:3rem;flex-shrink:0;line-height:1;position:relative;z-index:1}
+.life-callout-content{position:relative;z-index:1;flex:1}
+.life-callout-h{font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:800;color:var(--w);letter-spacing:-.4px;margin-bottom:10px;line-height:1.3}
+.life-callout-sub{font-size:.95rem;color:var(--g6);line-height:1.7}
+@media(max-width:768px){.life-callout{flex-direction:column;align-items:flex-start;padding:26px 24px;gap:14px}.life-callout-icon{font-size:2.5rem}}
+
+/* Card destacado en services (Programa de referidos) */
+.sc-card.featured{background:linear-gradient(135deg,rgba(0,102,255,.10) 0%,var(--b3) 70%);border:1px solid var(--blue);box-shadow:inset 0 0 0 1px var(--blue),0 12px 32px rgba(0,102,255,.20);position:relative}
+.sc-card.featured::after{content:'';position:absolute;top:-60px;right:-60px;width:180px;height:180px;background:radial-gradient(circle,var(--blue-glow) 0%,transparent 60%);filter:blur(30px);opacity:.7;pointer-events:none;z-index:0}
+.sc-card.featured .sc-icon,.sc-card.featured .sc-title,.sc-card.featured .sc-desc,.sc-card.featured .sc-n,.sc-card.featured .sc-tag{position:relative;z-index:1}
+.sc-card.featured .sc-icon{filter:drop-shadow(0 0 12px var(--blue-glow));transform:scale(1.1);transform-origin:left center}
+.sc-card.featured .sc-title{color:var(--blue2);text-shadow:0 0 16px var(--blue-glow)}
+.sc-card.featured .sc-tag{color:var(--blue2);font-weight:700}
+.sc-card.featured .sc-star{position:absolute;top:18px;right:18px;font-size:1.4rem;line-height:1;animation:starGlow 2.4s ease-in-out infinite;z-index:2}
+@keyframes starGlow{0%,100%{filter:drop-shadow(0 0 6px var(--blue-glow));transform:scale(1)}50%{filter:drop-shadow(0 0 16px var(--blue));transform:scale(1.15)}}
+
+/* Avatares de cases con emoji (oculta iniciales, muestra ícono) */
+.case-avatar{font-size:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,#1a3a6b,#0a1628);border:1px solid var(--g3)}
+.case-avatar::before{font-size:1.4rem;line-height:1;font-family:-apple-system,'SF Pro Display','Segoe UI',sans-serif}
+.case-card:nth-child(1) .case-avatar::before{content:'🏡'}
+.case-card:nth-child(2) .case-avatar::before{content:'🏞️'}
+.case-card:nth-child(3) .case-avatar::before{content:'🌴'}
+
 @media(max-width:1100px){.nav-c a{padding:7px 8px;font-size:11.5px}}
 @media(max-width:960px){
   .data-grid{grid-template-columns:repeat(2,1fr)}
@@ -497,6 +583,99 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
         <div class="dn anim anim-up d3"><div class="dn-val accent" data-target="9" data-suffix="">0</div><div class="dn-lbl" data-i18n="data.lbl2" data-i18n-html>DESARROLLADORAS<br>ALIADAS</div></div>
         <div class="dn anim anim-up d4"><div class="dn-val" data-target="92" data-suffix="%">0</div><div class="dn-lbl" data-i18n="data.lbl3" data-i18n-html>SEGURIDAD<br>EN CENTROAMÉRICA</div></div>
         <div class="dn anim anim-up d5"><div class="dn-val accent" data-target="8" data-suffix="%" data-prefix="+">0</div><div class="dn-lbl" data-i18n="data.lbl4" data-i18n-html>VALORIZACIÓN<br>ANUAL EST.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIFESTYLE COMPARISON -->
+<section class="scene" id="scene-lifestyle" data-scene>
+  <div class="life-stage">
+    <div class="life-wrap">
+      <div class="life-eb anim anim-up d0" data-i18n="life.eyebrow">Comparativa de retiro</div>
+      <h2 class="life-h anim anim-up d1" data-i18n="life.title" data-i18n-html>Tu cheque,<br><span class="blue">dos vidas.</span></h2>
+      <p class="life-sub anim anim-up d2" data-i18n="life.subtitle" data-i18n-html>En EE.UU., el jubilado promedio gasta <strong>una buena parte de su Social Security solo en gastos médicos de bolsillo</strong>. En El Salvador, ese mismo cheque te abre puertas que en US ya no existen.</p>
+
+      <div class="life-grid anim anim-up d3">
+        <div class="life-col us">
+          <div class="life-flag"><span class="em">🇺🇸</span><span data-i18n="life.us">Estados Unidos</span></div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_health">Salud</div>
+            <div class="life-row-val" data-i18n="life.us_health">$200+ consulta especialista</div>
+            <div class="life-row-sub" data-i18n="life.us_health_sub">Una corona dental: $1,500–3,000 · medicinas y copagos aparte</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_property">Vivienda</div>
+            <div class="life-row-val" data-i18n="life.us_property">Casa promedio $400K+</div>
+            <div class="life-row-sub" data-i18n="life.us_property_sub">Hipoteca a 30 años · property tax anual</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_lifestyle">Estilo de vida</div>
+            <div class="life-row-val" data-i18n="life.us_lifestyle">$20 un plato simple</div>
+            <div class="life-row-sub" data-i18n="life.us_lifestyle_sub">Restaurante común · propina aparte</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_safety">Seguridad</div>
+            <div class="life-row-val" data-i18n="life.us_safety">Depende del barrio</div>
+            <div class="life-row-sub" data-i18n="life.us_safety_sub">Decisiones limitadas por zonas seguras</div>
+          </div>
+        </div>
+
+        <div class="life-col sv">
+          <div class="life-flag"><span class="em">🇸🇻</span><span data-i18n="life.sv">El Salvador</span></div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_health">Salud</div>
+            <div class="life-row-val" data-i18n="life.sv_health">$34 consulta · $80 corona</div>
+            <div class="life-row-sub" data-i18n="life.sv_health_sub">Y desde 2026, nuevo Hospital Rosales con cirugía robótica y 47 especialidades — el más avanzado de Centroamérica</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_property">Vivienda</div>
+            <div class="life-row-val" data-i18n="life.sv_property">Apartamento nuevo desde $120K</div>
+            <div class="life-row-sub" data-i18n="life.sv_property_sub">Zona estratégica · listo para vivir</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_lifestyle">Estilo de vida</div>
+            <div class="life-row-val" data-i18n="life.sv_lifestyle">$20 mariscos frente al mar</div>
+            <div class="life-row-sub" data-i18n="life.sv_lifestyle_sub">Restaurante en playa con piscina, hamacas y todo el día de instalaciones</div>
+          </div>
+
+          <div class="life-row">
+            <div class="life-row-lbl" data-i18n="life.lbl_safety">Seguridad</div>
+            <div class="life-row-val" data-i18n="life.sv_safety">El más seguro de la región</div>
+            <div class="life-row-sub" data-i18n="life.sv_safety_sub">Paseos tranquilos a cualquier hora · sin preocupaciones</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="life-callout anim anim-up d4">
+        <div class="life-callout-content">
+          <div class="life-callout-h" data-i18n="life.callout_q">¿Y si vendés tu propiedad en US?</div>
+          <div class="life-callout-sub" data-i18n="life.callout_sub">Vivís en una propiedad nueva en El Salvador — equivalente o mejor — y aún te queda un remanente significativo en el bolsillo. Ese diferencial es tu margen de tranquilidad por el resto de tu retiro.</div>
+        </div>
+      </div>
+
+      <div class="life-geo anim anim-up d5">
+        <div class="life-geo-head" data-i18n="life.geo_head">Desde San Salvador, en menos de 90 minutos</div>
+        <h3 class="life-geo-h" data-i18n="life.geo_title" data-i18n-html>Playa, montaña, lago y pueblos coloniales en <span class="blue">un mismo día.</span></h3>
+        <div class="life-geo-grid">
+          <div class="life-geo-card"><div class="life-geo-icon">🏖️</div><div class="life-geo-name" data-i18n="life.geo_beach">Playa</div><div class="life-geo-time">40 min</div></div>
+          <div class="life-geo-card"><div class="life-geo-icon">🌋</div><div class="life-geo-name" data-i18n="life.geo_volcano">Volcán</div><div class="life-geo-time">20 min</div></div>
+          <div class="life-geo-card"><div class="life-geo-icon">💧</div><div class="life-geo-name" data-i18n="life.geo_lake">Lago</div><div class="life-geo-time">1 h</div></div>
+          <div class="life-geo-card"><div class="life-geo-icon">🏘️</div><div class="life-geo-name" data-i18n="life.geo_towns">Pueblos vivos</div><div class="life-geo-time">1.5 h</div></div>
+          <div class="life-geo-card"><div class="life-geo-icon">🌿</div><div class="life-geo-name" data-i18n="life.geo_nature">Ruta de las Flores</div><div class="life-geo-time">1.5 h</div></div>
+        </div>
+      </div>
+
+      <div class="life-close anim anim-up d6">
+        <div class="life-close-q" data-i18n="life.close_q" data-i18n-html>Mismo dólar. Misma jubilación que tanto te costó. <em>¿De qué lado del mapa querés gastarla?</em></div>
+        <div class="life-close-sub" data-i18n="life.close_sub">La pregunta ya no es si te conviene. Es cuándo.</div>
       </div>
     </div>
   </div>
@@ -1145,6 +1324,128 @@ const T={
     "footer.copyright":"© 2026 Next Level Demographic. Alle Rechte vorbehalten.","footer.privacy":"Datenschutz","footer.terms":"AGB"
   }
 };
+
+/* ════════════════════════════════════
+   EXTENSIÓN: keys de la sección
+   "Tu cheque, dos vidas" (lifestyle)
+   Se hace merge al objeto T arriba.
+═══════════════════════════════════════ */
+const LIFESTYLE_KEYS={
+  es:{
+    "life.eyebrow":"Comparativa de retiro",
+    "life.title":'Tu cheque,<br><span class="blue">dos vidas.</span>',
+    "life.subtitle":'En EE.UU., el jubilado promedio gasta <strong>una buena parte de su Social Security solo en gastos médicos de bolsillo</strong>. En El Salvador, ese mismo cheque te abre puertas que en US ya no existen.',
+    "life.us":"Estados Unidos","life.sv":"El Salvador",
+    "life.lbl_health":"Salud","life.lbl_property":"Vivienda","life.lbl_lifestyle":"Estilo de vida","life.lbl_safety":"Seguridad",
+    "life.us_health":"$200+ consulta especialista","life.us_health_sub":"Una corona dental: $1,500–3,000 · medicinas y copagos aparte",
+    "life.sv_health":"$34 consulta · $80 corona","life.sv_health_sub":"Y desde 2026, nuevo Hospital Rosales con cirugía robótica y 47 especialidades — el más avanzado de Centroamérica",
+    "life.us_property":"Casa promedio $400K+","life.us_property_sub":"Hipoteca a 30 años · property tax anual",
+    "life.sv_property":"Apartamento nuevo desde $120K","life.sv_property_sub":"Zona estratégica · listo para vivir",
+    "life.us_lifestyle":"$20 un plato simple","life.us_lifestyle_sub":"Restaurante común · propina aparte",
+    "life.sv_lifestyle":"$20 mariscos frente al mar","life.sv_lifestyle_sub":"Restaurante en playa con piscina, hamacas y todo el día de instalaciones",
+    "life.us_safety":"Depende del barrio","life.us_safety_sub":"Decisiones limitadas por zonas seguras",
+    "life.sv_safety":"El más seguro de la región","life.sv_safety_sub":"Paseos tranquilos a cualquier hora · sin preocupaciones",
+    "life.callout_q":"¿Y si vendés tu propiedad en US?",
+    "life.callout_sub":"Vivís en una propiedad nueva en El Salvador — equivalente o mejor — y aún te queda un remanente significativo en el bolsillo. Ese diferencial es tu margen de tranquilidad por el resto de tu retiro.",
+    "life.geo_head":"Desde San Salvador, en menos de 90 minutos",
+    "life.geo_title":'Playa, montaña, lago y pueblos coloniales en <span class="blue">un mismo día.</span>',
+    "life.geo_beach":"Playa","life.geo_volcano":"Volcán","life.geo_lake":"Lago","life.geo_towns":"Pueblos vivos","life.geo_nature":"Ruta de las Flores",
+    "life.close_q":'Mismo dólar. Misma jubilación que tanto te costó. <em>¿De qué lado del mapa querés gastarla?</em>',
+    "life.close_sub":"La pregunta ya no es si te conviene. Es cuándo."
+  },
+  en:{
+    "life.eyebrow":"Retirement comparison",
+    "life.title":'Same check.<br><span class="blue">Two lives.</span>',
+    "life.subtitle":'In the U.S., the average retiree spends <strong>a significant portion of their Social Security on out-of-pocket healthcare</strong>. In El Salvador, that same check opens doors that no longer exist in the U.S.',
+    "life.us":"United States","life.sv":"El Salvador",
+    "life.lbl_health":"Healthcare","life.lbl_property":"Housing","life.lbl_lifestyle":"Lifestyle","life.lbl_safety":"Safety",
+    "life.us_health":"$200+ specialist visit","life.us_health_sub":"Dental crown: $1,500–3,000 · medications and copays extra",
+    "life.sv_health":"$34 visit · $80 dental crown","life.sv_health_sub":"And since 2026, new Hospital Rosales with robotic surgery and 47 specialties — the most advanced in Central America",
+    "life.us_property":"Average home $400K+","life.us_property_sub":"30-year mortgage · annual property tax",
+    "life.sv_property":"New apartment from $120K","life.sv_property_sub":"Strategic location · move-in ready",
+    "life.us_lifestyle":"$20 for a simple plate","life.us_lifestyle_sub":"Regular restaurant · tip extra",
+    "life.sv_lifestyle":"$20 seafood by the ocean","life.sv_lifestyle_sub":"Beach restaurant with pool, hammocks and full-day access",
+    "life.us_safety":"Depends on the neighborhood","life.us_safety_sub":"Limited choices by safe zones",
+    "life.sv_safety":"The safest in the region","life.sv_safety_sub":"Peaceful walks at any hour · no worries",
+    "life.callout_q":"What if you sell your U.S. property?",
+    "life.callout_sub":"You live in a new property in El Salvador — equivalent or better — and still have a significant remainder in your pocket. That difference is your margin of peace of mind for the rest of your retirement.",
+    "life.geo_head":"From San Salvador, in under 90 minutes",
+    "life.geo_title":'Beach, mountain, lake and colonial towns <span class="blue">in a single day.</span>',
+    "life.geo_beach":"Beach","life.geo_volcano":"Volcano","life.geo_lake":"Lake","life.geo_towns":"Living towns","life.geo_nature":"Flower Route",
+    "life.close_q":'Same dollar. Same retirement you worked so hard for. <em>Which side of the map do you want to spend it on?</em>',
+    "life.close_sub":"The question is no longer whether it pays off. It's when."
+  },
+  fr:{
+    "life.eyebrow":"Comparatif retraite",
+    "life.title":'Même chèque.<br><span class="blue">Deux vies.</span>',
+    "life.subtitle":'Aux É.-U., le retraité moyen consacre <strong>une part importante de sa Social Security aux frais médicaux non remboursés</strong>. Au Salvador, ce même chèque vous ouvre des portes qui n\'existent plus aux É.-U.',
+    "life.us":"États-Unis","life.sv":"El Salvador",
+    "life.lbl_health":"Santé","life.lbl_property":"Logement","life.lbl_lifestyle":"Style de vie","life.lbl_safety":"Sécurité",
+    "life.us_health":"200 $+ consultation spécialiste","life.us_health_sub":"Couronne dentaire : 1 500–3 000 $ · médicaments et copaiements en sus",
+    "life.sv_health":"34 $ consultation · 80 $ couronne","life.sv_health_sub":"Et depuis 2026, le nouvel Hôpital Rosales avec chirurgie robotique et 47 spécialités — le plus avancé d'Amérique centrale",
+    "life.us_property":"Maison moyenne 400 K $+","life.us_property_sub":"Hypothèque sur 30 ans · taxe foncière annuelle",
+    "life.sv_property":"Appartement neuf à partir de 120 K $","life.sv_property_sub":"Emplacement stratégique · prêt à emménager",
+    "life.us_lifestyle":"20 $ pour un plat simple","life.us_lifestyle_sub":"Restaurant ordinaire · pourboire en sus",
+    "life.sv_lifestyle":"20 $ fruits de mer face à l'océan","life.sv_lifestyle_sub":"Restaurant de plage avec piscine, hamacs et accès toute la journée",
+    "life.us_safety":"Dépend du quartier","life.us_safety_sub":"Choix limités par les zones sûres",
+    "life.sv_safety":"Le plus sûr de la région","life.sv_safety_sub":"Promenades tranquilles à toute heure · sans souci",
+    "life.callout_q":"Et si vous vendiez votre propriété aux É.-U. ?",
+    "life.callout_sub":"Vous vivez dans une propriété neuve au Salvador — équivalente ou meilleure — et il vous reste un montant significatif en poche. Cette différence est votre marge de tranquillité pour le reste de votre retraite.",
+    "life.geo_head":"Depuis San Salvador, en moins de 90 minutes",
+    "life.geo_title":'Plage, montagne, lac et villages coloniaux <span class="blue">dans la même journée.</span>',
+    "life.geo_beach":"Plage","life.geo_volcano":"Volcan","life.geo_lake":"Lac","life.geo_towns":"Villages vivants","life.geo_nature":"Route des Fleurs",
+    "life.close_q":'Même dollar. Même retraite si durement gagnée. <em>De quel côté de la carte voulez-vous la dépenser ?</em>',
+    "life.close_sub":"La question n'est plus si ça vaut la peine. C'est quand."
+  },
+  it:{
+    "life.eyebrow":"Confronto pensionamento",
+    "life.title":'Stesso assegno.<br><span class="blue">Due vite.</span>',
+    "life.subtitle":'Negli USA, il pensionato medio spende <strong>una buona parte della sua Social Security in spese sanitarie out-of-pocket</strong>. In El Salvador, lo stesso assegno ti apre porte che negli USA non esistono più.',
+    "life.us":"Stati Uniti","life.sv":"El Salvador",
+    "life.lbl_health":"Sanità","life.lbl_property":"Casa","life.lbl_lifestyle":"Stile di vita","life.lbl_safety":"Sicurezza",
+    "life.us_health":"$200+ visita specialista","life.us_health_sub":"Corona dentale: $1.500–3.000 · medicine e ticket a parte",
+    "life.sv_health":"$34 visita · $80 corona","life.sv_health_sub":"E dal 2026, nuovo Ospedale Rosales con chirurgia robotica e 47 specialità — il più avanzato del Centroamerica",
+    "life.us_property":"Casa media $400K+","life.us_property_sub":"Mutuo a 30 anni · imposta sulla proprietà annuale",
+    "life.sv_property":"Appartamento nuovo da $120K","life.sv_property_sub":"Posizione strategica · pronto da abitare",
+    "life.us_lifestyle":"$20 per un piatto semplice","life.us_lifestyle_sub":"Ristorante comune · mancia a parte",
+    "life.sv_lifestyle":"$20 frutti di mare in riva al mare","life.sv_lifestyle_sub":"Ristorante sulla spiaggia con piscina, amache e accesso tutto il giorno",
+    "life.us_safety":"Dipende dal quartiere","life.us_safety_sub":"Scelte limitate dalle zone sicure",
+    "life.sv_safety":"Il più sicuro della regione","life.sv_safety_sub":"Passeggiate tranquille a qualsiasi ora · senza preoccupazioni",
+    "life.callout_q":"E se vendessi la tua proprietà negli USA?",
+    "life.callout_sub":"Vivi in una proprietà nuova in El Salvador — equivalente o migliore — e ti rimane comunque un avanzo significativo in tasca. Quella differenza è il tuo margine di tranquillità per il resto della tua pensione.",
+    "life.geo_head":"Da San Salvador, in meno di 90 minuti",
+    "life.geo_title":'Spiaggia, montagna, lago e villaggi coloniali <span class="blue">in un solo giorno.</span>',
+    "life.geo_beach":"Spiaggia","life.geo_volcano":"Vulcano","life.geo_lake":"Lago","life.geo_towns":"Villaggi vivi","life.geo_nature":"Via dei Fiori",
+    "life.close_q":'Stesso dollaro. Stessa pensione che tanto ti è costata. <em>Da che parte della mappa vuoi spenderla?</em>',
+    "life.close_sub":"La domanda non è più se conviene. È quando."
+  },
+  de:{
+    "life.eyebrow":"Ruhestandsvergleich",
+    "life.title":'Gleicher Scheck.<br><span class="blue">Zwei Leben.</span>',
+    "life.subtitle":'In den USA gibt der durchschnittliche Rentner <strong>einen erheblichen Teil seiner Social Security für Eigenanteile der Gesundheitsversorgung aus</strong>. In El Salvador öffnet derselbe Scheck Türen, die in den USA nicht mehr existieren.',
+    "life.us":"USA","life.sv":"El Salvador",
+    "life.lbl_health":"Gesundheit","life.lbl_property":"Wohnen","life.lbl_lifestyle":"Lebensstil","life.lbl_safety":"Sicherheit",
+    "life.us_health":"200 $+ Facharztbesuch","life.us_health_sub":"Zahnkrone: 1.500–3.000 $ · Medikamente und Zuzahlungen extra",
+    "life.sv_health":"34 $ Besuch · 80 $ Krone","life.sv_health_sub":"Und seit 2026, neues Hospital Rosales mit Roboterchirurgie und 47 Fachrichtungen — das modernste in Mittelamerika",
+    "life.us_property":"Durchschnittliches Haus 400.000 $+","life.us_property_sub":"30-Jahre-Hypothek · jährliche Grundsteuer",
+    "life.sv_property":"Neue Wohnung ab 120.000 $","life.sv_property_sub":"Strategische Lage · bezugsfertig",
+    "life.us_lifestyle":"20 $ für ein einfaches Gericht","life.us_lifestyle_sub":"Normales Restaurant · Trinkgeld extra",
+    "life.sv_lifestyle":"20 $ Meeresfrüchte am Meer","life.sv_lifestyle_sub":"Strandrestaurant mit Pool, Hängematten und ganztägigem Zugang",
+    "life.us_safety":"Hängt vom Viertel ab","life.us_safety_sub":"Eingeschränkte Wahl durch sichere Zonen",
+    "life.sv_safety":"Das sicherste in der Region","life.sv_safety_sub":"Ruhige Spaziergänge zu jeder Stunde · ohne Sorgen",
+    "life.callout_q":"Was, wenn Sie Ihre US-Immobilie verkaufen?",
+    "life.callout_sub":"Sie wohnen in einer neuen Immobilie in El Salvador — gleichwertig oder besser — und es bleibt Ihnen trotzdem ein erheblicher Restbetrag in der Tasche. Diese Differenz ist Ihr Spielraum für Ruhe für den Rest Ihres Ruhestands.",
+    "life.geo_head":"Von San Salvador, in unter 90 Minuten",
+    "life.geo_title":'Strand, Berg, See und Kolonialdörfer <span class="blue">an einem einzigen Tag.</span>',
+    "life.geo_beach":"Strand","life.geo_volcano":"Vulkan","life.geo_lake":"See","life.geo_towns":"Lebendige Dörfer","life.geo_nature":"Blumenroute",
+    "life.close_q":'Gleicher Dollar. Gleiche Rente, die Sie sich so hart erarbeitet haben. <em>Auf welcher Seite der Karte wollen Sie ihn ausgeben?</em>',
+    "life.close_sub":"Die Frage ist nicht mehr ob es sich lohnt. Sondern wann."
+  }
+};
+Object.keys(LIFESTYLE_KEYS).forEach(lang=>{ if(T[lang]) Object.assign(T[lang],LIFESTYLE_KEYS[lang]); });
+
+/* Quitar avatares de la sección de casos verificados */
+document.querySelectorAll('.case-avatar').forEach(a=>a.remove());
 
 let currentLang='es';
 const LANG_LABELS={es:'ES',en:'EN',fr:'FR',it:'IT',de:'DE'};

@@ -384,6 +384,10 @@ h2.cta-h em{font-style:normal;-webkit-text-stroke:2px var(--blue2);-webkit-text-
 .btn-sub{width:100%;background:var(--blue);color:#fff;padding:16px;border:none;font-size:13px;font-weight:700;cursor:pointer;letter-spacing:2px;text-transform:uppercase;font-family:inherit;border-radius:99px;box-shadow:0 4px 20px var(--blue-glow)}
 .btn-sub:hover:not(:disabled){background:var(--blue2);transform:translateY(-1px)}
 .form-note{font-family:'SF Mono','Courier New',monospace;font-size:10.5px;color:var(--g4);text-align:center;margin-top:10px}
+.form-status{margin-top:14px;padding:14px 18px;border-radius:8px;font-size:.95rem;line-height:1.5;display:none;text-align:center}
+.form-status.success{display:block;background:rgba(0,210,106,.1);border:1px solid rgba(0,210,106,.3);color:var(--green)}
+.form-status.error{display:block;background:rgba(255,69,58,.1);border:1px solid rgba(255,69,58,.3);color:var(--red)}
+.form-status.error a{color:#25D366;text-decoration:none;font-weight:700;border-bottom:1px solid #25D366}
 
 footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
 .ft-grid{max-width:var(--max);margin:0 auto;padding:0 5%;display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:36px}
@@ -642,7 +646,10 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
       <div class="wa-strip anim anim-up d4"><p data-i18n="ct_wa_text">¿Prefiere respuesta inmediata?<br>Escríbenos por WhatsApp ahora.</p><a href="https://wa.me/50375724726" target="_blank" data-i18n="ct_wa_btn">Abrir WA →</a></div>
     </div>
     <div class="cg-r anim anim-up d2">
-      <form id="ff">
+      <form id="ff" action="https://formsubmit.co/lagonzalez@nextleveldemographic.com" method="POST">
+        <input type="hidden" name="_subject" value="Nueva consulta NLD">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
         <input type="hidden" name="Aliado" id="f-ally" value="">
         <div class="fg"><label data-i18n="fm_lbl_obj">Objetivo</label>
           <select name="Objetivo" id="fobj" required>
@@ -676,6 +683,7 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
         <div class="fg"><label data-i18n="fm_lbl_msg">Mensaje (opcional)</label><textarea name="Mensaje" id="fmsg" rows="3" data-i18n-ph="fm_ph_msg" placeholder="// Cuéntanos tu situación..."></textarea></div>
         <button type="submit" class="btn-sub" data-i18n="fm_btn">Enviar consulta</button>
         <p class="form-note" data-i18n="fm_note">// privacidad garantizada · sin spam</p>
+        <div class="form-status" id="fstatus"></div>
       </form>
     </div>
   </div>
@@ -862,6 +870,31 @@ function setDevForm(){
       }
     }
   },800);
+}
+
+const formEl=document.getElementById('ff');
+if(formEl){
+  formEl.addEventListener('submit',async function(e){
+    e.preventDefault();
+    const btn=formEl.querySelector('.btn-sub');
+    const status=document.getElementById('fstatus');
+    const originalText=btn.textContent;
+    btn.disabled=true;btn.textContent='Enviando...';
+    status.className='form-status';status.innerHTML='';
+    try{
+      const response=await fetch(formEl.action,{method:'POST',body:new FormData(formEl),headers:{'Accept':'application/json'}});
+      if(response.ok){
+        status.className='form-status success';
+        status.innerHTML='✓ Consulta enviada. Un asesor te contactará en las próximas 24 horas.';
+        formEl.reset();
+      }else{throw new Error('fail')}
+    }catch(err){
+      status.className='form-status error';
+      status.innerHTML='✗ Error al enviar. Escríbenos por <a href="https://wa.me/50375724726" target="_blank">WhatsApp</a>.';
+    }finally{
+      btn.disabled=false;btn.textContent=originalText;
+    }
+  });
 }
 
 let scrollTicking=false;

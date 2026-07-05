@@ -21,7 +21,10 @@ body{font-family:-apple-system,'SF Pro Display','Segoe UI',system-ui,sans-serif;
 nav{position:fixed;top:30px;left:0;right:0;z-index:100;height:52px;background:var(--nav-bg);backdrop-filter:blur(28px) saturate(180%);-webkit-backdrop-filter:blur(28px) saturate(180%);border-bottom:1px solid var(--g2);display:flex;align-items:center;justify-content:space-between;padding:0 5%}
 .nav-left{display:flex;align-items:center;gap:14px}
 .logo-w{display:flex;align-items:center;gap:10px;text-decoration:none}
-.logo-sq{width:30px;height:30px;background:var(--w);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:var(--b);border-radius:6px}
+.logo-sq{width:30px;height:30px;background:var(--w);display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:800;color:var(--b);border-radius:6px;position:relative;overflow:hidden}
+.logo-sq img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.logo-sq.has-img{background:transparent}
+.logo-sq.has-img .logo-fb{opacity:0}
 .logo-tx{font-size:12.5px;font-weight:600;color:var(--w);line-height:1.2}
 .logo-sx{font-size:9.5px;color:var(--g4);letter-spacing:1.8px;text-transform:uppercase}
 .nav-c{display:flex;gap:0;list-style:none}
@@ -407,7 +410,7 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
 <div class="ticker"><div class="ticker-track" id="ttrack"></div></div>
 
 <nav id="nav">
-  <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq">NL</div><div><div class="logo-tx">Next Level Demographic</div><div class="logo-sx">Investment Advisory</div></div></a>
+  <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div><div class="logo-tx">Next Level Demographic</div><div class="logo-sx">Investment Advisory</div></div></a>
     <div class="lang-sel" id="langSel">
       <button class="lang-btn" onclick="toggleLang(event)" aria-label="Language"><span id="curLang">ES</span><span class="arr">▾</span></button>
       <div class="lang-dd">
@@ -713,7 +716,7 @@ footer{background:var(--b);padding:48px 0 24px;border-top:1px solid var(--g2)}
 
 <footer>
   <div class="ft-grid">
-    <div class="ft-b"><a href="#top" class="logo-w"><div class="logo-sq">NL</div><div><div class="logo-tx">Next Level Demographic</div><div class="logo-sx">Investment Advisory</div></div></a><p data-i18n="ft_text">// Asesoría estratégica para la diáspora salvadoreña en EE.UU. Proceso en español.</p><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc">Tk</a></div></div>
+    <div class="ft-b"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div><div class="logo-tx">Next Level Demographic</div><div class="logo-sx">Investment Advisory</div></div></a><p data-i18n="ft_text">// Asesoría estratégica para la diáspora salvadoreña en EE.UU. Proceso en español.</p><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc">Tk</a></div></div>
     <div class="ft-col"><h5 data-i18n="ft_nav">Navegar</h5><a href="#scene-data" data-i18n="nav_market">Mercado</a><a href="#scene-process" data-i18n="nav_process">Proceso</a><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a><a href="#scene-cases" data-i18n="nav_cases">Casos</a><a href="#scene-faq" data-i18n="ft_faq">FAQ</a></div>
     <div class="ft-col"><h5 data-i18n="ft_company">Empresa</h5><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-services" data-i18n="ft_services">Servicios</a><a href="#scene-allies" data-i18n="nav_allies">Aliados</a><a href="#scene-developers" data-i18n="nav_b2b">B2B</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
     <div class="ft-col"><h5 data-i18n="ft_contact">Contacto</h5><a href="https://wa.me/50375724726" target="_blank">WA +503 7572-4726</a><a href="#contacto" data-i18n="ft_form">Formulario</a><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank">Facebook</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank">Instagram</a></div>

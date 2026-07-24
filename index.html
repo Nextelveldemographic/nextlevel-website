@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v4.3 · Klaric · UI polish: team fix, no eyebrows, no plecas, sentence case, tighter spacing -->
+<!-- NLD v4.7 · Klaric · portfolio compact + smart search bar -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v4.3-polish-2026-07">
+<meta name="version" content="v4.7-search-compact-2026-07">
 
 <meta property="og:title" content="Next Level Demographic — Asesoría inmobiliaria para la diáspora">
 <meta property="og:description" content="Asesoría boutique · Proceso remoto · Sin costo de asesoría">
@@ -181,25 +181,6 @@ h1.hero-h .blue{color:var(--blue)}
 .life-close-q .blue{color:var(--blue)}
 .life-close-sub{font-size:17px;color:var(--grey-2);line-height:1.4;max-width:640px;margin:0 auto}
 /* PROJECTS */
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.proj-card{background:var(--chalk);border-radius:var(--r-xl);overflow:hidden;display:flex;flex-direction:column;transition:transform .3s var(--ease)}
-.sec-chalk .proj-card{background:var(--w)}
-.proj-card:hover{transform:translateY(-4px)}
-.proj-photo{aspect-ratio:4/3;background:linear-gradient(135deg,#E8F1FE,#B8D4F5);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
-.proj-photo-fb{font-size:72px;opacity:.32;line-height:1}
-.proj-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
-.proj-body{padding:36px 36px;display:flex;flex-direction:column;gap:14px;flex:1;min-height:280px}
-.proj-tag{font-family:var(--sf-mono);font-size:11px;color:var(--blue);letter-spacing:.5px;font-weight:500}
-.proj-name{font-size:22px;font-weight:600;color:var(--dark);letter-spacing:-.015em;line-height:1.2}
-.proj-loc{font-size:14px;color:var(--grey-2);line-height:1.4}
-.proj-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:0;padding:16px 0;border-top:1px solid var(--divider-2);border-bottom:1px solid var(--divider-2);margin:8px 0}
-.pcs{padding-right:10px}
-.pcs+.pcs{padding-left:12px;border-left:1px solid var(--divider-2)}
-.pcs-val{font-size:17px;font-weight:600;color:var(--dark);letter-spacing:-.01em;line-height:1}
-.pcs-unit{font-size:.65em;color:var(--blue);font-weight:400}
-.pcs-lbl{font-family:var(--sf-mono);font-size:10px;color:var(--grey);margin-top:6px;letter-spacing:.3px}
-.proj-cta{margin-top:auto;color:var(--blue);font-size:15px;font-weight:400;display:inline-flex;align-items:center;gap:4px}
-.proj-cta::after{content:'›';font-size:20px;line-height:1;margin-top:-2px}
 /* PROCESS */
 .proc-track-wrap{overflow:visible;margin-top:20px;padding:0}
 .proc-track{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;transition:none;transform:none!important}
@@ -379,6 +360,63 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 .abnb-t{font-size:20px;font-weight:600;color:var(--dark);letter-spacing:-.015em;margin-bottom:8px;line-height:1.22}
 .abnb-d{font-size:15px;color:var(--grey-2);line-height:1.5;flex-grow:1}
 .abnb-cta-wrap{display:flex;align-items:center;gap:24px;flex-wrap:wrap;justify-content:center}
+/* Propi-inspired projects (v4.6) */
+
+.proj-search{position:relative;margin-bottom:16px;max-width:520px}
+.proj-search-icon{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--grey);pointer-events:none;display:flex;align-items:center;justify-content:center}
+.proj-search input{width:100%;padding:12px 40px 12px 44px;background:var(--chalk);border:1px solid transparent;border-radius:980px;font-size:14px;color:var(--dark);font-family:inherit;letter-spacing:-.005em;transition:.2s var(--ease);outline:none;box-sizing:border-box}
+.proj-search input::placeholder{color:var(--grey-2)}
+.proj-search input:focus{background:var(--w);border-color:var(--blue);box-shadow:0 0 0 3px rgba(0,113,227,.12)}
+[data-theme="dark"] .proj-search input{background:#1D1D1F;color:#F5F5F7}
+[data-theme="dark"] .proj-search input:focus{background:#000;border-color:#2997FF;box-shadow:0 0 0 3px rgba(41,151,255,.18)}
+.proj-search-clear{position:absolute;right:12px;top:50%;transform:translateY(-50%);width:22px;height:22px;background:var(--divider-2);color:var(--dark);border:none;border-radius:50%;cursor:pointer;font-size:12px;line-height:1;display:none;align-items:center;justify-content:center;padding:0;font-family:inherit}
+.proj-search-clear.visible{display:inline-flex}
+.proj-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--grey-2);font-size:15px;background:var(--chalk);border-radius:var(--r-xl);display:none}
+.proj-empty.visible{display:block}
+[data-theme="dark"] .proj-empty{background:#1D1D1F}
+.proj-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;justify-content:flex-start}
+.proj-filter{padding:8px 16px;background:var(--chalk);color:var(--dark);border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;transition:.25s var(--ease);border:none;font-family:inherit;letter-spacing:-.005em;white-space:nowrap}
+.proj-filter:hover{background:var(--divider-2)}
+.proj-filter.active{background:var(--dark);color:var(--w)}
+[data-theme="dark"] .proj-filter{background:#1D1D1F;color:#F5F5F7}
+[data-theme="dark"] .proj-filter:hover{background:#2C2C2E}
+[data-theme="dark"] .proj-filter.active{background:#F5F5F7;color:#000}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.proj-card{background:var(--w);border:1px solid var(--divider-2);border-radius:var(--r-xl);overflow:hidden;display:flex;flex-direction:column;transition:box-shadow .25s var(--ease),transform .25s var(--ease);position:relative}
+.sec-chalk .proj-card{background:var(--w)}
+[data-theme="dark"] .proj-card{background:#1D1D1F;border-color:#2C2C2E}
+[data-theme="dark"] .sec-chalk .proj-card{background:#1D1D1F}
+.proj-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.08);transform:translateY(-2px)}
+[data-theme="dark"] .proj-card:hover{box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.proj-photo{aspect-ratio:16/10;background:linear-gradient(135deg,#E8F1FE,#B8D4F5);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.proj-photo-fb{font-size:52px;opacity:.32;line-height:1}
+.proj-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
+.proj-badges{position:absolute;top:10px;left:10px;z-index:3;display:flex;flex-direction:column;gap:5px;align-items:flex-start;max-width:calc(100% - 20px)}
+.proj-badge{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);color:var(--dark);font-size:10px;font-weight:600;padding:4px 9px;border-radius:980px;letter-spacing:-.005em;line-height:1.2;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.proj-badge.blue{background:var(--blue);color:var(--w)}
+.proj-badge.green{background:#4CD964;color:#000}
+.proj-badge.amber{background:#FF9500;color:#000}
+[data-theme="dark"] .proj-badge{background:rgba(29,29,31,.95);color:#F5F5F7}
+[data-theme="dark"] .proj-badge.blue{background:#2997FF;color:#000}
+.proj-body{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
+.proj-name{font-size:16px;font-weight:600;color:var(--dark);letter-spacing:-.015em;line-height:1.25}
+.proj-loc{font-size:12px;color:var(--grey-2);line-height:1.35}
+.proj-meta{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--grey-2);padding:0}
+.proj-meta-type{font-weight:500;color:var(--dark)}
+.proj-meta-dot{width:3px;height:3px;background:var(--grey);border-radius:50%;display:inline-block}
+.proj-divider{height:1px;background:var(--divider-2);margin:4px 0}
+[data-theme="dark"] .proj-divider{background:#2C2C2E}
+.proj-price{display:flex;align-items:center;gap:10px;margin-top:auto}
+.proj-price-icon{width:20px;height:20px;background:var(--blue);color:var(--w);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.proj-price-body{display:flex;flex-direction:column;line-height:1.15}
+.proj-price-lbl{font-size:11px;color:var(--grey-2);letter-spacing:-.005em}
+.proj-price-val{font-size:17px;font-weight:600;color:var(--dark);letter-spacing:-.02em;line-height:1.1}
+.proj-cta{margin-top:8px;color:var(--blue);font-size:13px;font-weight:500;display:inline-flex;align-items:center;gap:4px;padding-top:8px;border-top:1px solid var(--divider-2)}
+[data-theme="dark"] .proj-cta{border-top-color:#2C2C2E}
+.proj-cta::after{content:'›';font-size:18px;line-height:1;margin-top:-2px}
+@media(max-width:960px){.proj-grid{grid-template-columns:repeat(2,1fr);gap:16px}}
+@media(max-width:600px){.proj-grid{grid-template-columns:1fr;gap:14px}.proj-filters{overflow-x:auto;flex-wrap:nowrap;-webkit-overflow-scrolling:touch}}
+
 @media(max-width:768px){.abnb-grid{grid-template-columns:1fr}}
 
 /* Responsive */
@@ -685,10 +723,149 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="proj_eb">Portafolio activo</div>
     <h2 class="section-h anim d1" data-i18n="proj_h">Los lugares donde<br><span class="grey">otros ya están empezando.</span></h2>
+    <div class="proj-search anim d2">
+      <span class="proj-search-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+      </span>
+      <input type="text" id="projSearch" placeholder="Buscar por proyecto, ciudad o zona…" autocomplete="off" oninput="searchProjects()" />
+      <button type="button" class="proj-search-clear" id="projSearchClear" onclick="clearProjSearch()" aria-label="Limpiar búsqueda">×</button>
+    </div>
+    <div class="proj-filters anim d3">
+      <button type="button" class="proj-filter active" data-filter="all">Todos</button>
+      <button type="button" class="proj-filter" data-filter="playa">Playa</button>
+      <button type="button" class="proj-filter" data-filter="ciudad">Ciudad</button>
+      <button type="button" class="proj-filter" data-filter="montana">Montaña</button>
+      <button type="button" class="proj-filter" data-filter="colonial">Colonial</button>
+      <button type="button" class="proj-filter" data-filter="inversion">Inversión</button>
+    </div>
     <div class="proj-grid">
-      <article class="proj-card anim d2"><div class="proj-photo"><span class="proj-photo-fb">🏡</span><img src="projects/proyecto1.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="proj-body"><div class="proj-tag">LA LIBERTAD</div><div class="proj-name">Residencial Costa del Pacífico</div><div class="proj-loc">📍 La Libertad, El Salvador</div><div class="proj-stats"><div class="pcs"><div class="pcs-val">$120K</div><div class="pcs-lbl" data-i18n="proj_lbl_from">Desde</div></div><div class="pcs"><div class="pcs-val">~7<span class="pcs-unit">%</span></div><div class="pcs-lbl" data-i18n="proj_lbl_return">Retorno est.</div></div><div class="pcs"><div class="pcs-val">140<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="proj_lbl_upto">Hasta</div></div></div><a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a></div></article>
-      <article class="proj-card anim d3"><div class="proj-photo"><span class="proj-photo-fb">🏢</span><img src="projects/proyecto2.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="proj-body"><div class="proj-tag">ESCALÓN</div><div class="proj-name">Condominio Montecarlo Escalón</div><div class="proj-loc">📍 Col. Escalón, San Salvador</div><div class="proj-stats"><div class="pcs"><div class="pcs-val">$115K</div><div class="pcs-lbl" data-i18n="proj_lbl_from">Desde</div></div><div class="pcs"><div class="pcs-val">~6.5<span class="pcs-unit">%</span></div><div class="pcs-lbl" data-i18n="proj_lbl_return">Retorno est.</div></div><div class="pcs"><div class="pcs-val">135<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="proj_lbl_upto">Hasta</div></div></div><a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a></div></article>
-      <article class="proj-card anim d4"><div class="proj-photo"><span class="proj-photo-fb">🌿</span><img src="projects/proyecto3.jpg" alt="" loading="lazy" onerror="this.remove()"></div><div class="proj-body"><div class="proj-tag">SANTA TECLA</div><div class="proj-name">Parque Residencial Santa Tecla</div><div class="proj-loc">📍 Santa Tecla, La Libertad</div><div class="proj-stats"><div class="pcs"><div class="pcs-val">$125K</div><div class="pcs-lbl" data-i18n="proj_lbl_from">Desde</div></div><div class="pcs"><div class="pcs-val" data-i18n="proj_retire">Retiro</div><div class="pcs-lbl" data-i18n="proj_lbl_return">Retorno est.</div></div><div class="pcs"><div class="pcs-val">200<span class="pcs-unit">m²</span></div><div class="pcs-lbl" data-i18n="proj_lbl_upto">Hasta</div></div></div><a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a></div></article>
+      <article class="proj-card anim d3" data-cat="playa ciudad inversion">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge blue">Recomendado NLD</span><span class="proj-badge">Ideal para vivir</span></div>
+          <span class="proj-photo-fb">🏖️</span><img src="projects/proyecto1.jpg" alt="Residencial Costa del Pacífico" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Residencial Costa del Pacífico</div>
+          <div class="proj-loc">📍 La Libertad, El Salvador</div>
+          <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>90 a 140 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$120,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d3" data-cat="ciudad inversion">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge blue">Recomendado NLD</span><span class="proj-badge amber">Plusvalía proyectada</span></div>
+          <span class="proj-photo-fb">🏢</span><img src="projects/proyecto2.jpg" alt="Condominio Montecarlo Escalón" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Condominio Montecarlo Escalón</div>
+          <div class="proj-loc">📍 Col. Escalón, San Salvador</div>
+          <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>85 a 135 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$115,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d4" data-cat="ciudad montana">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge">Ideal para retiro</span><span class="proj-badge">Zona premium</span></div>
+          <span class="proj-photo-fb">🌿</span><img src="projects/proyecto3.jpg" alt="Parque Residencial Santa Tecla" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Parque Residencial Santa Tecla</div>
+          <div class="proj-loc">📍 Santa Tecla, La Libertad</div>
+          <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>140 a 200 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$125,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d4" data-cat="playa inversion">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge blue">Airbnb friendly</span><span class="proj-badge green">Alta demanda alquiler</span></div>
+          <span class="proj-photo-fb">🏝️</span><img src="projects/proyecto4.jpg" alt="Villas Playa El Tunco" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Villas Playa El Tunco</div>
+          <div class="proj-loc">📍 El Tunco, La Libertad</div>
+          <div class="proj-meta"><span class="proj-meta-type">Villa</span><span class="proj-meta-dot"></span><span>110 a 160 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$135,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d5" data-cat="montana ciudad">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge">Ideal para retiro</span></div>
+          <span class="proj-photo-fb">⛰️</span><img src="projects/proyecto5.jpg" alt="Residencial Vista Volcán Santa Ana" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Residencial Vista Volcán</div>
+          <div class="proj-loc">📍 Santa Ana, Santa Ana</div>
+          <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>120 a 180 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$95,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d5" data-cat="playa inversion">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge blue">Airbnb friendly</span><span class="proj-badge amber">Plusvalía proyectada</span></div>
+          <span class="proj-photo-fb">🌊</span><img src="projects/proyecto6.jpg" alt="Marina Golfo de Fonseca" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Marina Golfo de Fonseca</div>
+          <div class="proj-loc">📍 La Unión, La Unión</div>
+          <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>95 a 150 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$105,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d6" data-cat="colonial montana">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge">Colonial</span><span class="proj-badge">Ideal para retiro</span></div>
+          <span class="proj-photo-fb">🌸</span><img src="projects/proyecto7.jpg" alt="Hacienda Ruta de las Flores" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Hacienda Ruta de las Flores</div>
+          <div class="proj-loc">📍 Ataco, Ahuachapán</div>
+          <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>150 a 220 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$85,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d6" data-cat="ciudad">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge">Precio accesible</span></div>
+          <span class="proj-photo-fb">🏙️</span><img src="projects/proyecto8.jpg" alt="Condominio Vista Izalco" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Condominio Vista Izalco</div>
+          <div class="proj-loc">📍 Sonsonate, Sonsonate</div>
+          <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>90 a 145 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$90,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d7" data-cat="colonial inversion">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge">Colonial</span><span class="proj-badge blue">Airbnb friendly</span></div>
+          <span class="proj-photo-fb">🏞️</span><img src="projects/proyecto9.jpg" alt="Villas Coloniales Suchitoto" loading="lazy" onerror="this.remove()">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Villas Coloniales Suchitoto</div>
+          <div class="proj-loc">📍 Suchitoto, Cuscatlán</div>
+          <div class="proj-meta"><span class="proj-meta-type">Villa</span><span class="proj-meta-dot"></span><span>130 a 175 m²</span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$110,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <div class="proj-empty" id="projEmpty">No encontramos proyectos que coincidan con tu búsqueda. Probá con otro término o quitá algún filtro.</div>
     </div>
   </div>
 </section>
@@ -889,6 +1066,52 @@ const INTENTS={
   segunda:{h1:"Una base propia<br>para <em>cuando visitás.</em><br>Rentada el resto del año.",sub:"Vivís los meses que querés. Alquilamos los que no estés. Vuelve el dinero cuando no estás usando la casa.",btn1:"Ver casas para segunda residencia"}
 };
 let curIntent="retiro";
+
+let _projCat='all',_projQuery='';
+function _normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')}
+function _applyProjectFilters(){
+  const q=_normalize(_projQuery.trim());
+  let visible=0;
+  document.querySelectorAll('.proj-card').forEach(c=>{
+    const cats=(c.getAttribute('data-cat')||'').split(' ');
+    const catOk=(_projCat==='all'||cats.includes(_projCat));
+    let queryOk=true;
+    if(q){
+      const name=_normalize(c.querySelector('.proj-name')?.textContent||'');
+      const loc=_normalize(c.querySelector('.proj-loc')?.textContent||'');
+      const meta=_normalize(c.querySelector('.proj-meta')?.textContent||'');
+      const badges=_normalize(Array.from(c.querySelectorAll('.proj-badge')).map(b=>b.textContent).join(' '));
+      queryOk=(name+' '+loc+' '+meta+' '+badges).includes(q);
+    }
+    const show=catOk&&queryOk;
+    c.style.display=show?'':'none';
+    if(show)visible++;
+  });
+  const empty=document.getElementById('projEmpty');
+  if(empty)empty.classList.toggle('visible',visible===0);
+  const clr=document.getElementById('projSearchClear');
+  if(clr)clr.classList.toggle('visible',_projQuery.length>0);
+}
+function filterProjects(cat){
+  _projCat=cat;
+  document.querySelectorAll('.proj-filter').forEach(b=>b.classList.toggle('active',b.getAttribute('data-filter')===cat));
+  _applyProjectFilters();
+}
+function searchProjects(){
+  const inp=document.getElementById('projSearch');
+  _projQuery=inp?inp.value:'';
+  _applyProjectFilters();
+}
+function clearProjSearch(){
+  const inp=document.getElementById('projSearch');
+  if(inp){inp.value='';_projQuery='';inp.focus()}
+  _applyProjectFilters();
+}
+document.addEventListener('click',ev=>{
+  const f=ev.target.closest('.proj-filter');
+  if(f)filterProjects(f.getAttribute('data-filter'));
+});
+
 function setIntent(i){
   curIntent=i;
   document.querySelectorAll(".intent-btn").forEach(b=>{

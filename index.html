@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v6.3 · Klaric · hero intent i18n + remove satellite + popup autopan + close-on-filter -->
+<!-- NLD v6.5 · Klaric · popup photo only in map-only view -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v6.3-hero-i18n-mapfix-2026-07">
+<meta name="version" content="v6.5-popup-photo-maponly-2026-07">
 <!-- Favicons v5.1 · Inline SVG · brand logo recreation (black bg + blue wave + white bird) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
 <link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
@@ -484,6 +484,10 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 [data-theme="dark"] .nld-marker:hover,[data-theme="dark"] .nld-marker.active{background:#2997FF;color:#fff}
 .leaflet-popup-content-wrapper{border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.15);padding:0;overflow:hidden}
 .leaflet-popup-content{margin:0;width:220px!important}
+.nld-popup-photo{width:100%;height:120px;background:linear-gradient(135deg,#E8F1FE,#B8D4F5);position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.nld-popup-photo img{width:100%;height:100%;object-fit:cover;display:block}
+.nld-popup-photo.noimg{font-size:44px;line-height:1}
+.proj-layout.hybrid .nld-popup-photo{display:none}
 .nld-popup-body{padding:14px 16px}
 .nld-popup-name{font-size:15px;font-weight:600;color:#1D1D1F;letter-spacing:-.015em;line-height:1.25;margin-bottom:4px}
 .nld-popup-loc{font-size:12px;color:#6E6E73;margin-bottom:8px}
@@ -1300,9 +1304,13 @@ function _initProjMap(){
     const loc=(card.querySelector('.proj-loc')?.textContent||'').replace('📍','').trim();
     if(isNaN(lat)||isNaN(lng))return;
     bounds.push([lat,lng]);
+    const _img=card.querySelector('.proj-photo img');
+    const _imgSrc=_img?_img.getAttribute('src'):'';
+    const _fb=(card.querySelector('.proj-photo-fb')?.textContent||'').trim();
     const icon=L.divIcon({className:'',html:'<div class="nld-marker" data-pname="'+name+'">'+price+'</div>',iconSize:null});
     const marker=L.marker([lat,lng],{icon}).addTo(_projMap);
-    const popupHtml='<div class="nld-popup-body"><div class="nld-popup-name">'+name+'</div><div class="nld-popup-loc">'+loc+'</div><div class="nld-popup-price">Desde '+price+'</div><a href="#contacto" class="nld-popup-cta" onclick="setProjView(\'list\')">Ver más información</a></div>';
+    const _photoHtml=_imgSrc?('<div class="nld-popup-photo"><img src="'+_imgSrc+'" alt="'+name+'" onerror="this.parentNode.classList.add(\'noimg\');this.parentNode.innerHTML=\''+_fb+'\'"><\/div>'):('<div class="nld-popup-photo noimg">'+_fb+'<\/div>');
+    const popupHtml=_photoHtml+'<div class="nld-popup-body"><div class="nld-popup-name">'+name+'</div><div class="nld-popup-loc">'+loc+'</div><div class="nld-popup-price">Desde '+price+'</div><a href="#contacto" class="nld-popup-cta" onclick="setProjView(\'list\')">Ver más información</a></div>';
     marker.bindPopup(popupHtml,{autoPanPadding:[24,30],keepInView:true,maxWidth:240});
     _projMarkers[name]=marker;
     marker.on('mouseover',()=>_highlightCard(name,true));

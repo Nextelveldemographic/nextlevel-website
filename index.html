@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v6.6 · Klaric · process text fix + price filters + airbnb copy + B2B blue/numbers -->
+<!-- NLD v6.7 · Klaric · white process cards + fixed title + filters layout (search+toggle row, cat/price split) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v6.6-price-filters-2026-07">
+<meta name="version" content="v6.7-layout-2026-07">
 <!-- Favicons v5.1 · Inline SVG · brand logo recreation (black bg + blue wave + white bird) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
 <link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
@@ -138,7 +138,7 @@ h1.hero-h .blue{color:var(--blue)}
 .sec-chalk{background:var(--chalk)}
 .sec-white{background:var(--w)}
 .sec-dark{background:#1D1D1F;color:#F5F5F7}
-.sec-dark .eyebrow,.sec-dark h2.section-h,.sec-dark .proc-t{color:#F5F5F7}
+.sec-dark .eyebrow,.sec-dark h2.section-h{color:#F5F5F7}
 .sec-dark h2.section-h .blue,.sec-dark h2.section-h em{color:#5AB0FF}
 .sec-dark .section-sub,.sec-dark .proc-d{color:#A1A1A6}
 /* DATA — bento numbers */
@@ -201,7 +201,6 @@ h1.hero-h .blue{color:var(--blue)}
 .proc-track{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;transition:none;transform:none!important}
 .proc-card{width:auto;background:var(--chalk);border-radius:var(--r-xl);padding:32px 26px;transition:background .3s;position:relative;min-height:280px;display:flex;flex-direction:column}
 .sec-chalk .proc-card{background:var(--w)}
-.sec-dark .proc-card{background:#2C2C2E}
 .proc-n{display:none}
 .proc-tag{font-family:var(--sf);font-size:36px;color:var(--blue);letter-spacing:-.02em;margin-bottom:16px;font-weight:600;line-height:1}
 .proc-t{font-size:20px;font-weight:600;color:var(--dark);letter-spacing:-.015em;line-height:1.2;margin-bottom:8px}
@@ -390,8 +389,14 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 .proj-empty{grid-column:1/-1;text-align:center;padding:48px 20px;color:var(--grey-2);font-size:15px;background:var(--chalk);border-radius:var(--r-xl);display:none}
 .proj-empty.visible{display:block}
 [data-theme="dark"] .proj-empty{background:#1D1D1F}
+.proj-controls-top{display:flex;gap:16px;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap}
+.proj-controls-top .proj-search{margin-bottom:0;flex:1 1 260px;min-width:220px;max-width:none}
+.proj-controls-top .proj-viewtoggle{margin-bottom:0;flex-shrink:0}
+.proj-controls-filters{display:flex;gap:16px 24px;align-items:center;justify-content:space-between;flex-wrap:wrap;margin-bottom:20px}
+.proj-controls-filters .proj-filters,.proj-controls-filters .proj-pfilters{margin-bottom:0;margin-top:0}
+@media(max-width:760px){.proj-controls-filters{gap:10px}}
 .proj-filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;justify-content:flex-start}
-.proj-pfilters{margin-top:-8px}
+.proj-pfilters{margin-top:0}
 .proj-pfilter{padding:8px 16px;background:var(--chalk);color:var(--dark);border-radius:980px;font-size:13px;font-weight:500;cursor:pointer;transition:.25s var(--ease);border:none;font-family:inherit;letter-spacing:-.005em;white-space:nowrap}
 .proj-pfilter:hover{background:var(--divider-2)}
 .proj-pfilter.active{background:var(--dark);color:var(--w)}
@@ -821,40 +826,44 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="proj_eb">Portafolio activo *</div>
     <h2 class="section-h anim d1" data-i18n="proj_h">Los lugares donde<br><span class="grey">otros ya están empezando.</span></h2>
-    <div class="proj-search anim d2">
-      <span class="proj-search-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
-      </span>
-      <input type="text" id="projSearch" data-i18n-ph="proj_search_ph" placeholder="Buscar por proyecto, ciudad o zona…" autocomplete="off" oninput="searchProjects()" />
-      <button type="button" class="proj-search-clear" id="projSearchClear" onclick="clearProjSearch()" aria-label="Limpiar búsqueda">×</button>
+    <div class="proj-controls-top anim d2">
+      <div class="proj-search">
+        <span class="proj-search-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg>
+        </span>
+        <input type="text" id="projSearch" data-i18n-ph="proj_search_ph" placeholder="Buscar por proyecto, ciudad o zona…" autocomplete="off" oninput="searchProjects()" />
+        <button type="button" class="proj-search-clear" id="projSearchClear" onclick="clearProjSearch()" aria-label="Limpiar búsqueda">×</button>
+      </div>
+      <div class="proj-viewtoggle">
+        <button type="button" class="proj-viewbtn active" data-view="hybrid" onclick="setProjView('hybrid')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg>
+          <span data-i18n="proj_view_hybrid">Lista + Mapa</span>
+        </button>
+        <button type="button" class="proj-viewbtn" data-view="list" onclick="setProjView('list')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+          <span data-i18n="proj_view_list">Lista</span>
+        </button>
+        <button type="button" class="proj-viewbtn" data-view="map" onclick="setProjView('map')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
+          <span data-i18n="proj_view_map">Mapa</span>
+        </button>
+      </div>
     </div>
-    <div class="proj-filters anim d3">
-      <button type="button" class="proj-filter active" data-filter="all" data-i18n="proj_f_all">Todos</button>
-      <button type="button" class="proj-filter" data-filter="playa" data-i18n="proj_f_playa">Playa</button>
-      <button type="button" class="proj-filter" data-filter="ciudad" data-i18n="proj_f_ciudad">Ciudad</button>
-      <button type="button" class="proj-filter" data-filter="montana" data-i18n="proj_f_montana">Montaña</button>
-      <button type="button" class="proj-filter" data-filter="colonial" data-i18n="proj_f_colonial">Colonial</button>
-      <button type="button" class="proj-filter" data-filter="inversion" data-i18n="proj_f_inversion">Inversión</button>
-    </div>
-    <div class="proj-filters proj-pfilters anim d3">
-      <button type="button" class="proj-pfilter active" data-price-range="all" data-i18n="proj_pf_all">Todos los precios</button>
-      <button type="button" class="proj-pfilter" data-price-range="p0" data-i18n="proj_pf_0">Menos de $100K</button>
-      <button type="button" class="proj-pfilter" data-price-range="p1" data-i18n="proj_pf_1">$100K – $125K</button>
-      <button type="button" class="proj-pfilter" data-price-range="p2" data-i18n="proj_pf_2">Más de $125K</button>
-    </div>
-    <div class="proj-viewtoggle anim d3">
-      <button type="button" class="proj-viewbtn active" data-view="hybrid" onclick="setProjView('hybrid')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg>
-        <span data-i18n="proj_view_hybrid">Lista + Mapa</span>
-      </button>
-      <button type="button" class="proj-viewbtn" data-view="list" onclick="setProjView('list')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
-        <span data-i18n="proj_view_list">Lista</span>
-      </button>
-      <button type="button" class="proj-viewbtn" data-view="map" onclick="setProjView('map')">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-        <span data-i18n="proj_view_map">Mapa</span>
-      </button>
+    <div class="proj-controls-filters anim d3">
+      <div class="proj-filters">
+        <button type="button" class="proj-filter active" data-filter="all" data-i18n="proj_f_all">Todos</button>
+        <button type="button" class="proj-filter" data-filter="playa" data-i18n="proj_f_playa">Playa</button>
+        <button type="button" class="proj-filter" data-filter="ciudad" data-i18n="proj_f_ciudad">Ciudad</button>
+        <button type="button" class="proj-filter" data-filter="montana" data-i18n="proj_f_montana">Montaña</button>
+        <button type="button" class="proj-filter" data-filter="colonial" data-i18n="proj_f_colonial">Colonial</button>
+        <button type="button" class="proj-filter" data-filter="inversion" data-i18n="proj_f_inversion">Inversión</button>
+      </div>
+      <div class="proj-filters proj-pfilters">
+        <button type="button" class="proj-pfilter active" data-price-range="all" data-i18n="proj_pf_all">Todos los precios</button>
+        <button type="button" class="proj-pfilter" data-price-range="p0" data-i18n="proj_pf_0">Menos de $100K</button>
+        <button type="button" class="proj-pfilter" data-price-range="p1" data-i18n="proj_pf_1">$100K – $125K</button>
+        <button type="button" class="proj-pfilter" data-price-range="p2" data-i18n="proj_pf_2">Más de $125K</button>
+      </div>
     </div>
     <div class="proj-layout hybrid" id="projLayout"><div class="proj-grid">
       <article class="proj-card anim d3" data-cat="playa ciudad inversion" data-lat="13.4883" data-lng="-89.3222" data-price="$120,000" data-pname="Residencial Costa del Pacífico">

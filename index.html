@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v7.0 · Klaric · keep zoom on marker click + fullscreen map -->
+<!-- NLD v7.2 · Klaric · popup closes on mouseout, click-to-pin -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v7.0-map-zoom-fullscreen-2026-07">
+<meta name="version" content="v7.2-hover-close-2026-07">
 <!-- Favicons v5.1 · Inline SVG · brand logo recreation (black bg + blue wave + white bird) -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
 <link rel="alternate icon" type="image/svg+xml" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='w' x1='0' y1='1' x2='1' y2='0'><stop offset='0' stop-color='%230A2540'/><stop offset='0.5' stop-color='%232E7CD6'/><stop offset='1' stop-color='%235AC8FA'/></linearGradient></defs><rect width='32' height='32' rx='7' fill='%23000000'/><path d='M4 22 Q10 14 16 20 T28 18 L28 28 L4 28 Z' fill='url(%23w)'/><path d='M11 12 Q13 9 15 11 Q17 9 19 12 Q17 11.5 15 12.5 Q13 11.5 11 12 Z' fill='%23FFFFFF'/></svg>">
@@ -500,6 +500,7 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 .proj-viewbtn svg{width:15px;height:15px}
 .proj-map-wrap{display:none;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--divider-2);margin-bottom:8px}
 .proj-map-wrap{position:relative}
+.proj-layout.hybrid .map-fs-btn{display:none}
 .map-fs-btn{position:absolute;top:12px;right:12px;z-index:600;width:38px;height:38px;background:#fff;border:1px solid var(--divider-2);border-radius:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;color:#1D1D1F;box-shadow:0 2px 8px rgba(0,0,0,.18);transition:background .15s ease,transform .15s ease}
 .map-fs-btn:hover{background:#F5F5F7;transform:scale(1.05)}
 [data-theme="dark"] .map-fs-btn{background:#1D1D1F;color:#F5F5F7;border-color:#2C2C2E}
@@ -1274,6 +1275,7 @@ function _applyProjectFilters(){
   _syncMapMarkers();
   _updateMapPickBanner();
 }
+function _isHybrid(){var l=document.getElementById('projLayout');return l&&l.classList.contains('hybrid');}
 function _syncMapMarkers(){
   if(!_projMap)return;
   var visibleBounds=[];
@@ -1290,7 +1292,7 @@ function _syncMapMarkers(){
     }
   });
   if(visibleBounds.length&&!_skipMapFit)_projMap.fitBounds(visibleBounds,{padding:[25,25],maxZoom:11});
-  _skipMapFit=false;
+  _skipMapFit=false,_pinnedMk=null;
 }
 function _updateMapPickBanner(){
   var b=document.getElementById('mapPickBanner');
@@ -1347,7 +1349,7 @@ document.addEventListener('click',ev=>{
 });
 
 
-let _projMap=null,_projMarkers={},_projMapInit=false,_touristMarkers=[],_touristOn=true,_skipMapFit=false;
+let _projMap=null,_projMarkers={},_projMapInit=false,_touristMarkers=[],_touristOn=true,_skipMapFit=false,_pinnedMk=null;
 var TOURIST_SPOTS=[
  {n:"Parque Infantil de Diversiones",lat:13.7024,lng:-89.1997,e:"🎡",d:"Clásico parque de juegos mecánicos en San Salvador, tradición de varias generaciones."},
  {n:"Palacio Nacional",lat:13.6983,lng:-89.1911,e:"🏛️",d:"Monumento histórico restaurado en el Centro Histórico, con visitas guiadas familiares."},
@@ -1389,6 +1391,9 @@ function _initTouristMarkers(){
     var mk=L.marker([s.lat,s.lng],{icon:icon,zIndexOffset:-200});
     var pop='<div class="nld-tpopup"><div class="nld-tpopup-tag">\ud83d\udccd '+tag+'</div><div class="nld-tpopup-name">'+s.e+' '+s.n+'</div><div class="nld-tpopup-desc">'+s.d+'</div></div>';
     mk.bindPopup(pop,{autoPanPadding:[24,30],keepInView:true,maxWidth:230});
+    mk.on('mouseover',function(){mk.openPopup()});
+    mk.on('mouseout',function(){if(_pinnedMk!==mk)mk.closePopup()});
+    mk.on('click',function(){_pinnedMk=mk});
     _touristMarkers.push(mk);
   });
 }
@@ -1421,7 +1426,8 @@ function _initProjMap(){
   _projMapInit=true;
   const cards=Array.from(document.querySelectorAll('.proj-card[data-lat]'));
   if(!cards.length)return;
-  _projMap=L.map('projMap',{scrollWheelZoom:false,zoomControl:true,minZoom:7}).setView([13.7500,-88.9000],9);
+  _projMap=L.map('projMap',{scrollWheelZoom:true,zoomControl:true,minZoom:7}).setView([13.7500,-88.9000],9);
+  _projMap.on('popupclose',function(){_pinnedMk=null});
   const dark=document.documentElement.getAttribute('data-theme')==='dark';
   const tileUrl=dark?'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png':'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png';
   L.tileLayer(tileUrl,{attribution:'&copy; OpenStreetMap &copy; CARTO',maxZoom:19}).addTo(_projMap);
@@ -1443,9 +1449,9 @@ function _initProjMap(){
     const popupHtml=_photoHtml+'<div class="nld-popup-body"><div class="nld-popup-name">'+name+'</div><div class="nld-popup-loc">'+loc+'</div><div class="nld-popup-price">Desde '+price+'</div><a href="#contacto" class="nld-popup-cta" onclick="setProjView(\'list\')">Ver más información</a></div>';
     marker.bindPopup(popupHtml,{autoPanPadding:[24,30],keepInView:true,maxWidth:240});
     _projMarkers[name]=marker;
-    marker.on('mouseover',()=>_highlightCard(name,true));
-    marker.on('mouseout',()=>_highlightCard(name,false));
-    marker.on('click',()=>_focusCardFromMap(name));
+    marker.on('mouseover',()=>{_highlightCard(name,true);if(!_isHybrid())marker.openPopup()});
+    marker.on('mouseout',()=>{_highlightCard(name,false);if(!_isHybrid()&&_pinnedMk!==marker)marker.closePopup()});
+    marker.on('click',()=>{if(_isHybrid()){marker.closePopup()}else{_pinnedMk=marker}_focusCardFromMap(name)});
   });
   if(bounds.length)_projMap.fitBounds(bounds,{padding:[25,25],maxZoom:9.5});
   _syncMapMarkers();
@@ -1474,6 +1480,7 @@ function setProjView(view){
   const grid=document.querySelector('.proj-grid');
   const mapWrap=document.querySelector('.proj-map-wrap');
   layout.classList.remove('hybrid');
+  if(mapWrap){mapWrap.classList.remove('map-fullscreen');document.body.classList.remove('map-fs-lock');}
   if(view==='hybrid'){
     layout.classList.add('hybrid');
     grid.classList.remove('map-hidden');

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v8.6 · Klaric · popups del mapa i18n dinamico; toggle intencion 1 fila; fixes PT -->
+<!-- NLD v8.7 · Klaric · tarjeta Desde i18n; sin notificacion social; popups refrescan al cambiar idioma; emoji toggle VS16 -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v8.6-2026-07">
+<meta name="version" content="v8.7-2026-07">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -895,9 +895,9 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     <h1 class="hero-h anim d1" data-i18n="hero_h1">Volvé.<br>El país <em>ya está listo.</em><br>¿Y vos?</h1>
     <p class="hero-sub anim d2" data-i18n="hero_sub">Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.</p>
     <div class="intent-toggle anim d3" role="tablist" aria-label="Objetivo">
-      <button type="button" class="intent-btn active" data-intent="retiro" onclick="setIntent('retiro')" role="tab" aria-selected="true">🌴 <span data-i18n="intent_retiro">Retiro</span></button>
-      <button type="button" class="intent-btn" data-intent="inversion" onclick="setIntent('inversion')" role="tab" aria-selected="false">📈 <span data-i18n="intent_inversion">Inversión</span></button>
-      <button type="button" class="intent-btn" data-intent="segunda" onclick="setIntent('segunda')" role="tab" aria-selected="false">🏡 <span data-i18n="intent_segunda">Segunda casa</span></button>
+      <button type="button" class="intent-btn active" data-intent="retiro" onclick="setIntent('retiro')" role="tab" aria-selected="true">🌴️ <span data-i18n="intent_retiro">Retiro</span></button>
+      <button type="button" class="intent-btn" data-intent="inversion" onclick="setIntent('inversion')" role="tab" aria-selected="false">📈️ <span data-i18n="intent_inversion">Inversión</span></button>
+      <button type="button" class="intent-btn" data-intent="segunda" onclick="setIntent('segunda')" role="tab" aria-selected="false">🏡️ <span data-i18n="intent_segunda">Segunda casa</span></button>
     </div>
     <div class="hero-btns anim d4"><a href="#contacto" class="btn-blue" data-i18n="hero_btn1">Ver cómo se ve tu retiro</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
   </div>
@@ -1010,7 +1010,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 La Libertad, El Salvador</div>
           <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>90 a 140 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$120,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$120,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1024,7 +1024,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Col. Escalón, San Salvador</div>
           <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>85 a 135 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$115,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$115,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1038,7 +1038,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Santa Tecla, La Libertad</div>
           <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>140 a 200 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$125,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$125,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1052,7 +1052,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 El Tunco, La Libertad</div>
           <div class="proj-meta"><span class="proj-meta-type">Villa</span><span class="proj-meta-dot"></span><span>110 a 160 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$135,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$135,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1066,7 +1066,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Santa Ana, Santa Ana</div>
           <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>120 a 180 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$95,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$95,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1080,7 +1080,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 La Unión, La Unión</div>
           <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>95 a 150 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$105,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$105,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1094,7 +1094,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Ataco, Ahuachapán</div>
           <div class="proj-meta"><span class="proj-meta-type">Casa</span><span class="proj-meta-dot"></span><span>150 a 220 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$85,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$85,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1108,7 +1108,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Sonsonate, Sonsonate</div>
           <div class="proj-meta"><span class="proj-meta-type">Apartamento</span><span class="proj-meta-dot"></span><span>90 a 145 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$90,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$90,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1122,7 +1122,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="proj-loc">📍 Suchitoto, Cuscatlán</div>
           <div class="proj-meta"><span class="proj-meta-type">Villa</span><span class="proj-meta-dot"></span><span>130 a 175 m²</span></div>
           <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl">Desde</span><span class="proj-price-val">$110,000</span></span></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="proj_lbl_from">Desde</span><span class="proj-price-val">$110,000</span></span></div>
           <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
         </div>
       </article>
@@ -1385,7 +1385,7 @@ const I18N={es:{nav_market:"Mercado",nav_process:"Proceso",nav_projects:"Proyect
 const procNames={0:{es:'Diagnóstico gratuito',en:'Free diagnosis',fr:'Diagnostic gratuit',it:'Diagnosi gratuita',de:'Kostenlose Diagnose',pt:'Diagnóstico gratuito'},1:{es:'Propuesta curada',en:'Curated proposal',fr:'Proposition curatée',it:'Proposta curata',de:'Kuratierter Vorschlag',pt:'Proposta curada'},2:{es:'Reserva y legal',en:'Reservation and legal',fr:'Réservation et légal',it:'Prenotazione e legale',de:'Reservierung und Recht',pt:'Reserva e legal'},3:{es:'Escritura y entrega',en:'Deed and delivery',fr:'Acte et livraison',it:'Atto e consegna',de:'Urkunde und Übergabe',pt:'Escritura e entrega'}};
 let curLang='es';
 function applyLang(l){curLang=l;document.documentElement.lang=l;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[l]&&I18N[l][k]!==undefined)el.innerHTML=I18N[l][k]});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(I18N[l]&&I18N[l][k]!==undefined)el.placeholder=I18N[l][k]});document.getElementById('curLang').textContent=l.toUpperCase();document.querySelectorAll('.lang-dd button,.mob-lang button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lng')===l));const p=document.getElementById('proc-name');if(p&&procNames[curProc]&&procNames[curProc][l])p.textContent=procNames[curProc][l];updateWALinks();if(typeof setIntent==='function')setIntent(curIntent);try{localStorage.setItem('nld_lang',l)}catch(e){}}
-function setLang(l){applyLang(l);try{_syncFaqMore()}catch(e){}try{if(_projMap)_projMap.closePopup()}catch(e){}document.getElementById('langSel').classList.remove('open')}
+function setLang(l){applyLang(l);try{_syncFaqMore()}catch(e){}try{if(_projMap)_projMap.eachLayer(function(ly){try{if(ly.getPopup&&ly.getPopup()&&ly.isPopupOpen&&ly.isPopupOpen())ly.getPopup().update()}catch(e){}})}catch(e){}document.getElementById('langSel').classList.remove('open')}
 const INTENTS={
   retiro:{es:{h1:"Volvé.<br>El país <em>ya está listo.</em><br>¿Y vos?",sub:"Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.",btn1:"Ver cómo se ve tu retiro"},en:{h1:"Come back.<br>The country <em>is ready.</em><br>Are you?",sub:"Retire where your memories were born. We take care of everything else — at no cost to you.",btn1:"See what your retirement looks like"},fr:{h1:"Reviens.<br>Le pays <em>est prêt.</em><br>Et toi ?",sub:"Prends ta retraite là où sont nés tes souvenirs. Nous nous occupons de tout le reste — sans frais pour toi.",btn1:"Voir à quoi ressemble ta retraite"},it:{h1:"Torna.<br>Il paese <em>è pronto.</em><br>E tu?",sub:"Vai in pensione dove sono nati i tuoi ricordi. Noi ci occupiamo di tutto il resto — senza costi per te.",btn1:"Guarda com’è la tua pensione"},de:{h1:"Komm zurück.<br>Das Land <em>ist bereit.</em><br>Und du?",sub:"Geh in Rente, wo deine Erinnerungen entstanden sind. Um alles andere kümmern wir uns — kostenlos für dich.",btn1:"Sieh, wie dein Ruhestand aussieht"},pt:{h1:"Volte.<br>O país <em>já está pronto.</em><br>E você?",sub:"Aposente-se onde nasceram suas memórias. Nós cuidamos de todo o resto — sem custo para você.",btn1:"Veja como é a sua aposentadoria"}},
   inversion:{es:{h1:"Tu dinero rinde<br>el <em>doble aquí.</em><br>Sin volverte loco.",sub:"$120K entrada. $850/mes renta. 8.5% anual + apreciación. Gestión completa — vos ni te enterás.",btn1:"Ver proyectos con ROI"},en:{h1:"Your money earns<br><em>double here.</em><br>Without the hassle.",sub:"$120K down. $850/mo rent. 8.5% annual + appreciation. Full management — you won’t even notice.",btn1:"See projects with ROI"},fr:{h1:"Ton argent rapporte<br>le <em>double ici.</em><br>Sans te compliquer la vie.",sub:"120K$ d’apport. 850$/mois de loyer. 8,5% par an + valorisation. Gestion complète — tu ne t’occupes de rien.",btn1:"Voir les projets avec ROI"},it:{h1:"Il tuo denaro rende<br>il <em>doppio qui.</em><br>Senza impazzire.",sub:"120K$ di anticipo. 850$/mese di affitto. 8,5% annuo + rivalutazione. Gestione completa — non te ne accorgi nemmeno.",btn1:"Vedi progetti con ROI"},de:{h1:"Dein Geld bringt<br>hier das <em>Doppelte.</em><br>Ohne Stress.",sub:"120.000$ Anzahlung. 850$/Monat Miete. 8,5% jährlich + Wertsteigerung. Komplette Verwaltung — du merkst nichts davon.",btn1:"Projekte mit ROI ansehen"},pt:{h1:"Seu dinheiro rende<br>o <em>dobro aqui.</em><br>Sem dor de cabeça.",sub:"$120K de entrada. $850/mês de aluguel. 8,5% ao ano + valorização. Gestão completa — você nem percebe.",btn1:"Ver projetos com ROI"}},
@@ -2034,23 +2034,6 @@ function openProjModalByName(name){var card=document.querySelector('.proj-card[d
 document.addEventListener('click',function(ev){var a=ev.target.closest('.nld-popup-cta');if(!a)return;ev.preventDefault();var nm=a.getAttribute('data-pname');if(nm)openProjModalByName(nm);});
 
 
-/* ===== Notificación de prueba social ===== */
-(function(){
-  var t,tt,ss,ht;
-  function spShow(){
-    t=t||document.getElementById('spToast');if(!t)return;
-    tt=tt||document.getElementById('spT');ss=ss||document.getElementById('spS');
-    var n=Math.floor(Math.random()*41)+20;
-    var lg=(typeof curLang!=='undefined'&&typeof I18N!=='undefined'&&I18N[curLang])?curLang:'es';
-    var d=(typeof I18N!=='undefined'&&I18N[lg])?I18N[lg]:{};
-    tt.textContent=n+' '+((d&&d.sp_ppl)||'personas');
-    ss.textContent=(d&&d.sp_view)||'Están viendo esta página ahora mismo';
-    t.classList.add('show');t.setAttribute('aria-hidden','false');
-    clearTimeout(ht);ht=setTimeout(function(){t.classList.remove('show');t.setAttribute('aria-hidden','true');},3200);
-  }
-  function spLoop(){spShow();setTimeout(spLoop,22000+Math.random()*30000);}
-  setTimeout(spLoop,60000);
-})();
 </script>
 <!-- ===== Vista de detalle de proyecto ===== -->
 <div class="pm-overlay" id="pmOverlay" aria-hidden="true">
@@ -2088,9 +2071,5 @@ document.addEventListener('click',function(ev){var a=ev.target.closest('.nld-pop
   </div>
 </div>
 
-<div class="sp-toast" id="spToast" role="status" aria-live="polite" aria-hidden="true">
-  <div class="sp-toast-ico"><span class="sp-toast-dot"></span></div>
-  <div class="sp-toast-txt"><div class="sp-toast-t" id="spT"></div><div class="sp-toast-s" id="spS"></div></div>
-</div>
 </body>
 </html>

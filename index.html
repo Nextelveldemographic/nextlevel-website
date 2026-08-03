@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v9.9 · Klaric · carrusel de proyectos en movil (auto + deslizable + ligado a filtros y mapa); lista 2 columnas -->
+<!-- NLD v10.0 · Klaric · seleccion como interruptor; jerarquia visual en movil (filtros en una fila, capas secundarias) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v9.9-2026-08">
+<meta name="version" content="v10.0-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAIQ0lEQVR4nO2bTYwcRxXHf1XdPTvrXa/32zg4WTt8DIQQ4kTGYIycBAxcUGQJyZHsKDIICySMPw65cYSjDxEcOCSXYBnlkgMSFkg2TvDFKNhOJBQUC2QbHGHYddb27K5nprseh6qa7pmd2R3bszObXT9tqb9eVdf/X6/ee107pWgsGhBXNPAs8F3g68AmYLhJvW7LDeAy8Gfgd8CfAAMoV0wrjQSZ85eAd0jJ+LiVdxyGRtgaSuiOnwHO1DUWAwmWxW4Da1aM62Ncd/+Mw5TF2BT8M8CUq1hxDXYb2L2WxGEQh+mZZiRod9wJzGTAdxtAu4rHMuMwZjGjsQ5iMzDtFOtNaCUUj2naYVWeBE/A2Tq2VmLx2M5mCQDYtwrA15Owz4MPgHexHnQlmn59iR3Wdx12nnMPlnN4a3fxWJ/TwG6stJQlrRDxWHdrYIe7UF3qTDfEY92hgI+AQaxJrBYSPNZp5S5WrejFVVa2PCCg2x3otqx6App+G7dTgiBAKRtgjDEYY8Ow1hqt0zFIkgSRzvrkJY0CSqmGgILALswkSdJynaWSJSNAa10d6T179rBr1y6mp6c5fvw4Fy5cAGDLli3s3buXwcFBTp06xYkTJ+bV7YS0PdfWWgsgw8PDcvLkSclKHMdy9OhROXTokJTL5Zpnp0+flvHx8Zo2OlDa26BSSpRSMjQ0JJcuXZoHPo7j6nWSJDXXIiJXrlyRsbGxjpHQ9ingHduxY8fYvn07U1NT9PT0sHHjRiYmJgjDWr8bxzFXr17l2rVrzM3NMTIywrlz5zhy5AhxHHdkKrSd1TAMZWhoqOZeFEVSKBTk4MGDcv78ebl48aIcPnxYCoWC5HK5Gt3h4WGJoqgjU2DJo0A2/NXfz97z4VBEVkYUqA9nHrTWmjiOAQjDEGPMPNCdDIVd+Rr0VtHppKeRPPgc7nYHui0PCOh2B7otbf4aVG5V0S0tSjXbXLbSHieonCFJg6xNKZTSiBhHyPKS+yNA6RrQKuwh6F1H1DdKUioSz0xhyjPpcxVYIjplFUotSvq9E5BpvG9iK/2P7mDNQ48T9A4R5PsRY0ju3KJy8xrFf5zl5genSWY/cnV1Y2tpp1TfsTDEuycgA3zNw08z8vQe8us/hwoiJKlUnykdosIcOsqjghzx7etM/+33TP7ldUx5BqUDxMxfEGmH+LbHtu5m9sO/M3Pt/aak3x0BrhEVhIxs28+6z38bECQugdIWtA5QOrC6SrusT6GjPEF+gNKNK3z4h58z+6/zqW9oo3jwA5/exuM/fYOLv9jF7H8+aEpA62HQNRANrGfDd37GQOEbJHduYUp+jlsuRQxijH2ZGEuvUkhSoVKcJBr4BBPfe4WRrXsteOV/nnD/onSImIQ1Gwo89uPjgEaS8oJ1WguDDnxueILxnQcJ+8eI56bRQQSAiLHwHR4ByJwrA6KtEzSlIiqI2PDNlwl7B7n+9q/sqN1nlLAjHxOtHaXwg9fQuT5MqZhGqHsmwI/82vWM7/wJQX4Ac+cWKsiBmCpYNC2TICahcvu/jG3/IaC4/vYva9511+CDEEli8mOPUvj+q+THNpPM3UYFi8NbREOBGIL8WkZ3/AgdrbEOLIgQSaoAccBbJgHrHyrFSUa/uh/d08f1M69gKnN3Zw3u5ZLE9D38JT67/1V6hh6iMnuLIMy19LW5gH3YeamjXka3HyDsG67GdDEGjEEkycx3ey6Zc6RWx5LmdexIxzM3GH5qD5v3vkbvhi/YyCBinanSNupUfYSyiZV3sq6d0a0vUDjwW8L+cSqzN60vEEFkcR6bW4CLD+ueeJ5o6BE3d3OIMfNG9N4tAdAB8cwkPaOb2fTCr7nx1xNMnX+DuPi/Bp0S+yc2fPY98hSf/NbLrCvsxJSLJOVZtA4RI7YPLRhREwJsrNdRnp7RT2HKRff+BIXUALtvEowlwZSKoCPGvnaAwSee59b7f+T2P89SmrpMMncTE99Bh72E/SP0b/oKg4/tYqDwLEGUp1K8gQoClNaIiH1vi/50US9hkxvjgKmGwNpBgugAJQlxcZIg18/ItpcY+fKLmDu3SUpFTGWOIL+WcM0I0doxwGBKReK4hNKhW+IUxE0XZdyK530TIH7OZpz0kpEASmlMUsbMTFk/EOSIBtZbkLZVKsVJ9yxAEThnp8BI+g5ayy4WjxMusakx/aUmAUuErR9jKonLKl2WqQM3OJYQZXtXJcH+BLK15GpxCzDOq4N9UYdIAO8fQNAoBJTNNOunTj0JyrHj+Ll3Aux6hgtjNADRURIW0q0nARDlosDCDLTkA3BhpyGIZUmCH73FJcT+enrQUVU3ccT6gKoTVB8TEgCjkOaJgMc6HWL32DxZS0Ba0Wd92dvLn4S0s00o8Fgvh9ifjj/ZVNensO6ltuPSnASVntsOSoYEyTyvPU9JELvmokEZSYEpm91hQCnJkCoZEty7lE4zwSao3PGsBt50F7qhZub7XsRZg9ipkU6P2mPtPclcp/V8G1Udk+oItfp+HVHq6uL/p1jVzeos6P481jdD4C3gPeCL2D02tTurTGIjgaQjai1BMjHXM+9GxI8uYu8psZag7Chl66VWIaklGBvylHIWpNwoK8lYgrghDqyuFsQEqQ6kc65WEkfAe8Bb3untA17H/pY+jQxKEfQMgPtnZvVoL1wHVcZzqswho1utl9Gta6u+nv0WU06tUVvz69X0w90rT//bpvOpeIwvAr+BVb5lxu+bEeyO0AvAOmqmQpZ9loncRUfSFSaP6SawBRv9qg35ybKTVbhtzsuq3jhZT8Kq3DrrZVVtnm7mTbxjFFb49vn/A27du6Lx5fUHAAAAAElFTkSuQmCC">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -1038,6 +1038,67 @@ a,button,summary,label,select,[role="button"],[onclick],
   .proj-layout:not(.hybrid) .proj-divider{margin:3px 0}
 }
 
+
+/* ============================================================
+   JERARQUÍA EN MÓVIL — sección de proyectos
+   El problema no era cuántos controles hay, sino que todos
+   pesaban visualmente lo mismo. Se ordenan por importancia:
+   buscar > cambiar de vista > capas del mapa > filtrar.
+   ============================================================ */
+@media(max-width:600px){
+
+  /* 1. Filtros de categoría y precio: una sola fila deslizable
+        con una línea fina que separa los dos grupos. */
+  .proj-controls-filters{
+    flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start;
+    gap:0;margin-bottom:14px;padding-bottom:2px;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    scroll-snap-type:x proximity;scrollbar-width:none;-ms-overflow-style:none}
+  .proj-controls-filters::-webkit-scrollbar{display:none}
+  .proj-controls-filters .proj-filters,
+  .proj-controls-filters .proj-pfilters{
+    overflow:visible;flex-wrap:nowrap;flex:0 0 auto;gap:6px}
+  .proj-controls-filters .proj-pfilters{
+    position:relative;margin-left:12px;padding-left:12px}
+  .proj-controls-filters .proj-pfilters::before{
+    content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);
+    width:1px;height:18px;background:var(--divider)}
+
+  /* 2. Filtros en reposo: contorno silencioso. Sólo el activo pesa. */
+  .proj-filter,.proj-pfilter{
+    background:transparent;border:1px solid var(--divider);
+    padding:7px 13px;font-size:var(--fs-12);scroll-snap-align:center}
+  .proj-filter:hover,.proj-pfilter:hover{background:transparent}
+  .proj-filter.active,.proj-pfilter.active{
+    background:var(--dark);border-color:var(--dark);color:var(--w)}
+  [data-theme="dark"] .proj-filter,[data-theme="dark"] .proj-pfilter{
+    background:transparent;border-color:var(--divider)}
+  [data-theme="dark"] .proj-filter.active,[data-theme="dark"] .proj-pfilter.active{
+    background:#F5F5F7;border-color:#F5F5F7;color:#000}
+
+  /* 3. Capas del mapa: son opciones, no navegación.
+        Activas se marcan en azul suave, no en azul sólido. */
+  .proj-tourtoggle{padding:8px 10px;font-size:var(--fs-12);
+    background:transparent;border:1px solid var(--divider);color:var(--grey-2)}
+  .proj-tourtoggle.active{
+    background:var(--blue-soft);border-color:transparent;color:var(--blue);font-weight:500}
+  [data-theme="dark"] .proj-tourtoggle{background:transparent;border-color:var(--divider);color:var(--grey-2)}
+  [data-theme="dark"] .proj-tourtoggle.active{background:var(--blue-soft);color:var(--blue);border-color:transparent}
+
+  /* 4. Aire entre bloques: menos separación, menos ruido. */
+  .proj-controls-top{gap:7px;margin-bottom:10px}
+  .proj-viewtoggle{margin-bottom:0}
+  .proj-disclaimer{font-size:var(--fs-11);line-height:1.45;opacity:.85}
+}
+
+/* 5. El mapa cede un poco de alto para que asome la primera
+      tarjeta del carrusel: así se entiende que hay más abajo. */
+@media(max-width:600px){
+  .proj-layout.hybrid #projMap{height:288px}
+  .proj-layout.hybrid .proj-map-wrap{margin-bottom:4px}
+  .proj-layout.hybrid .proj-grid{padding-top:2px}
+}
+
 /* --- 14. Mapa en móvil: gestos más predecibles --- */
 @media(max-width:768px){
   .leaflet-container{-webkit-tap-highlight-color:transparent}
@@ -1779,6 +1840,7 @@ function _updateMapPickBanner(){
 function clearMapPick(){
   _mapPick=null;
   document.querySelectorAll('.proj-card.map-active').forEach(function(c){c.classList.remove('map-active');c.style.boxShadow=''});
+  try{Object.keys(_projMarkers).forEach(function(k){var el=_projMarkers[k].getElement&&_projMarkers[k].getElement();var d=el?el.querySelector('.nld-marker'):null;if(d)d.classList.remove('active');});}catch(e){}
   if(_projMap)_projMap.closePopup();
   _applyProjectFilters();
 }
@@ -2089,6 +2151,7 @@ function _highlightCard(name,on){
   if(card&&!card.classList.contains('map-active'))card.style.boxShadow=on?'0 0 0 2px var(--blue)':'';
 }
 function _focusCardFromMap(name){
+  if(_mapPick===name){clearMapPick();return;}
   _mapPick=name;
   _skipMapFit=true;
   _applyProjectFilters();
@@ -2132,6 +2195,7 @@ document.addEventListener('click',ev=>{
   const card=ev.target.closest('.proj-card[data-lat]');
   if(card&&!ev.target.closest('.proj-cta')){
     const name=card.getAttribute('data-pname');
+    if(_mapPick&&_mapPick===name){clearMapPick();return;}
     document.querySelectorAll('.proj-card.map-active').forEach(function(c){if(c!==card){c.classList.remove('map-active');c.style.boxShadow=''}});
     card.classList.add('map-active');card.style.boxShadow='';
     const m=_projMarkers[name];

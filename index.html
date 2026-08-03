@@ -1,16 +1,19 @@
 <!DOCTYPE html>
-<!-- NLD v9.3 · Klaric · PDF vistoso/estructurado (badges pill, tarjeta de datos, chips, filas de bancos) -->
+<!-- NLD v9.4 · Klaric · auditoria + optimizacion; capa de experiencia movil (safe-area, tap targets, snap, dvh, a11y) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Volvé al país que ya está listo — Next Level Demographic</title>
 <meta name="description" content="Asesoría inmobiliaria boutique para la diáspora salvadoreña en EE.UU. Proceso en español, sin costo, equipo verificable.">
 <meta name="theme-color" content="#FFFFFF">
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<meta name="version" content="v9.3-2026-07">
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://a.basemaps.cartocdn.com" crossorigin>
+<link rel="dns-prefetch" href="https://b.basemaps.cartocdn.com">
+<link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
+<link rel="dns-prefetch" href="https://photon.komoot.io">
+<link rel="dns-prefetch" href="https://formsubmit.co">
+<meta name="version" content="v9.4-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -828,23 +831,143 @@ body.pm-lock{overflow:hidden}
 .pm-fact.price .pm-fact-v{color:var(--blue);font-size:21px}
 
 
-/* ===== Notificación de prueba social (estilo Apple) ===== */
-.sp-toast{position:fixed;top:20px;right:20px;z-index:4200;display:flex;align-items:center;gap:13px;background:var(--w);border:1px solid var(--divider);border-radius:18px;padding:12px 18px 12px 13px;box-shadow:0 14px 44px rgba(0,0,0,.17);max-width:340px;opacity:0;transform:translateY(-14px) scale(.96);transition:opacity .5s var(--ease),transform .5s var(--ease);pointer-events:none}
-.sp-toast.show{opacity:1;transform:none}
-[data-theme="dark"] .sp-toast{background:#1D1D1F;border-color:#2C2C2E;box-shadow:0 14px 44px rgba(0,0,0,.55)}
-.sp-toast-ico{width:36px;height:36px;border-radius:50%;background:rgba(255,149,0,.14);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sp-toast-dot{width:11px;height:11px;border-radius:50%;background:#FF9500;animation:spPulse 1.8s infinite}
-@keyframes spPulse{0%{box-shadow:0 0 0 0 rgba(255,149,0,.45)}70%{box-shadow:0 0 0 9px rgba(255,149,0,0)}100%{box-shadow:0 0 0 0 rgba(255,149,0,0)}}
-.sp-toast-txt{line-height:1.3;min-width:0}
-.sp-toast-t{font-size:14.5px;font-weight:600;color:var(--dark);letter-spacing:-.01em}
-.sp-toast-s{font-size:12.5px;color:var(--grey);margin-top:1px}
-@media(max-width:600px){.sp-toast{top:14px;left:14px;right:14px;max-width:none}}
 .ck-banner{position:fixed;left:16px;right:16px;bottom:16px;z-index:4300;max-width:600px;margin:0 auto;background:var(--w);border:1px solid var(--divider);border-radius:16px;box-shadow:0 16px 50px rgba(0,0,0,.20);padding:15px 18px;display:none;align-items:center;gap:14px;flex-wrap:wrap}
 .ck-banner.show{display:flex}
 [data-theme="dark"] .ck-banner{background:#1D1D1F;border-color:#2C2C2E}
 .ck-txt{font-size:12.5px;line-height:1.5;color:var(--grey);flex:1;min-width:210px}
 .ck-ok{background:var(--blue);color:#fff;border:none;border-radius:980px;padding:10px 22px;font-size:13.5px;font-weight:600;font-family:inherit;cursor:pointer;white-space:nowrap}
 .ck-ok:hover{background:#0063c9}
+
+/* ============================================================
+   CAPA DE EXPERIENCIA MÓVIL — NLD v9.4
+   Patrones de Apple / Airbnb / Instagram, con estética NLD.
+   ============================================================ */
+
+/* --- 1. Base táctil: sin flash gris, sin retardo de 300ms --- */
+*{-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+a,button,summary,label,select,[role="button"],[onclick],
+.proj-card,.faq-q,.intent-btn,.pf,.pv,.proj-tourtoggle,.tm-card,.msr,.lang-btn,.lang-dd button
+{touch-action:manipulation}
+
+/* --- 2. Áreas seguras (notch / barra de gestos del iPhone) ---
+   viewport-fit=cover ya estaba activo pero nunca se usaba env(). */
+.nav-inner{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right))}
+.mob{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right));padding-bottom:max(18px,calc(env(safe-area-inset-bottom) + 10px))}
+.wa-fl{bottom:max(24px,calc(env(safe-area-inset-bottom) + 14px));right:max(20px,calc(env(safe-area-inset-right) + 14px))}
+.ck-banner{bottom:max(16px,calc(env(safe-area-inset-bottom) + 10px));left:max(16px,env(safe-area-inset-left));right:max(16px,env(safe-area-inset-right))}
+.pm-cta{padding-bottom:max(12px,calc(env(safe-area-inset-bottom) + 8px))}
+@media(max-width:768px){
+  section{padding-left:max(22px,env(safe-area-inset-left));padding-right:max(22px,env(safe-area-inset-right))}
+  footer{padding-bottom:max(28px,calc(env(safe-area-inset-bottom) + 18px))}
+}
+
+/* --- 3. Altura real del viewport móvil (evita el salto al ocultarse la barra del navegador) --- */
+.map-fullscreen{height:100vh;height:100dvh}
+@media(max-width:560px){.pm-dialog{height:100vh;height:100dvh;max-height:100dvh}}
+.mob{max-height:calc(100vh - 44px);max-height:calc(100dvh - 44px)}
+
+/* --- 4. iOS: evitar el zoom automático al enfocar un campo ---
+   Safari hace zoom si la fuente del campo mide menos de 16px. */
+@media(max-width:768px){
+  .fg input,.fg select,.fg textarea,#mapSearch,.proj-search input,input,select,textarea{font-size:16px}
+  .fg label{font-size:13.5px}
+}
+
+/* --- 5. Objetivos táctiles mínimos de 44px (Apple HIG) --- */
+@media(hover:none){
+  .ham{min-width:44px;min-height:44px;padding:12px}
+  .lang-btn{min-height:40px;padding-top:8px;padding-bottom:8px}
+  .lang-dd button{min-height:44px}
+  .nav-r a{min-height:40px;display:inline-flex;align-items:center}
+  .pm-close,.pm-dl{width:42px;height:42px}
+  .map-search-clear{width:26px;height:26px}
+  .faq-q{min-height:52px}
+  .ft-col a{padding-top:4px;padding-bottom:4px;display:inline-block}
+}
+
+/* --- 6. Respuesta táctil inmediata (Apple: el elemento "cede" al tocarlo) --- */
+@media(hover:none){
+  .btn-blue:active,.btn-ghost:active,.proj-cta:active,.pm-btn-primary:active,
+  .pm-btn-wa:active,.ck-ok:active,.intent-btn:active,.pf:active,.pv:active,
+  .proj-tourtoggle:active,.faq-more-q:active,.msr:active
+  {transform:scale(.97);transition:transform .09s ease-out}
+  .proj-card:active,.tm-card:active{transform:scale(.985);transition:transform .12s ease-out}
+  .ham:active{opacity:.55}
+}
+
+/* --- 7. Scroll horizontal con imán (carruseles de filtros tipo App Store) --- */
+.intent-toggle,.proj-filters,.proj-pfilters,.proj-viewtoggle{
+  scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
+  overscroll-behavior-x:contain;scrollbar-width:none}
+.intent-toggle::-webkit-scrollbar,.proj-filters::-webkit-scrollbar,
+.proj-pfilters::-webkit-scrollbar,.proj-viewtoggle::-webkit-scrollbar{display:none}
+.intent-btn,.proj-filters>*,.proj-pfilters>*,.proj-viewtoggle>*{scroll-snap-align:center}
+@media(max-width:768px){
+  .proj-filters,.proj-pfilters{padding-left:2px;padding-right:2px}
+}
+
+/* --- 8. Contención de scroll: el desplazamiento no "contagia" a la página --- */
+.pm-scroll,.mob,.map-search-results,.lang-dd{overscroll-behavior:contain}
+
+/* --- 9. Menú móvil: entrada suave en vez de aparecer de golpe --- */
+@media(max-width:768px){
+  .mob{
+    display:flex;visibility:hidden;opacity:0;
+    transform:translateY(-10px);
+    transition:opacity .26s cubic-bezier(.32,.72,0,1),transform .26s cubic-bezier(.32,.72,0,1),visibility .26s;
+    pointer-events:none;
+    -webkit-backdrop-filter:saturate(1.8) blur(20px);backdrop-filter:saturate(1.8) blur(20px);
+    background:color-mix(in srgb,var(--w) 88%,transparent)}
+  .mob.open{visibility:visible;opacity:1;transform:none;pointer-events:auto}
+  .mob a{transition:opacity .2s}
+  .mob a:active{opacity:.5}
+}
+@supports not (backdrop-filter:blur(1px)){.mob{background:var(--w)}}
+
+/* --- 10. Modal de proyecto en móvil: hoja inferior estilo iOS --- */
+@media(max-width:560px){
+  .pm-dialog{
+    top:auto;bottom:0;left:0;transform:translateY(100%);
+    border-radius:16px 16px 0 0;
+    transition:transform .42s cubic-bezier(.32,.72,0,1),opacity .3s ease}
+  .pm-overlay.show .pm-dialog{transform:translateY(0)}
+  .pm-gallery{aspect-ratio:16/10}
+  .pm-scroll{scroll-behavior:smooth}
+  .pm-name{line-height:1.12}
+}
+
+/* --- 11. Movimiento reducido (accesibilidad del sistema) --- */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms;animation-iteration-count:1;
+    transition-duration:.01ms;scroll-behavior:auto}
+  [data-scene]{opacity:1;transform:none}
+}
+
+/* --- 12. Foco visible solo con teclado (no molesta al tocar) --- */
+:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:6px}
+:focus:not(:focus-visible){outline:none}
+
+/* --- 13. Legibilidad y anti-desbordes en pantallas angostas --- */
+@media(max-width:480px){
+  h1,h2,h3,.hero-h,.sc-h{overflow-wrap:break-word;hyphens:auto}
+  .proj-name,.pm-name,.tm-name{overflow-wrap:anywhere}
+  body{-webkit-font-smoothing:antialiased}
+}
+
+/* --- 14. Mapa en móvil: gestos más predecibles --- */
+@media(max-width:768px){
+  .leaflet-container{-webkit-tap-highlight-color:transparent}
+  .leaflet-popup-content{margin:12px 14px}
+  .map-search-results{max-height:210px}
+}
+
+/* --- 15. Rendimiento: aislar capas que animan (evita repintados) --- */
+.pm-overlay,.mob,.wa-fl,.ck-banner{will-change:opacity,transform}
+.pm-overlay:not(.open),.mob:not(.open){will-change:auto}
+.proj-photo img,.tm-photo img{content-visibility:auto;contain-intrinsic-size:auto 220px}
+
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -856,7 +979,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 </head>
 <body>
 <nav id="nav"><div class="nav-inner">
-  <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><span class="logo-tx">Next Level Demographic</span></a></div>
+  <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><span class="logo-tx">Next Level Demographic</span></a></div>
   <ul class="nav-c">
     <li><a href="#scene-lifestyle" data-i18n="nav_market">Mercado</a></li>
     <li><a href="#scene-process" data-i18n="nav_process">Proceso</a></li>
@@ -955,10 +1078,10 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     <h2 class="section-h anim d1" data-i18n="team_h">Somos <span class="grey">de aquí.</span><br>Sabemos cómo hacerlo.</h2>
     <p class="section-sub anim d2" data-i18n="team_sub">Somos salvadoreños viviendo en El Salvador. Conocemos el terreno, los desarrolladores, los abogados y las zonas. Diseñamos el proceso que quisiéramos para nuestra propia familia.</p>
     <div class="team-grid">
-      <div class="tm-card anim d3"><div class="tm-photo"><span class="tm-fallback">LG</span><img src="team/luis.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Luis Gonzalez</div><div class="tm-role" data-i18n="team_role_luis">Director de Estrategia y Tecnología</div><div class="tm-area" data-i18n="team_area_luis">Estrategia y tecnología</div><div class="tm-loc">La Libertad, El Salvador</div></div>
-      <div class="tm-card anim d5"><div class="tm-photo"><span class="tm-fallback">IA</span><img src="team/ivette.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Ivette Alvarado</div><div class="tm-role" data-i18n="team_role_ivette">Cofundadora y CEO</div><div class="tm-area" data-i18n="team_area_ivette">Crecimiento y expansión internacional</div><div class="tm-loc">La Libertad, El Salvador</div></div>
-      <div class="tm-card anim d6"><div class="tm-photo"><span class="tm-fallback">AM</span><img src="team/aniano.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Aniano Mabunda</div><div class="tm-role" data-i18n="team_role_aniano">Jefe de Ventas y Director de Ingresos</div><div class="tm-area" data-i18n="team_area_aniano">Ventas y crecimiento de ingresos</div><div class="tm-loc">Santa Ana, El Salvador</div></div>
-      <div class="tm-card anim d7"><div class="tm-photo"><span class="tm-fallback">JD</span><img src="team/jose.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Jose Diaz</div><div class="tm-role" data-i18n="team_role_jose">Director Creativo y de Operaciones</div><div class="tm-area" data-i18n="team_area_jose">Contenido, medios y operaciones</div><div class="tm-loc">San Salvador, El Salvador</div></div>
+      <div class="tm-card anim d3"><div class="tm-photo"><span class="tm-fallback">LG</span><img decoding="async" src="team/luis.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Luis Gonzalez</div><div class="tm-role" data-i18n="team_role_luis">Director de Estrategia y Tecnología</div><div class="tm-area" data-i18n="team_area_luis">Estrategia y tecnología</div><div class="tm-loc">La Libertad, El Salvador</div></div>
+      <div class="tm-card anim d5"><div class="tm-photo"><span class="tm-fallback">IA</span><img decoding="async" src="team/ivette.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Ivette Alvarado</div><div class="tm-role" data-i18n="team_role_ivette">Cofundadora y CEO</div><div class="tm-area" data-i18n="team_area_ivette">Crecimiento y expansión internacional</div><div class="tm-loc">La Libertad, El Salvador</div></div>
+      <div class="tm-card anim d6"><div class="tm-photo"><span class="tm-fallback">AM</span><img decoding="async" src="team/aniano.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Aniano Mabunda</div><div class="tm-role" data-i18n="team_role_aniano">Jefe de Ventas y Director de Ingresos</div><div class="tm-area" data-i18n="team_area_aniano">Ventas y crecimiento de ingresos</div><div class="tm-loc">Santa Ana, El Salvador</div></div>
+      <div class="tm-card anim d7"><div class="tm-photo"><span class="tm-fallback">JD</span><img decoding="async" src="team/jose.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><div class="tm-name">Jose Diaz</div><div class="tm-role" data-i18n="team_role_jose">Director Creativo y de Operaciones</div><div class="tm-area" data-i18n="team_area_jose">Contenido, medios y operaciones</div><div class="tm-loc">San Salvador, El Salvador</div></div>
     </div>
   </div>
 </section>
@@ -1012,7 +1135,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d3" data-cat="playa ciudad inversion" data-lat="13.4883" data-lng="-89.3222" data-price="$120,000" data-pname="Residencial Costa del Pacífico">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge blue" data-i18n="badge_rec">Recomendado NLD</span><span class="proj-badge" data-i18n="badge_live">Ideal para vivir</span></div>
-          <span class="proj-photo-fb">🏖️</span><img src="projects/proyecto1.jpg" alt="Residencial Costa del Pacífico" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🏖️</span><img decoding="async" src="projects/proyecto1.jpg" alt="Residencial Costa del Pacífico" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Residencial Costa del Pacífico</div>
@@ -1026,7 +1149,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d3" data-cat="ciudad inversion" data-lat="13.7008" data-lng="-89.2436" data-price="$115,000" data-pname="Condominio Montecarlo Escalón">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge blue" data-i18n="badge_rec">Recomendado NLD</span><span class="proj-badge amber" data-i18n="badge_appr">Plusvalía proyectada</span></div>
-          <span class="proj-photo-fb">🏢</span><img src="projects/proyecto2.jpg" alt="Condominio Montecarlo Escalón" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🏢</span><img decoding="async" src="projects/proyecto2.jpg" alt="Condominio Montecarlo Escalón" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Condominio Montecarlo Escalón</div>
@@ -1040,7 +1163,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d4" data-cat="ciudad montana" data-lat="13.6731" data-lng="-89.2797" data-price="$125,000" data-pname="Parque Residencial Santa Tecla">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge" data-i18n="badge_retire">Ideal para retiro</span><span class="proj-badge" data-i18n="badge_premium">Zona premium</span></div>
-          <span class="proj-photo-fb">🌿</span><img src="projects/proyecto3.jpg" alt="Parque Residencial Santa Tecla" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🌿</span><img decoding="async" src="projects/proyecto3.jpg" alt="Parque Residencial Santa Tecla" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Parque Residencial Santa Tecla</div>
@@ -1054,7 +1177,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d4" data-cat="playa inversion" data-lat="13.4939" data-lng="-89.3831" data-price="$135,000" data-pname="Villas Playa El Tunco">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge blue">Airbnb friendly</span><span class="proj-badge green" data-i18n="badge_rent">Alta demanda alquiler</span></div>
-          <span class="proj-photo-fb">🏝️</span><img src="projects/proyecto4.jpg" alt="Villas Playa El Tunco" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🏝️</span><img decoding="async" src="projects/proyecto4.jpg" alt="Villas Playa El Tunco" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Villas Playa El Tunco</div>
@@ -1068,7 +1191,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d5" data-cat="montana ciudad" data-lat="13.9942" data-lng="-89.5597" data-price="$95,000" data-pname="Residencial Vista Volcán">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge" data-i18n="badge_retire">Ideal para retiro</span></div>
-          <span class="proj-photo-fb">⛰️</span><img src="projects/proyecto5.jpg" alt="Residencial Vista Volcán Santa Ana" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">⛰️</span><img decoding="async" src="projects/proyecto5.jpg" alt="Residencial Vista Volcán Santa Ana" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Residencial Vista Volcán</div>
@@ -1082,7 +1205,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d5" data-cat="playa inversion" data-lat="13.3369" data-lng="-87.8439" data-price="$105,000" data-pname="Marina Golfo de Fonseca">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge blue">Airbnb friendly</span><span class="proj-badge amber" data-i18n="badge_appr">Plusvalía proyectada</span></div>
-          <span class="proj-photo-fb">🌊</span><img src="projects/proyecto6.jpg" alt="Marina Golfo de Fonseca" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🌊</span><img decoding="async" src="projects/proyecto6.jpg" alt="Marina Golfo de Fonseca" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Marina Golfo de Fonseca</div>
@@ -1096,7 +1219,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d6" data-cat="colonial montana" data-lat="13.8608" data-lng="-89.8483" data-price="$85,000" data-pname="Hacienda Ruta de las Flores">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge" data-i18n="badge_colonial">Colonial</span><span class="proj-badge" data-i18n="badge_retire">Ideal para retiro</span></div>
-          <span class="proj-photo-fb">🌸</span><img src="projects/proyecto7.jpg" alt="Hacienda Ruta de las Flores" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🌸</span><img decoding="async" src="projects/proyecto7.jpg" alt="Hacienda Ruta de las Flores" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Hacienda Ruta de las Flores</div>
@@ -1110,7 +1233,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d6" data-cat="ciudad" data-lat="13.7189" data-lng="-89.7239" data-price="$90,000" data-pname="Condominio Vista Izalco">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge" data-i18n="badge_price">Precio accesible</span></div>
-          <span class="proj-photo-fb">🏙️</span><img src="projects/proyecto8.jpg" alt="Condominio Vista Izalco" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🏙️</span><img decoding="async" src="projects/proyecto8.jpg" alt="Condominio Vista Izalco" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Condominio Vista Izalco</div>
@@ -1124,7 +1247,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <article class="proj-card anim d7" data-cat="colonial inversion" data-lat="13.9403" data-lng="-89.0294" data-price="$110,000" data-pname="Villas Coloniales Suchitoto">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge" data-i18n="badge_colonial">Colonial</span><span class="proj-badge blue">Airbnb friendly</span></div>
-          <span class="proj-photo-fb">🏞️</span><img src="projects/proyecto9.jpg" alt="Villas Coloniales Suchitoto" loading="lazy" onerror="this.remove()">
+          <span class="proj-photo-fb">🏞️</span><img decoding="async" src="projects/proyecto9.jpg" alt="Villas Coloniales Suchitoto" loading="lazy" onerror="this.remove()">
         </div>
         <div class="proj-body">
           <div class="proj-name">Villas Coloniales Suchitoto</div>
@@ -1353,7 +1476,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     <p class="section-sub anim d2" data-i18n="ally_sub">Constructoras y proveedores de servicios complementarios verificados por nuestro equipo. Si te interesa contactar a alguno, hacelo directamente desde aquí.</p>
     <div class="ally-spotlight anim d3"><article class="ally-card">
       <div class="ally-head">
-        <div class="ally-logo"><span class="ally-logo-fb">🏗️</span><img src="allies/espinal.png" alt="Espinal Constructores S.A. de C.V." loading="lazy" onerror="this.remove()"></div>
+        <div class="ally-logo"><span class="ally-logo-fb">🏗️</span><img decoding="async" src="allies/espinal.png" alt="Espinal Constructores S.A. de C.V." loading="lazy" onerror="this.remove()"></div>
         <div><div class="ally-name">Espinal Constructores S.A. de C.V.</div><div class="ally-cat" data-i18n="ally_cat">Constructora</div></div>
       </div>
       <div class="ally-body">
@@ -1376,7 +1499,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   <div class="ft-inner">
     <div class="ft-fine" data-i18n="ft_text">Next Level Demographic — Asesoría estratégica para la diáspora salvadoreña en EE.UU. Proceso en español, sin costo de asesoría, equipo bicontinental verificable.</div>
     <div class="ft-grid">
-      <div class="ft-b"><div class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><span class="logo-tx">Next Level Demographic</span></div><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc">Tk</a></div></div>
+      <div class="ft-b"><div class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()"></div><span class="logo-tx">Next Level Demographic</span></div><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc">Tk</a></div></div>
       <div class="ft-col"><h5 data-i18n="ft_nav">Navegar</h5><a href="#scene-lifestyle" data-i18n="nav_market">Mercado</a><a href="#scene-process" data-i18n="nav_process">Proceso</a><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a><a href="#scene-cases" data-i18n="nav_cases">Casos</a><a href="#scene-faq" data-i18n="ft_faq">FAQ</a></div>
       <div class="ft-col"><h5 data-i18n="ft_company">Empresa</h5><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-extras" data-i18n="ft_services">Servicios</a><a href="#scene-partners" data-i18n="nav_allies">Aliados</a><a href="#scene-partners" data-i18n="nav_b2b">B2B</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
       <div class="ft-col"><h5 data-i18n="ft_contact">Contacto</h5><a href="https://wa.me/50375724726" target="_blank">WA +503 7572-4726</a><a href="#contacto" data-i18n="ft_form">Formulario</a><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank">Facebook</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank">Instagram</a></div>
@@ -1756,7 +1879,7 @@ function _initProjMap(){
     const _fb=(card.querySelector('.proj-photo-fb')?.textContent||'').trim();
     const icon=L.divIcon({className:'',html:'<div class="nld-marker" data-pname="'+name+'">'+price+'</div>',iconSize:null});
     const marker=L.marker([lat,lng],{icon}).addTo(_projMap);
-    const _photoHtml=_imgSrc?('<div class="nld-popup-photo"><img src="'+_imgSrc+'" alt="'+name+'" onerror="this.parentNode.classList.add(\'noimg\');this.parentNode.innerHTML=\''+_fb+'\'"><\/div>'):('<div class="nld-popup-photo noimg">'+_fb+'<\/div>');
+    const _photoHtml=_imgSrc?('<div class="nld-popup-photo"><img decoding="async" src="'+_imgSrc+'" alt="'+name+'" onerror="this.parentNode.classList.add(\'noimg\');this.parentNode.innerHTML=\''+_fb+'\'"><\/div>'):('<div class="nld-popup-photo noimg">'+_fb+'<\/div>');
     marker.bindPopup(function(){return _photoHtml+'<div class="nld-popup-body"><div class="nld-popup-name">'+name+'</div><div class="nld-popup-loc">'+loc+'</div><div class="nld-popup-price">'+((I18N[curLang]&&I18N[curLang].proj_lbl_from)||'Desde')+' '+price+'</div><a href="javascript:void(0)" class="nld-popup-cta" data-pname="'+name.replace(/"/g,'&quot;')+'">'+((window.PM_UI&&PM_UI[curLang]&&PM_UI[curLang].more_info)||'Ver más información')+'</a></div>';},{autoPanPadding:[24,30],keepInView:true,maxWidth:240});
     _projMarkers[name]=marker;
     marker.on('mouseover',()=>{_highlightCard(name,true);if(!_isHybrid()){_cancelPopupClose();marker.openPopup()}});

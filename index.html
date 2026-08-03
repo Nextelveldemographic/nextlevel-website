@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v9.8 · Klaric · escala tipografica consolidada (30 valores -> 11 pasos); filtros movil revertidos -->
+<!-- NLD v9.9 · Klaric · carrusel de proyectos en movil (auto + deslizable + ligado a filtros y mapa); lista 2 columnas -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v9.8-2026-08">
+<meta name="version" content="v9.9-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -993,6 +993,51 @@ a,button,summary,label,select,[role="button"],[onclick],
 }
 
 
+
+/* ============================================================
+   CARRUSEL DE PROYECTOS (vista Lista + Mapa en móvil)
+   El mapa manda arriba; la lista se convierte en un carrusel
+   que avanza solo, se puede deslizar y responde a los filtros.
+   ============================================================ */
+.hcar-dots{display:none}
+@media(max-width:960px){
+  .proj-layout.hybrid .proj-grid{
+    display:flex;grid-template-columns:none;
+    overflow-x:auto;overflow-y:visible;max-height:none;
+    scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;
+    overscroll-behavior-x:contain;scroll-behavior:smooth;
+    gap:12px;padding:4px 2px 6px;scrollbar-width:none}
+  .proj-layout.hybrid .proj-grid::-webkit-scrollbar{display:none}
+  .proj-layout.hybrid .proj-card{
+    flex:0 0 78%;max-width:340px;scroll-snap-align:center;scroll-snap-stop:always}
+  .proj-layout.hybrid .proj-empty{flex:0 0 100%;max-width:none}
+  .proj-layout.hybrid .proj-photo{aspect-ratio:16/9}
+
+  .hcar-dots.show{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:12px;flex-wrap:wrap}
+  .hcar-dot{width:20px;height:3px;padding:0;border:none;cursor:pointer;border-radius:var(--r-pill);
+    background:var(--divider);transition:width .3s var(--ease),background .3s var(--ease)}
+  .hcar-dot.on{width:32px;background:var(--blue)}
+  .hcar-dot:active{transform:scaleY(1.6)}
+}
+
+/* --- Vista Lista en móvil: dos proyectos por fila --- */
+@media(max-width:600px){
+  .proj-layout:not(.hybrid) .proj-grid{grid-template-columns:repeat(2,1fr);gap:11px}
+  .proj-layout:not(.hybrid) .proj-photo{aspect-ratio:4/3}
+  .proj-layout:not(.hybrid) .proj-body{padding:10px 11px 12px;gap:3px}
+  .proj-layout:not(.hybrid) .proj-name{font-size:var(--fs-13);line-height:1.25}
+  .proj-layout:not(.hybrid) .proj-loc{font-size:var(--fs-11)}
+  .proj-layout:not(.hybrid) .proj-meta{font-size:var(--fs-10);gap:4px}
+  .proj-layout:not(.hybrid) .proj-price-icon{width:16px;height:16px;font-size:var(--fs-10)}
+  .proj-layout:not(.hybrid) .proj-price{gap:7px}
+  .proj-layout:not(.hybrid) .proj-price-val{font-size:var(--fs-14)}
+  .proj-layout:not(.hybrid) .proj-price-lbl{font-size:var(--fs-10)}
+  .proj-layout:not(.hybrid) .proj-cta{font-size:var(--fs-11);margin-top:5px;padding-top:7px}
+  .proj-layout:not(.hybrid) .proj-badges{top:6px;left:6px;gap:3px}
+  .proj-layout:not(.hybrid) .proj-badge{font-size:var(--fs-10);padding:2px 6px}
+  .proj-layout:not(.hybrid) .proj-divider{margin:3px 0}
+}
+
 /* --- 14. Mapa en móvil: gestos más predecibles --- */
 @media(max-width:768px){
   .leaflet-container{-webkit-tap-highlight-color:transparent}
@@ -1379,6 +1424,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       </article>
       <div class="proj-empty" id="projEmpty"><div class="pe-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></div><p class="pe-txt" data-i18n="proj_empty">No encontramos proyectos que coincidan con tu búsqueda.</p><button type="button" class="pe-btn" onclick="resetProjFilters()" data-i18n="proj_empty_btn">Ver todos los proyectos</button></div>
     </div>
+    <div class="hcar-dots" id="hcarDots"></div>
     <div class="proj-map-wrap"><button type="button" class="map-fs-btn" onclick="toggleMapFull()" aria-label="Pantalla completa" title="Pantalla completa"><svg class="fs-open" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg><svg class="fs-close" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 14 10 14 10 20"/><polyline points="20 10 14 10 14 4"/><line x1="14" y1="10" x2="21" y2="3"/><line x1="3" y1="21" x2="10" y2="14"/></svg></button><div class="map-search" id="mapSearchBox"><div class="map-search-bar"><span class="map-search-ico">🔍</span><input type="text" id="mapSearch" data-i18n-ph="map_search_ph" placeholder="Buscar en el mapa…" oninput="mapSearch()" autocomplete="off"><button type="button" class="map-search-clear" id="mapSearchClear" onclick="clearMapSearch()" aria-label="Limpiar">×</button></div><div class="map-search-results" id="mapSearchResults"></div></div><div id="projMap"></div></div>
     </div>
     <p class="proj-disclaimer anim" data-i18n="proj_disclaimer">* Los proyectos mostrados son de carácter ilustrativo y sirven como ejemplo del tipo de oportunidades y acompañamiento que ofrecemos. No representan desarrollos en venta actualmente ni constituyen una oferta comercial.</p>
@@ -1695,6 +1741,7 @@ function _applyProjectFilters(){
   if(clr)clr.classList.toggle('visible',_projQuery.length>0);
   _syncMapMarkers();
   _updateMapPickBanner();
+  try{_hcarRefresh()}catch(e){}
 }
 function _isHybrid(){var l=document.getElementById('projLayout');return l&&l.classList.contains('hybrid');}
 function _syncMapMarkers(){
@@ -2067,6 +2114,7 @@ function setProjView(view){
     mapWrap.classList.add('active');
     _initProjMap();
     setTimeout(()=>{if(_projMap)_projMap.invalidateSize()},120);
+    setTimeout(function(){try{_hcarRefresh()}catch(e){}},160);
   }else if(view==='map'){
     grid.classList.add('map-hidden');
     mapWrap.classList.add('active');
@@ -2077,6 +2125,7 @@ function setProjView(view){
     grid.classList.remove('map-hidden');
     mapWrap.classList.remove('active');
   }
+  try{_hcarRefresh()}catch(e){}
 }
 // Click en card centra el mapa (si está en vista mapa)
 document.addEventListener('click',ev=>{
@@ -2309,6 +2358,101 @@ document.addEventListener('click',function(ev){
   openProjModal(card);
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeProjModal();});
+
+/* ===== Carrusel de proyectos (Lista + Mapa, móvil) ===== */
+var _hcar={t:null,idle:null,rz:null,userT:0};
+function _hcarActive(){
+  var l=document.getElementById('projLayout');
+  return !!(l&&l.classList.contains('hybrid')&&window.matchMedia('(max-width:960px)').matches);
+}
+function _hcarCards(){
+  return [].filter.call(document.querySelectorAll('.proj-grid .proj-card'),function(c){return c.style.display!=='none';});
+}
+function _hcarIndex(){
+  var g=document.querySelector('.proj-grid'),cards=_hcarCards();
+  if(!g||!cards.length)return 0;
+  var mid=g.scrollLeft+g.clientWidth/2,best=0,bd=Infinity;
+  cards.forEach(function(el,i){var m=el.offsetLeft+el.offsetWidth/2,d=Math.abs(m-mid);if(d<bd){bd=d;best=i;}});
+  return best;
+}
+function _hcarBuildDots(){
+  var box=document.getElementById('hcarDots');if(!box)return;
+  var cards=_hcarCards();
+  if(!_hcarActive()||cards.length<2){box.innerHTML='';box.classList.remove('show');return;}
+  var h='';
+  for(var i=0;i<cards.length;i++)h+='<button type="button" class="hcar-dot'+(i===0?' on':'')+'" data-i="'+i+'" aria-label="'+(i+1)+'"></button>';
+  box.innerHTML=h;box.classList.add('show');
+}
+function _hcarSyncDots(){
+  var box=document.getElementById('hcarDots');
+  if(!box||!box.classList.contains('show'))return;
+  var idx=_hcarIndex();
+  [].forEach.call(box.children,function(b,i){b.classList.toggle('on',i===idx);});
+}
+function _hcarSyncMap(){
+  if(!_projMap)return;
+  var cards=_hcarCards(),c=cards[_hcarIndex()];
+  if(!c)return;
+  var name=c.getAttribute('data-pname'),mk=_projMarkers[name];
+  Object.keys(_projMarkers).forEach(function(k){
+    var m=_projMarkers[k],el=m.getElement&&m.getElement();
+    var d=el?el.querySelector('.nld-marker'):null;
+    if(d)d.classList.toggle('active',k===name);
+  });
+  if(mk){try{_projMap.panTo(mk.getLatLng(),{animate:true,duration:.45});}catch(e){}}
+}
+function _hcarGo(i,user){
+  var g=document.querySelector('.proj-grid'),cards=_hcarCards();
+  if(!g||!cards.length)return;
+  i=((i%cards.length)+cards.length)%cards.length;
+  var el=cards[i];
+  g.scrollTo({left:Math.max(0,el.offsetLeft-(g.clientWidth-el.offsetWidth)/2),behavior:'smooth'});
+  if(user)_hcarPause();
+}
+function _hcarPause(){_hcar.userT=Date.now();}
+function _hcarStop(){if(_hcar.t){clearInterval(_hcar.t);_hcar.t=null;}}
+function _hcarStart(){
+  _hcarStop();
+  if(!_hcarActive())return;
+  try{if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;}catch(e){}
+  if(_hcarCards().length<2)return;
+  _hcar.t=setInterval(function(){
+    if(document.hidden)return;
+    if(Date.now()-_hcar.userT<7000)return;   /* respeta al usuario tras tocarlo */
+    _hcarGo(_hcarIndex()+1,false);
+  },5200);
+}
+function _hcarRefresh(){
+  _hcarBuildDots();
+  var g=document.querySelector('.proj-grid');
+  if(g&&_hcarActive()){var b=g.style.scrollBehavior;g.style.scrollBehavior='auto';g.scrollLeft=0;g.style.scrollBehavior=b||'';}
+  _hcarSyncDots();_hcarStart();
+}
+(function(){
+  function init(){
+    var g=document.querySelector('.proj-grid');
+    if(g){
+      g.addEventListener('scroll',function(){
+        clearTimeout(_hcar.idle);
+        _hcar.idle=setTimeout(function(){
+          _hcarSyncDots();
+          if(_hcarActive()&&Date.now()-_hcar.userT<7000)_hcarSyncMap();
+        },110);
+      },{passive:true});
+      ['touchstart','pointerdown','wheel'].forEach(function(ev){g.addEventListener(ev,_hcarPause,{passive:true});});
+    }
+    var box=document.getElementById('hcarDots');
+    if(box)box.addEventListener('click',function(e){
+      var b=e.target.closest('.hcar-dot');
+      if(b)_hcarGo(parseInt(b.getAttribute('data-i'),10),true);
+    });
+    window.addEventListener('resize',function(){clearTimeout(_hcar.rz);_hcar.rz=setTimeout(_hcarRefresh,200);},{passive:true});
+    document.addEventListener('visibilitychange',function(){document.hidden?_hcarStop():_hcarStart();});
+    _hcarRefresh();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+
 /* Aparición suave de imágenes ya cacheadas o al terminar de cargar */
 (function(){
   function mark(img){img.classList.add('loaded');}

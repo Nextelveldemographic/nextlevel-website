@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v9.2 · Klaric · descarga de ficha en PDF (jsPDF, marca NLD, i18n) -->
+<!-- NLD v9.3 · Klaric · PDF vistoso/estructurado (badges pill, tarjeta de datos, chips, filas de bancos) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
 <meta http-equiv="Expires" content="0">
-<meta name="version" content="v9.2-2026-07">
+<meta name="version" content="v9.3-2026-07">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -2058,6 +2058,7 @@ function downloadProjPDF(){
     var banks=[].map.call(document.querySelectorAll('#pmBanks .pm-bank'),function(b){var n=b.querySelector('b'),x=b.querySelector('span');return [_sanPDF(n?n.textContent:''),_sanPDF(x?x.textContent:'')];});
     var devName=txt('#pmDevName');
     var devBlurb=txt('#pmDevBlurb');
+    var verify=txt('#pmOverlay [data-i18n="pm_verify"]');
     var disc=txt('#pmOverlay .pm-disc');
     var photo=null;
     try{var img=_pmCurCard&&_pmCurCard.querySelector('.proj-photo img');
@@ -2065,35 +2066,72 @@ function downloadProjPDF(){
     }catch(e){photo=null;}
 
     var jsPDF=window.jspdf.jsPDF;
-    var doc=new jsPDF({unit:'mm',format:'a4'});
-    var W=210,H=297,M=15,y=0;
-    var navy=[11,18,32],gold=[198,160,74],blue=[0,113,227],dark=[29,29,31],grey=[110,110,120],ln=[226,226,231];
-    function ensure(need){if(y+need>H-18){doc.addPage();y=20;}}
-    function heading(t){ensure(16);doc.setFont('helvetica','bold');doc.setFontSize(8.5);doc.setTextColor(grey[0],grey[1],grey[2]);doc.text((t||'').toUpperCase(),M,y);y+=5.5;}
-    function body(t){doc.setFont('helvetica','normal');doc.setFontSize(10);doc.setTextColor(dark[0],dark[1],dark[2]);var lines=doc.splitTextToSize(t||'',W-2*M);for(var i=0;i<lines.length;i++){ensure(6);doc.text(lines[i],M,y);y+=5;}y+=4;}
+    var doc=new jsPDF({unit:'mm',format:'a4',compress:true});
+    var W=210,H=297,M=14,y=0;
+    var CL={navy:[11,18,32],blue:[0,113,227],blueBg:[231,241,255],amber:[176,120,0],amberBg:[255,243,212],chip:[54,54,60],chipBg:[243,243,246],dark:[29,29,31],grey:[122,122,132],line:[228,228,233],gold:[201,164,84],white:[255,255,255]};
+    function setF(w,sz){doc.setFont('helvetica',w);doc.setFontSize(sz);}
+    function col(c){doc.setTextColor(c[0],c[1],c[2]);}
+    function fill(c){doc.setFillColor(c[0],c[1],c[2]);}
+    function draw(c){doc.setDrawColor(c[0],c[1],c[2]);}
+    function ensure(need){if(y+need>H-16){doc.addPage();y=18;}}
+    function heading(t){ensure(13);setF('bold',8.5);col(CL.grey);doc.text((t||'').toUpperCase(),M,y);y+=3.2;draw(CL.line);doc.setLineWidth(0.2);doc.line(M,y,W-M,y);y+=4.5;}
+    function para(t){setF('normal',10);col(CL.dark);var L=doc.splitTextToSize(t||'',W-2*M);for(var i=0;i<L.length;i++){ensure(6);doc.text(L[i],M,y);y+=5.1;}y+=3.5;}
+    function chips(items){var x=M;setF('bold',8.5);var h=8.5*0.3528+2.8;ensure(h+2);
+      for(var i=0;i<items.length;i++){setF(items[i].b?'bold':'normal',8.5);var tw=doc.getTextWidth(items[i].t)+6;
+        if(x+tw>W-M){x=M;y+=h+2.6;ensure(h+2);}
+        fill(items[i].bg);doc.roundedRect(x,y,tw,h,h/2,h/2,'F');col(items[i].fg);doc.text(items[i].t,x+3,y+h/2,{baseline:'middle'});
+        x+=tw+2.6;}
+      y+=h+5;}
 
-    doc.setFillColor(navy[0],navy[1],navy[2]);doc.rect(0,0,W,22,'F');
-    doc.setTextColor(255,255,255);doc.setFont('helvetica','bold');doc.setFontSize(13);doc.text('Next Level Demographic',M,13.5);
-    doc.setFont('helvetica','normal');doc.setFontSize(9);doc.setTextColor(gold[0],gold[1],gold[2]);doc.text(_sanPDF(U.pdf_title||'Ficha de proyecto'),W-M,13.5,{align:'right'});
-    y=22;
-    if(photo){var pw=W,ph=Math.min(80,pw*photo.h/photo.w);try{doc.addImage(photo.d,'JPEG',0,y,pw,ph);}catch(e){}y+=ph;}
+    // HEADER
+    fill(CL.navy);doc.rect(0,0,W,20,'F');
+    setF('bold',12.5);col(CL.white);doc.text('Next Level Demographic',M,12.4);
+    setF('normal',9);col(CL.gold);doc.text(U.pdf_title||'Ficha de proyecto',W-M,12.4,{align:'right'});
+    y=20;
+    // HERO
+    if(photo){var pw=W,ph=Math.min(80,pw*photo.h/photo.w),py=y;try{doc.addImage(photo.d,'JPEG',0,py,pw,ph);}catch(e){}
+      var ot=U.illus||'Ejemplo ilustrativo';setF('bold',7.5);var ow=doc.getTextWidth(ot)+5;fill([36,36,42]);doc.roundedRect(M,py+4,ow,5.6,2.8,2.8,'F');col(CL.white);doc.text(ot,M+2.5,py+4+2.8,{baseline:'middle'});
+      y=py+ph;}
     y+=9;
-    doc.setFont('helvetica','normal');doc.setFontSize(7.5);doc.setTextColor(grey[0],grey[1],grey[2]);doc.text(_sanPDF(U.illus||'Ejemplo ilustrativo'),M,y);y+=6.5;
-    doc.setFont('helvetica','bold');doc.setFontSize(19);doc.setTextColor(dark[0],dark[1],dark[2]);var nl=doc.splitTextToSize(name,W-2*M);doc.text(nl,M,y);y+=nl.length*8;
-    doc.setFont('helvetica','normal');doc.setFontSize(11);doc.setTextColor(grey[0],grey[1],grey[2]);doc.text(loc,M,y);y+=6.5;
-    if(badges.length){doc.setFontSize(9);doc.setTextColor(blue[0],blue[1],blue[2]);doc.text(badges.join('   -   '),M,y);y+=6.5;}
-    doc.setFont('helvetica','bold');doc.setFontSize(15);doc.setTextColor(blue[0],blue[1],blue[2]);doc.text(_sanPDF((U.from||'Desde')+' '+price),M,y);y+=8;
-    doc.setDrawColor(ln[0],ln[1],ln[2]);doc.line(M,y,W-M,y);y+=8;
-    if(facts.length){var colW=(W-2*M)/2,rows=Math.ceil(facts.length/2);for(var i=0;i<facts.length;i++){var col=i%2,row=Math.floor(i/2),x=M+col*colW,ry=y+row*13;doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(grey[0],grey[1],grey[2]);doc.text(facts[i][0].toUpperCase(),x,ry);doc.setFont('helvetica','bold');doc.setFontSize(11);doc.setTextColor(dark[0],dark[1],dark[2]);doc.text(facts[i][1],x,ry+5);}y+=rows*13+4;}
-    if(desc){heading(U.details||'Detalles');body(desc);}
-    if(amen.length){heading(U.amen||'Amenidades');body(amen.join('  -  '));}
-    if(near.length){heading(U.location||'Ubicacion');body(near.join('\n'));}
-    if(modelName){heading(U.models||'Modelos');body(modelName+(modelSpecs.length?('\n'+modelSpecs.join('    ')):''));}
-    if(banks.length){heading(U.process||'Financiamiento');doc.setFontSize(10);for(var k=0;k<banks.length;k++){ensure(6);doc.setFont('helvetica','bold');doc.setTextColor(dark[0],dark[1],dark[2]);doc.text(banks[k][0],M,y);doc.setFont('helvetica','normal');doc.setTextColor(grey[0],grey[1],grey[2]);doc.text(banks[k][1],W-M,y,{align:'right'});y+=6;}y+=3;}
-    if(devName){heading(U.developer||'Desarrolladora');body(devName+(devBlurb?('\n'+devBlurb):''));}
-    if(disc){ensure(16);doc.setFontSize(7.5);doc.setTextColor(grey[0],grey[1],grey[2]);var dl=doc.splitTextToSize(disc,W-2*M);for(var q=0;q<dl.length;q++){ensure(4);doc.text(dl[q],M,y);y+=3.6;}}
+    // TITLE + LOCATION
+    setF('bold',20);col(CL.dark);var nl=doc.splitTextToSize(name,W-2*M);doc.text(nl,M,y);y+=nl.length*8.2;
+    fill([224,54,44]);doc.circle(M+1.1,y-1.5,1.1,'F');setF('normal',11);col(CL.grey);doc.text(loc,M+4,y);y+=7;
+    // BADGES
+    if(badges.length){chips(badges.map(function(b){if(/recomend|recommend|empfehl|NLD/i.test(b))return {t:b,bg:CL.blueBg,fg:CL.blue,b:true};if(/plusval|appreciation|wertsteig|valoriz|rivalut|plus-value|receit|umsatz/i.test(b))return {t:b,bg:CL.amberBg,fg:CL.amber,b:true};return {t:b,bg:CL.chipBg,fg:CL.chip,b:false};}));}
+    // PRICE
+    setF('bold',16);col(CL.blue);doc.text((U.from||'Desde')+' '+price,M,y);y+=8;
+    // FACTS CARD
+    if(facts.length){var rows=Math.ceil(facts.length/2),cellH=14,cardH=rows*cellH+3,cw=(W-2*M)/2;ensure(cardH+3);
+      draw(CL.line);doc.setLineWidth(0.3);doc.roundedRect(M,y,W-2*M,cardH,3,3,'S');
+      doc.line(M+cw,y+3,M+cw,y+cardH-3);
+      for(var r=1;r<rows;r++){doc.line(M+3,y+r*cellH+1.5,W-M-3,y+r*cellH+1.5);}
+      for(var i=0;i<facts.length;i++){var c=i%2,rr=Math.floor(i/2),cx=M+c*cw+6,cy=y+rr*cellH+7;
+        setF('normal',7.5);col(CL.grey);doc.text(facts[i][0].toUpperCase(),cx,cy);
+        setF('bold',11);col(CL.dark);doc.text(facts[i][1],cx,cy+5.5);}
+      y+=cardH+8;}
+    // DETALLES
+    if(desc){heading(U.details||'Detalles');para(desc);}
+    // AMENIDADES (chips)
+    if(amen.length){heading(U.amen||'Amenidades');chips(amen.map(function(a){return {t:a,bg:CL.chipBg,fg:CL.chip,b:false};}));}
+    // UBICACION (lista con viñeta)
+    if(near.length){heading(U.location||'Ubicacion');setF('normal',10);for(var i=0;i<near.length;i++){ensure(6);fill(CL.blue);doc.circle(M+1,y-1.3,0.9,'F');col(CL.dark);doc.text(near[i],M+4.5,y);y+=6;}y+=2.5;}
+    // MODELO (tarjeta)
+    if(modelName){heading(U.models||'Modelos');var mh=modelSpecs.length?18:12;ensure(mh+2);draw(CL.line);doc.setLineWidth(0.3);doc.roundedRect(M,y,W-2*M,mh,3,3,'S');
+      setF('bold',12);col(CL.dark);doc.text(modelName,M+6,y+8);
+      if(modelSpecs.length){setF('normal',9.5);col(CL.grey);doc.text(modelSpecs.join('      '),M+6,y+14);}
+      y+=mh+8;}
+    // FINANCIAMIENTO (filas)
+    if(banks.length){heading(U.process||'Financiamiento');for(var i=0;i<banks.length;i++){ensure(9);setF('bold',10.5);col(CL.dark);doc.text(banks[i][0],M,y);setF('normal',9.5);col(CL.grey);doc.text(banks[i][1],W-M,y,{align:'right'});y+=4.5;draw(CL.line);doc.setLineWidth(0.2);doc.line(M,y,W-M,y);y+=4.5;}y+=1;}
+    // DESARROLLADORA
+    if(devName){heading(U.developer||'Desarrolladora');setF('bold',11);col(CL.dark);doc.text(devName,M,y);y+=5.5;
+      if(devBlurb){setF('normal',9.5);col(CL.grey);var L=doc.splitTextToSize(devBlurb,W-2*M);for(var i=0;i<L.length;i++){ensure(5);doc.text(L[i],M,y);y+=4.8;}}
+      if(verify){ensure(6);draw(CL.blue);doc.setLineWidth(0.6);doc.line(M,y-1.6,M+1.1,y-0.6);doc.line(M+1.1,y-0.6,M+2.7,y-2.8);setF('bold',8.5);col(CL.blue);doc.text(verify,M+4.5,y);y+=6;}
+      y+=2;}
+    // DISCLAIMER
+    if(disc){ensure(14);draw(CL.line);doc.setLineWidth(0.2);doc.line(M,y,W-M,y);y+=4;setF('normal',7.5);col(CL.grey);var dl=doc.splitTextToSize(disc,W-2*M);for(var q=0;q<dl.length;q++){ensure(4);doc.text(dl[q],M,y);y+=3.6;}}
+    // FOOTER
     var pages=doc.internal.getNumberOfPages();
-    for(var pg=1;pg<=pages;pg++){doc.setPage(pg);doc.setDrawColor(ln[0],ln[1],ln[2]);doc.line(M,H-14,W-M,H-14);doc.setFont('helvetica','normal');doc.setFontSize(8);doc.setTextColor(grey[0],grey[1],grey[2]);doc.text('Next Level Demographic  -  nextleveldemographic.com  -  WhatsApp +503 7572-4726',M,H-9);doc.text(pg+'/'+pages,W-M,H-9,{align:'right'});}
+    for(var pg=1;pg<=pages;pg++){doc.setPage(pg);draw(CL.line);doc.setLineWidth(0.2);doc.line(M,H-13,W-M,H-13);setF('normal',8);col(CL.grey);doc.text('Next Level Demographic   -   nextleveldemographic.com   -   WhatsApp +503 7572-4726',M,H-8.5);doc.text(pg+'/'+pages,W-M,H-8.5,{align:'right'});}
     var fn=(name||'proyecto').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase()||'proyecto';
     doc.save('NLD-'+fn+'.pdf');
   }catch(err){try{console.error(err);}catch(e){}alert('No se pudo generar el PDF.');}

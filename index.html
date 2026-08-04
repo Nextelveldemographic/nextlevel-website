@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v11.3 · Klaric · fix alineacion: ambas tarjetas del comparativo arrancan a la misma altura -->
+<!-- NLD v12.0 · Klaric · revelado al desplazar por elemento (patron Apple): texto, objetos, imagenes y botones -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v11.3-2026-08">
+<meta name="version" content="v12.0-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -127,9 +127,9 @@ h2.section-h .blue{color:var(--blue)}
 .text-center{text-align:center}
 .text-center .section-sub{margin-left:auto;margin-right:auto}
 /* Animation */
-.anim{opacity:0;transform:translateY(20px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.anim{will-change:auto}
 .active .anim{opacity:1;transform:none}
-.d1{transition-delay:.06s}.d2{transition-delay:.12s}.d3{transition-delay:.18s}.d4{transition-delay:.24s}.d5{transition-delay:.3s}.d6{transition-delay:.36s}.d7{transition-delay:.42s}
+.d1{transition-delay:.11s}.d2{transition-delay:.22s}.d3{transition-delay:.33s}.d4{transition-delay:.44s}.d5{transition-delay:.55s}.d6{transition-delay:.66s}.d7{transition-delay:.77s}
 /* Buttons Apple */
 .btn-blue{background:var(--blue);color:var(--w);padding:12px 22px;border-radius:var(--r-pill);font-size:var(--fs-17);font-weight:400;display:inline-flex;align-items:center;gap:6px;transition:background .2s;line-height:1}
 .btn-blue:hover{background:var(--blue-h)}
@@ -1368,6 +1368,38 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 .sc-eyebrow{font-variant-numeric:tabular-nums}
 .faq-q:hover{color:var(--blue)}
 @media(hover:none){.faq-q:hover{color:var(--dark)}}
+
+
+/* ============================================================
+   REVELADO AL DESPLAZAR — patrón Apple
+   La diferencia clave con el sistema anterior: allí se animaba
+   la SECCIÓN y su texto. Aquí se anima CADA PIEZA por separado
+   —titular, párrafo, botón, foto, tarjeta, chip, campo— y cada
+   una tiene su propio observador, así que aparece justo cuando
+   entra en pantalla mientras la persona desplaza.
+   ============================================================ */
+:root{
+  /* Curva de Apple para revelado: sale rápido y frena larguísimo */
+  --ease-rv:cubic-bezier(.32,.94,.6,1);
+}
+.rv{
+  opacity:0;
+  transform:translateY(42px);
+  transition:opacity .9s var(--ease-rv),transform 1s var(--ease-rv);
+}
+.rv.in{opacity:1;transform:none}
+
+/* Las fotos entran con su propio ritmo, más lento que su contenedor:
+   dos velocidades dentro del mismo bloque generan profundidad. */
+.rv .proj-photo img,.rv .tm-photo img,.rv.proj-photo img,.rv.tm-photo img{
+  transform:scale(1.08);transition:transform 1.7s var(--ease-rv)}
+.rv.in .proj-photo img,.rv.in .tm-photo img,.rv.in.proj-photo img,.rv.in.tm-photo img{transform:none}
+
+/* Si el sistema pide menos movimiento, todo aparece ya colocado */
+@media(prefers-reduced-motion:reduce){
+  .rv{opacity:1!important;transform:none!important;transition:none!important}
+  .rv .proj-photo img,.rv .tm-photo img{transform:none!important}
+}
 
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
@@ -2906,6 +2938,76 @@ document.addEventListener('click',function(ev){var a=ev.target.closest('.nld-pop
 /* ===== Aviso de cookies / almacenamiento ===== */
 function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=document.getElementById('ckBanner');if(b)b.classList.remove('show')}
 (function(){var seen=false;try{seen=localStorage.getItem('nld_cookie')==='1'}catch(e){}if(seen)return;setTimeout(function(){var b=document.getElementById('ckBanner');if(b)b.classList.add('show')},900);})();
+
+/* ===== Motor de revelado al desplazar (patrón Apple) ===== */
+(function(){
+  /* Piezas que se animan por separado. La lista es explícita a
+     propósito: nada que contenga el mapa entra aquí, porque un
+     transform sobre un ancestro rompería su pantalla completa. */
+  var SEL=[
+    /* texto */
+    '.sc-eyebrow','.section-h','.section-sub','.hero-h','.hero-sub','.hero-eyebrow',
+    '.life-callout-h','.life-geo-h','.life-close-q','.cg-l h3','.faq-feat-lead','.faq-feat-close',
+    /* acción */
+    '.hero-btns','.intent-toggle','.btn-blue','.btn-ghost','.svc-cta','.dev-cta','.b2b-cta','.pe-btn',
+    /* objetos */
+    '.proj-card','.case-card','.tm-card','.sc-card','.dev-card','.proc-card','.ally-card',
+    '.dn','.prob-card','.life-geo-card','.faq-item','.abnb-card','.life-col','.life-row',
+    '.cs-cell','.ffb','.dev-bento>*','.contact-grid','.ft-col','.ft-b','.proj-disclaimer',
+    /* imágenes sueltas */
+    '.ally-logo','.guide-img',
+    /* controles */
+    '.proj-controls-top','.proj-controls-filters','.proj-search'
+  ].join(',');
+
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
+
+  var io=null;
+  if('IntersectionObserver' in window && !reduce){
+    io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(!e.isIntersecting)return;
+        e.target.classList.add('in');
+        io.unobserve(e.target);          /* una vez revelado, se queda */
+      });
+    },{
+      threshold:0,
+      /* Se dispara cuando la pieza cruza el 88% de la altura de
+         pantalla: ya está entrando, no espera a estar centrada. */
+      rootMargin:'0px 0px -12% 0px'
+    });
+  }
+
+  function prepare(){
+    document.querySelectorAll('[data-scene]').forEach(function(sec){
+      var found=[].slice.call(sec.querySelectorAll(SEL));
+      var taken=[];
+      found.forEach(function(el){
+        /* Una sola capa: si un contenedor ya se anima, sus hijos no.
+           Evita el doble desvanecido que ensucia la entrada. */
+        for(var i=0;i<taken.length;i++){ if(taken[i].contains(el))return; }
+        el.classList.add('rv');
+        taken.push(el);
+      });
+      /* Desfase por grupo de hermanos: cada fila entra en cascada */
+      taken.forEach(function(el){
+        var par=el.parentNode;
+        if(par.__rvIdx===undefined)par.__rvIdx=0;
+        var idx=par.__rvIdx++;
+        el.style.transitionDelay=(Math.min(idx,5)*0.09).toFixed(2)+'s';
+      });
+      taken.forEach(function(el){ if(io)io.observe(el); else el.classList.add('in'); });
+    });
+  }
+
+  function init(){
+    try{prepare();}catch(e){try{console.error(e);}catch(_){}}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);
+  else init();
+})();
+
 </script>
 <!-- ===== Vista de detalle de proyecto ===== -->
 <div class="pm-overlay" id="pmOverlay" aria-hidden="true">

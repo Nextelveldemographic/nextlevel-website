@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v10.6 · Klaric · servicio adicional 2 por fila en movil; distancias ordenadas por tiempo -->
+<!-- NLD v10.7 · Klaric · comparativo EEUU/SV como carrusel en movil (controlador reutilizable) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -13,7 +13,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v10.6-2026-08">
+<meta name="version" content="v10.7-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -1196,6 +1196,44 @@ a,button,summary,label,select,[role="button"],[onclick],
   .abnb-cta-wrap{gap:12px}
 }
 
+
+/* ============================================================
+   COMPARATIVO EE.UU. / EL SALVADOR EN MÓVIL
+   Antes se apilaba: había que bajar toda la columna de EE.UU.
+   para descubrir que existía la de El Salvador. Ahora es un
+   carrusel: se ve EE.UU. completo y asoma el borde de la
+   siguiente tarjeta, que es la invitación a deslizar.
+   ============================================================ */
+@media(max-width:600px){
+  .life-cols{
+    display:flex;grid-template-columns:none;gap:10px;
+    overflow-x:auto;scroll-snap-type:x mandatory;scroll-behavior:smooth;
+    -webkit-overflow-scrolling:touch;overscroll-behavior-x:contain;
+    scrollbar-width:none;-ms-overflow-style:none;padding:2px 0 4px}
+  .life-cols::-webkit-scrollbar{display:none}
+  .life-col{
+    flex:0 0 87%;max-width:87%;box-sizing:border-box;
+    scroll-snap-align:center;scroll-snap-stop:always;
+    border:1px solid var(--divider-2);border-radius:var(--r-l);
+    padding:18px 16px!important;border-top:1px solid var(--divider-2)!important}
+  .life-col:first-child{padding-top:18px!important;border-top:1px solid var(--divider-2)!important}
+  .life-flag{margin-bottom:16px;font-size:var(--fs-15)}
+  .life-row{padding:12px 0}
+  .life-row:last-child{border-bottom:none;padding-bottom:0}
+  .life-row-lbl{font-size:var(--fs-10);margin-bottom:5px}
+  .life-row-val{font-size:var(--fs-17);line-height:1.22}
+  .life-row-sub{font-size:var(--fs-12);line-height:1.4}
+
+  /* Mismo indicador que el carrusel de proyectos */
+  .lcar-dots{display:none}
+  .lcar-dots.show{display:flex;justify-content:center;align-items:center;gap:6px;margin-top:14px}
+  .lcar-dot{width:20px;height:3px;padding:0;border:none;cursor:pointer;
+    border-radius:var(--r-pill);background:var(--divider);
+    transition:width .3s var(--ease),background .3s var(--ease)}
+  .lcar-dot.on{width:32px;background:var(--blue)}
+}
+.lcar-dots{display:none}
+
 /* --- 14. Mapa en móvil: gestos más predecibles --- */
 @media(max-width:768px){
   .leaflet-container{-webkit-tap-highlight-color:transparent}
@@ -1378,6 +1416,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
           <div class="life-row"><div class="life-row-lbl" data-i18n="life_safety">Seguridad</div><div class="life-row-val" data-i18n="life_sv_safety_v">El más seguro de la región</div><div class="life-row-sub" data-i18n="life_sv_safety_s">Paseos tranquilos a cualquier hora · sin preocupaciones</div></div>
         </div>
       </div>
+      <div class="lcar-dots" id="lcarDots"></div>
     </div>
     <div class="life-callout anim d4"><div class="life-callout-h" data-i18n="life_callout_h">¿Y si vendes tu propiedad en US?</div><div class="life-callout-sub" data-i18n="life_callout_sub">Vives en una propiedad nueva en El Salvador — equivalente o mejor — y aún te queda un remanente significativo en el bolsillo. Ese diferencial es tu margen de tranquilidad por el resto de tu retiro.</div></div>
     <div class="life-geo anim d5">
@@ -1840,7 +1879,7 @@ const I18N={es:{nav_market:"Mercado",nav_process:"Proceso",nav_projects:"Proyect
 const procNames={0:{es:'Diagnóstico gratuito',en:'Free diagnosis',fr:'Diagnostic gratuit',it:'Diagnosi gratuita',de:'Kostenlose Diagnose',pt:'Diagnóstico gratuito'},1:{es:'Propuesta curada',en:'Curated proposal',fr:'Proposition curatée',it:'Proposta curata',de:'Kuratierter Vorschlag',pt:'Proposta curada'},2:{es:'Reserva y legal',en:'Reservation and legal',fr:'Réservation et légal',it:'Prenotazione e legale',de:'Reservierung und Recht',pt:'Reserva e legal'},3:{es:'Escritura y entrega',en:'Deed and delivery',fr:'Acte et livraison',it:'Atto e consegna',de:'Urkunde und Übergabe',pt:'Escritura e entrega'}};
 let curLang='es';
 function applyLang(l){curLang=l;document.documentElement.lang=l;document.querySelectorAll('[data-i18n]').forEach(el=>{const k=el.getAttribute('data-i18n');if(I18N[l]&&I18N[l][k]!==undefined)el.innerHTML=I18N[l][k]});document.querySelectorAll('[data-i18n-ph]').forEach(el=>{const k=el.getAttribute('data-i18n-ph');if(I18N[l]&&I18N[l][k]!==undefined)el.placeholder=I18N[l][k]});document.getElementById('curLang').textContent=l.toUpperCase();document.querySelectorAll('.lang-dd button,.mob-lang button').forEach(b=>b.classList.toggle('active',b.getAttribute('data-lng')===l));const p=document.getElementById('proc-name');if(p&&procNames[curProc]&&procNames[curProc][l])p.textContent=procNames[curProc][l];updateWALinks();if(typeof setIntent==='function')setIntent(curIntent);try{localStorage.setItem('nld_lang',l)}catch(e){}}
-function setLang(l){applyLang(l);try{_syncFaqMore()}catch(e){}try{_refreshMapTitles()}catch(e){}try{setTimeout(_faqResizeAll,60)}catch(e){}try{if(_projMap)_projMap.eachLayer(function(ly){try{if(ly.getPopup&&ly.getPopup()&&ly.isPopupOpen&&ly.isPopupOpen())ly.getPopup().update()}catch(e){}})}catch(e){}document.getElementById('langSel').classList.remove('open')}
+function setLang(l){applyLang(l);try{_syncFaqMore()}catch(e){}try{setTimeout(function(){_lifeCar&&_lifeCar.refresh()},60)}catch(e){}try{_refreshMapTitles()}catch(e){}try{setTimeout(_faqResizeAll,60)}catch(e){}try{if(_projMap)_projMap.eachLayer(function(ly){try{if(ly.getPopup&&ly.getPopup()&&ly.isPopupOpen&&ly.isPopupOpen())ly.getPopup().update()}catch(e){}})}catch(e){}document.getElementById('langSel').classList.remove('open')}
 const INTENTS={
   retiro:{es:{h1:"Volvé.<br>El país <em>ya está listo.</em><br>¿Y vos?",sub:"Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.",btn1:"Ver cómo se ve tu retiro"},en:{h1:"Come back.<br>The country <em>is ready.</em><br>Are you?",sub:"Retire where your memories were born. We take care of everything else — at no cost to you.",btn1:"See what your retirement looks like"},fr:{h1:"Reviens.<br>Le pays <em>est prêt.</em><br>Et toi ?",sub:"Prends ta retraite là où sont nés tes souvenirs. Nous nous occupons de tout le reste — sans frais pour toi.",btn1:"Voir à quoi ressemble ta retraite"},it:{h1:"Torna.<br>Il paese <em>è pronto.</em><br>E tu?",sub:"Vai in pensione dove sono nati i tuoi ricordi. Noi ci occupiamo di tutto il resto — senza costi per te.",btn1:"Guarda com’è la tua pensione"},de:{h1:"Komm zurück.<br>Das Land <em>ist bereit.</em><br>Und du?",sub:"Geh in Rente, wo deine Erinnerungen entstanden sind. Um alles andere kümmern wir uns — kostenlos für dich.",btn1:"Sieh, wie dein Ruhestand aussieht"},pt:{h1:"Volte.<br>O país <em>já está pronto.</em><br>E você?",sub:"Aposente-se onde nasceram suas memórias. Nós cuidamos de todo o resto — sem custo para você.",btn1:"Veja como é a sua aposentadoria"}},
   inversion:{es:{h1:"Tu dinero rinde<br>el <em>doble aquí.</em><br>Sin volverte loco.",sub:"$120K entrada. $850/mes renta. 8.5% anual + apreciación. Gestión completa — vos ni te enterás.",btn1:"Ver proyectos con ROI"},en:{h1:"Your money earns<br><em>double here.</em><br>Without the hassle.",sub:"$120K down. $850/mo rent. 8.5% annual + appreciation. Full management — you won’t even notice.",btn1:"See projects with ROI"},fr:{h1:"Ton argent rapporte<br>le <em>double ici.</em><br>Sans te compliquer la vie.",sub:"120K$ d’apport. 850$/mois de loyer. 8,5% par an + valorisation. Gestion complète — tu ne t’occupes de rien.",btn1:"Voir les projets avec ROI"},it:{h1:"Il tuo denaro rende<br>il <em>doppio qui.</em><br>Senza impazzire.",sub:"120K$ di anticipo. 850$/mese di affitto. 8,5% annuo + rivalutazione. Gestione completa — non te ne accorgi nemmeno.",btn1:"Vedi progetti con ROI"},de:{h1:"Dein Geld bringt<br>hier das <em>Doppelte.</em><br>Ohne Stress.",sub:"120.000$ Anzahlung. 850$/Monat Miete. 8,5% jährlich + Wertsteigerung. Komplette Verwaltung — du merkst nichts davon.",btn1:"Projekte mit ROI ansehen"},pt:{h1:"Seu dinheiro rende<br>o <em>dobro aqui.</em><br>Sem dor de cabeça.",sub:"$120K de entrada. $850/mês de aluguel. 8,5% ao ano + valorização. Gestão completa — você nem percebe.",btn1:"Ver projetos com ROI"}},
@@ -2527,6 +2566,86 @@ document.addEventListener('click',function(ev){
   openProjModal(card);
 });
 document.addEventListener('keydown',function(e){if(e.key==='Escape')closeProjModal();});
+
+/* ===== Carrusel automático reutilizable =====
+   Mismos tiempos y comportamiento que el carrusel de proyectos:
+   avanza solo, se pausa cuando la persona lo toca, se detiene si
+   la pestaña queda oculta y respeta "reducir movimiento". */
+function _autoCarousel(trackSel,dotsId,opts){
+  opts=opts||{};
+  var IV=opts.interval||5200,PAUSE=opts.pause||7000,MQ=opts.mq||'(max-width:600px)';
+  var st={t:null,idle:null,rz:null,userT:0,bound:false};
+  function track(){return document.querySelector(trackSel);}
+  function dotsBox(){return document.getElementById(dotsId);}
+  function on(){try{return window.matchMedia(MQ).matches;}catch(e){return false;}}
+  function items(){var t=track();if(!t)return [];return [].filter.call(t.children,function(el){return el.nodeType===1;});}
+  function idx(){
+    var t=track(),it=items();if(!t||!it.length)return 0;
+    var mid=t.scrollLeft+t.clientWidth/2,b=0,bd=Infinity;
+    it.forEach(function(el,i){var m=el.offsetLeft+el.offsetWidth/2,d=Math.abs(m-mid);if(d<bd){bd=d;b=i;}});
+    return b;
+  }
+  function build(){
+    var box=dotsBox();if(!box)return;
+    var it=items();
+    if(!on()||it.length<2){box.innerHTML='';box.classList.remove('show');return;}
+    var h='';
+    for(var i=0;i<it.length;i++)h+='<button type="button" class="lcar-dot'+(i===0?' on':'')+'" data-i="'+i+'" aria-label="'+(i+1)+'"></button>';
+    box.innerHTML=h;box.classList.add('show');
+  }
+  function sync(){
+    var box=dotsBox();if(!box||!box.classList.contains('show'))return;
+    var k=idx();
+    [].forEach.call(box.children,function(b,i){b.classList.toggle('on',i===k);});
+  }
+  function go(i,user){
+    var t=track(),it=items();if(!t||!it.length)return;
+    i=((i%it.length)+it.length)%it.length;
+    var el=it[i];
+    t.scrollTo({left:Math.max(0,el.offsetLeft-(t.clientWidth-el.offsetWidth)/2),behavior:'smooth'});
+    if(user)st.userT=Date.now();
+  }
+  function stop(){if(st.t){clearInterval(st.t);st.t=null;}}
+  function start(){
+    stop();
+    if(!on())return;
+    try{if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;}catch(e){}
+    if(items().length<2)return;
+    st.t=setInterval(function(){
+      if(document.hidden)return;
+      if(Date.now()-st.userT<PAUSE)return;
+      go(idx()+1,false);
+    },IV);
+  }
+  function refresh(){
+    build();
+    var t=track();
+    if(t&&on()){var b=t.style.scrollBehavior;t.style.scrollBehavior='auto';t.scrollLeft=0;t.style.scrollBehavior=b||'';}
+    sync();start();
+  }
+  function init(){
+    var t=track();if(!t)return;
+    if(!st.bound){
+      st.bound=true;
+      t.addEventListener('scroll',function(){clearTimeout(st.idle);st.idle=setTimeout(sync,110);},{passive:true});
+      ['touchstart','pointerdown','wheel'].forEach(function(ev){
+        t.addEventListener(ev,function(){st.userT=Date.now();},{passive:true});
+      });
+      var box=dotsBox();
+      if(box)box.addEventListener('click',function(e){
+        var b=e.target.closest('.lcar-dot');
+        if(b)go(parseInt(b.getAttribute('data-i'),10),true);
+      });
+      window.addEventListener('resize',function(){clearTimeout(st.rz);st.rz=setTimeout(refresh,200);},{passive:true});
+      document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
+    }
+    refresh();
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+  return {refresh:refresh};
+}
+var _lifeCar=_autoCarousel('.life-cols','lcarDots');
+
 
 /* ===== Carrusel de proyectos (Lista + Mapa, móvil) ===== */
 var _hcar={t:null,idle:null,rz:null,userT:0};

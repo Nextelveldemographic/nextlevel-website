@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v12.9 · Klaric · el texto de los bloques grandes entra con tiempo propio, no pegado al recuadro -->
+<!-- NLD v13.1 · Klaric · ficha: revelado ligado a su propio scroll y barra superpuesta (la foto llega al borde) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v12.9-2026-08">
+<meta name="version" content="v13.1-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -1362,11 +1362,15 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 
 /* --- 11. Barras de desplazamiento discretas (sólo escritorio con ratón) --- */
 @media(hover:hover) and (pointer:fine){
-  .pm-scroll::-webkit-scrollbar,.mob::-webkit-scrollbar{width:10px}
-  .pm-scroll::-webkit-scrollbar-thumb,.mob::-webkit-scrollbar-thumb{
+  .mob::-webkit-scrollbar{width:10px}
+  /* En la ficha la barra se superpone en vez de ocupar ancho: así la
+     foto llega hasta el borde derecho del recuadro. */
+  .pm-scroll{scrollbar-width:none;-ms-overflow-style:none}
+  .pm-scroll::-webkit-scrollbar{width:0;height:0;display:none}
+  .mob::-webkit-scrollbar-thumb{
     background:var(--divider);border-radius:var(--r-pill);border:3px solid var(--w);background-clip:padding-box}
-  .pm-scroll::-webkit-scrollbar-thumb:hover,.mob::-webkit-scrollbar-thumb:hover{background:var(--grey-3)}
-  .pm-scroll::-webkit-scrollbar-track,.mob::-webkit-scrollbar-track{background:transparent}
+  .mob::-webkit-scrollbar-thumb:hover{background:var(--grey-3)}
+  .mob::-webkit-scrollbar-track{background:transparent}
 }
 
 /* --- 12. Separadores y eyebrows: jerarquía más nítida --- */
@@ -1478,6 +1482,48 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
   .rv .life-callout-h,.rv .life-callout-sub,
   .rv .life-close-q,.rv .life-close-sub{
     opacity:1!important;transform:none!important;transition:none!important}
+}
+
+
+/* ============================================================
+   FICHA DE PROYECTO — entrada escalonada
+   La ficha se construye por JavaScript y vive fuera de las
+   secciones, así que el motor de revelado no la alcanzaba: todo
+   su contenido aparecía de golpe con el recuadro.
+   Aquí se reproduce la misma lógica, encadenada a .show, y se
+   reinicia sola cada vez que la ficha se abre.
+   ============================================================ */
+
+/* Nivel 1 — los bloques de la ficha, en cascada */
+.pm-overlay .pm-rv,
+.pm-overlay .pm-cta{
+  opacity:0;transform:translateY(22px);
+  transition:opacity .62s var(--ease-rv),transform .72s var(--ease-rv)}
+.pm-overlay .pm-rv.in,
+.pm-overlay.show .pm-cta{opacity:1;transform:none}
+
+/* La barra de acción entra pronto: es la que invita a actuar */
+.pm-overlay.show .pm-cta{transition-delay:.20s}
+
+/* Nivel 2 — dentro de la cabecera, el texto tiene tiempo propio,
+   igual que en los bloques grandes de la página */
+.pm-overlay .pm-head>*{
+  opacity:0;transform:translateY(16px);
+  transition:opacity .6s var(--ease-rv),transform .7s var(--ease-rv)}
+.pm-overlay .pm-head.in>*{opacity:1;transform:none}
+.pm-overlay .pm-head.in>*:nth-child(1){transition-delay:.10s}
+.pm-overlay .pm-head.in>*:nth-child(2){transition-delay:.17s}
+.pm-overlay .pm-head.in>*:nth-child(3){transition-delay:.24s}
+.pm-overlay .pm-head.in>*:nth-child(4){transition-delay:.31s}
+
+/* La foto acompaña con un zoom lento, como las tarjetas de la web */
+.pm-overlay .pm-slide-photo{transform:scale(1.06);transition:transform 1.5s var(--ease-rv)}
+.pm-overlay.show .pm-slide-photo{transform:none}
+
+@media(prefers-reduced-motion:reduce){
+  .pm-overlay .pm-rv,.pm-overlay .pm-cta,.pm-overlay .pm-head>*{
+    opacity:1!important;transform:none!important;transition:none!important}
+  .pm-overlay .pm-slide-photo{transform:none!important;transition:none!important}
 }
 
 </style>
@@ -2701,6 +2747,7 @@ function openProjModal(card){_pmCurCard=card;
   ov.classList.add('open');document.body.classList.add('pm-lock');
   requestAnimationFrame(function(){ov.classList.add('show')});
   document.getElementById('pmScroll').scrollTop=0;
+  try{_pmRevealInit()}catch(e){}
   ov.setAttribute('aria-hidden','false');
 }
 function closeProjModal(){
@@ -3259,6 +3306,48 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);
   else start();
 })();
+
+
+/* ===== Revelado dentro de la ficha de proyecto =====
+   La ficha tiene su propio contenedor con desplazamiento, así que sus
+   bloques no los puede vigilar el observador de la página: hay que
+   observarlos tomando la ficha como marco de referencia. Se reinicia
+   en cada apertura, porque el contenido se reconstruye cada vez. */
+var _pmIO=null;
+function _pmRevealInit(){
+  var sc=document.getElementById('pmScroll');
+  if(!sc)return;
+  var items=[].slice.call(sc.children);
+  items.forEach(function(el){el.classList.add('pm-rv');el.classList.remove('in');el.style.transitionDelay='';});
+
+  if(_pmIO){_pmIO.disconnect();_pmIO=null;}
+
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
+  if(reduce||!('IntersectionObserver' in window)){
+    items.forEach(function(el){el.classList.add('in');});
+    return;
+  }
+
+  _pmIO=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      e.target.classList.add('in');
+      _pmIO.unobserve(e.target);
+    });
+  },{root:sc,threshold:0,rootMargin:'0px 0px -8% 0px'});
+
+  /* Igual que en la página: el estado inicial debe pintarse antes de observar */
+  items.forEach(function(el){ void el.offsetHeight; });
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){
+      items.forEach(function(el,i){
+        el.style.transitionDelay=(Math.min(i,5)*0.07).toFixed(2)+'s';
+        _pmIO.observe(el);
+      });
+    });
+  });
+}
 
 </script>
 <!-- ===== Vista de detalle de proyecto ===== -->

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v14.3 · Klaric · barra mas transparente; legibilidad sostenida por saturacion y brillo -->
+<!-- NLD v14.6 · Klaric · 16 desenfoques imperceptibles retirados de los badges; menos trabajo por fotograma -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v14.3-2026-08">
+<meta name="version" content="v14.6-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -587,7 +587,11 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 .proj-photo-fb{font-size:52px;opacity:.32;line-height:1}
 .proj-photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:2}
 .proj-badges{position:absolute;top:10px;left:10px;z-index:3;display:flex;flex-direction:column;gap:5px;align-items:flex-start;max-width:calc(100% - 20px)}
-.proj-badge{background:rgba(255,255,255,.95);backdrop-filter:blur(8px);color:var(--dark);font-size:var(--fs-10);font-weight:600;padding:4px 9px;border-radius:var(--r-pill);letter-spacing:-.005em;line-height:1.2;box-shadow:var(--sh-1)}
+/* Sin desenfoque de fondo: con el fondo al 95% de opacidad sólo
+   afectaba al 5% restante —imperceptible— pero obligaba a 16
+   desenfoques en vivo que se recomponen en cada fotograma al
+   desplazar. A 60 Hz, con 16,7 ms por fotograma, ese margen cuenta. */
+.proj-badge{background:rgba(255,255,255,.96);color:var(--dark);font-size:var(--fs-10);font-weight:600;padding:4px 9px;border-radius:var(--r-pill);letter-spacing:-.005em;line-height:1.2;box-shadow:var(--sh-1)}
 .proj-badge.blue{background:var(--blue);color:var(--w)}
 .proj-badge.green{background:#4CD964;color:#000}
 .proj-badge.amber{background:#FF9500;color:#000}
@@ -614,7 +618,7 @@ footer{background:var(--chalk);color:var(--grey-2);padding:40px 22px 20px;border
 /* Hybrid split view */
 .proj-layout{display:block}
 .proj-layout.hybrid{display:grid;grid-template-columns:2fr 3fr;gap:20px;align-items:start}
-.proj-layout.hybrid .proj-grid{grid-template-columns:1fr;gap:12px;max-height:460px;overflow-y:auto;padding:4px 8px 4px 4px;scroll-behavior:smooth}
+.proj-layout.hybrid .proj-grid{grid-template-columns:1fr;gap:12px;max-height:460px;overflow-y:auto;padding:4px 8px 4px 4px}
 .proj-layout.hybrid .proj-map-wrap{display:block;position:sticky;top:80px}
 .proj-layout.hybrid #projMap{height:460px}
 .proj-layout.hybrid .proj-grid::-webkit-scrollbar{width:6px}
@@ -1018,7 +1022,7 @@ a,button,summary,label,select,[role="button"],[onclick],
     transition:transform .42s cubic-bezier(.32,.72,0,1),opacity .3s ease}
   .pm-overlay.show .pm-dialog{transform:translateY(0)}
   .pm-gallery{aspect-ratio:16/10}
-  .pm-scroll{scroll-behavior:smooth}
+  .pm-scroll{scroll-behavior:auto}
   .pm-name{line-height:1.12}
 }
 
@@ -1444,11 +1448,20 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 :root{
   /* Curva de Apple para revelado: sale rápido y frena larguísimo */
   --ease-rv:cubic-bezier(.32,.94,.6,1);
+  /* Escala de tiempos del revelado. Tres niveles y nada más:
+     base   → la mayoría de las piezas
+     grande → bloques que ocupan buena parte de la pantalla
+     interno→ segundo nivel dentro de un bloque que ya entró
+     Antes cada sistema traía sus propios números y se notaba:
+     la ficha en escritorio corría un 40% más rápido que la página. */
+  --rv-o:.9s;    --rv-t:1s;      /* base */
+  --rv-o-lg:1.05s; --rv-t-lg:1.2s; /* bloques grandes */
+  --rv-o-sm:.8s;  --rv-t-sm:.9s;  /* segundo nivel */
 }
 .rv{
   opacity:0;
   transform:translateY(42px);
-  transition:opacity .9s var(--ease-rv),transform 1s var(--ease-rv);
+  transition:opacity var(--rv-o) var(--ease-rv),transform var(--rv-t) var(--ease-rv);
 }
 /* Sin will-change: el navegador promueve a capa sólo mientras la
    transición corre y libera al terminar. Reservarlo por adelantado
@@ -1496,7 +1509,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 
 .js-hero .hero-eb,.js-hero .hero-h,.js-hero .hero-sub,
 .js-hero .intent-toggle,.js-hero .hero-btns{
-  transition:opacity .9s var(--ease-rv),transform 1s var(--ease-rv)}
+  transition:opacity var(--rv-o) var(--ease-rv),transform var(--rv-t) var(--ease-rv)}
 
 @media(prefers-reduced-motion:reduce){
   .js-hero .hero-eb:not(.in),.js-hero .hero-h:not(.in),.js-hero .hero-sub:not(.in),
@@ -1510,7 +1523,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
    con la misma intensidad que en las tarjetas del resto de la web. */
 .rv-big{
   transform:translateY(64px);
-  transition:opacity 1.05s var(--ease-rv),transform 1.2s var(--ease-rv)}
+  transition:opacity var(--rv-o-lg) var(--ease-rv),transform var(--rv-t-lg) var(--ease-rv)}
 @media(prefers-reduced-motion:reduce){
   .rv-big{transform:none!important;transition:none!important}
 }
@@ -1526,7 +1539,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 .rv .life-callout-h,.rv .life-callout-sub,
 .rv .life-close-q,.rv .life-close-sub{
   opacity:0;transform:translateY(24px);
-  transition:opacity .85s var(--ease-rv),transform .95s var(--ease-rv)}
+  transition:opacity var(--rv-o-sm) var(--ease-rv),transform var(--rv-t-sm) var(--ease-rv)}
 
 /* El titular arranca poco después del recuadro; la bajada, tras él */
 .rv.in .life-callout-h,.rv.in .life-close-q{
@@ -1554,7 +1567,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 .pm-overlay .pm-rv,
 .pm-overlay .pm-cta{
   opacity:0;transform:translateY(22px);
-  transition:opacity .62s var(--ease-rv),transform .72s var(--ease-rv)}
+  transition:opacity var(--rv-o) var(--ease-rv),transform var(--rv-t) var(--ease-rv)}
 .pm-overlay .pm-rv.in,
 .pm-overlay.show .pm-cta{opacity:1;transform:none}
 
@@ -1565,7 +1578,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
    igual que en los bloques grandes de la página */
 .pm-overlay .pm-head>*{
   opacity:0;transform:translateY(16px);
-  transition:opacity .6s var(--ease-rv),transform .7s var(--ease-rv)}
+  transition:opacity var(--rv-o-sm) var(--ease-rv),transform var(--rv-t-sm) var(--ease-rv)}
 .pm-overlay .pm-head.in>*{opacity:1;transform:none}
 .pm-overlay .pm-head.in>*:nth-child(1){transition-delay:.10s}
 .pm-overlay .pm-head.in>*:nth-child(2){transition-delay:.17s}
@@ -1643,16 +1656,13 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
    estrecho: el mismo tiempo se percibe mucho más apurado. Se alarga
    sólo aquí; el resto de la web queda igual. */
 @media(max-width:600px){
-  .pm-overlay .pm-rv{
-    transition:opacity .95s var(--ease-rv),transform 1.05s var(--ease-rv)}
-  .pm-overlay .pm-head>*{
-    transition:opacity .88s var(--ease-rv),transform .98s var(--ease-rv)}
+  .pm-overlay .pm-rv{transition:opacity var(--rv-o) var(--ease-rv),transform var(--rv-t) var(--ease-rv)}
+  .pm-overlay .pm-head>*{transition:opacity var(--rv-o-sm) var(--ease-rv),transform var(--rv-t-sm) var(--ease-rv)}
   .pm-overlay .pm-head.in>*:nth-child(1){transition-delay:.14s}
   .pm-overlay .pm-head.in>*:nth-child(2){transition-delay:.24s}
   .pm-overlay .pm-head.in>*:nth-child(3){transition-delay:.34s}
   .pm-overlay .pm-head.in>*:nth-child(4){transition-delay:.44s}
-  .pm-overlay .pm-cta{
-    transition:opacity .9s var(--ease-rv),transform 1s var(--ease-rv)}
+  .pm-overlay .pm-cta{transition:opacity var(--rv-o) var(--ease-rv),transform var(--rv-t) var(--ease-rv)}
   .pm-overlay.show .pm-cta{transition-delay:.26s}
   /* La foto sigue yendo más lenta que su contenedor: da profundidad */
   .pm-overlay .pm-gallery .pm-slide-photo{transition:transform 2.2s var(--ease-rv)}
@@ -3280,12 +3290,12 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
   if('IntersectionObserver' in window && !reduce){
     /* Piezas normales: se disparan al cruzar el 88% de la pantalla,
        o sea apenas entran. */
-    io=makeIO('0px 0px -12% 0px');
+    io=makeIO('0px 0px -6% 0px');
     /* Bloques grandes: se disparan más adentro (74%). Si usaran el
        mismo punto, la animación de 1s terminaría mientras el bloque
        todavía está mayormente debajo del pliegue, y al llegar a verlo
        ya estaría quieto: por eso parecían no animarse. */
-    ioBig=makeIO('0px 0px -26% 0px');
+    ioBig=makeIO('0px 0px -18% 0px');
   }
 
   function prepare(){
@@ -3305,7 +3315,7 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
         var par=el.parentNode;
         if(par.__rvIdx===undefined)par.__rvIdx=0;
         var idx=par.__rvIdx++;
-        el.style.transitionDelay=(Math.min(idx,5)*0.09).toFixed(2)+'s';
+        el.style.transitionDelay=(Math.min(idx,3)*0.09).toFixed(2)+'s';
       });
       /* El estado inicial debe quedar COMPROMETIDO antes de observar.
          Con sólo dos fotogramas no alcanzaba en móvil: ahí el hilo

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v13.1 · Klaric · ficha: revelado ligado a su propio scroll y barra superpuesta (la foto llega al borde) -->
+<!-- NLD v13.4 · Klaric · ficha en movil, popups del mapa y cambio de vista con la misma curva de la casa -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v13.1-2026-08">
+<meta name="version" content="v13.4-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -786,7 +786,9 @@ h2.cta-h em,.life-callout-h em{color:#5AB0FF}
   .life-geo-grid{grid-template-columns:repeat(2,1fr);gap:12px}
 }
 /* ===== Vista de detalle de proyecto (lógica propilatam · estilo NLD) ===== */
-.pm-overlay{position:fixed;inset:0;z-index:3000;display:none}
+/* Por encima del mapa a pantalla completa (9999): la ficha es lo
+   último que se abre, así que debe ser lo primero que se ve. */
+.pm-overlay{position:fixed;inset:0;z-index:10000;display:none}
 .pm-overlay.open{display:block}
 .pm-scrim{position:absolute;inset:0;background:rgba(0,0,0,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);opacity:0;transition:opacity .35s var(--ease)}
 .pm-overlay.show .pm-scrim{opacity:1}
@@ -1517,13 +1519,50 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 .pm-overlay .pm-head.in>*:nth-child(4){transition-delay:.31s}
 
 /* La foto acompaña con un zoom lento, como las tarjetas de la web */
-.pm-overlay .pm-slide-photo{transform:scale(1.06);transition:transform 1.5s var(--ease-rv)}
-.pm-overlay.show .pm-slide-photo{transform:none}
+/* El zoom acompaña a la galería: arranca cuando ella entra, no antes.
+   Va más lento que su contenedor para dar sensación de profundidad. */
+.pm-overlay .pm-gallery .pm-slide-photo{transform:scale(1.07);transition:transform 1.6s var(--ease-rv)}
+.pm-overlay .pm-gallery.in .pm-slide-photo{transform:none}
 
 @media(prefers-reduced-motion:reduce){
   .pm-overlay .pm-rv,.pm-overlay .pm-cta,.pm-overlay .pm-head>*{
     opacity:1!important;transform:none!important;transition:none!important}
-  .pm-overlay .pm-slide-photo{transform:none!important;transition:none!important}
+  .pm-overlay .pm-gallery .pm-slide-photo{transform:none!important;transition:none!important}
+}
+
+
+/* ============================================================
+   POPUPS DEL MAPA Y CAMBIO DE VISTA
+   Los popups usaban la animación por defecto de Leaflet (0.2s
+   lineal) y el cambio de vista no tenía ninguna. Ambos pasan a
+   la misma curva del resto de la web.
+   ============================================================ */
+
+/* Popup: crece desde el pin en vez de aparecer de golpe */
+@keyframes nldPopIn{
+  from{opacity:0;transform:translateY(10px) scale(.94)}
+  to{opacity:1;transform:none}}
+.leaflet-popup-content-wrapper{
+  animation:nldPopIn .42s var(--ease-rv) both;
+  transform-origin:bottom center}
+/* La punta sólo aparece: Leaflet la mantiene rotada 45°, así que
+   tocarle el transform la deformaría */
+.leaflet-popup-tip-container{animation:nldPopIn .42s var(--ease-rv) both;animation-name:nldTipIn}
+@keyframes nldTipIn{from{opacity:0}to{opacity:1}}
+/* La transición propia de Leaflet, alineada a nuestra curva */
+.leaflet-fade-anim .leaflet-popup{transition:opacity .3s var(--ease-rv)}
+
+/* Cambio de vista: lista, mapa y lista+mapa entran, no saltan */
+@keyframes projViewIn{
+  from{opacity:0;transform:translateY(16px)}
+  to{opacity:1;transform:none}}
+.proj-layout.view-fx .proj-grid,
+.proj-layout.view-fx .proj-map-wrap{animation:projViewIn .55s var(--ease-rv) both}
+.proj-layout.view-fx .proj-map-wrap{animation-delay:.07s}
+
+@media(prefers-reduced-motion:reduce){
+  .leaflet-popup-content-wrapper,.leaflet-popup-tip-container,
+  .proj-layout.view-fx .proj-grid,.proj-layout.view-fx .proj-map-wrap{animation:none!important}
 }
 
 </style>
@@ -2298,7 +2337,13 @@ function toggleMapFull(){
   setTimeout(function(){if(_projMap)_projMap.invalidateSize()},60);
 }
 document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){var w=document.querySelector('.proj-map-wrap.map-fullscreen');if(w){w.classList.remove('map-fullscreen');document.body.classList.remove('map-fs-lock');setTimeout(function(){if(_projMap)_projMap.invalidateSize()},60)}}
+  if(e.key!=='Escape')return;
+  /* Si la ficha está abierta sobre el mapa, Escape le corresponde a ella:
+     de lo contrario una sola pulsación cerraría las dos capas a la vez. */
+  var ov=document.getElementById('pmOverlay');
+  if(ov&&ov.classList.contains('open'))return;
+  var w=document.querySelector('.proj-map-wrap.map-fullscreen');
+  if(w){w.classList.remove('map-fullscreen');document.body.classList.remove('map-fs-lock');setTimeout(function(){if(_projMap)_projMap.invalidateSize()},60);}
 });
 
 // ===== Generic auto-carousel (liquid glass) =====
@@ -2523,6 +2568,7 @@ function setProjView(view){
     grid.classList.remove('map-hidden');
     mapWrap.classList.remove('active');
   }
+  try{_projViewFx()}catch(e){}
   try{_hcarRefresh()}catch(e){}
 }
 // Click en card centra el mapa (si está en vista mapa)
@@ -3341,12 +3387,32 @@ function _pmRevealInit(){
   items.forEach(function(el){ void el.offsetHeight; });
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      items.forEach(function(el,i){
-        el.style.transitionDelay=(Math.min(i,5)*0.07).toFixed(2)+'s';
-        _pmIO.observe(el);
-      });
+      /* En móvil el hilo va cargado y la ficha además entra deslizándose:
+         sin esta pausa el observador se adelantaba al primer pintado y
+         los bloques visibles al abrir aparecían ya colocados. */
+      setTimeout(function(){
+        items.forEach(function(el,i){
+          el.style.transitionDelay=(Math.min(i,5)*0.07).toFixed(2)+'s';
+          _pmIO.observe(el);
+        });
+      },90);
     });
   });
+}
+
+
+/* Reinicia la animación de entrada al cambiar de vista. Se aplica a la
+   lista y al mapa, no al contenedor: un transform en el contenedor
+   rompería el mapa a pantalla completa, que se posiciona fijo. */
+function _projViewFx(){
+  var l=document.getElementById('projLayout');
+  if(!l)return;
+  try{if(window.matchMedia('(prefers-reduced-motion:reduce)').matches)return;}catch(e){}
+  l.classList.remove('view-fx');
+  void l.offsetWidth;                       /* fuerza el reinicio de la animación */
+  l.classList.add('view-fx');
+  clearTimeout(l.__vfx);
+  l.__vfx=setTimeout(function(){l.classList.remove('view-fx');},700);
 }
 
 </script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v14.0 · Klaric · C-2 cerrado (SRI real de jsPDF) y C-7 cerrado (un solo escuchador de resize) -->
+<!-- NLD v14.3 · Klaric · barra mas transparente; legibilidad sostenida por saturacion y brillo -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v14.0-2026-08">
+<meta name="version" content="v14.3-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -77,7 +77,44 @@ h1 em,h2 em,h3 em,h4 em{font-style:normal;font-weight:inherit;color:var(--grey)}
 button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
 h1,h2,h3,h4,h5{font-family:var(--sf);color:var(--dark);letter-spacing:-.005em}
 /* Nav */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;height:44px;background:rgba(255,255,255,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--divider-2);display:flex;align-items:center;justify-content:center}
+/* ===== Barra: liquid glass =====
+   El coste de rendimiento vive casi todo en el RADIO del desenfoque.
+   Por eso baja de 20px a 16px y la riqueza se recupera con brillo y
+   saturación —que son mucho más baratos— más reflejos hechos con
+   sombras internas y degradados, que no cuestan prácticamente nada.
+   Resultado: se ve más vidrio y pesa algo menos que antes. */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;height:44px;
+  /* El degradado sutil es lo que separa el vidrio del esmerilado plano */
+  background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,.34));
+  /* Con menos fondo, la legibilidad la sostienen la saturación y el
+     brillo del filtro, no la opacidad. Ambos son baratos. */
+  backdrop-filter:saturate(210%) brightness(1.12) blur(16px);
+  -webkit-backdrop-filter:saturate(210%) brightness(1.12) blur(16px);
+  border-bottom:1px solid rgba(0,0,0,.07);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.95),   /* reflejo especular superior */
+    inset 0 -1px 0 rgba(0,0,0,.04),        /* canto inferior, da grosor */
+    0 1px 12px rgba(0,0,0,.045);           /* elevación sobre el contenido */
+  display:flex;align-items:center;justify-content:center;
+  isolation:isolate}
+
+/* Brillo diagonal: el destello que recorre el cristal. Es un degradado
+   estático, no una animación: cuesta lo mismo que un fondo plano. */
+nav::after{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(104deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.30) 38%,
+    rgba(255,255,255,.10) 52%,
+    rgba(255,255,255,0) 68%);
+  opacity:.55}
+
+/* Sin soporte de desenfoque, el cristal sería ilegible: fondo sólido */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  nav{background:var(--w)}
+  nav::after{display:none}
+}
 .nav-inner{max-width:var(--max-nav);width:100%;display:flex;align-items:center;justify-content:space-between;padding:0 22px;height:100%}
 .nav-left{display:flex;align-items:center;gap:22px}
 .logo-w{display:flex;align-items:center;gap:8px}
@@ -717,7 +754,22 @@ body.map-fs-lock{overflow:hidden}
   --sh-pin:0 2px 8px rgba(0,0,0,.60);--sh-focus:0 0 0 3px rgba(41,151,255,.28);
 }
 [data-theme="dark"] body{background:#000;color:#F5F5F7}
-[data-theme="dark"] nav{background:rgba(0,0,0,.72)}
+[data-theme="dark"] nav{
+  background:linear-gradient(180deg,rgba(30,30,32,.52),rgba(14,14,16,.36));
+  backdrop-filter:saturate(200%) brightness(1.25) blur(16px);
+  -webkit-backdrop-filter:saturate(200%) brightness(1.25) blur(16px);
+  border-bottom:1px solid rgba(255,255,255,.09);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.20),
+    inset 0 -1px 0 rgba(0,0,0,.45),
+    0 1px 16px rgba(0,0,0,.45)}
+[data-theme="dark"] nav::after{
+  background:linear-gradient(104deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,.10) 38%,
+    rgba(255,255,255,.03) 52%,
+    rgba(255,255,255,0) 68%);
+  opacity:.7}
 [data-theme="dark"] .sec-white{background:#000}
 [data-theme="dark"] .sec-chalk{background:#161617}
 [data-theme="dark"] .sec-dark{background:#000}
@@ -1398,8 +1450,10 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
   transform:translateY(42px);
   transition:opacity .9s var(--ease-rv),transform 1s var(--ease-rv);
 }
-.rv{will-change:opacity,transform}
-.rv.in{opacity:1;transform:none;will-change:auto}
+/* Sin will-change: el navegador promueve a capa sólo mientras la
+   transición corre y libera al terminar. Reservarlo por adelantado
+   en 102 piezas saturaba la memoria de vídeo en escritorio. */
+.rv.in{opacity:1;transform:none}
 
 /* Las fotos entran con su propio ritmo, más lento que su contenedor:
    dos velocidades dentro del mismo bloque generan profundidad. */
@@ -2674,9 +2728,13 @@ window.addEventListener('resize',function(){
   },180);
 },{passive:true});
 onResize(function(){setProc(curProc);});
+onResize(_spMeasure);
 function _faqSize(it){var a=it.querySelector('.faq-a');if(!a)return;if(it.classList.contains('open')){a.style.maxHeight=a.scrollHeight+'px';}else{a.style.maxHeight='';}}
 function _faqResizeAll(){document.querySelectorAll('.faq-item.open').forEach(_faqSize);}
-document.addEventListener('click',ev=>{const q=ev.target.closest('.faq-q');if(!q)return;const it=q.parentElement;const open=it.classList.toggle('open');q.setAttribute('aria-expanded',open);_faqSize(it);if(open&&it.classList.contains('faq-item-featured'))_faqCountUp(it);});
+/* El FAQ y los filtros cambian la altura de la página: hay que
+   volver a medir el recorrido de la barra de progreso. */
+function _spRemeasureSoon(){setTimeout(function(){try{_spMeasure()}catch(e){}},450);}
+document.addEventListener('click',ev=>{const q=ev.target.closest('.faq-q');if(!q)return;const it=q.parentElement;const open=it.classList.toggle('open');q.setAttribute('aria-expanded',open);_faqSize(it);_spRemeasureSoon();if(open&&it.classList.contains('faq-item-featured'))_faqCountUp(it);});
 onResize(_faqResizeAll);
 var faqExpanded=false;
 function _syncFaqMore(){var l=document.getElementById('faqMoreLbl');if(!l)return;var d=I18N[curLang]||I18N.es;l.textContent=faqExpanded?((d&&d.faq_btn_less)||'Ver menos'):((d&&d.faq_btn_more)||'Ver más preguntas');}
@@ -2685,7 +2743,16 @@ function _faqCountUp(it){it.querySelectorAll('.ffb-v[data-target]').forEach(func
 const _ff=document.getElementById('ff'),_fst=document.getElementById('fstatus'),_fsb=_ff.querySelector('.btn-sub');_ff.addEventListener('submit',function(ev){ev.preventDefault();_fsb.disabled=true;_fsb.setAttribute('aria-busy','true');_fsb.textContent=(I18N[curLang]&&I18N[curLang].fm_sending)||'Enviando…';fetch(this.action,{method:'POST',body:new FormData(this),headers:{Accept:'application/json'}}).then(r=>{if(!r.ok)throw 0;_fst.className='form-status success';_fst.textContent=(I18N[curLang]&&I18N[curLang].fm_success)||'✓ Gracias. Te contactaremos dentro de 24 horas.';this.reset()}).catch(()=>{_fst.className='form-status error';_fst.innerHTML=((I18N[curLang]&&I18N[curLang].fm_error)||'No pudimos enviar. Escríbenos por <a href="{wa}" target="_blank" rel="noopener">WhatsApp</a>.').replace('{wa}','https://wa.me/'+WA_NUMBER)}).finally(()=>{_fsb.disabled=false;_fsb.removeAttribute('aria-busy');_fsb.textContent=(I18N[curLang]&&I18N[curLang].fm_btn)||'Enviar consulta'})});
 function contactAlly(name){const s=document.getElementById('fobj');const a=document.getElementById('f-ally');const m=document.getElementById('fmsg');[...s.options].forEach(o=>{if(o.value.startsWith('Contactar aliado'))s.value=o.value});a.value=name;m.value='Me interesa contactar a: '+name+'. ';document.getElementById('contacto').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>document.querySelector('#ff input[name="Nombre"]').focus(),700)}
 function setDevForm(){const s=document.getElementById('fobj');const m=document.getElementById('fmsg');[...s.options].forEach(o=>{if(o.value.startsWith('Soy desarrolladora'))s.value=o.value});m.value='Soy desarrolladora — me interesa explorar alianza con NLD. ';setTimeout(()=>document.querySelector('#ff input[name="Nombre"]').focus(),700)}
-const sp=document.getElementById('scroll-prog');let sTick=false;window.addEventListener('scroll',()=>{if(sTick)return;sTick=true;requestAnimationFrame(()=>{const h=document.documentElement;sp.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';sTick=false})},{passive:true});
+const sp=document.getElementById('scroll-prog');let sTick=false;/* Leer scrollHeight y clientHeight obliga al navegador a recalcular
+   toda la maquetación. Al hacerlo en cada fotograma de desplazamiento,
+   y sobre una página larga, ese trabajo se nota como tirones —más en
+   escritorio, donde hay más elementos que medir.
+   Ahora el recorrido total se calcula una vez y se recalcula sólo
+   cuando cambia el tamaño de la ventana o el contenido. */
+var _spMax=0;
+function _spMeasure(){var h=document.documentElement;_spMax=Math.max(1,h.scrollHeight-h.clientHeight);}
+_spMeasure();
+window.addEventListener('scroll',()=>{if(sTick)return;sTick=true;requestAnimationFrame(()=>{sp.style.width=(document.documentElement.scrollTop/_spMax*100)+'%';sTick=false})},{passive:true});
 document.addEventListener('DOMContentLoaded',()=>{let saved='es',theme='light';try{saved=localStorage.getItem('nld_lang')||'es';theme=localStorage.getItem('nld_theme')||'light'}catch(e){}document.documentElement.setAttribute('data-theme',theme);document.querySelectorAll('.faq-q').forEach(q=>q.setAttribute('aria-expanded','false'));applyLang(saved);try{_syncFaqMore()}catch(e){}let intent='retiro';try{intent=localStorage.getItem('nld_intent')||'retiro'}catch(e){}setTimeout(()=>setIntent(intent),100);setTimeout(()=>{if(document.getElementById('projLayout'))setProjView('list')},300);updateWALinks();setTimeout(()=>setProc(0),200)});
 
 /* ===== Vista de detalle de proyecto (lógica propilatam · estilo NLD) ===== */

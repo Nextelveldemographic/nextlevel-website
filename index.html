@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v13.6 · Klaric · lienzo bajo la foto de la ficha (sin parpadeo blanco) y ritmo mas pausado en movil -->
+<!-- NLD v14.0 · Klaric · C-2 cerrado (SRI real de jsPDF) y C-7 cerrado (un solo escuchador de resize) -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v13.6-2026-08">
+<meta name="version" content="v14.0-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -134,7 +134,7 @@ h2.section-h .blue{color:var(--blue)}
    Antes forzaba opacity:1 en toda la seccion al entrar, y los bloques
    de mas abajo llegaban ya visibles (quedaban estaticos). */
 .active .anim{}
-.d1{transition-delay:.11s}.d2{transition-delay:.22s}.d3{transition-delay:.33s}.d4{transition-delay:.44s}.d5{transition-delay:.55s}.d6{transition-delay:.66s}.d7{transition-delay:.77s}
+
 /* Buttons Apple */
 .btn-blue{background:var(--blue);color:var(--w);padding:12px 22px;border-radius:var(--r-pill);font-size:var(--fs-17);font-weight:400;display:inline-flex;align-items:center;gap:6px;transition:background .2s;line-height:1}
 .btn-blue:hover{background:var(--blue-h)}
@@ -1607,7 +1607,7 @@ a{text-underline-offset:.18em;text-decoration-thickness:from-font}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script defer src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script defer src="https://unpkg.com/jspdf@2.5.1/dist/jspdf.umd.min.js" integrity="sha384-JcnsjUPPylna1s1fvi1u12X5qjY5OL56iySh75FdtrwhO/SWXgMjoVqcKyIIWOLk" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
 </script>
@@ -2501,7 +2501,7 @@ function _msRender(items){
   var box=document.getElementById('mapSearchResults');if(!box)return;
   _msItems=items||[];
   if(!_msItems.length){box.classList.remove('show');box.innerHTML='';return;}
-  box.innerHTML=_msItems.map(function(it,i){return '<button type="button" class="msr" data-i="'+i+'"><span class="msr-e">'+(it.e||'\ud83d\udccd')+'</span><span class="msr-tx"><span class="msr-n">'+_pmEsc(it.n)+'</span>'+(it.sub?'<span class="msr-s">'+_pmEsc(it.sub)+'</span>':'')+'</span></button>';}).join('');
+  box.innerHTML=_msItems.map(function(it,i){return '<button type="button" class="msr" data-i="'+i+'"><span class="msr-e">'+_pmEsc(it.e||'\ud83d\udccd')+'</span><span class="msr-tx"><span class="msr-n">'+_pmEsc(it.n)+'</span>'+(it.sub?'<span class="msr-s">'+_pmEsc(it.sub)+'</span>':'')+'</span></button>';}).join('');
   box.classList.add('show');
 }
 function _msGo(it){
@@ -2660,11 +2660,24 @@ function countUp(el){const t=parseInt(el.getAttribute('data-target'));const sfx=
 let curProc=0;
 function setProc(i){curProc=Math.max(0,Math.min(3,i));var cur=document.getElementById('proc-cur');if(cur)cur.textContent=String(curProc+1).padStart(2,'0');var n=document.getElementById('proc-name');if(n&&procNames[curProc]&&procNames[curProc][curLang])n.textContent=procNames[curProc][curLang];document.querySelectorAll('.proc-dot').forEach(function(d,idx){d.classList.toggle('on',idx===curProc)})}
 function navProc(dir){setProc((curProc+dir+4)%4)}
-window.addEventListener('resize',()=>setProc(curProc));
+/* ===== Un solo escuchador de cambio de tamaño para toda la página =====
+   Había cuatro por separado (cinco en ejecución, porque el motor de
+   carrusel se instancia dos veces), cada uno con su propia espera.
+   Ahora hay uno con lista de suscriptores: una sola espera, un solo
+   recálculo, y cada módulo se registra con onResize(). */
+var _rzSubs=[],_rzT=null;
+function onResize(fn){if(typeof fn==='function')_rzSubs.push(fn);}
+window.addEventListener('resize',function(){
+  clearTimeout(_rzT);
+  _rzT=setTimeout(function(){
+    for(var i=0;i<_rzSubs.length;i++){try{_rzSubs[i]();}catch(e){}}
+  },180);
+},{passive:true});
+onResize(function(){setProc(curProc);});
 function _faqSize(it){var a=it.querySelector('.faq-a');if(!a)return;if(it.classList.contains('open')){a.style.maxHeight=a.scrollHeight+'px';}else{a.style.maxHeight='';}}
 function _faqResizeAll(){document.querySelectorAll('.faq-item.open').forEach(_faqSize);}
 document.addEventListener('click',ev=>{const q=ev.target.closest('.faq-q');if(!q)return;const it=q.parentElement;const open=it.classList.toggle('open');q.setAttribute('aria-expanded',open);_faqSize(it);if(open&&it.classList.contains('faq-item-featured'))_faqCountUp(it);});
-window.addEventListener('resize',function(){clearTimeout(window._faqRT);window._faqRT=setTimeout(_faqResizeAll,140);},{passive:true});
+onResize(_faqResizeAll);
 var faqExpanded=false;
 function _syncFaqMore(){var l=document.getElementById('faqMoreLbl');if(!l)return;var d=I18N[curLang]||I18N.es;l.textContent=faqExpanded?((d&&d.faq_btn_less)||'Ver menos'):((d&&d.faq_btn_more)||'Ver más preguntas');}
 function toggleFaqMore(){var sec=document.getElementById('scene-faq');if(!sec)return;faqExpanded=!faqExpanded;sec.classList.toggle('faq-expanded',faqExpanded);var b=document.getElementById('faqMoreBtn');if(b)b.setAttribute('aria-expanded',faqExpanded?'true':'false');_syncFaqMore();}
@@ -2921,7 +2934,7 @@ function _autoCarousel(trackSel,dotsId,opts){
         var b=e.target.closest('.lcar-dot');
         if(b)go(parseInt(b.getAttribute('data-i'),10),true);
       });
-      window.addEventListener('resize',function(){clearTimeout(st.rz);st.rz=setTimeout(refresh,200);},{passive:true});
+      onResize(refresh);
       document.addEventListener('visibilitychange',function(){document.hidden?stop():start();});
     }
     refresh();
@@ -3020,7 +3033,7 @@ function _hcarRefresh(){
       var b=e.target.closest('.hcar-dot');
       if(b)_hcarGo(parseInt(b.getAttribute('data-i'),10),true);
     });
-    window.addEventListener('resize',function(){clearTimeout(_hcar.rz);_hcar.rz=setTimeout(_hcarRefresh,200);},{passive:true});
+    onResize(_hcarRefresh);
     document.addEventListener('visibilitychange',function(){document.hidden?_hcarStop():_hcarStart();});
     _hcarRefresh();
   }
@@ -3426,16 +3439,29 @@ function _pmRevealInit(){
   items.forEach(function(el){ void el.offsetHeight; });
   requestAnimationFrame(function(){
     requestAnimationFrame(function(){
-      /* En móvil el hilo va cargado y la ficha además entra deslizándose:
-         sin esta pausa el observador se adelantaba al primer pintado y
-         los bloques visibles al abrir aparecían ya colocados. */
       setTimeout(function(){
-        /* Móvil: más separación entre bloques, acorde con la duración */
         var step=0.07;
         try{if(window.matchMedia('(max-width:600px)').matches)step=0.11;}catch(e){}
-        items.forEach(function(el,i){
-          el.style.transitionDelay=(Math.min(i,5)*step).toFixed(2)+'s';
-          _pmIO.observe(el);
+
+        /* La ficha entra desplazándose (420ms). Si en ese momento se le
+           pregunta al observador qué es visible, responde con la ficha
+           aún fuera de sitio y da "nada visible": esos bloques quedaban
+           en blanco hasta que la persona desplazaba.
+           Por eso lo que cabe en pantalla al abrir se revela por medida
+           directa —offsetTop y clientHeight no dependen del transform—
+           y el observador se reserva para lo que viene más abajo. */
+        var visH=sc.clientHeight||0;
+        var k=0;
+        items.forEach(function(el){
+          var dentro = visH>0 ? (el.offsetTop < visH-8) : true;
+          if(dentro){
+            el.style.transitionDelay=(Math.min(k,5)*step).toFixed(2)+'s';
+            k++;
+            el.classList.add('in');
+          }else{
+            el.style.transitionDelay='0s';
+            _pmIO.observe(el);
+          }
         });
       },90);
     });

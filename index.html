@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- NLD v16.3 · Klaric · el PDF ya no se corta: se abren los contenedores padre en la copia -->
+<!-- NLD v16.4 · Klaric · PDF nativo con la estructura de la ficha (sin cortes); fix animacion en movil -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v16.3-2026-08">
+<meta name="version" content="v16.4-2026-08">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -3314,96 +3314,221 @@ function downloadProjPDF(){
   });
 }
 
+function _imgDataURL(img,cuadrada){
+  try{
+    if(!img||!img.complete||!img.naturalWidth)return null;
+    var c=document.createElement('canvas'), ctx;
+    if(cuadrada){
+      var lado=Math.min(img.naturalWidth,img.naturalHeight);
+      c.width=c.height=lado; ctx=c.getContext('2d');
+      ctx.beginPath();ctx.arc(lado/2,lado/2,lado/2,0,Math.PI*2);ctx.closePath();ctx.clip();
+      ctx.drawImage(img,(img.naturalWidth-lado)/2,(img.naturalHeight-lado)/2,lado,lado,0,0,lado,lado);
+    }else{
+      c.width=img.naturalWidth;c.height=img.naturalHeight;
+      ctx=c.getContext('2d');ctx.drawImage(img,0,0);
+    }
+    return {d:c.toDataURL('image/jpeg',0.9),w:c.width,h:c.height};
+  }catch(e){return null;}
+}
+
 function _capturarFicha(sc,nombre,btn){
-  function terminar(){
-    if(btn){btn.style.opacity='';btn.style.pointerEvents='';}
+  function terminar(){ if(btn){btn.style.opacity='';btn.style.pointerEvents='';} }
+  var lang=(typeof curLang!=='undefined'&&PM_UI[curLang])?curLang:'es';
+  var U=PM_UI[lang]||PM_UI.es;
+  function txt(sel){var e=document.querySelector(sel);return e?_sanPDF(e.textContent):'';}
+  function all(sel){return [].map.call(document.querySelectorAll(sel),function(e){return _sanPDF(e.textContent);}).filter(Boolean);}
+
+  /* ---- Datos, leídos de la misma ficha ---- */
+  var loc=txt('#pmLoc').replace(/^[^A-Za-z0-9]+/,'');
+  var precio=txt('#pmCtaPrice');
+  var badges=all('#pmBadges .pm-chip');
+  var facts=[].map.call(document.querySelectorAll('#pmFacts .pm-fact'),function(f){
+    var l=f.querySelector('.pm-fact-l'), v=f.querySelector('.pm-fact-v');
+    return [_sanPDF(l?l.textContent:''),_sanPDF(v?v.textContent:'')];
+  });
+  var desc=txt('#pmDesc');
+  var amen=all('#pmAmen span');
+  var dists=[].map.call(document.querySelectorAll('#pmDist .pm-dist-row'),function(r){
+    var e=r.querySelector('.pm-dist-e'), n=r.querySelector('.pm-dist-n'), k=r.querySelector('.pm-dist-km');
+    return [_sanPDF(n?n.textContent:''),_sanPDF(k?k.textContent:'')];
+  });
+  var distNote=txt('#pmDistNote');
+  var modelName=txt('#pmModel .pm-model-name');
+  var modelSpecs=all('#pmModel .pm-model-specs span');
+  var banks=[].map.call(document.querySelectorAll('#pmBanks .pm-bank'),function(b){
+    var n=b.querySelector('b'), x=b.querySelector('span');
+    return [_sanPDF(n?n.textContent:''),_sanPDF(x?x.textContent:'')];
+  });
+  var agName=txt('#pmOverlay .pm-agent-name'), agRole=txt('#pmOverlay .pm-agent-role'),
+      agLoc=txt('#pmOverlay .pm-agent-loc').replace(/^[^A-Za-z0-9]+/,'');
+  var devName=txt('#pmDevName'), devBlurb=txt('#pmDevBlurb'),
+      verify=txt('#pmOverlay [data-i18n="pm_verify"]'), disc=txt('#pmOverlay .pm-disc');
+
+  /* ---- Imágenes ---- */
+  var foto=_imgDataURL(_pmCurCard?_pmCurCard.querySelector('.proj-photo img'):null,false);
+  var fotoAg=_imgDataURL(document.querySelector('.pm-agent-photo img'),true);
+
+  /* El croquis se fotografía sólo a él: es una imagen contenida, así que
+     nunca queda partida entre páginas. El resto del PDF se dibuja como
+     texto, que es lo que permite decidir dónde cortar cada hoja. */
+  function croquisImg(){
+    var el=document.getElementById('pmCroquis');
+    if(!el||typeof html2canvas!=='function')return Promise.resolve(null);
+    return html2canvas(el,{useCORS:true,scale:2,backgroundColor:'#F5F5F7',logging:false,imageTimeout:8000})
+      .then(function(c){return {d:c.toDataURL('image/jpeg',0.92),w:c.width,h:c.height};})
+      .catch(function(){return null;});
   }
 
-  /* El croquis tarda en traer sus teselas. Capturar antes de que estén
-     dibujadas deja el mapa en blanco, que era el punto flojo. */
-  function esperarMapa(){
-    return new Promise(function(ok){
-      var m=(typeof _pmCroquis!=='undefined')?_pmCroquis:null;
-      if(!m){ok();return;}
-      var listo=false, fin=function(){if(!listo){listo=true;ok();}};
-      try{
-        m.invalidateSize();
-        m.whenReady(function(){setTimeout(fin,450);});
-        m.eachLayer(function(l){ if(l.on) l.on('load',function(){setTimeout(fin,250);}); });
-      }catch(e){}
-      setTimeout(fin,2200);          /* tope: nunca se queda esperando */
-    });
-  }
-
-  esperarMapa().then(function(){
-    return html2canvas(sc,{
-      backgroundColor:'#ffffff',
-      scale:Math.min(2,(window.devicePixelRatio||1)*1.5),
-      useCORS:true, allowTaint:false, logging:false, imageTimeout:8000,
-      windowWidth:sc.scrollWidth,
-      width:sc.scrollWidth,
-      height:sc.scrollHeight,
-      scrollX:0, scrollY:0,
-      /* Se trabaja sobre una COPIA del documento, no sobre el que ve la
-         persona: así no hay parpadeos y se puede forzar que todo esté
-         visible y quieto sin alterar la ficha real. */
-      onclone:function(docClon){
-        var cont=docClon.getElementById('pmScroll');
-        if(cont){
-          cont.style.height='auto';
-          cont.style.maxHeight='none';
-          cont.style.overflow='visible';
-          /* El contenedor podía crecer, pero sus PADRES seguían
-             recortando: .pm-dialog tiene overflow oculto y un alto
-             máximo de pantalla. Por eso el PDF salía cortado justo
-             después de la foto y la tabla. Se abren todos los
-             ancestros, no sólo el contenedor. */
-          var n=cont.parentNode;
-          while(n && n.nodeType===1 && n.tagName!=='BODY'){
-            n.style.overflow='visible';
-            n.style.maxHeight='none';
-            n.style.height='auto';
-            n.style.position='static';
-            n.style.transform='none';
-            n.style.inset='auto';
-            n=n.parentNode;
-          }
-        }
-        /* Todo revelado: lo que aún no había entrado saldría en blanco */
-        docClon.querySelectorAll('.pm-rv,.rv,.pm-head,.pm-gallery').forEach(function(el){
-          el.classList.add('in');
-        });
-        docClon.querySelectorAll('.pm-agent-photo').forEach(function(el){
-          el.classList.add('has-img');
-        });
-        /* Visibilidad dirigida, no global: forzar opacidad en TODO hacía
-           aparecer las cuatro diapositivas de la galería superpuestas. */
-        var st=docClon.createElement('style');
-        st.textContent=
-          '*,*::before,*::after{transition:none!important;animation:none!important}'+
-          '.pm-rv,.rv,.pm-head,.pm-gallery{opacity:1!important;transform:none!important}'+
-          '.pm-rv .pm-fact,.pm-rv .pm-dist-row,.pm-rv .pm-amen>span,'+
-          '.pm-head>*,.pm-agent-photo img{opacity:1!important;transform:none!important}'+
-          '.pm-slide-photo{transform:none!important}'+
-          '.pm-cta{display:none!important}'+
-          '.pm-close,.pm-dl,.pm-share,.pm-gnav{display:none!important}';
-        docClon.head.appendChild(st);
-      }
-    });
-  }).then(function(canvas){
+  croquisImg().then(function(mapa){
     var jsPDF=window.jspdf.jsPDF;
     var doc=new jsPDF({unit:'mm',format:'a4',compress:true});
-    var W=210,H=297;
-    var img=canvas.toDataURL('image/jpeg',0.94);
-    var alto=canvas.height*W/canvas.width;
-    var pos=0, restante=alto;
-    doc.addImage(img,'JPEG',0,pos,W,alto,undefined,'FAST');
-    restante-=H;
-    while(restante>0){
-      pos-=H; doc.addPage();
-      doc.addImage(img,'JPEG',0,pos,W,alto,undefined,'FAST');
-      restante-=H;
+    var W=210,H=297,M=16,y=0;
+    var CL={navy:[11,18,32],blue:[0,113,227],blueBg:[232,241,254],
+            amber:[176,120,0],amberBg:[255,243,212],chip:[54,54,60],chipBg:[243,243,246],
+            dark:[29,29,31],grey:[118,118,121],line:[228,228,233],gold:[201,164,84],w:[255,255,255]};
+    function setF(w,z){doc.setFont('helvetica',w);doc.setFontSize(z);}
+    function col(c){doc.setTextColor(c[0],c[1],c[2]);}
+    function fill(c){doc.setFillColor(c[0],c[1],c[2]);}
+    function draw(c){doc.setDrawColor(c[0],c[1],c[2]);}
+    function ensure(n){if(y+n>H-16){doc.addPage();y=18;}}
+    function heading(t){ensure(14);setF('bold',8.5);col(CL.grey);doc.text((t||'').toUpperCase(),M,y);
+      y+=3;draw(CL.line);doc.setLineWidth(0.2);doc.line(M,y,W-M,y);y+=5;}
+    function para(t,size){setF('normal',size||10);col(CL.dark);
+      var L=doc.splitTextToSize(t||'',W-2*M);
+      for(var i=0;i<L.length;i++){ensure(6);doc.text(L[i],M,y);y+=5;}y+=3;}
+    function chips(items,bg,fg){
+      var x=M,h=6.6;ensure(h+3);
+      items.forEach(function(t){
+        setF('bold',8.5);var tw=doc.getTextWidth(t)+6;
+        if(x+tw>W-M){x=M;y+=h+2.4;ensure(h+3);}
+        fill(bg);doc.roundedRect(x,y,tw,h,h/2,h/2,'F');
+        col(fg);doc.text(t,x+3,y+h/2+0.2,{baseline:'middle'});
+        x+=tw+2.4;});
+      y+=h+5;}
+
+    /* Cabecera */
+    fill(CL.navy);doc.rect(0,0,W,20,'F');
+    setF('bold',12.5);col(CL.w);doc.text('Next Level Demographic',M,12.4);
+    setF('normal',9);col(CL.gold);doc.text(U.pdf_title||'Ficha de proyecto',W-M,12.4,{align:'right'});
+    y=20;
+
+    /* Foto del proyecto */
+    if(foto){
+      var ph=Math.min(84,W*foto.h/foto.w);
+      try{doc.addImage(foto.d,'JPEG',0,y,W,ph,undefined,'FAST');}catch(e){}
+      var et=U.illus||'Ejemplo ilustrativo';
+      setF('bold',7.5);var ew=doc.getTextWidth(et)+5;
+      fill([36,36,42]);doc.roundedRect(M,y+4,ew,5.6,2.8,2.8,'F');
+      col(CL.w);doc.text(et,M+2.5,y+6.9);
+      y+=ph;
     }
+    y+=9;
+
+    /* Nombre y ubicación */
+    setF('bold',20);col(CL.dark);
+    var nl=doc.splitTextToSize(nombre,W-2*M);doc.text(nl,M,y);y+=nl.length*8.2;
+    fill([224,54,44]);doc.circle(M+1.1,y-1.5,1.1,'F');
+    setF('normal',11);col(CL.grey);doc.text(loc,M+4,y);y+=7;
+
+    /* Badges */
+    if(badges.length){
+      badges.forEach(function(b){
+        var esAzul=/recomend|recommend|empfehl|NLD/i.test(b);
+        var esAmbar=/plusval|appreciation|wertsteig|valoriz|rivalut|plus-value/i.test(b);
+        chips([b],esAzul?CL.blueBg:(esAmbar?CL.amberBg:CL.chipBg),
+                  esAzul?CL.blue:(esAmbar?CL.amber:CL.chip));
+        y-=11.6;});
+      y+=11.6;}
+
+    /* Precio */
+    setF('bold',16);col(CL.blue);doc.text((U.from||'Desde')+' '+precio,M,y);y+=8;
+
+    /* Tabla de datos */
+    if(facts.length){
+      var filas=Math.ceil(facts.length/2),ch=14,alto=filas*ch+3,cw=(W-2*M)/2;
+      ensure(alto+4);
+      draw(CL.line);doc.setLineWidth(0.3);doc.roundedRect(M,y,W-2*M,alto,3,3,'S');
+      doc.line(M+cw,y+3,M+cw,y+alto-3);
+      for(var r=1;r<filas;r++)doc.line(M+3,y+r*ch+1.5,W-M-3,y+r*ch+1.5);
+      facts.forEach(function(f,i2){
+        var c2=i2%2,r2=Math.floor(i2/2),cx=M+c2*cw+6,cy=y+r2*ch+7;
+        setF('normal',7.5);col(CL.grey);doc.text(f[0].toUpperCase(),cx,cy);
+        setF('bold',11);col(CL.dark);doc.text(f[1],cx,cy+5.5);});
+      y+=alto+8;}
+
+    if(desc){heading(U.details||'Detalles');para(desc);}
+    if(amen.length){heading(U.amen||'Amenidades');chips(amen,CL.chipBg,CL.chip);}
+
+    /* Ubicación: croquis real + distancias */
+    if(mapa||dists.length){
+      heading(U.location||'Ubicacion');
+      if(mapa){
+        var mh=Math.min(62,(W-2*M)*mapa.h/mapa.w);
+        ensure(mh+4);
+        try{doc.addImage(mapa.d,'JPEG',M,y,W-2*M,mh,undefined,'FAST');}catch(e){}
+        draw(CL.line);doc.setLineWidth(0.3);doc.roundedRect(M,y,W-2*M,mh,3,3,'S');
+        y+=mh+6;}
+      dists.forEach(function(dp){
+        ensure(7);
+        setF('normal',10);col(CL.dark);doc.text(dp[0],M,y);
+        setF('bold',10);col(CL.blue);doc.text(dp[1],W-M,y,{align:'right'});
+        y+=4.6;draw(CL.line);doc.setLineWidth(0.15);doc.line(M,y,W-M,y);y+=4;});
+      if(distNote){ensure(6);setF('normal',7.2);col(CL.grey);doc.text(distNote,M,y);y+=7;}}
+
+    if(modelName){
+      heading(U.models||'Modelos');
+      var mh2=modelSpecs.length?18:12;ensure(mh2+3);
+      draw(CL.line);doc.setLineWidth(0.3);doc.roundedRect(M,y,W-2*M,mh2,3,3,'S');
+      setF('bold',12);col(CL.dark);doc.text(modelName,M+6,y+8);
+      if(modelSpecs.length){setF('normal',9.5);col(CL.grey);doc.text(modelSpecs.join('     '),M+6,y+14);}
+      y+=mh2+8;}
+
+    if(banks.length){
+      heading(U.process||'Financiamiento');
+      banks.forEach(function(b){
+        ensure(9);setF('bold',10.5);col(CL.dark);doc.text(b[0],M,y);
+        setF('normal',9.5);col(CL.grey);doc.text(b[1],W-M,y,{align:'right'});
+        y+=4.5;draw(CL.line);doc.setLineWidth(0.15);doc.line(M,y,W-M,y);y+=4.5;});
+      y+=1;}
+
+    /* Asesor, con su foto */
+    if(agName){
+      heading(U.agent||'Quien te acompana');
+      var ah=fotoAg?24:19;ensure(ah+4);
+      fill([245,245,247]);doc.roundedRect(M,y,W-2*M,ah,3,3,'F');
+      var tx=M+8;
+      if(fotoAg){try{doc.addImage(fotoAg.d,'JPEG',M+6,y+4,16,16,undefined,'FAST');}catch(e){}tx=M+27;}
+      setF('bold',11);col(CL.dark);doc.text(agName,tx,y+9);
+      setF('normal',9);col(CL.blue);doc.text(agRole,tx,y+14);
+      setF('normal',8.5);col(CL.grey);
+      doc.text(agLoc,W-M-6,y+9,{align:'right'});
+      doc.text('WhatsApp +503 6207-3860',W-M-6,y+14,{align:'right'});
+      y+=ah+8;}
+
+    if(devName){
+      heading(U.developer||'Desarrolladora');
+      setF('bold',11);col(CL.dark);doc.text(devName,M,y);y+=5.5;
+      if(devBlurb){setF('normal',9.5);col(CL.grey);
+        var L2=doc.splitTextToSize(devBlurb,W-2*M);
+        for(var q=0;q<L2.length;q++){ensure(5);doc.text(L2[q],M,y);y+=4.8;}}
+      if(verify){ensure(6);draw(CL.blue);doc.setLineWidth(0.6);
+        doc.line(M,y-1.6,M+1.1,y-0.6);doc.line(M+1.1,y-0.6,M+2.7,y-2.8);
+        setF('bold',8.5);col(CL.blue);doc.text(verify,M+4.5,y);y+=6;}
+      y+=2;}
+
+    if(disc){ensure(14);draw(CL.line);doc.setLineWidth(0.2);doc.line(M,y,W-M,y);y+=4;
+      setF('normal',7.2);col(CL.grey);
+      var dl=doc.splitTextToSize(disc,W-2*M);
+      for(var z=0;z<dl.length;z++){ensure(4);doc.text(dl[z],M,y);y+=3.5;}}
+
+    var pgs=doc.internal.getNumberOfPages();
+    for(var pg=1;pg<=pgs;pg++){
+      doc.setPage(pg);
+      draw(CL.line);doc.setLineWidth(0.2);doc.line(M,H-13,W-M,H-13);
+      setF('normal',8);col(CL.grey);
+      doc.text('Next Level Demographic   ·   nextleveldemographic.com   ·   WhatsApp +503 6207-3860',M,H-8.5);
+      doc.text(pg+'/'+pgs,W-M,H-8.5,{align:'right'});}
+
     var fn=(nombre||'proyecto').replace(/[^a-z0-9]+/gi,'-').replace(/^-+|-+$/g,'').toLowerCase()||'proyecto';
     doc.save('NLD-'+fn+'.pdf');
     terminar();
@@ -3783,6 +3908,19 @@ function _pmRevealInit(){
            directa —offsetTop y clientHeight no dependen del transform—
            y el observador se reserva para lo que viene más abajo. */
         var visH=sc.clientHeight||0;
+        /* En móvil la ficha entra deslizándose y puede no tener alto aún.
+           Antes, si medía 0, se revelaba TODO de golpe y ningún bloque
+           llegaba a animarse: por eso había módulos sin animación.
+           Ahora se reintenta hasta que haya una medida real. */
+        if(visH<=0){
+          if(_pmRevealInit.__try==null)_pmRevealInit.__try=0;
+          if(_pmRevealInit.__try<6){
+            _pmRevealInit.__try++;
+            setTimeout(function(){try{_pmRevealInit()}catch(e){}},120);
+            return;
+          }
+        }
+        _pmRevealInit.__try=0;
         var k=0;
         items.forEach(function(el){
           var dentro = visH>0 ? (el.offsetTop < visH-8) : true;

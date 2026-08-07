@@ -698,7 +698,7 @@ body.map-fs-lock{overflow:hidden}
 [data-theme="dark"] .proj-map-wrap{border-color:#2C2C2E}
 .proj-map-wrap.active{display:block}
 #projMap{width:100%;height:560px;background:var(--chalk);z-index:1}
-[data-theme="dark"] #projMap{background:#1D1D1F}
+[data-theme="dark"] #projMap{background:var(--chalk)}
 .proj-grid.map-hidden{display:none}
 /* Leaflet custom marker */
 .nld-marker{background:var(--dark);color:var(--w);border-radius:var(--r-pill);padding:6px 12px;font-size:var(--fs-13);font-weight:600;white-space:nowrap;box-shadow:var(--sh-pin);border:2px solid var(--w);letter-spacing:-.01em;cursor:pointer;transition:transform .15s ease,background .15s ease}
@@ -2699,7 +2699,8 @@ var TILES={
   dark :'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png'
 };
 function _tileURL(){
-  return TILES[document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light'];
+  // Los mapas y croquis permanecen claros, independientemente del tema general.
+  return TILES.light;
 }
 var TOURIST_SPOTS=[
  {n:"Parque Infantil de Diversiones",lat:13.7024,lng:-89.1997,e:"🎡",d:"Clásico parque de juegos mecánicos en San Salvador, tradición de varias generaciones."},
@@ -3556,8 +3557,14 @@ function _imgDataURL(img,cuadrada){
     if(cuadrada){
       var lado=Math.min(img.naturalWidth,img.naturalHeight);
       c.width=c.height=lado; ctx=c.getContext('2d');
+      // Fondo claro en todo el lienzo: evita que las esquinas transparentes
+      // se conviertan en negro al exportar el avatar como JPEG para el PDF.
+      ctx.fillStyle='#F5F5F7';
+      ctx.fillRect(0,0,lado,lado);
+      ctx.save();
       ctx.beginPath();ctx.arc(lado/2,lado/2,lado/2,0,Math.PI*2);ctx.closePath();ctx.clip();
       ctx.drawImage(img,(img.naturalWidth-lado)/2,(img.naturalHeight-lado)/2,lado,lado,0,0,lado,lado);
+      ctx.restore();
     }else{
       c.width=img.naturalWidth;c.height=img.naturalHeight;
       ctx=c.getContext('2d');ctx.drawImage(img,0,0);
@@ -3609,9 +3616,13 @@ function _capturarFicha(sc,nombre,btn){
   function croquisImg(){
     var el=document.getElementById('pmCroquis');
     if(!el||typeof html2canvas!=='function')return Promise.resolve(null);
+    // El croquis usa siempre teselas claras. Se fija además un fondo claro
+    // durante la captura para que el PDF no herede colores del modo oscuro.
+    var prevBg=el.style.backgroundColor;
+    el.style.backgroundColor='#F5F5F7';
     return html2canvas(el,{useCORS:true,scale:2,backgroundColor:'#F5F5F7',logging:false,imageTimeout:8000})
-      .then(function(c){return {d:c.toDataURL('image/jpeg',0.92),w:c.width,h:c.height};})
-      .catch(function(){return null;});
+      .then(function(c){el.style.backgroundColor=prevBg;return {d:c.toDataURL('image/jpeg',0.92),w:c.width,h:c.height};})
+      .catch(function(){el.style.backgroundColor=prevBg;return null;});
   }
 
   croquisImg().then(function(mapa){

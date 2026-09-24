@@ -2113,6 +2113,8 @@ select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
 .skip-link{position:absolute;left:-9999px;top:0;z-index:2000;padding:12px 20px;
   background:var(--dark);color:#FFF;border-radius:0 0 12px 0;font-size:14px;font-weight:600}
 .skip-link:focus{left:0}
+section[hidden]{display:none!important}
+.inv-toggle{display:inline-flex;margin:0 0 28px}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -2151,10 +2153,10 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="64" height="64"></div><span class="logo-tx">Next Level Demographic</span></a></div>
   <ul class="nav-c">
     <li><a href="#scene-lifestyle" data-i18n="nav_market">Mercado</a></li>
-    <li><a href="#scene-process" data-i18n="nav_process">Proceso</a></li>
-    <li><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a></li>
     <li><a href="#scene-particulares" data-i18n="nav_part">Particulares</a></li>
     <li><a href="#scene-cases" data-i18n="nav_cases">Casos</a></li>
+    <li><a href="#scene-process" data-i18n="nav_process">Proceso</a></li>
+    <li><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a></li>
     <li><a href="#scene-partners" data-i18n="nav_allies">Aliados</a></li>
     <li><a href="#scene-partners" data-i18n="nav_b2b">B2B</a></li>
   </ul>
@@ -2177,10 +2179,11 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 </div></nav>
 <div class="mob" id="mob">
   <a href="#scene-lifestyle" onclick="hm()" data-i18n="nav_market">Mercado</a>
-  <a href="#scene-process" onclick="hm()" data-i18n="nav_process">Proceso</a>
-  <a href="#scene-projects" onclick="hm()" data-i18n="nav_projects">Proyectos</a>
+  <a href="#scene-particulares" onclick="hm()" data-i18n="nav_part">Particulares</a>
   <a href="#scene-cases" onclick="hm()" data-i18n="nav_cases">Casos</a>
+  <a href="#scene-process" onclick="hm()" data-i18n="nav_process">Proceso</a>
   <a href="#scene-team" onclick="hm()" data-i18n="nav_team">Equipo</a>
+  <a href="#scene-projects" onclick="hm()" data-i18n="nav_projects">Proyectos</a>
   <a href="#scene-partners" onclick="hm()" data-i18n="nav_allies">Aliados</a>
   <a href="#scene-partners" onclick="hm()" data-i18n="nav_b2b">B2B</a>
   <a href="#contacto" onclick="hm()" data-i18n="btn_consult_arrow">Consulta gratuita ›</a>
@@ -2243,21 +2246,94 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="scene-team" class="sec-chalk" data-scene>
+<section id="scene-particulares" class="sec-white" data-scene>
   <div class="wrap">
-    <h2 class="section-h anim d1" data-i18n="team_h">Somos <span class="grey">de aquí.</span> <br>Sabemos cómo hacerlo.</h2>
-    <p class="section-sub anim d2" data-i18n="team_sub">Somos salvadoreños viviendo en El Salvador. Conocemos el terreno, los desarrolladores, los abogados y las zonas. Diseñamos el proceso que quisiéramos para nuestra propia familia.</p>
-    <div class="team-grid">
-      <div class="tm-card anim d3"><div class="tm-photo"><span class="tm-fallback">LG</span><img decoding="async" src="team/luis.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Luis Gonzalez</div><div class="tm-role" data-i18n="team_role_luis">Director de Estrategia y Tecnología</div><div class="tm-area" data-i18n="team_area_luis">Estrategia y tecnología</div><div class="tm-loc">La Libertad, El Salvador</div></div>
-      <div class="tm-card anim d5"><div class="tm-photo"><span class="tm-fallback">IA</span><img decoding="async" src="team/ivette.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Ivette Alvarado</div><div class="tm-role" data-i18n="team_role_ivette">Cofundadora y CEO</div><div class="tm-area" data-i18n="team_area_ivette">Crecimiento y expansión internacional</div><div class="tm-loc">La Libertad, El Salvador</div></div>
-      <div class="tm-card anim d6"><div class="tm-photo"><span class="tm-fallback">AM</span><img decoding="async" src="team/aniano.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Aniano Mabunda</div><div class="tm-role" data-i18n="team_role_aniano">Jefe de Ventas y Director de Ingresos</div><div class="tm-area" data-i18n="team_area_aniano">Ventas y crecimiento de ingresos</div><div class="tm-loc">Santa Ana, El Salvador</div></div>
-      <div class="tm-card anim d7"><div class="tm-photo"><span class="tm-fallback">JD</span><img decoding="async" src="team/jose.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Jose Diaz</div><div class="tm-role" data-i18n="team_role_jose">Director Creativo y de Operaciones</div><div class="tm-area" data-i18n="team_area_jose">Contenido, medios y operaciones</div><div class="tm-loc">San Salvador, El Salvador</div></div>
+    <div class="intent-toggle inv-toggle" role="tablist" aria-label="Tipo de propiedad">
+      <button type="button" class="intent-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
+      <button type="button" class="intent-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
     </div>
+    <div class="proj-head-row">
+      <div class="eyebrow anim grey" data-i18n="part_eb">Propiedades de particulares</div>
+      <div class="nuevo-trust anim d1" id="partTrust"></div>
+    </div>
+    <h2 class="section-h anim d1" data-i18n="part_h">Venta directa del propietario, <br><span class="grey">con el mismo respaldo legal.</span></h2>
+    <p class="section-sub anim d2" data-i18n="part_sub">Propiedades que vende su dueño directamente, sin desarrolladora de por medio. Aplicamos el mismo proceso: estudio registral, revisión de escrituras y validación del contrato con nuestros abogados antes de que firmes.</p>
+
+    <div class="proj-controls-top anim d2">
+      <div class="proj-search">
+        <span class="proj-search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg></span>
+        <input type="text" id="p2Search" data-i18n-ph="proj_search_ph" placeholder="Buscar por propiedad, ciudad o zona…" autocomplete="off" oninput="P2.buscar()" />
+        <button type="button" class="proj-search-clear" id="p2SearchClear" onclick="P2.limpiarBusqueda()" aria-label="Limpiar búsqueda">×</button>
+      </div>
+      <div class="proj-viewtoggle">
+        <button type="button" class="p2-viewbtn active" data-view="list" onclick="P2.vista('list')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span data-i18n="proj_view_list">Lista</span></button>
+        <button type="button" class="p2-viewbtn" data-view="map" onclick="P2.vista('map')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span data-i18n="proj_view_map">Mapa</span></button>
+        <button type="button" class="p2-viewbtn" data-view="hybrid" onclick="P2.vista('hybrid')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg><span data-i18n="proj_view_hybrid">Lista + Mapa</span></button>
+      </div>
+      <button type="button" id="p2TourToggle" class="proj-tourtoggle active" aria-pressed="true" onclick="P2.toggleTur()"><span class="tt-ico">🗺️</span><span data-i18n="tour_toggle">Lugares turísticos</span></button>
+      <button type="button" id="p2HospToggle" class="proj-tourtoggle" aria-pressed="false" onclick="P2.toggleHosp()"><span class="tt-ico">🏥</span><span data-i18n="hosp_toggle">Red hospitalaria</span></button>
+    </div>
+
+    <div class="proj-controls-filters anim d3">
+      <div class="proj-filters">
+        <button type="button" class="p2-filter active" data-filter="all" data-i18n="proj_f_all">Todos</button>
+        <button type="button" class="p2-filter" data-filter="playa" data-i18n="proj_f_playa">Playa</button>
+        <button type="button" class="p2-filter" data-filter="ciudad" data-i18n="proj_f_ciudad">Ciudad</button>
+        <button type="button" class="p2-filter" data-filter="montana" data-i18n="proj_f_montana">Montaña</button>
+        <button type="button" class="p2-filter" data-filter="colonial" data-i18n="proj_f_colonial">Colonial</button>
+        <button type="button" class="p2-filter" data-filter="inversion" data-i18n="proj_f_inversion">Inversión</button>
+      </div>
+      <div class="proj-filters proj-pfilters">
+        <button type="button" class="p2-pfilter active" data-price-range="all" data-i18n="proj_pf_all">Todos los precios</button>
+        <button type="button" class="p2-pfilter" data-price-range="p0" data-i18n="part_pf_0">Menos de $200K</button>
+        <button type="button" class="p2-pfilter" data-price-range="p1" data-i18n="part_pf_1">$200K – $300K</button>
+        <button type="button" class="p2-pfilter" data-price-range="p2" data-i18n="part_pf_2">Más de $300K</button>
+      </div>
+    </div>
+
+    <div class="proj-layout" id="p2Layout"><div class="proj-grid">
+      <article class="proj-card anim d3" data-cat="ciudad inversion" data-lat="13.7187551" data-lng="-89.2387499" data-price="$225,000" data-pname="Citalá Haus — Opción 1">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge green" data-i18n="badge_directa">Venta directa</span><span class="proj-badge" data-i18n="badge_nuevo">Nuevo, sin habitar</span></div>
+          <span class="proj-photo-fb">🏢</span><img decoding="async" src="particulares/citala-op1.jpg" alt="Citalá Haus — Opción 1" loading="lazy" onerror="this.remove()" width="640" height="400">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Citalá Haus — Opción 1</div>
+          <div class="proj-loc">📍 Distrito Masferrer, Col. Escalón Norte, San Salvador</div>
+          <div class="proj-meta"><span class="proj-meta-type" data-i18n="type_apto">Apartamento</span><span class="proj-meta-dot"></span><span>59.31 m²</span><span class="proj-meta-dot"></span><span>2 <span data-i18n="unit_bd">hab</span></span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="part_lbl_price">Precio</span><span class="proj-price-val">$225,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <article class="proj-card anim d4" data-cat="ciudad inversion" data-lat="13.7188751" data-lng="-89.2386299" data-price="$215,000" data-pname="Citalá Haus — Opción 2">
+        <div class="proj-photo">
+          <div class="proj-badges"><span class="proj-badge green" data-i18n="badge_directa">Venta directa</span><span class="proj-badge" data-i18n="badge_nuevo">Nuevo, sin habitar</span></div>
+          <span class="proj-photo-fb">🏙️</span><img decoding="async" src="particulares/citala-op2.jpg" alt="Citalá Haus — Opción 2" loading="lazy" onerror="this.remove()" width="640" height="400">
+        </div>
+        <div class="proj-body">
+          <div class="proj-name">Citalá Haus — Opción 2</div>
+          <div class="proj-loc">📍 Distrito Masferrer, Col. Escalón Norte, San Salvador</div>
+          <div class="proj-meta"><span class="proj-meta-type" data-i18n="type_apto">Apartamento</span><span class="proj-meta-dot"></span><span>57.99 m²</span><span class="proj-meta-dot"></span><span>2 <span data-i18n="unit_bd">hab</span></span></div>
+          <div class="proj-divider"></div>
+          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="part_lbl_price">Precio</span><span class="proj-price-val">$215,000</span></span></div>
+          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
+        </div>
+      </article>
+      <div class="proj-empty" id="p2Empty"><div class="pe-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></div><p class="pe-txt" data-i18n="part_empty">No encontramos propiedades que coincidan con tu búsqueda.</p><button type="button" class="pe-btn" onclick="P2.reset()" data-i18n="part_empty_btn">Ver todas las propiedades</button></div>
+    </div>
+    <div class="proj-map-wrap"><div class="map-search" id="p2MapSearchBox"><div class="map-search-bar"><span class="map-search-ico">🔍</span><input type="text" id="p2MapSearch" data-i18n-ph="map_search_ph" placeholder="Buscar en el mapa…" oninput="P2.buscarMapa()" autocomplete="off"><button type="button" class="map-search-clear" id="p2MapSearchClear" onclick="P2.limpiarMapa()" aria-label="Limpiar">×</button></div><div class="map-search-results" id="p2MapSearchResults"></div></div><div id="p2Map"></div></div>
+    </div>
+    <p class="proj-disclaimer anim" data-i18n="part_disclaimer">Propiedades ofrecidas por sus propietarios. Next Level Demographic actúa como asesor del comprador: verificamos el estado registral y la documentación antes de cualquier compromiso, sin costo para vos.</p>
   </div>
 </section>
 
-<section id="scene-projects" class="sec-white" data-scene>
+<section id="scene-projects" class="sec-white" data-scene hidden>
   <div class="wrap">
+    <div class="intent-toggle inv-toggle" role="tablist" aria-label="Tipo de propiedad">
+      <button type="button" class="intent-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
+      <button type="button" class="intent-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
+    </div>
     <div class="proj-head-row">
       <div class="eyebrow anim grey" data-i18n="proj_eb">Portafolio activo *</div>
       <div class="proj-trust anim d1" id="projTrust"></div>
@@ -2440,85 +2516,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="scene-particulares" class="sec-chalk" data-scene>
-  <div class="wrap">
-    <div class="proj-head-row">
-      <div class="eyebrow anim grey" data-i18n="part_eb">Propiedades de particulares</div>
-      <div class="nuevo-trust anim d1" id="partTrust"></div>
-    </div>
-    <h2 class="section-h anim d1" data-i18n="part_h">Venta directa del propietario, <br><span class="grey">con el mismo respaldo legal.</span></h2>
-    <p class="section-sub anim d2" data-i18n="part_sub">Propiedades que vende su dueño directamente, sin desarrolladora de por medio. Aplicamos el mismo proceso: estudio registral, revisión de escrituras y validación del contrato con nuestros abogados antes de que firmes.</p>
-
-    <div class="proj-controls-top anim d2">
-      <div class="proj-search">
-        <span class="proj-search-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line></svg></span>
-        <input type="text" id="p2Search" data-i18n-ph="proj_search_ph" placeholder="Buscar por propiedad, ciudad o zona…" autocomplete="off" oninput="P2.buscar()" />
-        <button type="button" class="proj-search-clear" id="p2SearchClear" onclick="P2.limpiarBusqueda()" aria-label="Limpiar búsqueda">×</button>
-      </div>
-      <div class="proj-viewtoggle">
-        <button type="button" class="p2-viewbtn active" data-view="list" onclick="P2.vista('list')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span data-i18n="proj_view_list">Lista</span></button>
-        <button type="button" class="p2-viewbtn" data-view="map" onclick="P2.vista('map')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span data-i18n="proj_view_map">Mapa</span></button>
-        <button type="button" class="p2-viewbtn" data-view="hybrid" onclick="P2.vista('hybrid')"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="18"/><rect x="14" y="3" width="7" height="18"/></svg><span data-i18n="proj_view_hybrid">Lista + Mapa</span></button>
-      </div>
-      <button type="button" id="p2TourToggle" class="proj-tourtoggle active" aria-pressed="true" onclick="P2.toggleTur()"><span class="tt-ico">🗺️</span><span data-i18n="tour_toggle">Lugares turísticos</span></button>
-      <button type="button" id="p2HospToggle" class="proj-tourtoggle" aria-pressed="false" onclick="P2.toggleHosp()"><span class="tt-ico">🏥</span><span data-i18n="hosp_toggle">Red hospitalaria</span></button>
-    </div>
-
-    <div class="proj-controls-filters anim d3">
-      <div class="proj-filters">
-        <button type="button" class="p2-filter active" data-filter="all" data-i18n="proj_f_all">Todos</button>
-        <button type="button" class="p2-filter" data-filter="playa" data-i18n="proj_f_playa">Playa</button>
-        <button type="button" class="p2-filter" data-filter="ciudad" data-i18n="proj_f_ciudad">Ciudad</button>
-        <button type="button" class="p2-filter" data-filter="montana" data-i18n="proj_f_montana">Montaña</button>
-        <button type="button" class="p2-filter" data-filter="colonial" data-i18n="proj_f_colonial">Colonial</button>
-        <button type="button" class="p2-filter" data-filter="inversion" data-i18n="proj_f_inversion">Inversión</button>
-      </div>
-      <div class="proj-filters proj-pfilters">
-        <button type="button" class="p2-pfilter active" data-price-range="all" data-i18n="proj_pf_all">Todos los precios</button>
-        <button type="button" class="p2-pfilter" data-price-range="p0" data-i18n="part_pf_0">Menos de $200K</button>
-        <button type="button" class="p2-pfilter" data-price-range="p1" data-i18n="part_pf_1">$200K – $300K</button>
-        <button type="button" class="p2-pfilter" data-price-range="p2" data-i18n="part_pf_2">Más de $300K</button>
-      </div>
-    </div>
-
-    <div class="proj-layout" id="p2Layout"><div class="proj-grid">
-      <article class="proj-card anim d3" data-cat="ciudad inversion" data-lat="13.7187551" data-lng="-89.2387499" data-price="$225,000" data-pname="Citalá Haus — Opción 1">
-        <div class="proj-photo">
-          <div class="proj-badges"><span class="proj-badge green" data-i18n="badge_directa">Venta directa</span><span class="proj-badge" data-i18n="badge_nuevo">Nuevo, sin habitar</span></div>
-          <span class="proj-photo-fb">🏢</span><img decoding="async" src="particulares/citala-op1.jpg" alt="Citalá Haus — Opción 1" loading="lazy" onerror="this.remove()" width="640" height="400">
-        </div>
-        <div class="proj-body">
-          <div class="proj-name">Citalá Haus — Opción 1</div>
-          <div class="proj-loc">📍 Distrito Masferrer, Col. Escalón Norte, San Salvador</div>
-          <div class="proj-meta"><span class="proj-meta-type" data-i18n="type_apto">Apartamento</span><span class="proj-meta-dot"></span><span>59.31 m²</span><span class="proj-meta-dot"></span><span>2 <span data-i18n="unit_bd">hab</span></span></div>
-          <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="part_lbl_price">Precio</span><span class="proj-price-val">$225,000</span></span></div>
-          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
-        </div>
-      </article>
-      <article class="proj-card anim d4" data-cat="ciudad inversion" data-lat="13.7188751" data-lng="-89.2386299" data-price="$215,000" data-pname="Citalá Haus — Opción 2">
-        <div class="proj-photo">
-          <div class="proj-badges"><span class="proj-badge green" data-i18n="badge_directa">Venta directa</span><span class="proj-badge" data-i18n="badge_nuevo">Nuevo, sin habitar</span></div>
-          <span class="proj-photo-fb">🏙️</span><img decoding="async" src="particulares/citala-op2.jpg" alt="Citalá Haus — Opción 2" loading="lazy" onerror="this.remove()" width="640" height="400">
-        </div>
-        <div class="proj-body">
-          <div class="proj-name">Citalá Haus — Opción 2</div>
-          <div class="proj-loc">📍 Distrito Masferrer, Col. Escalón Norte, San Salvador</div>
-          <div class="proj-meta"><span class="proj-meta-type" data-i18n="type_apto">Apartamento</span><span class="proj-meta-dot"></span><span>57.99 m²</span><span class="proj-meta-dot"></span><span>2 <span data-i18n="unit_bd">hab</span></span></div>
-          <div class="proj-divider"></div>
-          <div class="proj-price"><span class="proj-price-icon">$</span><span class="proj-price-body"><span class="proj-price-lbl" data-i18n="part_lbl_price">Precio</span><span class="proj-price-val">$215,000</span></span></div>
-          <a href="#contacto" class="proj-cta" data-i18n="proj_cta">Solicitar información</a>
-        </div>
-      </article>
-      <div class="proj-empty" id="p2Empty"><div class="pe-ico" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="21" y2="21"/></svg></div><p class="pe-txt" data-i18n="part_empty">No encontramos propiedades que coincidan con tu búsqueda.</p><button type="button" class="pe-btn" onclick="P2.reset()" data-i18n="part_empty_btn">Ver todas las propiedades</button></div>
-    </div>
-    <div class="proj-map-wrap"><div class="map-search" id="p2MapSearchBox"><div class="map-search-bar"><span class="map-search-ico">🔍</span><input type="text" id="p2MapSearch" data-i18n-ph="map_search_ph" placeholder="Buscar en el mapa…" oninput="P2.buscarMapa()" autocomplete="off"><button type="button" class="map-search-clear" id="p2MapSearchClear" onclick="P2.limpiarMapa()" aria-label="Limpiar">×</button></div><div class="map-search-results" id="p2MapSearchResults"></div></div><div id="p2Map"></div></div>
-    </div>
-    <p class="proj-disclaimer anim" data-i18n="part_disclaimer">Propiedades ofrecidas por sus propietarios. Next Level Demographic actúa como asesor del comprador: verificamos el estado registral y la documentación antes de cualquier compromiso, sin costo para vos.</p>
-  </div>
-</section>
-
-<section id="scene-cases" class="sec-white" data-scene>
+<section id="scene-cases" class="sec-chalk" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="cases_eb">Casos verificados</div>
     <h2 class="section-h anim d1" data-i18n="cases_h">Historias reales <br><span class="grey">de quienes ya volvieron.</span></h2>
@@ -2545,7 +2543,20 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="scene-extras" class="sec-white" data-scene>
+<section id="scene-team" class="sec-white" data-scene>
+  <div class="wrap">
+    <h2 class="section-h anim d1" data-i18n="team_h">Somos <span class="grey">de aquí.</span> <br>Sabemos cómo hacerlo.</h2>
+    <p class="section-sub anim d2" data-i18n="team_sub">Somos salvadoreños viviendo en El Salvador. Conocemos el terreno, los desarrolladores, los abogados y las zonas. Diseñamos el proceso que quisiéramos para nuestra propia familia.</p>
+    <div class="team-grid">
+      <div class="tm-card anim d3"><div class="tm-photo"><span class="tm-fallback">LG</span><img decoding="async" src="team/luis.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Luis Gonzalez</div><div class="tm-role" data-i18n="team_role_luis">Director de Estrategia y Tecnología</div><div class="tm-area" data-i18n="team_area_luis">Estrategia y tecnología</div><div class="tm-loc">La Libertad, El Salvador</div></div>
+      <div class="tm-card anim d5"><div class="tm-photo"><span class="tm-fallback">IA</span><img decoding="async" src="team/ivette.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Ivette Alvarado</div><div class="tm-role" data-i18n="team_role_ivette">Cofundadora y CEO</div><div class="tm-area" data-i18n="team_area_ivette">Crecimiento y expansión internacional</div><div class="tm-loc">La Libertad, El Salvador</div></div>
+      <div class="tm-card anim d6"><div class="tm-photo"><span class="tm-fallback">AM</span><img decoding="async" src="team/aniano.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Aniano Mabunda</div><div class="tm-role" data-i18n="team_role_aniano">Jefe de Ventas y Director de Ingresos</div><div class="tm-area" data-i18n="team_area_aniano">Ventas y crecimiento de ingresos</div><div class="tm-loc">Santa Ana, El Salvador</div></div>
+      <div class="tm-card anim d7"><div class="tm-photo"><span class="tm-fallback">JD</span><img decoding="async" src="team/jose.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Jose Diaz</div><div class="tm-role" data-i18n="team_role_jose">Director Creativo y de Operaciones</div><div class="tm-area" data-i18n="team_area_jose">Contenido, medios y operaciones</div><div class="tm-loc">San Salvador, El Salvador</div></div>
+    </div>
+  </div>
+</section>
+
+<section id="scene-extras" class="sec-chalk" data-scene>
   <div class="pcar pcar2">
     <div class="pcar-viewport">
       <div class="pcar-track">
@@ -2609,7 +2620,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="scene-faq" class="sec-chalk" data-scene>
+<section id="scene-faq" class="sec-white" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="faq_eb">Preguntas frecuentes</div>
     <h2 class="section-h anim d1" data-i18n="faq_h">Las dudas más comunes <br><span class="grey">de la diáspora.</span></h2>
@@ -2645,7 +2656,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="contacto" class="sec-white" data-scene>
+<section id="contacto" class="sec-chalk" data-scene>
   <div class="contact-grid">
     <div class="cg-l">
       <div class="cg-l-eb anim" data-i18n="ct_eb">consulta gratuita</div>
@@ -2704,6 +2715,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
     </div>
   </div>
 </section>
+
 
 <section id="scene-partners" class="sec-white" data-scene>
   <div class="pcar pcar1">
@@ -5664,5 +5676,17 @@ document.addEventListener('click',function(ev){
   <div class="ck-txt" data-i18n="cookie_txt">Usamos almacenamiento local para recordar tus preferencias (idioma, tema). No usamos cookies de rastreo ni publicidad.</div>
   <button class="ck-ok" data-i18n="cookie_ok" onclick="ckAccept()">Entendido</button>
 </div>
+<script>
+function setInv(k,scroll){
+  var p=document.getElementById('scene-particulares'),q=document.getElementById('scene-projects');
+  p.hidden=(k!=='part');q.hidden=(k!=='proj');
+  document.querySelectorAll('.inv-toggle .intent-btn').forEach(function(b){var on=b.dataset.inv===k;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
+  var sec=k==='part'?p:q;sec.classList.add('active');
+  setTimeout(function(){window.dispatchEvent(new Event('resize'))},60);
+  if(scroll)sec.scrollIntoView({behavior:'smooth'});
+}
+document.addEventListener('click',function(e){var a=e.target.closest('a[href="#scene-projects"],a[href="#scene-particulares"]');if(!a)return;e.preventDefault();setInv(a.getAttribute('href')==='#scene-projects'?'proj':'part',true);});
+document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='#scene-projects'?'proj':'part')});
+</script>
 </body>
 </html>

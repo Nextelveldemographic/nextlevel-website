@@ -2136,17 +2136,22 @@ section[hidden]{display:none!important}
 /* ===== Pantallas grandes (24"+): aprovechar el ancho ===== */
 .flag-svg{display:inline-block;vertical-align:-1px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.15)}
 @media (min-width:1500px){
-  :root{--max:1440px;--max-nav:1360px}
+  :root{--max:1320px;--max-nav:1240px}
   /* Más ancho = más columnas, no elementos más grandes */
   .proj-layout:not(.hybrid):not(.map) .proj-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
   .proj-layout:not(.hybrid):not(.map) .proj-grid>.proj-card{max-width:400px}
-  .section-h{font-size:64px}
   .section-sub{max-width:900px}
   .life-comparison{padding:72px 80px}
 }
 @media (min-width:1800px){
-  :root{--max:1560px;--max-nav:1440px}
+  :root{--max:1440px;--max-nav:1320px}
 }
+
+/* ===== Escala tipográfica unificada (igual en iPad y en escritorio) =====
+   Antes el título crecía con el ancho de pantalla (5.4vw) hasta 68px:
+   en un monitor ancho se veía el doble de grande que en el iPad. */
+.section-h{font-size:clamp(32px,3.4vw,52px);line-height:1.08}
+.section-sub{font-size:clamp(17px,1.35vw,21px)}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -5723,6 +5728,24 @@ function setInv(k,scroll){
 }
 document.addEventListener('click',function(e){var a=e.target.closest('a[href="#scene-projects"],a[href="#scene-particulares"]');if(!a)return;e.preventDefault();setInv(a.getAttribute('href')==='#scene-projects'?'proj':'part',true);});
 document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='#scene-projects'?'proj':'part')});
+</script>
+<script>
+/* URL limpia: navegar por secciones sin dejar #top, #contacto, etc. en la barra */
+(function(){
+  function clean(){try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="#"]');if(!a||e.defaultPrevented)return;
+    var id=a.getAttribute('href').slice(1);
+    var t=id==='top'||id===''?document.body:document.getElementById(id);
+    if(!t)return;
+    e.preventDefault();
+    if(id==='top'||id===''){window.scrollTo({top:0,behavior:'smooth'});}
+    else{t.scrollIntoView({behavior:'smooth',block:'start'});}
+    clean();
+  });
+  window.addEventListener('hashchange',clean);
+  window.addEventListener('load',function(){if(location.hash){var t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView();clean();}});
+})();
 </script>
 </body>
 </html>

@@ -2115,6 +2115,23 @@ select:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{
 .skip-link:focus{left:0}
 section[hidden]{display:none!important}
 .inv-toggle{display:inline-flex;margin:0 0 28px}
+#pmVideoSec[hidden]{display:none}
+.pm-video{position:relative;width:100%;max-width:340px;aspect-ratio:9/16;margin:0 auto;border-radius:var(--r-xl,20px);overflow:hidden;background:#000}
+.pm-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+
+/* ===== Estandarizar Proyectos con el estilo de Particulares ===== */
+.inv-btn{background:transparent;color:var(--grey-2);padding:10px 18px;border-radius:var(--r-pill);font-size:var(--fs-15);font-weight:500;cursor:pointer;transition:.25s var(--ease);border:none;font-family:inherit;letter-spacing:-.01em;white-space:nowrap}
+.inv-btn:hover{color:var(--dark)}
+.inv-btn.active{background:var(--dark);color:var(--w);box-shadow:var(--sh-2)}
+[data-theme="dark"] .inv-btn.active{background:#F5F5F7;color:#000}
+#scene-projects .proj-filter,#scene-projects .proj-pfilter{padding:8px 16px;background:#FFF;color:var(--dark);border:1px solid rgba(0,0,0,.07);border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:500;cursor:pointer;transition:.25s var(--ease);white-space:nowrap}
+#scene-projects .proj-filter:hover,#scene-projects .proj-pfilter:hover{background:#F0F0F2;border-color:rgba(0,0,0,.12)}
+#scene-projects .proj-filter.active,#scene-projects .proj-pfilter.active{background:var(--dark);color:var(--w);border-color:var(--dark)}
+#scene-projects .proj-filter.is-empty:hover,#scene-projects .proj-pfilter.is-empty:hover{background:#FFF;border-color:rgba(0,0,0,.07)}
+[data-theme="dark"] #scene-projects .proj-filter,[data-theme="dark"] #scene-projects .proj-pfilter{background:#2C2C2E;color:#F5F5F7;border-color:rgba(255,255,255,.09)}
+[data-theme="dark"] #scene-projects .proj-filter.active,[data-theme="dark"] #scene-projects .proj-pfilter.active{background:#F5F5F7;color:#000}
+#scene-projects .proj-viewbtn.active{background:var(--dark);color:var(--w)}
+[data-theme="dark"] #scene-projects .proj-viewbtn.active{background:#F5F5F7;color:#000}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -2249,8 +2266,8 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 <section id="scene-particulares" class="sec-white" data-scene>
   <div class="wrap">
     <div class="intent-toggle inv-toggle" role="tablist" aria-label="Tipo de propiedad">
-      <button type="button" class="intent-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
-      <button type="button" class="intent-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
+      <button type="button" class="inv-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
+      <button type="button" class="inv-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
     </div>
     <div class="proj-head-row">
       <div class="eyebrow anim grey" data-i18n="part_eb">Propiedades de particulares</div>
@@ -2331,8 +2348,8 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 <section id="scene-projects" class="sec-white" data-scene hidden>
   <div class="wrap">
     <div class="intent-toggle inv-toggle" role="tablist" aria-label="Tipo de propiedad">
-      <button type="button" class="intent-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
-      <button type="button" class="intent-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
+      <button type="button" class="inv-btn" data-inv="part" onclick="setInv('part')" role="tab">Particulares</button>
+      <button type="button" class="inv-btn" data-inv="proj" onclick="setInv('proj')" role="tab">Proyectos</button>
     </div>
     <div class="proj-head-row">
       <div class="eyebrow anim grey" data-i18n="proj_eb">Portafolio activo *</div>
@@ -2380,7 +2397,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         <button type="button" class="proj-pfilter" data-price-range="p2" data-i18n="proj_pf_2">Más de $125K</button>
       </div>
     </div>
-    <div class="proj-layout hybrid" id="projLayout"><div class="proj-grid">
+    <div class="proj-layout" id="projLayout"><div class="proj-grid">
       <article class="proj-card anim d3" data-cat="playa ciudad inversion" data-lat="13.4883" data-lng="-89.3222" data-price="$120,000" data-pname="Residencial Costa del Pacífico">
         <div class="proj-photo">
           <div class="proj-badges"><span class="proj-badge blue" data-i18n="badge_rec">Recomendado NLD</span><span class="proj-badge" data-i18n="badge_live">Ideal para vivir</span></div>
@@ -3615,8 +3632,8 @@ var PROJDATA={
 "Marina Golfo de Fonseca":{delivery:"Q2 2027",quota:"$745 / mes",hab:"2–3 hab",desc:"Apartamentos frente al Golfo de Fonseca, en la zona de mayor proyección de inversión del oriente del país por el desarrollo portuario. Vistas al mar y a tres países desde un mismo punto.",amen:["Piscina","Vista al golfo","Muelle","Seguridad 24/7","Área social","Estacionamiento"],near:[["Puerto de La Unión","⚓"],["Golfo de Fonseca","🌊"],["Volcán Conchagua","🌋"],["Playas de oriente","🏖️"]],model:{name:"Modelo Bahía",area:"120 m²",hab:"2",bath:"2",park:"1"},dev:{name:"Marina Development",blurb:"Desarrollo costero enfocado en la reactivación portuaria de La Unión."}},
 "Hacienda Ruta de las Flores":{delivery:"Entrega inmediata",quota:"$605 / mes",hab:"3 hab",desc:"Casas de estilo colonial en Ataco, corazón de la Ruta de las Flores. Rodeadas de cafetales y con el encanto de pueblo. Ideal para retiro o para operar como hospedaje con encanto.",amen:["Jardines","Terraza","Seguridad 24/7","Área social","Zonas comunes","Estacionamiento"],near:[["Ruta de las Flores","🌸"],["Concepción de Ataco","🎨"],["Apaneca","🌄"],["Cafetales","☕"]],model:{name:"Modelo Flor",area:"190 m²",hab:"3",bath:"3",park:"3"},dev:{name:"Haciendas del Bálsamo",blurb:"Vivienda con identidad colonial integrada al paisaje cafetalero."}},
 "Condominio Vista Izalco":{delivery:"Q4 2026",quota:"$640 / mes",hab:"2 hab",desc:"Apartamentos modernos en Sonsonate, con vista al volcán de Izalco y cerca de las playas de Los Cóbanos. Precio de entrada bajo con sólida demanda de alquiler local.",amen:["Gimnasio","Áreas verdes","Seguridad 24/7","Área social","Estacionamiento","Lobby"],near:[["Centro de Sonsonate","⛪"],["Volcán de Izalco","🌋"],["Los Cóbanos","🏖️"],["Ruta de las Flores","🌸"]],model:{name:"Modelo Izalco",area:"118 m²",hab:"2",bath:"2",park:"1"},dev:{name:"Grupo Izalco",blurb:"Vivienda vertical accesible en el occidente del país."}},
-"Citalá Haus — Opción 1":{fotos:["particulares/citala-op1-1.jpg","particulares/citala-op1-2.jpg","particulares/citala-op1-3.jpg","particulares/citala-op1-4.jpg","particulares/citala-op1-5.jpg","particulares/citala-op1-6.jpg","particulares/citala-op1-7.jpg","particulares/citala-op1-8.jpg"],delivery:"Entrega inmediata",quota:"Consultar",hab:"2 hab",desc:"Apartamento de esquina, nuevo y sin estrenar, en Citalá Haus — torre residencial en el Distrito Masferrer, una de las zonas de mayor plusvalía de San Salvador. Nivel alto, con luz natural por dos costados y vistas abiertas de la ciudad. Listo para habitar o para generar renta, en alquiler tradicional o en Airbnb: si elegís esa vía, te acompañamos en el montaje y la puesta en marcha.",amen:["Piscina","Cinema Room","Gimnasio","Yoga Room","Conference Room","Rooftop con vistas","Áreas verdes","Seguridad 24/7"],near:[],model:{name:"Opción 1 · apartamento de esquina",area:"59.31 m²",hab:"2",bath:"Consultar",park:"1"},dev:{name:"Edificio desarrollado por HAUS",blurb:"Citalá Haus es una torre residencial construida por HAUS en el Distrito Masferrer. Estas unidades las vende su propietario directamente; Next Level Demographic asesora al comprador y valida escrituras y estado registral con nuestros abogados antes de la firma."}},
-"Citalá Haus — Opción 2":{fotos:["particulares/citala-op2-1.jpg","particulares/citala-op2-2.jpg","particulares/citala-op2-3.jpg","particulares/citala-op2-4.jpg","particulares/citala-op2-5.jpg","particulares/citala-op2-6.jpg","particulares/citala-op2-7.jpg","particulares/citala-op2-8.jpg"],delivery:"Entrega inmediata",quota:"Consultar",hab:"2 hab",desc:"Apartamento de esquina, nuevo y sin estrenar, en Citalá Haus — torre residencial en el Distrito Masferrer, zona alta de la Col. Escalón. Metraje eficiente y el precio de entrada más accesible del edificio, con luz natural por dos costados. Sólido para vivir o invertir: la zona tiene demanda constante de alquiler y buen desempeño en Airbnb, y te acompañamos si elegís esa vía.",amen:["Piscina","Cinema Room","Gimnasio","Yoga Room","Conference Room","Rooftop con vistas","Áreas verdes","Seguridad 24/7"],near:[],model:{name:"Opción 2 · apartamento de esquina",area:"57.99 m²",hab:"2",bath:"Consultar",park:"1"},dev:{name:"Edificio desarrollado por HAUS",blurb:"Citalá Haus es una torre residencial construida por HAUS en el Distrito Masferrer. Estas unidades las vende su propietario directamente; Next Level Demographic asesora al comprador y valida escrituras y estado registral con nuestros abogados antes de la firma."}},
+"Citalá Haus — Opción 1":{video:"Z0blxqlmF2s",fotos:["particulares/citala-op1-1.jpg","particulares/citala-op1-2.jpg","particulares/citala-op1-3.jpg","particulares/citala-op1-4.jpg","particulares/citala-op1-5.jpg","particulares/citala-op1-6.jpg","particulares/citala-op1-7.jpg","particulares/citala-op1-8.jpg"],delivery:"Entrega inmediata",quota:"Consultar",hab:"2 hab",desc:"Apartamento de esquina, nuevo y sin estrenar, en Citalá Haus — torre residencial en el Distrito Masferrer, una de las zonas de mayor plusvalía de San Salvador. Nivel alto, con luz natural por dos costados y vistas abiertas de la ciudad. Listo para habitar o para generar renta, en alquiler tradicional o en Airbnb: si elegís esa vía, te acompañamos en el montaje y la puesta en marcha.",amen:["Piscina","Cinema Room","Gimnasio","Yoga Room","Conference Room","Rooftop con vistas","Áreas verdes","Seguridad 24/7"],near:[],model:{name:"Opción 1 · apartamento de esquina",area:"59.31 m²",hab:"2",bath:"Consultar",park:"1"},dev:{name:"Edificio desarrollado por HAUS",blurb:"Citalá Haus es una torre residencial construida por HAUS en el Distrito Masferrer. Estas unidades las vende su propietario directamente; Next Level Demographic asesora al comprador y valida escrituras y estado registral con nuestros abogados antes de la firma."}},
+"Citalá Haus — Opción 2":{video:"Z0blxqlmF2s",fotos:["particulares/citala-op2-1.jpg","particulares/citala-op2-2.jpg","particulares/citala-op2-3.jpg","particulares/citala-op2-4.jpg","particulares/citala-op2-5.jpg","particulares/citala-op2-6.jpg","particulares/citala-op2-7.jpg","particulares/citala-op2-8.jpg"],delivery:"Entrega inmediata",quota:"Consultar",hab:"2 hab",desc:"Apartamento de esquina, nuevo y sin estrenar, en Citalá Haus — torre residencial en el Distrito Masferrer, zona alta de la Col. Escalón. Metraje eficiente y el precio de entrada más accesible del edificio, con luz natural por dos costados. Sólido para vivir o invertir: la zona tiene demanda constante de alquiler y buen desempeño en Airbnb, y te acompañamos si elegís esa vía.",amen:["Piscina","Cinema Room","Gimnasio","Yoga Room","Conference Room","Rooftop con vistas","Áreas verdes","Seguridad 24/7"],near:[],model:{name:"Opción 2 · apartamento de esquina",area:"57.99 m²",hab:"2",bath:"Consultar",park:"1"},dev:{name:"Edificio desarrollado por HAUS",blurb:"Citalá Haus es una torre residencial construida por HAUS en el Distrito Masferrer. Estas unidades las vende su propietario directamente; Next Level Demographic asesora al comprador y valida escrituras y estado registral con nuestros abogados antes de la firma."}},
 "Villas Coloniales Suchitoto":{delivery:"Q1 2027",quota:"$780 / mes",hab:"3 hab",desc:"Villas de inspiración colonial en Suchitoto, el pueblo cultural más pintoresco del país, junto al lago Suchitlán. Fuerte atractivo turístico y potencial de renta por noche.",amen:["Jardines","Terraza con vista al lago","Seguridad 24/7","Área social","Piscina","Estacionamiento"],near:[["Centro colonial","⛪"],["Lago Suchitlán","🌊"],["Cascada Los Tercios","💧"],["Iglesia Santa Lucía","⛪"]],model:{name:"Modelo Colonial",area:"150 m²",hab:"3",bath:"2.5",park:"2"},dev:{name:"Villas Coloniales S.A.",blurb:"Proyectos con carácter colonial en destinos turísticos consolidados."}}
 };
 var pmG={i:0,n:0,t:null,dur:5000};
@@ -3886,6 +3903,8 @@ function openProjModal(card){_pmCurCard=card;
   var near=d.near||[];
   var m=d.model||{name:'—',area:area,hab:'3',bath:'2.5',park:'2'};
   document.getElementById('pmModel').innerHTML='<div class="pm-model-name">'+_pmEsc((m.name||'').replace(/^Modelo\b/,U.model_word))+'</div><div class="pm-model-specs"><span>📐 '+_pmEsc(_convArea(m.area))+'</span><span>🛏️ '+m.hab+' '+U.hab+'</span>'+_specChip('🛁',m.bath,U.baths)+_specChip('🚗',m.park,U.parks)+'</div><div class="pm-model-price">'+U.from+' '+_pmEsc(price)+'</div>';
+  var _vs=document.getElementById('pmVideoSec'),_vb=document.getElementById('pmVideo');
+  if(_vs&&_vb){if(d.video){_vb.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+d.video+'?rel=0&playsinline=1" title="Recorrido en video: '+_pmEsc(name)+'" loading="lazy" allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>';_vs.hidden=false;}else{_vb.innerHTML='';_vs.hidden=true;}}
   var _bx=document.getElementById('pmBanks');
   if(_bx){
     var _bsec=_bx.closest?_bx.closest('.pm-sec'):null;
@@ -3915,7 +3934,7 @@ function openProjModal(card){_pmCurCard=card;
   var _f=_pmEnfocables(ov);
   if(_f.length)setTimeout(function(){try{_f[0].focus()}catch(e){}},60);
 }
-function closeProjModal(){
+function closeProjModal(){var _vb0=document.getElementById('pmVideo');if(_vb0)_vb0.innerHTML='';
   var ov=document.getElementById('pmOverlay');
   if(!ov.classList.contains('open'))return;
   ov.classList.remove('show');clearTimeout(pmG.t);
@@ -5646,6 +5665,7 @@ document.addEventListener('click',function(ev){
       <div class="pm-sec"><h4 data-i18n="pm_amen">Amenidades</h4><div class="pm-amen" id="pmAmen"></div></div>
       <div class="pm-sec"><h4 data-i18n="pm_location">Ubicación y cercanías</h4><div class="pm-croquis"><div class="pm-croquis-map" id="pmCroquis"></div><div class="pm-croquis-tag"><span class="pm-croquis-dot"></span><span id="pmCroquisName"></span></div></div><div class="pm-dist" id="pmDist"></div></div>
       <div class="pm-sec"><h4 data-i18n="pm_models">Modelos</h4><div class="pm-model" id="pmModel"></div></div>
+      <div class="pm-sec" id="pmVideoSec" hidden><h4>Recorrido en video</h4><div class="pm-video" id="pmVideo"></div></div>
       <div class="pm-sec"><h4 data-i18n="pm_process">Proceso de compra · Bancos aliados</h4><div id="pmBanks"></div></div>
       <div class="pm-sec"><h4 id="pmAgentH">Quién te acompaña</h4>
         <div class="pm-agent">
@@ -5680,7 +5700,7 @@ document.addEventListener('click',function(ev){
 function setInv(k,scroll){
   var p=document.getElementById('scene-particulares'),q=document.getElementById('scene-projects');
   p.hidden=(k!=='part');q.hidden=(k!=='proj');
-  document.querySelectorAll('.inv-toggle .intent-btn').forEach(function(b){var on=b.dataset.inv===k;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
+  document.querySelectorAll('.inv-toggle .inv-btn').forEach(function(b){var on=b.dataset.inv===k;b.classList.toggle('active',on);b.setAttribute('aria-selected',on)});
   var sec=k==='part'?p:q;sec.classList.add('active');
   setTimeout(function(){window.dispatchEvent(new Event('resize'))},60);
   if(scroll)sec.scrollIntoView({behavior:'smooth'});

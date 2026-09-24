@@ -2136,12 +2136,16 @@ section[hidden]{display:none!important}
 /* ===== Pantallas grandes (24"+): aprovechar el ancho ===== */
 .flag-svg{display:inline-block;vertical-align:-1px;border-radius:2px;box-shadow:0 0 0 .5px rgba(0,0,0,.15)}
 @media (min-width:1500px){
-  :root{--max:1280px;--max-nav:1200px}
+  :root{--max:1440px;--max-nav:1360px}
+  /* Más ancho = más columnas, no elementos más grandes */
+  .proj-layout:not(.hybrid):not(.map) .proj-grid{grid-template-columns:repeat(auto-fill,minmax(300px,1fr))}
+  .proj-layout:not(.hybrid):not(.map) .proj-grid>.proj-card{max-width:400px}
+  .section-h{font-size:64px}
   .section-sub{max-width:900px}
   .life-comparison{padding:72px 80px}
 }
 @media (min-width:1800px){
-  :root{--max:1360px;--max-nav:1280px}
+  :root{--max:1560px;--max-nav:1440px}
 }
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">

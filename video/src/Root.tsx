@@ -3,6 +3,7 @@ import { Reel, REEL_DURATION, REEL_FPS } from "./Reel";
 import { Tour, TOUR_DURATION, TOUR_FPS } from "./Tour";
 import { Corporate, CORP_DURATION } from "./Corporate";
 import { Zoom, ZOOM_DURATION, ZOOM_FPS } from "./Zoom";
+import { ZoomV2, ZOOM_V2_DURATION, ZOOM_V2_FPS } from "./ZoomV2";
 
 // Reel vertical de 15 s para Instagram / TikTok:
 // npx remotion render NextLevelReel out/reel.mp4
@@ -42,6 +43,15 @@ export const RemotionRoot: React.FC = () => {
         component={Zoom}
         durationInFrames={ZOOM_DURATION}
         fps={ZOOM_FPS}
+        width={1080}
+        height={1920}
+      />
+      {/* Segunda versión del mismo encargo: npx remotion render NextLevelZoomV2 out/zoom-v2.mp4 */}
+      <Composition
+        id="NextLevelZoomV2"
+        component={ZoomV2}
+        durationInFrames={ZOOM_V2_DURATION}
+        fps={ZOOM_V2_FPS}
         width={1080}
         height={1920}
       />

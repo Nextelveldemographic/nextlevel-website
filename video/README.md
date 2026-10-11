@@ -32,3 +32,11 @@ npx remotion render NextLevelTour out/tour.mp4
 - Corte de 7,5 s: sin silencios, con zoom por toma (115 % / 130 % / 110 % / 140 % con arranque rápido), subtítulos Montserrat ExtraBold palabra por palabra con pop-in, sombra negra al 80 % y flash blanco al 50 % en "ZITALÁ".
 - Textos, tiempos de palabra y tomas en `src/Zoom.tsx`. Revisar "Slideographic" y "Zitalá House" contra el audio antes de publicar.
 - Montserrat (OFL) en `public/fonts/`. Sin música de fondo: no hay una pista con licencia en el entorno.
+
+## NextLevelZoomV2
+
+- Segunda versión del mismo encargo, rehecha desde cero: 6,6 s, la voz entra en el primer cuadro y no queda ningún hueco de 80 ms o más en el audio.
+- Cortes (segundos del original): 0,56–2,20 · 3,03–7,50 · 8,27–8,72. El "Ehh…" (9,2–10,1 s) queda fuera.
+- Zoom centrado en el rostro sin bordes negros, sombra paralela dura al 80 %, "ZITALÁ HOUSE" en rojo y pop sutil en cada palabra resaltada.
+- Textos, tiempos y tomas en `src/ZoomV2.tsx`. Revisar "Slideographic" y "Zitalá House" antes de publicar.
+- Render: `npx remotion render NextLevelZoomV2 out/zoom-v2.mp4`

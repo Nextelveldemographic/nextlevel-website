@@ -26,3 +26,9 @@ npx remotion render NextLevelTour out/tour.mp4
 - Misma línea de tiempo y material que `NextLevelTour`, con tono sobrio: encuadre estable, fundidos en los cortes, subtítulos por frase con acentos en azul (paleta del sitio) y cierre con "Hablemos por WhatsApp".
 - Textos en `LINES` dentro de `src/Corporate.tsx`. Antes de publicar, confirmar "Puerto Rico" y "Santa Laja".
 - Render: `npx remotion render NextLevelCorporate out/corporate.mp4`
+
+## NextLevelZoom
+
+- Corte de 7,5 s: sin silencios, con zoom por toma (115 % / 130 % / 110 % / 140 % con arranque rápido), subtítulos Montserrat ExtraBold palabra por palabra con pop-in, sombra negra al 80 % y flash blanco al 50 % en "ZITALÁ".
+- Textos, tiempos de palabra y tomas en `src/Zoom.tsx`. Revisar "Slideographic" y "Zitalá House" contra el audio antes de publicar.
+- Montserrat (OFL) en `public/fonts/`. Sin música de fondo: no hay una pista con licencia en el entorno.

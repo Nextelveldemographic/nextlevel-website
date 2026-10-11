@@ -27,7 +27,7 @@ const WHATSAPP = "#25D366";
 
 // Tramos del clip original que se conservan (en frames de 30 fps); los huecos
 // entre tramos se eliminan = jump cut.
-const SEGMENTS = [
+export const SEGMENTS = [
   { src: 34, len: 59 }, // "Hola, amigos de Next Level de Puerto Rico."
   { src: 95, len: 63 }, // "Hoy nos encontramos acá en Santa Laja,"
   { src: 159, len: 113 }, // "una torre de apartamentos ubicada en ... Escalón Norte."
@@ -37,13 +37,13 @@ const SEGMENTS = [
   return acc;
 }, []);
 
-const TALK_END =
+export const TALK_END =
   SEGMENTS[SEGMENTS.length - 1].out + SEGMENTS[SEGMENTS.length - 1].len;
 const OUTRO_LEN = 60;
 export const TOUR_DURATION = TALK_END + OUTRO_LEN;
 
 // Segundo del clip original -> frame del video final
-const srcToOut = (sec: number) => {
+export const srcToOut = (sec: number) => {
   const f = sec * TOUR_FPS;
   for (const s of SEGMENTS) {
     if (f < s.src) return s.out;

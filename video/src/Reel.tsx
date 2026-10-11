@@ -4,30 +4,13 @@ import {
   Img,
   OffthreadVideo,
   Sequence,
-  continueRender,
-  delayRender,
   interpolate,
   spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-
-// Inter (fuente del sitio), incluida en public/ para renderizar sin internet
-const fontFamily = "Inter";
-const fontHandle = delayRender("Cargando Inter");
-const inter = new FontFace(
-  fontFamily,
-  `url(${staticFile("fonts/Inter-latin.woff2")}) format("woff2")`,
-  { weight: "100 900" },
-);
-inter
-  .load()
-  .then(() => {
-    document.fonts.add(inter);
-    continueRender(fontHandle);
-  })
-  .catch((err) => console.error(err));
+import { fontFamily } from "./font";
 
 // Colores del sitio (index.html)
 const BLUE = "#2997FF";

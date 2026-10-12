@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- NLD v42.0 · Klaric · etiqueta de confianza a la derecha del rotulo; barra fija sin progreso ni pildora -->
-<!-- NLD v43.8 · Después del cierre y Red de aliados también en teléfono (selector como Gestión de Airbnb).
+<!-- NLD v43.9 · Aliados vuelve a tarjetas; en celular el contenido del teléfono va centrado y con aire.
+     v43.8 · Después del cierre y Red de aliados también en teléfono (selector como Gestión de Airbnb).
      v43.7 · Metodología y B2B también en teléfono de ejemplo (proceso del comprador; pauta, video, cierre y tablero del piloto).
      v43.6 · "Gestión de Airbnb": cada paso se ve en un teléfono de ejemplo. La tarjeta del número contrasta con su banda.
      v43.5 · B2B sale del carrusel y usa el selector de pasos de "Después del cierre"; Aliados queda como sección propia.
@@ -42,7 +43,7 @@ document.documentElement.className+=" js-hero";
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v43.8-2026-10">
+<meta name="version" content="v43.9-2026-10">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -2796,6 +2797,24 @@ body{overflow-x:hidden;overflow-x:clip}
   #scene-particulares .proj-tourtoggle.active,[data-theme="dark"] #scene-particulares .proj-tourtoggle.active{background:var(--blue-soft);border-color:transparent;color:var(--blue)}
   [data-theme="dark"] #scene-particulares .proj-tourtoggle:not(.active){background:transparent;border-color:var(--divider)}
 }
+
+/* ---------- 12. v43.9 ----------
+   Pantallas del teléfono: el rótulo queda arriba y el contenido se centra en
+   el espacio libre (antes todo se amontonaba arriba y dejaba vacío abajo). */
+.scn.live .scn-ph.is-phone:not(.bare) .stage-item{display:flex;flex-direction:column;align-items:stretch;justify-content:flex-start;gap:0;padding-bottom:10px}
+.scn-ph.is-phone:not(.bare) .phn-v>*{flex:none}
+.scn-ph.is-phone:not(.bare) .phn-v>.phn-k+*{margin-top:auto}
+.scn-ph.is-phone:not(.bare) .phn-v>:last-child{margin-bottom:auto}
+.scn-ph.is-phone:not(.bare) .phn-v>.phn-k{margin-bottom:10px}
+@media (max-width:699px){
+  .scn.live.has-phone>.scn-stage{margin-bottom:18px}
+  .scn.live.has-phone{gap:0}
+}
+/* Aliados en tarjetas: "Contactar empresa" como enlace azul, igual que el resto */
+#scene-partners .ally-cta,[data-theme="dark"] #scene-partners .ally-cta{background:none;color:var(--blue);padding:0;border-radius:0;font-size:var(--fs-17);gap:2px}
+[data-theme="dark"] #scene-partners .ally-cta{color:#2997FF}
+#scene-partners .ally-cta::after{content:"\203A";font-size:1.3em;line-height:1;margin-top:-2px}
+#scene-partners .ally-cta:hover{text-decoration:underline;background:none}
 </style>
 </head>
 <body>
@@ -3382,7 +3401,7 @@ body{overflow-x:hidden;overflow-x:clip}
     <div class="eyebrow anim grey" data-i18n="ally_eb">Red de aliados comerciales</div>
     <h2 class="section-h anim d1" data-i18n="ally_h">Empresas que construyen <br><span class="grey">el ecosistema con nosotros.</span></h2>
     <p class="section-sub anim d2" data-i18n="ally_sub">Constructoras y proveedores de servicios complementarios verificados por nuestro equipo. Si te interesa contactar a alguno, hacelo directamente desde aquí.</p>
-    <div class="scn" data-scn="ally"><div class="ally-grid scn-steps"><article class="ally-card scn-step"><div class="ally-num">1</div>
+    <div class="ally-spotlight anim d3"><article class="ally-card">
       <div class="ally-head">
         <div class="ally-logo"><span class="ally-logo-fb">🏗️</span><img decoding="async" src="allies/espinal.png" onload="this.parentNode.classList.add('has-img')" alt="Espinal Constructores S.A. de C.V." loading="lazy" onerror="this.remove()" width="160" height="160"></div>
         <div><div class="ally-name">Espinal Constructores S.A. de C.V.</div><div class="ally-cat" data-i18n="ally_cat">Constructora</div></div>
@@ -3391,7 +3410,7 @@ body{overflow-x:hidden;overflow-x:clip}
         <p class="ally-desc" data-i18n="ally_desc">Empresa con 16 años de experiencia en el sector. Su trayectoria incluye el desarrollo de gasolineras, construcción de viviendas, lotificaciones, edificios, topografías y remodelaciones, entre otros proyectos. Aliada estratégica de Next Level Demographic en el acompañamiento a inversores de la diáspora.</p>
         <div class="ally-cta-row"><button type="button" class="ally-cta" onclick="contactAlly('Espinal Constructores S.A. de C.V.')" data-i18n="ally_cta">Contactar empresa</button><span class="cta-x" data-i18n="ally_cta_x">o escríbenos directo por <a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></div>
       </div>
-    </article><article class="ally-card scn-step"><div class="ally-num">2</div>
+    </article><article class="ally-card">
       <div class="ally-head">
         <div class="ally-logo"><span class="ally-logo-fb">⚖️</span><img decoding="async" src="allies/laborlab.png" onload="this.parentNode.classList.add('has-img')" alt="LaborLab" loading="lazy" onerror="this.remove()" width="160" height="160"></div>
         <div><div class="ally-name">LaborLab</div><div class="ally-cat" data-i18n="ally2_cat">Firma legal</div></div>
@@ -3400,7 +3419,7 @@ body{overflow-x:hidden;overflow-x:clip}
         <p class="ally-desc" data-i18n="ally2_desc">LaborLab es una firma salvadoreña de abogados, con más de cuatro décadas de trayectoria asesorando a empresas líderes en El Salvador y la región, combinando experiencia y solidez profesional con una atención cercana y personalizada. La firma también acompaña a salvadoreños residentes en el exterior en sus asuntos legales en El Salvador, incluyendo poderes, revisión y formalización de operaciones inmobiliarias, estudios registrales y otros trámites relacionados con su patrimonio, permitiéndoles gestionar sus asuntos de forma segura y confiable aun desde el extranjero.</p>
         <div class="ally-cta-row"><button type="button" class="ally-cta" onclick="contactAlly('LaborLab')" data-i18n="ally_cta">Contactar empresa</button><span class="cta-x" data-i18n="ally_cta_x">o escríbenos directo por <a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></div>
       </div>
-    </article></div><div class="scn-stage" aria-hidden="true"><div class="scn-sticky"><div class="scn-ph"></div></div></div></div>
+    </article></div>
   </div>
 </section>
 

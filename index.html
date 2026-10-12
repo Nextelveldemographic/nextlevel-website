@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- NLD v42.0 · Klaric · etiqueta de confianza a la derecha del rotulo; barra fija sin progreso ni pildora -->
-<!-- NLD v43.6 · "Gestión de Airbnb": cada paso se ve en un teléfono de ejemplo. La tarjeta del número contrasta con su banda.
+<!-- NLD v43.7 · Metodología y B2B también en teléfono de ejemplo (proceso del comprador; pauta, video, cierre y tablero del piloto).
+     v43.6 · "Gestión de Airbnb": cada paso se ve en un teléfono de ejemplo. La tarjeta del número contrasta con su banda.
      v43.5 · B2B sale del carrusel y usa el selector de pasos de "Después del cierre"; Aliados queda como sección propia.
      v43.4 · Servicio adicional en banda oscura propia; invitación a Expansión discreta; sin cápsula de avance en celular.
      v43.2 · La frase de las 20 familias se ilumina al desplazar. Metodología, Después del cierre y Servicio
@@ -40,7 +41,7 @@ document.documentElement.className+=" js-hero";
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v43.6-2026-10">
+<meta name="version" content="v43.7-2026-10">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -2557,16 +2558,130 @@ body{overflow-x:hidden;overflow-x:clip}
 .phn-leg i.y{background:#1D1D1F}
 /* iPad y computadora: el teléfono reemplaza a la tarjeta del número */
 @media (min-width:700px){
-  .scn[data-scn="abnb"].live .scn-sticky{height:auto}
+  .scn.has-phone.live .scn-sticky{height:auto}
   .scn.live .scn-ph.is-phone{height:auto;width:var(--pw);max-width:none;margin:0 auto}
 }
 @media (min-width:700px) and (max-width:899px){.scn-ph.is-phone .phn{zoom:.86}}
 /* Celular: el teléfono va arriba de las tarjetas, más pequeño */
 @media (max-width:699px){
-  .scn.live[data-scn="abnb"]>.scn-stage{display:block;order:-1;margin-bottom:6px}
+  .scn.live.has-phone>.scn-stage{display:block;order:-1;margin-bottom:6px}
   .scn.live .scn-ph.is-phone{height:auto;width:auto;margin:0;background:none;box-shadow:none;border-radius:0;display:flex;justify-content:center}
   .scn-ph.is-phone .phn{zoom:.8}
 }
+
+/* ---------- 9. v43.7 · Metodología y B2B en teléfono ---------- */
+.phn-sb.lt{color:#fff}
+.phn-sb.lt .phn-ic i{background:#fff}
+.phn-sb.lt .phn-ic b{border-color:#fff;box-shadow:inset 0 0 0 1.5px #0B0B0C;background:#fff}
+.phn-sb.lt .phn-isl{background:#000}
+.scn.live .scn-ph.is-phone.bare .stage-item{padding:0}
+.phn-full{position:absolute;inset:0;display:flex;flex-direction:column;overflow:hidden}
+.phn-full>.phn-home{position:absolute;left:50%;bottom:8px;margin:0;transform:translateX(-50%)}
+.phn-home.lt{background:rgba(255,255,255,.85)}
+.phn-tag{position:absolute;right:12px;top:46px;z-index:2;background:rgba(255,255,255,.9);border-color:transparent}
+/* Conversación */
+.phn-chat{display:flex;flex-direction:column;gap:7px}
+.msg{max-width:84%;font-size:11.5px;line-height:1.35;padding:7px 10px;border-radius:14px}
+.msg.me{align-self:flex-end;background:#0071E3;color:#fff;border-bottom-right-radius:5px}
+.msg.nl{align-self:flex-start;background:#F0F0F3;color:#1D1D1F;border-bottom-left-radius:5px}
+.phn-slot{display:flex;align-items:center;gap:10px;border:1px solid #E5E5EA;border-radius:14px;padding:9px 10px;margin-top:2px}
+.phn-cal-ic{flex:none;width:36px;height:38px;border-radius:9px;background:#fff;box-shadow:0 0 0 1px #E5E5EA;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:15px;font-weight:700;line-height:1}
+.phn-cal-ic b{font-size:8px;font-weight:700;color:#FF3B30;margin-bottom:2px}
+.phn-okline{display:flex;align-items:center;gap:6px;font-size:11px;color:#28A745;font-weight:600;padding-left:2px}
+.phn-okline i,.phn-tl-i i,.phn-hero-ok i,.phn-chk i{display:grid;place-items:center}
+.phn-okline i{width:16px;height:16px;border-radius:50%;background:#E8F7EC}
+.phn-okline svg{width:10px;height:10px}
+/* Propuesta */
+.phn-opt{display:flex;align-items:center;gap:10px;padding:8px;border-radius:14px;background:#F5F5F7;margin-bottom:7px;box-shadow:inset 0 0 0 1.5px transparent}
+.phn-opt.on{background:#fff;box-shadow:inset 0 0 0 1.5px #0071E3}
+.phn-opt img{flex:none;width:58px;height:50px;border-radius:9px;object-fit:cover}
+.phn-rec{font-style:normal;align-self:flex-start;margin-top:3px;font-size:9.5px;font-weight:600;color:#0071E3;background:#E3EEFB;border-radius:999px;padding:2px 7px}
+.phn-btn{margin-top:8px;text-align:center;background:#0071E3;color:#fff;font-size:12px;font-weight:600;border-radius:12px;padding:10px}
+/* Contrato */
+.phn-doc{display:flex;align-items:center;gap:10px;background:#F5F5F7;border-radius:14px;padding:10px 12px}
+.phn-pdf{flex:none;width:34px;height:42px;border-radius:6px;background:#FF3B30;color:#fff;font-size:9px;font-weight:700;display:grid;place-items:center}
+.phn-note{display:flex;gap:9px;align-items:flex-start;background:#E3EEFB;border-radius:14px;padding:10px 12px;font-size:11.5px;line-height:1.35}
+.phn-note .phn-av{width:24px;height:24px;font-size:8.5px;background:#0071E3;color:#fff}
+/* Cierre */
+.phn-hero-ok{display:flex;flex-direction:column;align-items:center;text-align:center;gap:3px;padding:6px 0 12px}
+.phn-hero-ok i{width:46px;height:46px;border-radius:50%;background:#28A745;color:#fff;margin-bottom:6px}
+.phn-hero-ok i svg{width:24px;height:24px}
+.phn-hero-ok b{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.phn-hero-ok span{font-size:11px;color:#6E6E73}
+.phn-tl{position:relative;padding-left:2px}
+.phn-tl-i{position:relative;display:flex;gap:10px;align-items:flex-start;padding-bottom:12px}
+.phn-tl-i:not(:last-child)::before{content:"";position:absolute;left:10px;top:22px;bottom:2px;width:2px;background:#E5E5EA}
+.phn-tl-i.done:not(:last-child)::before{background:#28A745}
+.phn-tl-i i{flex:none;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:inset 0 0 0 2px #D2D2D7}
+.phn-tl-i.done i{background:#28A745;color:#fff;box-shadow:none}
+.phn-tl-i.now i{box-shadow:inset 0 0 0 2px #0071E3;background:radial-gradient(circle,#0071E3 0 4px,#fff 5px)}
+.phn-tl-i i svg{width:12px;height:12px}
+.phn-tl-i .phn-evb b{font-size:12px}
+/* B2B · historia patrocinada */
+.phn-story{background:linear-gradient(180deg,#0A6CE0,#0057C2);color:#fff;padding:0 16px}
+.phn-story .phn-sb{margin:0 -16px}
+.phn-bars2{display:flex;gap:4px;margin-top:2px}
+.phn-bars2 i{flex:1;height:2.5px;border-radius:2px;background:rgba(255,255,255,.35)}
+.phn-bars2 i.on{background:#fff}
+.phn-acct{display:flex;align-items:center;gap:8px;margin-top:9px}
+.phn-acct .phn-evb b{font-size:11.5px}
+.phn-acct .phn-evb span{color:rgba(255,255,255,.75)}
+.phn-av.lt{background:#fff;color:#0071E3}
+.phn-segr{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-top:12px}
+.phn-ex.lt{color:#fff;border-color:rgba(255,255,255,.5);margin-top:0}
+.phn-seg{font-size:9.5px;font-weight:600;background:rgba(255,255,255,.18);border-radius:999px;padding:4px 9px}
+.phn-sh{font-size:25px;font-weight:700;letter-spacing:-.03em;line-height:1.06;margin-top:14px}
+.phn-ss{font-size:11.5px;line-height:1.4;color:rgba(255,255,255,.85);margin-top:8px}
+.phn-pc{margin:16px 6px 0;background:#fff;color:#1D1D1F;border-radius:14px;padding:7px 7px 9px;transform:rotate(-3deg);box-shadow:0 10px 24px rgba(0,0,0,.25)}
+.phn-pc img{display:block;width:100%;height:96px;object-fit:cover;border-radius:9px}
+.phn-pc b{display:block;font-size:12px;margin:7px 3px 0}
+.phn-pc span{display:block;font-size:10px;color:#6E6E73;margin:0 3px}
+.phn-send{margin:auto auto 26px;background:#fff;color:#1D1D1F;font-size:12px;font-weight:600;border-radius:999px;padding:9px 22px}
+/* B2B · video corto */
+.phn-tt{background:#000;color:#fff}
+.phn-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.62)}
+.phn-tt>*:not(.phn-bg){position:relative}
+.phn-ttn{display:flex;justify-content:center;gap:16px;font-size:12px;margin-top:4px;color:rgba(255,255,255,.7)}
+.phn-ttn b{color:#fff;border-bottom:2px solid #fff;padding-bottom:3px}
+.phn-pov{margin:auto 54px 0 16px;font-size:17px;font-weight:700;line-height:1.22;letter-spacing:-.01em;text-shadow:0 1px 8px rgba(0,0,0,.45)}
+.phn-side{position:absolute!important;right:10px;bottom:120px;display:flex;flex-direction:column;gap:14px;align-items:center;font-size:10px;font-weight:600}
+.phn-side span{display:flex;flex-direction:column;align-items:center;gap:3px}
+.phn-side svg{width:27px;height:27px;filter:drop-shadow(0 1px 3px rgba(0,0,0,.4))}
+.phn-ttb{display:flex;flex-direction:column;gap:2px;padding:12px 16px 28px;font-size:11px}
+.phn-ttb span{color:rgba(255,255,255,.85)}
+.phn-ttb em{font-style:normal;align-self:flex-start;margin-top:8px;background:#0071E3;color:#fff;font-weight:600;border-radius:8px;padding:7px 12px}
+/* B2B · conversación de cierre */
+.phn-wa{background:#F2EFE9}
+.phn-wa .phn-sb{background:#fff}
+.phn-wah{display:flex;align-items:center;gap:9px;background:#fff;padding:4px 14px 10px;border-bottom:1px solid #E5E5EA}
+.phn-wah .phn-evb span{color:#28A745}
+.phn-wa .phn-chat{padding:12px 12px 30px}
+.phn-wa .msg.nl{background:#fff}
+.phn-wa .msg.me{background:#D9FDD3;color:#1D1D1F}
+.phn-chk{display:flex;flex-direction:column;gap:5px;min-width:76%}
+.phn-chk b{font-size:11px;margin-bottom:1px}
+.phn-chk span{display:flex;align-items:center;gap:6px;color:#6E6E73}
+.phn-chk span.d{color:#1D1D1F}
+.phn-chk i{flex:none;width:15px;height:15px;border-radius:50%;box-shadow:inset 0 0 0 1.5px #C7C7CC}
+.phn-chk .d i{background:#28A745;color:#fff;box-shadow:none}
+.phn-chk i svg{width:9px;height:9px}
+/* B2B · tablero del piloto */
+.phn-dash{background:#fff}
+.phn-pad{padding:4px 14px 0}
+.phn-dh{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:9px}
+.phn-dh .phn-app{font-size:16px}
+.phn-mon{display:flex;align-items:center;gap:8px;font-size:10px;color:#6E6E73;margin-bottom:10px}
+.phn-mon i{flex:1;height:4px;border-radius:2px;background:#E5E5EA;overflow:hidden}
+.phn-mon u{display:block;width:33%;height:100%;background:#0071E3}
+.phn-dash .phn-tiles b{font-size:20px}
+.phn-fn{display:grid;grid-template-columns:1fr auto;gap:2px 8px;font-size:10.5px;margin-bottom:7px}
+.phn-fn:last-child{margin-bottom:0}
+.phn-fn b{font-size:11px}
+.phn-fn i{grid-column:1/-1;height:5px;border-radius:3px;background:#E5E5EA;overflow:hidden}
+.phn-fn u{display:block;height:100%;background:#0071E3;border-radius:3px}
+.phn-pay{text-align:center;font-size:11px;font-weight:600;color:#0071E3;background:#E3EEFB;border-radius:10px;padding:8px}
+.phn-day{align-self:center;font-size:9.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#6E6E73;background:#fff;border-radius:7px;padding:3px 8px;margin-bottom:2px}
+.phn-tt>.phn-tag{position:absolute;right:12px;top:72px}
 </style>
 </head>
 <body>
@@ -6279,19 +6394,19 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   }
   function fillDerived(){derived.forEach(function(d){d.node.textContent=(d.fn||lastSentence)(d.src);});}
   var KINDS={
-    proc:{n:'.proc-n', more:['.proc-d','.proc-pill'],
+    proc:{n:'.proc-n', more:['.proc-d','.proc-pill'], phone:'proc',
       label:function(st){return st.querySelector('.proc-tag');},
       hi:function(st){var p=st.querySelector('.proc-pill');return p?copyOf(p,'ph-p'):null;}},
     svc:{n:'.sc-n', more:['.sc-desc','.sc-tag'],
       label:function(st,sec){return sec.querySelector('[data-i18n="svc_eb"]');},
       hi:function(st){var t=st.querySelector('.sc-tag');return t?copyOf(t,'ph-p'):null;}},
-    abnb:{n:'.abnb-n', more:['.abnb-d'], phone:true,
+    abnb:{n:'.abnb-n', more:['.abnb-d'], phone:'abnb',
       label:function(st,sec){return sec.querySelector('[data-i18n="abnb_eb"]');},
       hi:function(st){
         var src=st.querySelector('.abnb-d'); if(!src)return null;
         var s=mk('span','ph-p'); derived.push({node:s,src:src}); return s;}},
     /* v43.5: B2B · Para desarrolladoras, con la misma estructura que "Después del cierre" */
-    dev:{n:'.dev-num', more:['.dev-d'],
+    dev:{n:'.dev-num', more:['.dev-d'], phone:'dev',
       label:function(st,sec){return sec.querySelector('[data-i18n="dev_eb"]');},
       hi:function(st){
         var src=st.querySelector('.dev-n'); if(!src)return null;
@@ -6372,20 +6487,136 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       return '<div class="phn-k">'+esc(t.k4)+'</div><div class="phn-cal">'+c+'</div>'+
         '<div class="phn-leg"><span><i class="b"></i>'+esc(t.booked)+'</span><span><i class="y"></i>'+esc(t.yours)+'</span></div>';}
   ];
+  /* ===== 2c. v43.7 · Metodología y B2B también en teléfono ===== */
+  function SB(light){return '<div class="phn-sb'+(light?' lt':'')+'"><span>9:41</span><span class="phn-isl"></span><span class="phn-ic"><i></i><i></i><i></i><b></b></span></div>';}
+  var ICO={
+    h:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#FF2D55" d="M12 21s-7.5-4.6-9.6-9.2C.9 8.5 3 5 6.4 5c2.1 0 3.6 1.2 4.6 2.6C12 6.2 13.5 5 15.6 5 19 5 21.1 8.5 19.6 11.8 17.5 16.4 12 21 12 21z"/></svg>',
+    c:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M12 3.5c5 0 9 3.4 9 7.6s-4 7.6-9 7.6c-.9 0-1.8-.1-2.6-.3L4.5 20.5l1.3-4.1C4 15 3 13.1 3 11.1 3 6.9 7 3.5 12 3.5z"/></svg>',
+    s:'<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#fff" d="M13.5 4.5 21 11.6l-7.5 7.1v-4.2c-5 0-8.2 1.4-10.5 4.8.9-5.1 3.9-9.4 10.5-10.3z"/></svg>'
+  };
+  function TAG(t){return '<span class="phn-ex phn-tag">'+esc(t.ex)+'</span>';}
+  /* Metodología: el proceso visto por quien compra desde EE. UU. */
+  var PP={
+    es:{dow:'JUE',app:'Tu compra',ex:'Ejemplo',foot:'Acompañado por Next Level Demographic',
+      k1:'Diagnóstico · por WhatsApp',m1:'Hola, vivo en Houston y quiero volver en dos años. ¿Por dónde empiezo?',m2:'Hablemos 30 minutos: tu meta, tu presupuesto y tus tiempos. Sin compromiso.',
+      slot:'Videollamada · 30 min',when:'Jueves 6:00 p. m. · hora de Houston',ok:'Confirmada',m3:'¡Perfecto, ahí estaré!',
+      k2:'Propuesta · 3 opciones',ty:['Torre','Casa','Condominio'],deliv:'Entrega',imm:'Inmediata',rec:'Recomendada',cmp:'Ver análisis comparativo',
+      k3:'Contrato de reserva',pages:'12 páginas',c1:'Revisado por abogado',c2:'Fecha de entrega por escrito',c3:'Penalidad por atraso incluida',note:'Cambiamos la cláusula 7: tu depósito queda protegido.',ready:'Listo para firmar',
+      k4:'Cierre',big:'Escritura firmada',s1:'Poder notarial apostillado',s2:'Firma de escritura',s3:'Inscripción en el registro',s3m:'En proceso',s4:'Entrega de llaves',s4m:'15 dic',away:'Sin salir de EE. UU.'},
+    en:{dow:'THU',app:'Your purchase',ex:'Example',foot:'Guided by Next Level Demographic',
+      k1:'Assessment · on WhatsApp',m1:'Hi, I live in Houston and want to move back in two years. Where do I start?',m2:'Let’s talk for 30 minutes: your goal, your budget and your timing. No commitment.',
+      slot:'Video call · 30 min',when:'Thursday 6:00 PM · Houston time',ok:'Confirmed',m3:'Perfect, I’ll be there!',
+      k2:'Proposal · 3 options',ty:['Tower','House','Condo'],deliv:'Delivery',imm:'Immediate',rec:'Top pick',cmp:'See comparison',
+      k3:'Reservation contract',pages:'12 pages',c1:'Reviewed by a lawyer',c2:'Delivery date in writing',c3:'Late-delivery penalty included',note:'We changed clause 7: your deposit is protected.',ready:'Ready to sign',
+      k4:'Closing',big:'Deed signed',s1:'Apostilled power of attorney',s2:'Deed signing',s3:'Property registration',s3m:'In progress',s4:'Key handover',s4m:'Dec 15',away:'Without leaving the U.S.'},
+    fr:{dow:'JEU',app:'Votre achat',ex:'Exemple',foot:'Accompagné par Next Level Demographic',
+      k1:'Diagnostic · sur WhatsApp',m1:'Bonjour, je vis à Houston et je veux rentrer dans deux ans. Par où commencer ?',m2:'Parlons 30 minutes : votre objectif, votre budget et vos délais. Sans engagement.',
+      slot:'Appel vidéo · 30 min',when:'Jeudi 18h00 · heure de Houston',ok:'Confirmé',m3:'Parfait, j’y serai !',
+      k2:'Proposition · 3 options',ty:['Tour','Maison','Résidence'],deliv:'Livraison',imm:'Immédiate',rec:'Recommandée',cmp:'Voir l’analyse comparative',
+      k3:'Contrat de réservation',pages:'12 pages',c1:'Revu par un avocat',c2:'Date de livraison par écrit',c3:'Pénalité de retard incluse',note:'Clause 7 modifiée : votre dépôt est protégé.',ready:'Prêt à signer',
+      k4:'Clôture',big:'Acte signé',s1:'Procuration apostillée',s2:'Signature de l’acte',s3:'Inscription au registre',s3m:'En cours',s4:'Remise des clés',s4m:'15 déc.',away:'Sans quitter les États-Unis'},
+    it:{dow:'GIO',app:'Il tuo acquisto',ex:'Esempio',foot:'Seguito da Next Level Demographic',
+      k1:'Diagnosi · su WhatsApp',m1:'Ciao, vivo a Houston e voglio tornare tra due anni. Da dove comincio?',m2:'Parliamo 30 minuti: obiettivo, budget e tempi. Senza impegno.',
+      slot:'Videochiamata · 30 min',when:'Giovedì 18:00 · ora di Houston',ok:'Confermata',m3:'Perfetto, ci sarò!',
+      k2:'Proposta · 3 opzioni',ty:['Torre','Casa','Condominio'],deliv:'Consegna',imm:'Immediata',rec:'Consigliata',cmp:'Vedi l’analisi comparativa',
+      k3:'Contratto di prenotazione',pages:'12 pagine',c1:'Rivisto da un avvocato',c2:'Data di consegna per iscritto',c3:'Penale per ritardo inclusa',note:'Abbiamo cambiato la clausola 7: il tuo deposito è protetto.',ready:'Pronto da firmare',
+      k4:'Chiusura',big:'Atto firmato',s1:'Procura apostillata',s2:'Firma dell’atto',s3:'Iscrizione al registro',s3m:'In corso',s4:'Consegna delle chiavi',s4m:'15 dic',away:'Senza lasciare gli USA'},
+    de:{dow:'DO',app:'Dein Kauf',ex:'Beispiel',foot:'Begleitet von Next Level Demographic',
+      k1:'Erstgespräch · per WhatsApp',m1:'Hallo, ich lebe in Houston und will in zwei Jahren zurück. Wo fange ich an?',m2:'Lass uns 30 Minuten sprechen: Ziel, Budget und Zeitplan. Unverbindlich.',
+      slot:'Videoanruf · 30 Min.',when:'Donnerstag 18:00 · Houston-Zeit',ok:'Bestätigt',m3:'Perfekt, ich bin dabei!',
+      k2:'Vorschlag · 3 Optionen',ty:['Turm','Haus','Wohnanlage'],deliv:'Übergabe',imm:'Sofort',rec:'Empfohlen',cmp:'Vergleich ansehen',
+      k3:'Reservierungsvertrag',pages:'12 Seiten',c1:'Von einem Anwalt geprüft',c2:'Übergabetermin schriftlich',c3:'Verzugsstrafe enthalten',note:'Klausel 7 geändert: deine Anzahlung ist geschützt.',ready:'Bereit zur Unterschrift',
+      k4:'Abschluss',big:'Urkunde unterzeichnet',s1:'Apostillierte Vollmacht',s2:'Beurkundung',s3:'Grundbucheintrag',s3m:'In Bearbeitung',s4:'Schlüsselübergabe',s4m:'15. Dez.',away:'Ohne die USA zu verlassen'},
+    pt:{dow:'QUI',app:'Sua compra',ex:'Exemplo',foot:'Acompanhado pela Next Level Demographic',
+      k1:'Diagnóstico · pelo WhatsApp',m1:'Olá, moro em Houston e quero voltar em dois anos. Por onde começo?',m2:'Vamos conversar 30 minutos: sua meta, seu orçamento e seus prazos. Sem compromisso.',
+      slot:'Videochamada · 30 min',when:'Quinta 18:00 · horário de Houston',ok:'Confirmada',m3:'Perfeito, estarei lá!',
+      k2:'Proposta · 3 opções',ty:['Torre','Casa','Condomínio'],deliv:'Entrega',imm:'Imediata',rec:'Recomendada',cmp:'Ver análise comparativa',
+      k3:'Contrato de reserva',pages:'12 páginas',c1:'Revisado por advogado',c2:'Data de entrega por escrito',c3:'Multa por atraso incluída',note:'Mudamos a cláusula 7: seu depósito fica protegido.',ready:'Pronto para assinar',
+      k4:'Fechamento',big:'Escritura assinada',s1:'Procuração apostilada',s2:'Assinatura da escritura',s3:'Registro do imóvel',s3m:'Em andamento',s4:'Entrega das chaves',s4m:'15 dez',away:'Sem sair dos EUA'}
+  };
+  var VP=[
+    function(t){return '<div class="phn-k">'+esc(t.k1)+'</div><div class="phn-chat">'+
+      '<div class="msg me">'+esc(t.m1)+'</div><div class="msg nl">'+esc(t.m2)+'</div>'+
+      '<div class="phn-slot"><span class="phn-cal-ic"><b>'+esc(t.dow)+'</b>14</span><span class="phn-evb"><b>'+esc(t.slot)+'</b><span>'+esc(t.when)+'</span></span></div>'+
+      '<div class="phn-okline"><i>'+CHECK+'</i>'+esc(t.ok)+'</div><div class="msg me">'+esc(t.m3)+'</div></div>';},
+    function(t){
+      var P=[['proyecto2.jpg',t.ty[0]+' · San Salvador','$1,650/m²','2027',1],['proyecto3.jpg',t.ty[1]+' · Santa Tecla','$1,200/m²',t.imm,0],['proyecto6.jpg',t.ty[2]+' · La Unión','$1,900/m²','2028',0]], h='';
+      P.forEach(function(x){h+='<div class="phn-opt'+(x[4]?' on':'')+'"><img src="projects/'+x[0]+'" alt="" loading="lazy" decoding="async"><span class="phn-evb"><b>'+esc(x[1])+'</b><span>'+esc(x[2])+' · '+esc(t.deliv)+' '+esc(x[3])+'</span>'+(x[4]?'<em class="phn-rec">'+esc(t.rec)+'</em>':'')+'</span></div>';});
+      return '<div class="phn-k">'+esc(t.k2)+'</div>'+h+'<div class="phn-btn">'+esc(t.cmp)+'</div>';},
+    function(t){return '<div class="phn-k">'+esc(t.k3)+'</div>'+
+      '<div class="phn-doc"><span class="phn-pdf">PDF</span><span class="phn-evb"><b>Contrato_reserva.pdf</b><span>'+esc(t.pages)+'</span></span></div>'+
+      '<div class="phn-tasks">'+[t.c1,t.c2,t.c3].map(function(x){return '<div class="phn-task"><i>'+CHECK+'</i><span>'+esc(x)+'</span></div>';}).join('')+'</div>'+
+      '<div class="phn-note"><span class="phn-av">NL</span><span>'+esc(t.note)+'</span></div>'+
+      '<div class="phn-btn">'+esc(t.ready)+'</div>';},
+    function(t){
+      var S=[[t.s1,'Houston, TX',1],[t.s2,'San Salvador',1],[t.s3,t.s3m,2],[t.s4,t.s4m,0]], h='';
+      S.forEach(function(x){h+='<div class="phn-tl-i'+(x[2]===1?' done':(x[2]===2?' now':''))+'"><i>'+(x[2]===1?CHECK:'')+'</i><span class="phn-evb"><b>'+esc(x[0])+'</b><span>'+esc(x[1])+'</span></span></div>';});
+      return '<div class="phn-k">'+esc(t.k4)+'</div><div class="phn-hero-ok"><i>'+CHECK+'</i><b>'+esc(t.big)+'</b><span>'+esc(t.away)+'</span></div><div class="phn-tl">'+h+'</div>';}
+  ];
+  /* B2B: lo que ve la diáspora (en español, como la pauta real) y el tablero del piloto */
+  var PD={
+    es:{ex:'Ejemplo',seg:'Pauta por código postal',dash:'Tablero del piloto',sub:'Su proyecto · una tipología',mon:'Mes 2 de 6',leads:'Leads calificados',tours:'Recorridos virtuales',res:'Reservas firmadas',fix:'Costo fijo',msgs:'Mensajes recibidos',pay:'Usted paga solo si se vende'},
+    en:{ex:'Example',seg:'Ads by ZIP code',dash:'Pilot dashboard',sub:'Your project · one unit type',mon:'Month 2 of 6',leads:'Qualified leads',tours:'Virtual tours',res:'Signed reservations',fix:'Fixed cost',msgs:'Messages received',pay:'You only pay if it sells'},
+    fr:{ex:'Exemple',seg:'Publicité par code postal',dash:'Tableau de bord du pilote',sub:'Votre projet · une typologie',mon:'Mois 2 sur 6',leads:'Leads qualifiés',tours:'Visites virtuelles',res:'Réservations signées',fix:'Coût fixe',msgs:'Messages reçus',pay:'Vous ne payez que si ça se vend'},
+    it:{ex:'Esempio',seg:'Annunci per CAP',dash:'Dashboard del pilota',sub:'Il tuo progetto · una tipologia',mon:'Mese 2 di 6',leads:'Lead qualificati',tours:'Tour virtuali',res:'Prenotazioni firmate',fix:'Costo fisso',msgs:'Messaggi ricevuti',pay:'Paghi solo se si vende'},
+    de:{ex:'Beispiel',seg:'Anzeigen nach PLZ',dash:'Pilot-Dashboard',sub:'Ihr Projekt · ein Wohnungstyp',mon:'Monat 2 von 6',leads:'Qualifizierte Leads',tours:'Virtuelle Touren',res:'Unterschriebene Reservierungen',fix:'Fixkosten',msgs:'Eingegangene Nachrichten',pay:'Sie zahlen nur bei Verkauf'},
+    pt:{ex:'Exemplo',seg:'Anúncios por CEP',dash:'Painel do piloto',sub:'Seu projeto · uma tipologia',mon:'Mês 2 de 6',leads:'Leads qualificados',tours:'Tours virtuais',res:'Reservas assinadas',fix:'Custo fixo',msgs:'Mensagens recebidas',pay:'Você só paga se vender'}
+  };
+  var VD=[
+    function(t){return '<div class="phn-full phn-story">'+SB(1)+'<div class="phn-bars2"><i class="on"></i><i></i></div>'+
+      '<div class="phn-acct"><span class="phn-av lt">NL</span><span class="phn-evb"><b>nextleveldemographic</b><span>Patrocinado</span></span></div>'+
+      '<div class="phn-segr"><span class="phn-seg">'+esc(t.seg)+' · Houston 77036</span><span class="phn-ex lt">'+esc(t.ex)+'</span></div>'+
+      '<div class="phn-sh">Tu retiro te espera en casa.</div><div class="phn-ss">Hospitales cerca, el mar a una hora y tu familia a la vuelta.</div>'+
+      '<div class="phn-pc"><img src="projects/proyecto2.jpg" alt="" loading="lazy" decoding="async"><b>Su proyecto</b><span>San Salvador</span></div>'+
+      '<div class="phn-send">Enviar mensaje</div><div class="phn-home lt"></div></div>';},
+    function(t){return '<div class="phn-full phn-tt"><img class="phn-bg" src="projects/proyecto8.jpg" alt="" loading="lazy" decoding="async">'+SB(1)+
+      '<div class="phn-ttn"><span>Siguiendo</span><b>Para ti</b></div>'+
+      '<div class="phn-pov">POV: te jubilas en Houston y vuelves a ver el volcán desde tu balcón.</div>'+
+      '<div class="phn-side"><span>'+ICO.h+'18.4K</span><span>'+ICO.c+'1,203</span><span>'+ICO.s+'2,951</span></div>'+
+      '<div class="phn-ttb"><b>@nextleveldemographic</b><span>Su proyecto · San Salvador</span><em>Enviar mensaje</em></div>'+TAG(t)+'<div class="phn-home lt"></div></div>';},
+    function(t){return '<div class="phn-full phn-wa">'+SB(0)+
+      '<div class="phn-wah"><span class="phn-av">NL</span><span class="phn-evb"><b>Next Level Demographic</b><span>en línea</span></span></div>'+
+      '<div class="phn-chat"><span class="phn-day">'+esc(t.ex)+'</span>'+
+      '<div class="msg me">Me interesa el de 2 habitaciones. ¿Lo puedo ver desde aquí?</div>'+
+      '<div class="msg nl">Claro, Don Roberto. Le agendé un recorrido virtual el sábado 10:00 a. m., hora de Houston.</div>'+
+      '<div class="msg nl phn-chk"><b>Su compra</b>'+
+        '<span class="d"><i>'+CHECK+'</i>Reserva confirmada</span><span class="d"><i>'+CHECK+'</i>Contrato revisado</span>'+
+        '<span class="d"><i>'+CHECK+'</i>Poder apostillado</span><span><i></i>Firma de escritura · 12 nov</span></div>'+
+      '<div class="msg me">¡Listo! Ya envié la reserva.</div></div><div class="phn-home"></div></div>';},
+    function(t){
+      var F=[[t.msgs,312,100],[t.leads,48,40],[t.tours,11,18],[t.res,2,7]], f='';
+      F.forEach(function(x){f+='<div class="phn-fn"><span>'+esc(x[0])+'</span><b>'+x[1]+'</b><i><u style="width:'+x[2]+'%"></u></i></div>';});
+      return '<div class="phn-full phn-dash">'+SB(0)+'<div class="phn-pad">'+
+        '<div class="phn-dh"><span class="phn-evb"><b class="phn-app">'+esc(t.dash)+'</b><span>'+esc(t.sub)+'</span></span><span class="phn-ex">'+esc(t.ex)+'</span></div>'+
+        '<div class="phn-mon"><span>'+esc(t.mon)+'</span><i><u></u></i></div>'+
+        '<div class="phn-tiles"><div><b>48</b><span>'+esc(t.leads)+'</span></div><div><b>11</b><span>'+esc(t.tours)+'</span></div>'+
+        '<div><b>2</b><span>'+esc(t.res)+'</span></div><div><b>$0</b><span>'+esc(t.fix)+'</span></div></div>'+
+        '<div class="phn-card">'+f+'</div><div class="phn-pay">'+esc(t.pay)+'</div></div><div class="phn-home"></div></div>';}
+  ];
+  var PHONES={
+    abnb:{T:PT,V:VIEWS,head:true,sub:'El Tunco · La Libertad'},
+    proc:{T:PP,V:VP,head:true,sub:'Houston, TX → San Salvador'},
+    dev:{T:PD,V:VD,head:false}
+  };
   var phones=[];
-  function phoneShell(ph){
+  function phoneShell(ph,cfg){
     ph.classList.add('is-phone');
-    ph.innerHTML='<div class="phn"><div class="phn-scr">'+
-      '<div class="phn-sb"><span>9:41</span><span class="phn-isl"></span><span class="phn-ic"><i></i><i></i><i></i><b></b></span></div>'+
-      '<div class="phn-hd"><div><div class="phn-app" data-pt="app"></div><div class="phn-sub">El Tunco · La Libertad</div></div><span class="phn-ex" data-pt="ex"></span></div>'+
+    if(!cfg.head){
+      ph.classList.add('bare');
+      ph.innerHTML='<div class="phn"><div class="phn-scr"><div class="phn-body"></div></div></div>';
+      return ph.querySelector('.phn-body');
+    }
+    ph.innerHTML='<div class="phn"><div class="phn-scr">'+SB(0)+
+      '<div class="phn-hd"><div><div class="phn-app" data-pt="app"></div><div class="phn-sub">'+esc(cfg.sub)+'</div></div><span class="phn-ex" data-pt="ex"></span></div>'+
       '<div class="phn-body"></div><div class="phn-ft" data-pt="foot"></div><div class="phn-home"></div></div></div>';
     return ph.querySelector('.phn-body');
   }
   function paintPhones(){
-    var t=PT[(document.documentElement.lang||'es').slice(0,2)]||PT.es;
+    var l=(document.documentElement.lang||'es').slice(0,2);
     phones.forEach(function(p){
+      var t=p.cfg.T[l]||p.cfg.T.es;
       [].forEach.call(p.ph.querySelectorAll('[data-pt]'),function(n){n.textContent=t[n.getAttribute('data-pt')]||'';});
-      p.items.forEach(function(it,k){if(VIEWS[k])it.innerHTML=VIEWS[k](t);});
+      p.items.forEach(function(it,k){if(p.cfg.V[k])it.innerHTML=p.cfg.V[k](t);});
     });
   }
   var scenes=[];
@@ -6396,7 +6627,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     if(!K||!steps.length||!ph||!track)return null;
     var sec=el.closest('section')||document;
     var total=pad(steps.length), items=[];
-    var body=K.phone?phoneShell(ph):null;
+    var cfg=K.phone?PHONES[K.phone]:null, body=cfg?phoneShell(ph,cfg):null;
     steps.forEach(function(st,k){
       var nEl=st.querySelector(K.n), num=pad(nEl&&nEl.textContent.trim()?nEl.textContent:(k+1));
       /* "1" pasa a "01": el mismo número que muestra la tarjeta */
@@ -6426,7 +6657,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       st.setAttribute('tabindex','0'); st.setAttribute('role','button'); st.setAttribute('aria-expanded','false');
     });
     el.classList.add('live');
-    if(body){phones.push({ph:ph,items:items});paintPhones();}
+    if(body){el.classList.add('has-phone');phones.push({ph:ph,items:items,cfg:cfg});paintPhones();}
     var s={el:el,steps:steps,items:items,track:track,cur:-1,visible:false,stopped:false,hold:false,prog:false,progT:0,raf:0};
 
     steps.forEach(function(st,k){

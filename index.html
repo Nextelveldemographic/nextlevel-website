@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <!-- NLD v42.0 · Klaric · etiqueta de confianza a la derecha del rotulo; barra fija sin progreso ni pildora -->
+<!-- NLD v43.2 · La frase de las 20 familias se ilumina al desplazar. Metodología, Después del cierre y Servicio
+     adicional con selector de pasos compacto (iPad y PC: lista + tarjeta que avanza sola; celular: tarjetas que se
+     deslizan). Después del cierre y Servicio
+     adicional salen del carrusel. Nuevo orden: después de la consulta gratuita van "¿Y si vendés tu propiedad en US?",
+     Metodología, Después del cierre y Servicio adicional; luego aliados. El comparativo entra fila por fila y el
+     WhatsApp flotante es la píldora de Expansión. Al final, invitación a Expansión internacional (expansion.html). -->
 <html lang="es">
 <head>
 <meta charset="UTF-8">
@@ -31,7 +37,7 @@ document.documentElement.className+=" js-hero";
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v42.0-2026-08">
+<meta name="version" content="v43.2-2026-10">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAIQ0lEQVR4nO2bTYwcRxXHf1XdPTvrXa/32zg4WTt8DIQQ4kTGYIycBAxcUGQJyZHsKDIICySMPw65cYSjDxEcOCSXYBnlkgMSFkg2TvDFKNhOJBQUC2QbHGHYddb27K5nprseh6qa7pmd2R3bszObXT9tqb9eVdf/X6/ee107pWgsGhBXNPAs8F3g68AmYLhJvW7LDeAy8Gfgd8CfAAMoV0wrjQSZ85eAd0jJ+LiVdxyGRtgaSuiOnwHO1DUWAwmWxW4Da1aM62Ncd/+Mw5TF2BT8M8CUq1hxDXYb2L2WxGEQh+mZZiRod9wJzGTAdxtAu4rHMuMwZjGjsQ5iMzDtFOtNaCUUj2naYVWeBE/A2Tq2VmLx2M5mCQDYtwrA15Owz4MPgHexHnQlmn59iR3Wdx12nnMPlnN4a3fxWJ/TwG6stJQlrRDxWHdrYIe7UF3qTDfEY92hgI+AQaxJrBYSPNZp5S5WrejFVVa2PCCg2x3otqx6App+G7dTgiBAKRtgjDEYY8Ow1hqt0zFIkgSRzvrkJY0CSqmGgILALswkSdJynaWSJSNAa10d6T179rBr1y6mp6c5fvw4Fy5cAGDLli3s3buXwcFBTp06xYkTJ+bV7YS0PdfWWgsgw8PDcvLkSclKHMdy9OhROXTokJTL5Zpnp0+flvHx8Zo2OlDa26BSSpRSMjQ0JJcuXZoHPo7j6nWSJDXXIiJXrlyRsbGxjpHQ9ingHduxY8fYvn07U1NT9PT0sHHjRiYmJgjDWr8bxzFXr17l2rVrzM3NMTIywrlz5zhy5AhxHHdkKrSd1TAMZWhoqOZeFEVSKBTk4MGDcv78ebl48aIcPnxYCoWC5HK5Gt3h4WGJoqgjU2DJo0A2/NXfz97z4VBEVkYUqA9nHrTWmjiOAQjDEGPMPNCdDIVd+Rr0VtHppKeRPPgc7nYHui0PCOh2B7otbf4aVG5V0S0tSjXbXLbSHieonCFJg6xNKZTSiBhHyPKS+yNA6RrQKuwh6F1H1DdKUioSz0xhyjPpcxVYIjplFUotSvq9E5BpvG9iK/2P7mDNQ48T9A4R5PsRY0ju3KJy8xrFf5zl5genSWY/cnV1Y2tpp1TfsTDEuycgA3zNw08z8vQe8us/hwoiJKlUnykdosIcOsqjghzx7etM/+33TP7ldUx5BqUDxMxfEGmH+LbHtu5m9sO/M3Pt/aak3x0BrhEVhIxs28+6z38bECQugdIWtA5QOrC6SrusT6GjPEF+gNKNK3z4h58z+6/zqW9oo3jwA5/exuM/fYOLv9jF7H8+aEpA62HQNRANrGfDd37GQOEbJHduYUp+jlsuRQxijH2ZGEuvUkhSoVKcJBr4BBPfe4WRrXsteOV/nnD/onSImIQ1Gwo89uPjgEaS8oJ1WguDDnxueILxnQcJ+8eI56bRQQSAiLHwHR4ByJwrA6KtEzSlIiqI2PDNlwl7B7n+9q/sqN1nlLAjHxOtHaXwg9fQuT5MqZhGqHsmwI/82vWM7/wJQX4Ac+cWKsiBmCpYNC2TICahcvu/jG3/IaC4/vYva9511+CDEEli8mOPUvj+q+THNpPM3UYFi8NbREOBGIL8WkZ3/AgdrbEOLIgQSaoAccBbJgHrHyrFSUa/uh/d08f1M69gKnN3Zw3u5ZLE9D38JT67/1V6hh6iMnuLIMy19LW5gH3YeamjXka3HyDsG67GdDEGjEEkycx3ey6Zc6RWx5LmdexIxzM3GH5qD5v3vkbvhi/YyCBinanSNupUfYSyiZV3sq6d0a0vUDjwW8L+cSqzN60vEEFkcR6bW4CLD+ueeJ5o6BE3d3OIMfNG9N4tAdAB8cwkPaOb2fTCr7nx1xNMnX+DuPi/Bp0S+yc2fPY98hSf/NbLrCvsxJSLJOVZtA4RI7YPLRhREwJsrNdRnp7RT2HKRff+BIXUALtvEowlwZSKoCPGvnaAwSee59b7f+T2P89SmrpMMncTE99Bh72E/SP0b/oKg4/tYqDwLEGUp1K8gQoClNaIiH1vi/50US9hkxvjgKmGwNpBgugAJQlxcZIg18/ItpcY+fKLmDu3SUpFTGWOIL+WcM0I0doxwGBKReK4hNKhW+IUxE0XZdyK530TIH7OZpz0kpEASmlMUsbMTFk/EOSIBtZbkLZVKsVJ9yxAEThnp8BI+g5ayy4WjxMusakx/aUmAUuErR9jKonLKl2WqQM3OJYQZXtXJcH+BLK15GpxCzDOq4N9UYdIAO8fQNAoBJTNNOunTj0JyrHj+Ll3Aux6hgtjNADRURIW0q0nARDlosDCDLTkA3BhpyGIZUmCH73FJcT+enrQUVU3ccT6gKoTVB8TEgCjkOaJgMc6HWL32DxZS0Ba0Wd92dvLn4S0s00o8Fgvh9ifjj/ZVNensO6ltuPSnASVntsOSoYEyTyvPU9JELvmokEZSYEpm91hQCnJkCoZEty7lE4zwSao3PGsBt50F7qhZub7XsRZg9ipkU6P2mPtPclcp/V8G1Udk+oItfp+HVHq6uL/p1jVzeos6P481jdD4C3gPeCL2D02tTurTGIjgaQjai1BMjHXM+9GxI8uYu8psZag7Chl66VWIaklGBvylHIWpNwoK8lYgrghDqyuFsQEqQ6kc65WEkfAe8Bb3untA17H/pY+jQxKEfQMgPtnZvVoL1wHVcZzqswho1utl9Gta6u+nv0WU06tUVvz69X0w90rT//bpvOpeIwvAr+BVb5lxu+bEeyO0AvAOmqmQpZ9loncRUfSFSaP6SawBRv9qg35ybKTVbhtzsuq3jhZT8Kq3DrrZVVtnm7mTbxjFFb49vn/A27du6Lx5fUHAAAAAElFTkSuQmCC">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -2184,6 +2190,250 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 {"@type":"Question","name":"\u00bfPuedo financiar la propiedad o tiene que ser al contado?","acceptedAnswer":{"@type":"Answer","text":"Varios bancos salvadore\u00f1os ofrecen hipotecas a residentes en el exterior con ciertos requisitos. Te orientamos sobre algunas opciones."}}]}
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style id="capa-escenas">
+/* ============================================================
+   NLD v43.2 · ESCENAS
+   1. La frase de las 20 familias se ilumina renglón por renglón al
+      desplazar.
+   2. Metodología, Después del cierre y Servicio adicional: selector de
+      pasos compacto. Ocupa lo que mide su contenido; ya no hay tramos de
+      desplazamiento vacíos.
+      - iPad y computadora: lista a la izquierda (cada paso se abre al
+        tocarlo o hacer clic) y la tarjeta del paso a la derecha. Avanza
+        solo mientras está a la vista, con una línea de progreso; se
+        detiene con el cursor encima o con el foco, y se queda quieto
+        cuando la persona elige un paso.
+      - Celular: tarjetas que se deslizan con el dedo y una cápsula con
+        el avance (02 / 04).
+   3. El cuadro comparativo entra fila por fila.
+   4. WhatsApp flotante en píldora, el mismo de Expansión.
+   5. Invitación final a Expansión internacional.
+   Todo vive bajo .scn.live y .story.scrub, clases que pone el JS: sin
+   JavaScript se ven las tarjetas de siempre y la frase completa.
+   ============================================================ */
+
+:root{
+  --scn-gap:clamp(28px,4vw,64px);
+  --stage-h:340px;
+  --scn-t:6.5s;             /* tiempo de cada paso cuando avanza solo */
+  --wa:#25D366;--wa-h:#3DDC7A;--wa-ink:#062A13;--wa-shadow:rgba(0,0,0,.16);
+}
+@media (min-width:1200px){:root{--stage-h:360px}}
+
+/* La frase fija al desplazar necesita overflow-x:clip: con hidden, <body>
+   se vuelve contenedor de desplazamiento y nada se queda pegado. */
+html{overflow-x:hidden;overflow-x:clip}
+body{overflow-x:hidden;overflow-x:clip}
+
+/* ---------- 1. La frase de las 20 familias ---------- */
+.story{margin-top:clamp(64px,8vw,104px);text-align:left}
+.story .story-t{font-size:clamp(32px,5vw,64px);font-weight:600;letter-spacing:-.03em;line-height:1.08;
+  max-width:20ch;text-wrap:balance;color:var(--dark)}
+.story .life-close-q,.story .life-close-sub{font:inherit;letter-spacing:inherit;line-height:inherit;color:inherit;
+  margin:0;max-width:none;text-align:left}
+.story .life-close-q em,.story .life-close-q .blue{color:inherit}
+.story .life-close-sub{color:var(--blue)}
+.story .sl{display:block}
+.story-run{display:none}
+.story.scrub .story-pin{position:sticky;top:var(--pin-top,30vh)}
+.story.scrub .story-run{display:block;height:110vh}
+.story.scrub .sl{opacity:.16}
+.story.scrub.nofit .story-pin{position:static}
+.story.scrub.nofit .story-run{display:none}
+.story.scrub.nofit .sl{opacity:1}
+@media (min-width:900px){.story.scrub .story-run{height:130vh}}
+
+/* ---------- 2. Selector de pasos: base ---------- */
+.scn-stage,.scn-prog{display:none}
+/* Las tarjetas de Airbnb eran gris sobre gris en la banda gris: pasan a blanco, como las de servicios */
+.sec-chalk .abnb-card{background:var(--w)}
+.scn.live{--scn-line:var(--divider-2);--scn-dim:var(--grey);--scn-ink:var(--dark);--scn-muted:var(--grey-2);--scn-acc:var(--blue)}
+.scn.live .abnb-grid,.scn.live .svc-grid{margin:0}
+/* Los emojis se van: el selector lo llevan el número y el texto */
+.scn.live .sc-icon,.scn.live .abnb-icon{display:none}
+.scn.live .scn-step{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
+.scn.live .scn-step:hover{transform:none}
+.scn.live .scn-step:focus-visible{outline:2px solid var(--scn-acc);outline-offset:4px;border-radius:10px}
+.scn.live .proc-tag,.scn.live .sc-n,.scn.live .abnb-n{font-family:var(--sf-mono);font-size:11px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;line-height:1.3;color:var(--scn-acc);margin:0 0 6px}
+.scn.live .proc-t,.scn.live .sc-title,.scn.live .abnb-t{font-size:clamp(19px,1.9vw,24px);font-weight:600;letter-spacing:-.02em;
+  line-height:1.2;color:var(--scn-ink);margin:0;overflow-wrap:normal;text-wrap:balance;transition:color .3s var(--ease)}
+.scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d{font-size:16px;line-height:1.5;color:var(--scn-muted);margin:0;
+  flex-grow:0;text-wrap:pretty}
+.scn-more{display:grid;grid-template-rows:1fr}
+.scn-more-in{min-height:0;overflow:hidden}
+/* El aire va en el primer hijo, no como relleno: con relleno, el paso cerrado
+   conservaba 8 px y dejaba asomar el texto */
+.scn.live .scn-more-in>:first-child{margin-top:8px}
+.scn.live .proc-pill{align-self:flex-start;width:auto;margin-top:14px;font-size:11px;padding:6px 12px 6px calc(12px + 1.25em);
+  border-radius:var(--r-pill);text-align:left}
+.scn.live .sc-tag{margin-top:12px;font-size:11px}
+/* Línea de progreso del paso activo: cuando se llena, avanza al siguiente */
+.scn.live .scn-prog{display:block;position:absolute;left:0;right:0;bottom:-1px;height:2px;overflow:hidden;pointer-events:none}
+.scn.live .scn-prog i{display:block;width:100%;height:100%;background:var(--scn-acc);transform:scaleX(0);transform-origin:left center}
+.scn.live.auto .scn-step.on .scn-prog i{animation:scnProg var(--scn-t) linear forwards}
+.scn.live.auto.hold .scn-step.on .scn-prog i{animation-play-state:paused}
+@keyframes scnProg{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* La tarjeta del paso (en celular, la cápsula) */
+.ph-k{font-family:var(--sf-mono);font-size:11px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;line-height:1.2;color:var(--blue)}
+.ph-c{font-family:var(--sf-mono);font-size:11px;letter-spacing:.06em;color:var(--grey-2);font-variant-numeric:tabular-nums;white-space:nowrap}
+.ph-bar{display:flex;gap:4px}
+.ph-bar i{flex:1;height:3px;border-radius:2px;background:rgba(0,0,0,.13)}
+.ph-bar i.on{background:var(--blue)}
+
+/* ---------- 3. Celular: tarjetas que se deslizan ---------- */
+@media (max-width:699px){
+  .scn.live{display:flex;flex-direction:column;gap:14px;margin-top:8px;--scn-pad:22px}
+  .scn.live>.scn-stage{display:block;order:-1}
+  .scn.live .scn-ph{position:relative;height:38px;width:min(100%,340px);margin-inline:auto;border-radius:var(--r-pill);
+    background:rgba(255,255,255,.86);box-shadow:0 4px 16px rgba(0,0,0,.08),inset 0 0 0 1px rgba(0,0,0,.06)}
+  .scn.live .stage-item{position:absolute;inset:0;display:flex;align-items:center;gap:12px;padding:0 16px;
+    opacity:0;transition:opacity .35s var(--ease)}
+  .scn.live .stage-item.on{opacity:1}
+  .scn.live .ph-top,.scn.live .ph-foot{display:contents}
+  .scn.live .ph-n,.scn.live .ph-p{display:none}
+  .scn.live .ph-k{order:1;flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .scn.live .ph-bar{order:2;flex:none;width:72px}
+  .scn.live .ph-c{order:3;flex:none}
+  .scn.live>.scn-steps{position:relative;display:flex;flex-direction:row;align-items:stretch;gap:12px;overflow-x:auto;overflow-y:hidden;
+    overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+    margin:0 calc(-1 * var(--scn-pad));padding:2px var(--scn-pad) 8px;scroll-padding-inline:var(--scn-pad);transform:none!important}
+  .scn.live>.scn-steps::-webkit-scrollbar{display:none}
+  .scn.live .scn-step,
+  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card{
+    flex:0 0 86%;min-width:0;min-height:0;scroll-snap-align:start;padding:22px 20px 26px!important;border-radius:var(--r-xl);
+    display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;opacity:.5;transition:opacity .4s var(--ease)}
+  .scn.live .scn-step.on{opacity:1}
+  .scn.live .scn-prog{left:20px;right:20px;bottom:12px;border-radius:2px}
+}
+@media (max-width:480px){.scn.live{--scn-pad:16px}}
+@media (max-width:359px){
+  .scn.live .stage-item{gap:8px;padding:0 12px}
+  .scn.live .ph-bar{width:44px;gap:3px}
+}
+/* Metodología vive sobre la banda oscura: cápsula de vidrio oscuro */
+@media (max-width:699px){
+  #scene-process .scn.live .scn-ph{background:rgba(58,58,60,.78);box-shadow:0 4px 16px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.08)}
+  #scene-process .scn.live .ph-k{color:#5AB0FF}
+  #scene-process .scn.live .ph-c{color:#A1A1A6}
+  #scene-process .scn.live .ph-bar i{background:rgba(255,255,255,.2)}
+  #scene-process .scn.live .ph-bar i.on{background:#5AB0FF}
+}
+
+/* ---------- 4. iPad y computadora: lista + tarjeta ---------- */
+@media (min-width:700px){
+  .scn.live{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);column-gap:var(--scn-gap);align-items:center;margin-top:28px}
+  #scene-process .scn.live{--scn-line:rgba(255,255,255,.14);--scn-dim:rgba(245,245,247,.45);--scn-ink:#F5F5F7;--scn-muted:#A1A1A6;--scn-acc:#5AB0FF}
+  .scn.live>.scn-steps{display:flex;flex-direction:column;gap:0;margin:0;padding:0;border-top:1px solid var(--scn-line);transform:none!important}
+  .scn.live .scn-step,
+  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card{
+    display:block;min-height:0;padding:16px 4px 17px!important;background:transparent!important;border-radius:0;box-shadow:none;
+    border-bottom:1px solid var(--scn-line);overflow:visible}
+  .scn.live .scn-step:not(.on) .proc-t,.scn.live .scn-step:not(.on) .sc-title,.scn.live .scn-step:not(.on) .abnb-t{color:var(--scn-dim)}
+  .scn.live .scn-step:not(.on):hover .proc-t,.scn.live .scn-step:not(.on):hover .sc-title,.scn.live .scn-step:not(.on):hover .abnb-t{color:var(--scn-ink)}
+  .scn.live .scn-more{grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
+  .scn.live .scn-step.on .scn-more{grid-template-rows:1fr}
+  .scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d{max-width:52ch}
+  /* El dato clave de cada paso vive en la tarjeta */
+  .scn.live .proc-pill,.scn.live .sc-tag{display:none}
+
+  .scn.live>.scn-stage{display:block}
+  .scn.live .scn-sticky{position:relative;height:var(--stage-h)}
+  .scn.live .scn-ph{position:relative;height:100%;width:100%;max-width:400px;margin:0 0 0 auto}
+  .scn.live .stage-item{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:space-between;gap:12px;
+    padding:clamp(20px,2.2vw,28px);border-radius:var(--r-2xl);overflow:hidden;isolation:isolate;background:var(--scn-card,var(--w));
+    opacity:0;transform:scale(.96) translateY(10px);transition:opacity .5s var(--ease-rv),transform .7s var(--ease-rv)}
+  .scn.live .stage-item.on{opacity:1;transform:none}
+  .scn.live .stage-item::before{content:"";position:absolute;z-index:-1;left:50%;bottom:-62%;width:140%;aspect-ratio:1;
+    transform:translateX(-50%);pointer-events:none;background:radial-gradient(closest-side,var(--scn-glow,rgba(0,113,227,.10)),transparent 72%)}
+  .scn.live .ph-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .scn.live .ph-n{display:block;font-size:clamp(84px,8.6vw,136px);font-weight:600;letter-spacing:-.065em;line-height:.8;
+    color:var(--dark);font-variant-numeric:tabular-nums;margin-left:-.05em}
+  .scn.live .ph-p{display:block;font-family:var(--sf);font-size:clamp(17px,1.6vw,22px);font-weight:600;letter-spacing:-.02em;
+    line-height:1.15;color:var(--blue);text-wrap:balance;background:none;padding:0;margin:0;text-indent:0;border:0;
+    border-radius:0;text-transform:none;white-space:normal}
+  .scn.live .ph-bar{gap:6px;margin-top:14px}
+  .scn[data-scn="proc"]{--scn-card:var(--chalk)}
+}
+
+/* ---------- 5. Tema oscuro ---------- */
+[data-theme="dark"] .ph-bar i:not(.on){background:rgba(255,255,255,.18)}
+[data-theme="dark"] .scn{--scn-glow:rgba(41,151,255,.22)}
+[data-theme="dark"] .sec-chalk .abnb-card{background:#000}
+@media (max-width:699px){
+  [data-theme="dark"] .scn.live .scn-ph{background:rgba(29,29,31,.86);box-shadow:0 4px 16px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.08)}
+}
+
+/* ---------- 5b. Cuadro comparativo: cada fila entra por su cuenta ----------
+   Antes entraba cada columna como un bloque y el texto no se movía. Ahora
+   cada categoría (Salud, Vivienda, Estilo de vida, Seguridad) entra en
+   cascada, como las razones de "Por qué nosotros" en Expansión. Las dos
+   columnas avanzan a la par, fila con fila. */
+.life-row.rv{transform:translateY(28px)}
+.life-row.rv.in{transform:none}
+
+/* ---------- 5c. "¿Y si vendés tu propiedad en US?" en su propia sección ---------- */
+#scene-vender .life-callout{margin-bottom:0}
+.scn-next{margin-top:clamp(64px,8vw,104px)}
+.scn.live + .abnb-cta-wrap{margin-top:32px}
+
+/* ---------- 6. Invitación final a Expansión internacional ---------- */
+#scene-expansion{padding-top:8px}
+/* El resplandor sube desde el borde inferior, como el del héroe de Expansión */
+.exp-inv{position:relative;overflow:hidden;isolation:isolate;color:#F5F5F7;border-radius:var(--r-2xl);
+  background:radial-gradient(78% 95% at 50% 124%,rgba(41,151,255,.40),rgba(41,151,255,0) 70%),#1D1D1F;
+  padding:clamp(44px,6vw,80px) clamp(24px,5vw,72px);text-align:center}
+.exp-inv-eb{font-family:var(--sf-mono);font-size:12px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;
+  color:#5AB0FF;margin-bottom:14px}
+.exp-inv .exp-inv-h{font-size:clamp(30px,4.4vw,52px);font-weight:600;letter-spacing:-.03em;line-height:1.08;color:#F5F5F7;
+  max-width:20ch;margin:0 auto 16px;text-wrap:balance}
+.exp-inv .exp-inv-h em{color:#5AB0FF;font-style:normal}
+.exp-inv-sub{font-size:clamp(17px,1.6vw,20px);line-height:1.5;color:#A1A1A6;max-width:46ch;margin:0 auto 30px;text-wrap:pretty}
+.exp-inv-cta{display:inline-flex;align-items:center;gap:4px;min-height:46px;padding:0 24px;border-radius:var(--r-pill);
+  background:#0071E3;color:#FFFFFF;font-size:17px;font-weight:500;letter-spacing:-.01em;transition:background .2s}
+.exp-inv-cta:hover{background:#0077ED}
+.exp-inv-cta:focus-visible{outline:2px solid #5AB0FF;outline-offset:3px}
+.exp-inv-cta::after{content:"\203A";font-size:1.3em;line-height:1;margin-top:-2px}
+/* Entra como la tarjeta de "¿Y si vendés tu propiedad en US?": el
+   recuadro primero y, un instante después, su contenido */
+.rv .exp-inv-eb,.rv .exp-inv-h,.rv .exp-inv-sub,.rv .exp-inv-cta{opacity:0;transform:translateY(24px);
+  transition:opacity var(--rv-o-sm) var(--ease-rv),transform var(--rv-t-sm) var(--ease-rv)}
+.rv.in .exp-inv-eb{opacity:1;transform:none;transition-delay:.12s}
+.rv.in .exp-inv-h{opacity:1;transform:none;transition-delay:.2s}
+.rv.in .exp-inv-sub{opacity:1;transform:none;transition-delay:.32s}
+.rv.in .exp-inv-cta{opacity:1;transform:none;transition-delay:.44s}
+
+/* ---------- 6b. WhatsApp flotante: la píldora de Expansión ----------
+   Mismo botón en las dos páginas. Aparece cuando el botón del héroe sale
+   de vista y se aparta en la consulta gratuita y el pie, donde ya hay una
+   forma grande de escribirnos. */
+.wa-fl{width:auto;height:48px;padding:0 20px 0 15px;gap:8px;border-radius:var(--r-pill);
+  right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 12px));
+  background:var(--wa);color:var(--wa-ink);font-size:15px;font-weight:600;letter-spacing:-.01em;line-height:1;
+  box-shadow:0 10px 28px var(--wa-shadow),0 2px 6px var(--wa-shadow);
+  transition:opacity .4s var(--ease),transform .55s var(--ease-rv),visibility 0s linear 0s,background .2s}
+.wa-fl:hover{background:var(--wa-h);transform:none}
+.wa-fl svg{width:21px;height:21px;flex:none;display:block}
+.wa-fl .wa-dot{fill:var(--wa)}
+.wa-fl:hover .wa-dot{fill:var(--wa-h)}
+.wa-fl.off{opacity:0;visibility:hidden;transform:translateY(18px) scale(.94);pointer-events:none;
+  transition:opacity .3s var(--ease),transform .4s var(--ease),visibility 0s linear .3s}
+@media (max-width:480px){.wa-fl{width:auto;height:48px;right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));bottom:max(16px,calc(env(safe-area-inset-bottom,0px) + 12px))}}
+@media (hover:hover) and (pointer:fine) and (min-width:769px){
+  .wa-tip{right:max(16px,calc(env(safe-area-inset-right,0px) + 12px));
+    bottom:calc(max(16px,calc(env(safe-area-inset-bottom,0px) + 12px)) + 60px)}
+}
+[data-theme="dark"]{--wa-shadow:rgba(0,0,0,.5)}
+
+/* ---------- 7. Movimiento reducido ---------- */
+@media (prefers-reduced-motion:reduce){
+  .scn.live .stage-item,.scn.live .scn-step,.scn.live .scn-more{transition:none}
+  .scn.live .scn-prog{display:none}
+  .wa-fl,.wa-fl.off{transition:none;transform:none}
+  .rv .exp-inv-eb,.rv .exp-inv-h,.rv .exp-inv-sub,.rv .exp-inv-cta{opacity:1!important;transform:none!important;transition:none!important}
+}
+</style>
 </head>
 <body>
 <a href="#scene-hero" class="skip-link" data-i18n="skip_main">Saltar al contenido</a>
@@ -2268,7 +2518,6 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       </div>
       <div class="lcar-dots" id="lcarDots"></div>
     </div>
-    <div class="life-callout anim d4"><div class="life-callout-h" data-i18n="life_callout_h">¿Y si vendes tu propiedad en US?</div><div class="life-callout-sub" data-i18n="life_callout_sub">Vives en una propiedad nueva en El Salvador — equivalente o mejor — y aún te queda un remanente significativo en el bolsillo. Ese diferencial es tu margen de tranquilidad por el resto de tu retiro.</div></div>
     <div class="life-geo anim d5">
       <div class="life-geo-eb" data-i18n="life_geo_head">Desde San Salvador, en menos de 90 minutos</div>
       <h3 class="life-geo-h" data-i18n="life_geo_h">Playa, montaña, lago y pueblos coloniales en <span class="blue">un mismo día.</span></h3>
@@ -2280,7 +2529,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
         <div class="life-geo-card"><div class="life-geo-icon">🌿</div><div class="life-geo-name">Ruta de las Flores</div><div class="life-geo-time">1.5 h</div></div>
       </div>
     </div>
-    <div class="life-close anim d6"><div class="life-close-q" data-i18n="life_close_q">Ya lo hicieron <span class="blue">20 familias.</span> <br>Otras 200 están en proceso ahora mismo.</div><div class="life-close-sub" data-i18n="life_close_sub">La pregunta ya no es si te conviene. Es cuándo empezás vos.</div></div>
+    <div class="story" id="historia"><div class="story-pin"><div class="story-t"><div class="life-close-q" data-i18n="life_close_q">Ya lo hicieron <span class="blue">20 familias.</span> <br>Otras 200 están en proceso ahora mismo.</div><div class="life-close-sub" data-i18n="life_close_sub">La pregunta ya no es si te conviene. Es cuándo empezás vos.</div></div></div><div class="story-run" aria-hidden="true"></div></div>
   </div>
 </section>
 
@@ -2568,19 +2817,6 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
-<section id="scene-process" class="sec-dark" data-scene>
-  <div class="wrap">
-    <div class="eyebrow anim grey" data-i18n="proc_eb">Metodología</div>
-    <h2 class="section-h anim d1" data-i18n="proc_h">El camino que recorren <br><span class="blue">quienes ya volvieron.</span></h2>
-    <div class="proc-track-wrap anim d2"><div class="proc-track" id="proc-track">
-      <div class="proc-card"><div class="proc-n">01</div><div class="proc-tag" data-i18n="proc_1_tag">Fase 1</div><div class="proc-t" data-i18n="proc_1_t">Diagnóstico gratuito</div><div class="proc-d" data-i18n="proc_1_d">30 minutos para entender tu situación, metas y presupuesto. Sin compromiso, sin presión, en español.</div><span class="proc-pill" data-i18n="proc_1_p">→ mapa de opciones</span></div>
-      <div class="proc-card"><div class="proc-n">02</div><div class="proc-tag" data-i18n="proc_2_tag">Fase 2</div><div class="proc-t" data-i18n="proc_2_t">Propuesta curada</div><div class="proc-d" data-i18n="proc_2_d">Seleccionamos 2–4 proyectos verificados con análisis de zona, precio por m² y rentabilidad estimada.</div><span class="proc-pill" data-i18n="proc_2_p">→ análisis comparativo</span></div>
-      <div class="proc-card"><div class="proc-n">03</div><div class="proc-tag" data-i18n="proc_3_tag">Fase 3</div><div class="proc-t" data-i18n="proc_3_t">Reserva y legal</div><div class="proc-d" data-i18n="proc_3_d">Revisamos el contrato contigo antes de firmarlo. Coordinamos con abogados y notarios locales.</div><span class="proc-pill" data-i18n="proc_3_p">→ contrato revisado</span></div>
-      <div class="proc-card"><div class="proc-n">04</div><div class="proc-tag" data-i18n="proc_4_tag">Fase 4</div><div class="proc-t" data-i18n="proc_4_t">Escritura y entrega</div><div class="proc-d" data-i18n="proc_4_d">Acompañamiento hasta el cierre. Con poder notarial puedes escriturar sin salir de EE.UU.</div><span class="proc-pill" data-i18n="proc_4_p">→ escritura firmada</span></div>
-    </div></div>
-  </div>
-</section>
-
 <section id="scene-team" class="sec-white" data-scene>
   <div class="wrap">
     <h2 class="section-h anim d1" data-i18n="team_h">Somos <span class="grey">de aquí.</span> <br>Sabemos cómo hacerlo.</h2>
@@ -2590,70 +2826,6 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
       <div class="tm-card anim d5"><div class="tm-photo"><span class="tm-fallback">IA</span><img decoding="async" src="team/ivette.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Ivette Alvarado</div><div class="tm-role" data-i18n="team_role_ivette">Cofundadora y CEO</div><div class="tm-area" data-i18n="team_area_ivette">Crecimiento y expansión internacional</div><div class="tm-loc">La Libertad, El Salvador</div></div>
       <div class="tm-card anim d6"><div class="tm-photo"><span class="tm-fallback">AM</span><img decoding="async" src="team/aniano.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Aniano Mabunda</div><div class="tm-role" data-i18n="team_role_aniano">Jefe de Ventas y Director de Ingresos</div><div class="tm-area" data-i18n="team_area_aniano">Ventas y crecimiento de ingresos</div><div class="tm-loc">Santa Ana, El Salvador</div></div>
       <div class="tm-card anim d7"><div class="tm-photo"><span class="tm-fallback">JD</span><img decoding="async" src="team/jose.jpg" alt="" loading="lazy" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="240" height="240"></div><div class="tm-name">Jose Diaz</div><div class="tm-role" data-i18n="team_role_jose">Director Creativo y de Operaciones</div><div class="tm-area" data-i18n="team_area_jose">Contenido, medios y operaciones</div><div class="tm-loc">San Salvador, El Salvador</div></div>
-    </div>
-  </div>
-</section>
-
-<section id="scene-extras" class="sec-chalk" data-scene>
-  <div class="pcar pcar2">
-    <div class="pcar-viewport">
-      <div class="pcar-track">
-        <div class="pcar-slide">
-  <div class="wrap">
-    <div class="eyebrow anim grey" data-i18n="svc_eb">Después del cierre</div>
-    <h2 class="section-h anim d1" data-i18n="svc_h">Comprar es solo <br><span class="grey">el primer paso.</span></h2>
-    <div class="svc-grid">
-      <div class="sc-card anim d2"><div class="sc-n">1</div><div class="sc-icon">🎯</div><div class="sc-title" data-i18n="svc_1_t">Red de comercios recomendados</div><div class="sc-desc" data-i18n="svc_1_d">Te recomendamos comercios de confianza para línea blanca, muebles y todo lo que necesita tu propiedad. Vos elegís, nosotros conectamos.</div><div class="sc-tag" data-i18n="svc_1_tag">Red verificada</div></div>
-      <div class="sc-card anim d3"><div class="sc-n">2</div><div class="sc-icon">🔍</div><div class="sc-title" data-i18n="svc_2_t">Remodelación & construcción</div><div class="sc-desc" data-i18n="svc_2_d">¿Querés agregar cuarto, piscina, terraza? Nuestras constructoras aliadas te dan presupuesto en 72h.</div><div class="sc-tag" data-i18n="svc_2_tag">Presupuesto en 72h</div></div>
-      <div class="sc-card anim d4"><div class="sc-n">3</div><div class="sc-icon">⚖️</div><div class="sc-title" data-i18n="svc_3_t">Gestión de renta</div><div class="sc-desc" data-i18n="svc_3_d">¿Vas a vivir 6 meses acá y 6 allá? Alquilamos tu propiedad los meses que no estés — renta tradicional o gestión Airbnb, vos elegís.</div><div class="sc-tag" data-i18n="svc_3_tag">Renta + Airbnb</div></div>
-      <div class="sc-card anim d5"><div class="sc-n">4</div><div class="sc-icon">🌴</div><div class="sc-title" data-i18n="svc_4_t">Onboarding médico</div><div class="sc-desc" data-i18n="svc_4_d">Te damos visibilidad completa de la red hospitalaria salvadoreña — pública y privada — para que llegués sabiendo dónde y con quién atenderte.</div><div class="sc-tag" data-i18n="svc_4_tag">Red pública + privada</div></div>
-      <div class="sc-card anim d6"><div class="sc-n">5</div><div class="sc-icon">📊</div><div class="sc-title" data-i18n="svc_5_t">Comunidad de retornados</div><div class="sc-desc" data-i18n="svc_5_d">Los sábados hay desayuno en Santa Tecla. Más de 40 retornados. Ya no llegás a un país solo.</div><div class="sc-tag" data-i18n="svc_5_tag">Más de 40 familias</div></div>
-      <div class="sc-card anim d7"><div class="sc-n">6</div><div class="sc-icon">🤝</div><div class="sc-title" data-i18n="svc_6_t">Trámites migratorios & bancarios</div><div class="sc-desc" data-i18n="svc_6_d">Te ayudamos con la gestión de trámites básicos. Si tu caso es complejo, te recomendamos con expertos verificados del gremio legal salvadoreño.</div><div class="sc-tag" data-i18n="svc_6_tag">Gestión + expertos</div></div>
-    </div>
-  </div>
-</div>
-        <div class="pcar-slide">
-  <div class="wrap">
-    <div class="eyebrow anim grey" data-i18n="abnb_eb">Servicio adicional</div>
-    <h2 class="section-h anim d1" data-i18n="abnb_h">Tu casa trabaja <br><span class="grey">mientras vos vivís tu vida.</span></h2>
-    <p class="section-sub anim d2" data-i18n="abnb_sub">No todos quieren renta larga. Algunos prefieren que su propiedad se pague sola con turistas mientras la usan cuando quieren. Nosotros la operamos por vos.</p>
-    <div class="abnb-grid">
-      <div class="abnb-card anim d3">
-        <div class="abnb-n">1</div>
-        <div class="abnb-icon">🔑</div>
-        <div class="abnb-t" data-i18n="abnb_1_t">Setup completo</div>
-        <div class="abnb-d" data-i18n="abnb_1_d">Fotografía profesional, videos para redes sociales, publicación en Airbnb y Booking, precios dinámicos según temporada. En 30 días tu propiedad está generando renta.</div>
-      </div>
-      <div class="abnb-card anim d4">
-        <div class="abnb-n">2</div>
-        <div class="abnb-icon">🧹</div>
-        <div class="abnb-t" data-i18n="abnb_2_t">Operación día a día</div>
-        <div class="abnb-d" data-i18n="abnb_2_d">Recepción y entrega gestionadas, limpieza entre huéspedes, mantenimiento reactivo, atención 24/7 en español e inglés. Vos ni te enterás.</div>
-      </div>
-      <div class="abnb-card anim d5">
-        <div class="abnb-n">3</div>
-        <div class="abnb-icon">📊</div>
-        <div class="abnb-t" data-i18n="abnb_3_t">Reporte mensual claro</div>
-        <div class="abnb-d" data-i18n="abnb_3_d">Cada mes recibís: ingresos brutos, gastos operativos, ocupación, calificación de huéspedes y transferencia neta a tu cuenta. Sin sorpresas, sin letra chica.</div>
-      </div>
-      <div class="abnb-card anim d6">
-        <div class="abnb-n">4</div>
-        <div class="abnb-icon">🏖️</div>
-        <div class="abnb-t" data-i18n="abnb_4_t">Bloqueás cuando querés</div>
-        <div class="abnb-d" data-i18n="abnb_4_d">¿Vas a venir 3 semanas en diciembre? Bloqueás las fechas en el sistema y la propiedad es tuya. El resto del año trabaja para vos.</div>
-      </div>
-    </div>
-    <div class="abnb-cta-wrap anim d7">
-      <a href="#contacto" class="dev-cta" data-i18n="abnb_cta">Conocer más sobre gestión Airbnb</a>
-      <span class="cta-x" data-i18n="abnb_cta_x">o escríbenos directo por <a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WhatsApp</a></span>
-    </div>
-  </div>
-</div>
-      </div>
-    </div>
-    <div class="pcar-dots">
-      <button type="button" class="pcar-dot active" aria-label="Después del cierre"></button>
-      <button type="button" class="pcar-dot" aria-label="Servicio adicional"></button>
     </div>
   </div>
 </section>
@@ -2755,6 +2927,76 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 </section>
 
 
+<section id="scene-vender" class="sec-white" data-scene>
+  <div class="wrap">
+    <div class="life-callout anim d1"><div class="life-callout-h" data-i18n="life_callout_h">¿Y si vendes tu propiedad en US?</div><div class="life-callout-sub" data-i18n="life_callout_sub">Vives en una propiedad nueva en El Salvador — equivalente o mejor — y aún te queda un remanente significativo en el bolsillo. Ese diferencial es tu margen de tranquilidad por el resto de tu retiro.</div></div>
+  </div>
+</section>
+
+<section id="scene-process" class="sec-dark" data-scene>
+  <div class="wrap">
+    <div class="eyebrow anim grey" data-i18n="proc_eb">Metodología</div>
+    <h2 class="section-h anim d1" data-i18n="proc_h">El camino que recorren <br><span class="blue">quienes ya volvieron.</span></h2>
+    <div class="proc-track-wrap scn" data-scn="proc"><div class="proc-track scn-steps" id="proc-track">
+      <div class="proc-card scn-step"><div class="proc-n">01</div><div class="proc-tag" data-i18n="proc_1_tag">Fase 1</div><div class="proc-t" data-i18n="proc_1_t">Diagnóstico gratuito</div><div class="proc-d" data-i18n="proc_1_d">30 minutos para entender tu situación, metas y presupuesto. Sin compromiso, sin presión, en español.</div><span class="proc-pill" data-i18n="proc_1_p">→ mapa de opciones</span></div>
+      <div class="proc-card scn-step"><div class="proc-n">02</div><div class="proc-tag" data-i18n="proc_2_tag">Fase 2</div><div class="proc-t" data-i18n="proc_2_t">Propuesta curada</div><div class="proc-d" data-i18n="proc_2_d">Seleccionamos 2–4 proyectos verificados con análisis de zona, precio por m² y rentabilidad estimada.</div><span class="proc-pill" data-i18n="proc_2_p">→ análisis comparativo</span></div>
+      <div class="proc-card scn-step"><div class="proc-n">03</div><div class="proc-tag" data-i18n="proc_3_tag">Fase 3</div><div class="proc-t" data-i18n="proc_3_t">Reserva y legal</div><div class="proc-d" data-i18n="proc_3_d">Revisamos el contrato contigo antes de firmarlo. Coordinamos con abogados y notarios locales.</div><span class="proc-pill" data-i18n="proc_3_p">→ contrato revisado</span></div>
+      <div class="proc-card scn-step"><div class="proc-n">04</div><div class="proc-tag" data-i18n="proc_4_tag">Fase 4</div><div class="proc-t" data-i18n="proc_4_t">Escritura y entrega</div><div class="proc-d" data-i18n="proc_4_d">Acompañamiento hasta el cierre. Con poder notarial puedes escriturar sin salir de EE.UU.</div><span class="proc-pill" data-i18n="proc_4_p">→ escritura firmada</span></div>
+    </div><div class="scn-stage" aria-hidden="true"><div class="scn-sticky"><div class="scn-ph"></div></div></div></div>
+  </div>
+</section>
+
+<section id="scene-extras" class="sec-chalk" data-scene>
+  <div class="wrap">
+    <div class="eyebrow anim grey" data-i18n="svc_eb">Después del cierre</div>
+    <h2 class="section-h anim d1" data-i18n="svc_h">Comprar es solo <br><span class="grey">el primer paso.</span></h2>
+    <div class="scn" data-scn="svc"><div class="svc-grid scn-steps">
+      <div class="sc-card scn-step"><div class="sc-n">1</div><div class="sc-icon">🎯</div><div class="sc-title" data-i18n="svc_1_t">Red de comercios recomendados</div><div class="sc-desc" data-i18n="svc_1_d">Te recomendamos comercios de confianza para línea blanca, muebles y todo lo que necesita tu propiedad. Vos elegís, nosotros conectamos.</div><div class="sc-tag" data-i18n="svc_1_tag">Red verificada</div></div>
+      <div class="sc-card scn-step"><div class="sc-n">2</div><div class="sc-icon">🔍</div><div class="sc-title" data-i18n="svc_2_t">Remodelación & construcción</div><div class="sc-desc" data-i18n="svc_2_d">¿Querés agregar cuarto, piscina, terraza? Nuestras constructoras aliadas te dan presupuesto en 72h.</div><div class="sc-tag" data-i18n="svc_2_tag">Presupuesto en 72h</div></div>
+      <div class="sc-card scn-step"><div class="sc-n">3</div><div class="sc-icon">⚖️</div><div class="sc-title" data-i18n="svc_3_t">Gestión de renta</div><div class="sc-desc" data-i18n="svc_3_d">¿Vas a vivir 6 meses acá y 6 allá? Alquilamos tu propiedad los meses que no estés — renta tradicional o gestión Airbnb, vos elegís.</div><div class="sc-tag" data-i18n="svc_3_tag">Renta + Airbnb</div></div>
+      <div class="sc-card scn-step"><div class="sc-n">4</div><div class="sc-icon">🌴</div><div class="sc-title" data-i18n="svc_4_t">Onboarding médico</div><div class="sc-desc" data-i18n="svc_4_d">Te damos visibilidad completa de la red hospitalaria salvadoreña — pública y privada — para que llegués sabiendo dónde y con quién atenderte.</div><div class="sc-tag" data-i18n="svc_4_tag">Red pública + privada</div></div>
+      <div class="sc-card scn-step"><div class="sc-n">5</div><div class="sc-icon">📊</div><div class="sc-title" data-i18n="svc_5_t">Comunidad de retornados</div><div class="sc-desc" data-i18n="svc_5_d">Los sábados hay desayuno en Santa Tecla. Más de 40 retornados. Ya no llegás a un país solo.</div><div class="sc-tag" data-i18n="svc_5_tag">Más de 40 familias</div></div>
+      <div class="sc-card scn-step"><div class="sc-n">6</div><div class="sc-icon">🤝</div><div class="sc-title" data-i18n="svc_6_t">Trámites migratorios & bancarios</div><div class="sc-desc" data-i18n="svc_6_d">Te ayudamos con la gestión de trámites básicos. Si tu caso es complejo, te recomendamos con expertos verificados del gremio legal salvadoreño.</div><div class="sc-tag" data-i18n="svc_6_tag">Gestión + expertos</div></div>
+    </div><div class="scn-stage" aria-hidden="true"><div class="scn-sticky"><div class="scn-ph"></div></div></div></div>
+  </div>
+
+  <div class="wrap scn-next" id="scene-airbnb">
+    <div class="eyebrow anim grey" data-i18n="abnb_eb">Servicio adicional</div>
+    <h2 class="section-h anim d1" data-i18n="abnb_h">Tu casa trabaja <br><span class="grey">mientras vos vivís tu vida.</span></h2>
+    <p class="section-sub anim d2" data-i18n="abnb_sub">No todos quieren renta larga. Algunos prefieren que su propiedad se pague sola con turistas mientras la usan cuando quieren. Nosotros la operamos por vos.</p>
+    <div class="scn" data-scn="abnb"><div class="abnb-grid scn-steps">
+      <div class="abnb-card scn-step">
+        <div class="abnb-n">1</div>
+        <div class="abnb-icon">🔑</div>
+        <div class="abnb-t" data-i18n="abnb_1_t">Setup completo</div>
+        <div class="abnb-d" data-i18n="abnb_1_d">Fotografía profesional, videos para redes sociales, publicación en Airbnb y Booking, precios dinámicos según temporada. En 30 días tu propiedad está generando renta.</div>
+      </div>
+      <div class="abnb-card scn-step">
+        <div class="abnb-n">2</div>
+        <div class="abnb-icon">🧹</div>
+        <div class="abnb-t" data-i18n="abnb_2_t">Operación día a día</div>
+        <div class="abnb-d" data-i18n="abnb_2_d">Recepción y entrega gestionadas, limpieza entre huéspedes, mantenimiento reactivo, atención 24/7 en español e inglés. Vos ni te enterás.</div>
+      </div>
+      <div class="abnb-card scn-step">
+        <div class="abnb-n">3</div>
+        <div class="abnb-icon">📊</div>
+        <div class="abnb-t" data-i18n="abnb_3_t">Reporte mensual claro</div>
+        <div class="abnb-d" data-i18n="abnb_3_d">Cada mes recibís: ingresos brutos, gastos operativos, ocupación, calificación de huéspedes y transferencia neta a tu cuenta. Sin sorpresas, sin letra chica.</div>
+      </div>
+      <div class="abnb-card scn-step">
+        <div class="abnb-n">4</div>
+        <div class="abnb-icon">🏖️</div>
+        <div class="abnb-t" data-i18n="abnb_4_t">Bloqueás cuando querés</div>
+        <div class="abnb-d" data-i18n="abnb_4_d">¿Vas a venir 3 semanas en diciembre? Bloqueás las fechas en el sistema y la propiedad es tuya. El resto del año trabaja para vos.</div>
+      </div>
+    </div><div class="scn-stage" aria-hidden="true"><div class="scn-sticky"><div class="scn-ph"></div></div></div></div>
+    <div class="abnb-cta-wrap anim d7">
+      <a href="#contacto" class="dev-cta" data-i18n="abnb_cta">Conocer más sobre gestión Airbnb</a>
+      <span class="cta-x" data-i18n="abnb_cta_x">o escríbenos directo por <a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WhatsApp</a></span>
+    </div>
+  </div>
+</section>
+
 <section id="scene-partners" class="sec-white" data-scene>
   <div class="pcar pcar1">
     <div class="pcar-viewport">
@@ -2808,13 +3050,24 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
   </div>
 </section>
 
+<section id="scene-expansion" class="sec-white" data-scene>
+  <div class="wrap">
+    <div class="exp-inv anim d1">
+      <div class="exp-inv-eb" data-i18n="expi_eb">Expansión internacional</div>
+      <h2 class="exp-inv-h" data-i18n="expi_h">¿Quieres expandir tu negocio <em>a Estados Unidos?</em></h2>
+      <p class="exp-inv-sub" data-i18n="expi_sub">Si tienes una empresa en El Salvador, te ayudamos a venderle a la diáspora en EE.UU. sin abrir tiendas allá. Solo pagas si se vende.</p>
+      <a class="exp-inv-cta" href="expansion.html" data-linea="expansion" data-i18n="expi_cta">Conoce cómo funciona</a>
+    </div>
+  </div>
+</section>
+
 <footer>
   <div class="ft-inner">
     <div class="ft-fine" data-i18n="ft_text">Next Level Demographic — Asesoría estratégica para la diáspora salvadoreña en EE.UU. Proceso en español, sin costo de asesoría, equipo bicontinental verificable.</div>
     <div class="ft-grid">
       <div class="ft-b"><div class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="64" height="64"></div><span class="logo-tx">Next Level Demographic</span></div><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc" rel="noopener noreferrer">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc" rel="noopener noreferrer">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc" rel="noopener noreferrer">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc" rel="noopener noreferrer">Tk</a><a href="https://www.youtube.com/@nextleveldemographic" target="_blank" class="sc-soc" aria-label="YouTube" rel="noopener noreferrer">Yt</a></div></div>
       <div class="ft-col"><h3 class="ft-h" data-i18n="ft_nav">Navegar</h3><a href="#scene-lifestyle" data-i18n="nav_market">Mercado</a><a href="#scene-process" data-i18n="nav_process">Proceso</a><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a><a href="#scene-cases" data-i18n="nav_cases">Casos</a><a href="#scene-faq" data-i18n="ft_faq">FAQ</a></div>
-      <div class="ft-col"><h3 class="ft-h" data-i18n="ft_company">Empresa</h3><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-extras" data-i18n="ft_services">Servicios</a><a href="#scene-partners" data-i18n="nav_allies">Aliados</a><a href="#scene-partners" data-i18n="nav_b2b">B2B</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
+      <div class="ft-col"><h3 class="ft-h" data-i18n="ft_company">Empresa</h3><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-extras" data-i18n="ft_services">Servicios</a><a href="#scene-partners" data-i18n="nav_allies">Aliados</a><a href="#scene-partners" data-i18n="nav_b2b">B2B</a><a href="expansion.html" data-linea="expansion" data-i18n="expi_eb">Expansión internacional</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
       <div class="ft-col"><h3 class="ft-h" data-i18n="ft_contact">Contacto</h3><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WA +503 6207-3860</a><a href="#contacto" data-i18n="ft_form">Formulario</a><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.youtube.com/@nextleveldemographic" target="_blank" rel="noopener noreferrer">YouTube</a></div>
     </div>
     <div class="ft-bot"><span data-i18n="ft_rights">© 2026 Next Level Demographic. Todos los derechos reservados.</span><span><a href="#" data-i18n="ft_privacy">Privacidad</a> · <a href="#" data-i18n="ft_terms">Términos</a></span></div>
@@ -2822,7 +3075,7 @@ window.va = window.va || function () { (window.vaq = window.vaq || []).push(argu
 </footer>
 
 <div class="wa-tip" id="waTip" aria-hidden="true"></div>
-<a href="https://wa.me/50362073860" target="_blank" class="wa-fl" aria-label="WhatsApp" rel="noopener noreferrer"><svg viewBox="0 0 24 24" fill="white" width="26" height="26"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.122.554 4.118 1.527 5.847L0 24l6.285-1.648A11.94 11.94 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.818 9.818 0 01-5.006-1.368l-.359-.214-3.731.978.996-3.638-.234-.374A9.818 9.818 0 1112 21.818z"/></svg></a>
+<a href="https://wa.me/50362073860" target="_blank" class="wa-fl" aria-label="WhatsApp" rel="noopener noreferrer"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 3.5h12A3.5 3.5 0 0 1 21.5 7v7a3.5 3.5 0 0 1-3.5 3.5h-6.4l-4.8 3.3c-.5.35-1.2 0-1.2-.6v-2.8A3.5 3.5 0 0 1 2.5 14V7A3.5 3.5 0 0 1 6 3.5z"/><circle class="wa-dot" cx="8" cy="10.5" r="1.3"/><circle class="wa-dot" cx="12" cy="10.5" r="1.3"/><circle class="wa-dot" cx="16" cy="10.5" r="1.3"/></svg><span>WhatsApp</span></a>
 
 <script>
 const WA_NUMBER='50362073860';const WA_DISPLAY='+503 6207-3860';
@@ -4451,6 +4704,12 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
     '.hero-btns','.intent-toggle','.btn-blue','.btn-ghost','.svc-cta','.dev-cta','.b2b-cta','.pe-btn',
     /* objetos */
     '.proj-card','.case-card','.tm-card','.sc-card','.dev-card','.proc-card','.ally-card',
+    /* v43: en las escenas se revelan las piezas de cada paso, no el paso,
+       que usa su opacidad para encenderse cuando es el activo. */
+    '.proc-tag','.proc-t','.proc-d','.proc-pill','.sc-n','.sc-title','.sc-desc','.sc-tag',
+    '.abnb-n','.abnb-t','.abnb-d','.scn-stage',
+    /* v43.1: el comparativo entra fila por fila, no columna por columna */
+    '.life-flag','.life-row',
     '.dn','.prob-card','.life-geo-card','.faq-item','.abnb-card','.life-col',
     '.ffb','.dev-bento>*','.cg-l-eb','.ci-list','.wa-strip','.fg',
     '.ft-col','.ft-b','.proj-disclaimer','.anim',
@@ -4467,7 +4726,8 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
             '.proc-track-wrap','.proc-track','.faq-list','.cg-r','.contact-grid',
             '.ally-spotlight','.pcar','.pcar-viewport','.pcar-track','.pcar-slide',
             '.proj-layout','.proj-grid','.team-grid','.svc-grid','.cases-grid',
-            '.dev-bento','.abnb-grid','.ft-grid','.ft-inner'].join(',');
+            '.dev-bento','.abnb-grid','.ft-grid','.ft-inner',
+            '.scn','.scn-steps','.scn-step','.life-col'].join(',');
 
   var reduce=false;
   try{reduce=window.matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
@@ -4552,6 +4812,7 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
       var taken=[];
       found.forEach(function(el){
         if(el.matches&&el.matches(WRAP))return;   /* envoltorio: cede a sus hijos */
+        if(el.closest&&el.closest('.story'))return;   /* v43: la frase maneja su propia opacidad */
         /* Una sola capa: si un contenedor ya se anima, sus hijos no.
            Evita el doble desvanecido que ensucia la entrada. */
         for(var i=0;i<taken.length;i++){ if(taken[i].contains(el))return; }
@@ -5178,8 +5439,11 @@ function _cargarPdfLibs(){
     btn.addEventListener('mouseenter',function(){mostrar(0);});
     btn.addEventListener('mouseleave',function(){esconder();});
     tip.addEventListener('mouseenter',function(){clearTimeout(ocultar);});
-    setTimeout(function(){
+    setTimeout(function esperar(){
       if(mostrado||document.hidden)return;
+      /* v43.1: la píldora se aparta junto al botón del héroe, la consulta
+         gratuita y el pie; la invitación espera a que vuelva a la vista. */
+      if(btn.classList.contains('off')){setTimeout(esperar,900);return;}
       mostrado=true; mostrar(6500);
     },6000);
   }
@@ -5745,6 +6009,325 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   });
   window.addEventListener('hashchange',clean);
   window.addEventListener('load',function(){if(location.hash){var t=document.getElementById(location.hash.slice(1));if(t)t.scrollIntoView();clean();}});
+})();
+</script>
+<script id="capa-escenas-js">
+/* ============================================================
+   NLD v43.2 · ESCENAS (comportamiento)
+   1. La frase de las 20 familias se ilumina renglón por renglón.
+   2. Selector de pasos en Metodología, Después del cierre y Servicio
+      adicional. En iPad y computadora: lista + tarjeta; el paso se abre
+      al tocarlo o con el teclado, y avanza solo mientras está a la vista
+      (se pausa con el cursor encima o con el foco, y se queda quieto
+      cuando la persona elige). En celular: tarjetas que se deslizan con
+      el dedo; la cápsula de arriba muestra el avance.
+   3. Textos nuevos (invitación a Expansión) en los seis idiomas.
+   4. WhatsApp flotante en píldora, como en Expansión: se aparta donde
+      ya hay una forma grande de escribirnos.
+   Con movimiento reducido nada avanza solo y la frase se ve completa.
+   ============================================================ */
+(function(){
+  'use strict';
+  var root=document.documentElement;
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  /* La frase fija al desplazar necesita overflow-x:clip. Si el navegador
+     no lo soporta, la frase queda estática y completa. */
+  var clip=false;
+  try{clip=!!(window.CSS&&CSS.supports&&CSS.supports('overflow-x','clip'));}catch(e){}
+  var navEl=document.querySelector('nav');
+  /* Debe coincidir con la consulta de la hoja de estilos */
+  var mqWide=null;
+  try{mqWide=window.matchMedia('(min-width:700px)');}catch(e){}
+  function wide(){return !!(mqWide&&mqWide.matches);}
+  function navBottom(){return navEl?Math.max(0,navEl.getBoundingClientRect().bottom):44;}
+  function pad(n){n=String(n==null?'':n).trim();return n.length===1?'0'+n:n;}
+  function mk(tag,cls){var e=document.createElement(tag);if(cls)e.className=cls;return e;}
+  /* Copia de un texto con traducción: conserva data-i18n, así cambia de
+     idioma junto con el original. */
+  function copyOf(src,cls){
+    var c=src.cloneNode(true);
+    c.className=cls; c.removeAttribute('id'); c.removeAttribute('style');
+    [].forEach.call(c.querySelectorAll('[id]'),function(x){x.removeAttribute('id');});
+    return c;
+  }
+
+  /* ===== 3. Textos nuevos: se suman antes de la primera traducción ===== */
+  var TXT={
+    es:{expi_eb:'Expansión internacional',
+        expi_h:'¿Quieres expandir tu negocio <em>a Estados Unidos?</em>',
+        expi_sub:'Si tienes una empresa en El Salvador, te ayudamos a venderle a la diáspora en EE.UU. sin abrir tiendas allá. Solo pagas si se vende.',
+        expi_cta:'Conoce cómo funciona'},
+    en:{expi_eb:'International expansion',
+        expi_h:'Want to take your business <em>to the United States?</em>',
+        expi_sub:'If you have a company in El Salvador, we help you sell to the diaspora in the U.S. without opening stores there. You only pay if it sells.',
+        expi_cta:'See how it works'},
+    fr:{expi_eb:'Expansion internationale',
+        expi_h:'Vous voulez développer votre entreprise <em>aux États-Unis ?</em>',
+        expi_sub:'Si vous avez une entreprise au Salvador, nous vous aidons à vendre à la diaspora aux États-Unis sans y ouvrir de magasins. Vous ne payez que si ça se vend.',
+        expi_cta:'Découvrez comment ça marche'},
+    it:{expi_eb:'Espansione internazionale',
+        expi_h:'Vuoi espandere la tua attività <em>negli Stati Uniti?</em>',
+        expi_sub:'Se hai un’azienda in El Salvador, ti aiutiamo a vendere alla diaspora negli Stati Uniti senza aprire negozi lì. Paghi solo se si vende.',
+        expi_cta:'Scopri come funziona'},
+    de:{expi_eb:'Internationale Expansion',
+        expi_h:'Möchten Sie Ihr Unternehmen <em>in die USA bringen?</em>',
+        expi_sub:'Wenn Sie ein Unternehmen in El Salvador haben, helfen wir Ihnen, an die Diaspora in den USA zu verkaufen – ohne dort Geschäfte zu eröffnen. Sie zahlen nur, wenn verkauft wird.',
+        expi_cta:'So funktioniert es'},
+    pt:{expi_eb:'Expansão internacional',
+        expi_h:'Quer expandir seu negócio <em>para os Estados Unidos?</em>',
+        expi_sub:'Se você tem uma empresa em El Salvador, ajudamos você a vender para a diáspora nos EUA sem abrir lojas lá. Você só paga se vender.',
+        expi_cta:'Veja como funciona'}
+  };
+  try{
+    if(typeof I18N!=='undefined'){
+      for(var l in TXT){if(I18N[l])for(var k in TXT[l])I18N[l][k]=TXT[l][k];}
+    }
+  }catch(e){}
+
+  /* ===== 1. La frase que se ilumina =====
+     Un renglón por oración (y por cada <br> del texto traducido). Cada
+     renglón pasa de tenue a pleno mientras el recorrido invisible pasa
+     por debajo: 0 cuando la frase se fija, 1 cuando se suelta. */
+  var story=document.getElementById('historia'), pin=null, run=null, lines=[];
+  if(story&&!reduce&&clip){
+    pin=story.querySelector('.story-pin'); run=story.querySelector('.story-run');
+    if(pin&&run)story.classList.add('scrub');
+  }
+  function sentences(html){
+    var out=[];
+    html.split(/<br\s*\/?>/i).forEach(function(p){
+      p=p.trim(); if(!p)return;
+      var cur='', depth=0;
+      for(var i=0;i<p.length;i++){
+        var ch=p.charAt(i); cur+=ch;
+        if(ch==='<'){depth++;continue;}
+        if(ch==='>'){depth=Math.max(0,depth-1);continue;}
+        if(depth||!/[.!?]/.test(ch))continue;
+        /* Las etiquetas que cierran justo después van con la oración */
+        var j=i+1, tail='';
+        while(p.substr(j,2)==='</'){var e=p.indexOf('>',j);if(e<0)break;tail+=p.slice(j,e+1);j=e+1;}
+        if(j<p.length&&/\s/.test(p.charAt(j))){cur+=tail;out.push(cur.trim());cur='';i=j;}
+      }
+      if(cur.trim())out.push(cur.trim());
+    });
+    return out;
+  }
+  function splitStory(){
+    if(!story)return;
+    [].forEach.call(story.querySelectorAll('.life-close-q,.life-close-sub'),function(el){
+      if(el.querySelector('.sl'))return;
+      el.innerHTML=sentences(el.innerHTML).map(function(t){return '<span class="sl">'+t+'</span>';}).join(' ');
+    });
+    lines=[].slice.call(story.querySelectorAll('.sl'));
+  }
+  function layoutStory(){
+    if(!story||!story.classList.contains('scrub'))return;
+    var vh=window.innerHeight||800, nb=navBottom(), h=pin.offsetHeight;
+    var fits=h<=vh-nb-24;
+    story.classList.toggle('nofit',!fits);
+    if(fits)pin.style.top=Math.round(Math.max(nb+16,(nb+vh-h)/2))+'px';
+    else lines.forEach(function(x){x.style.opacity='';});
+  }
+  function updStory(){
+    if(!lines.length||!story.classList.contains('scrub')||story.classList.contains('nofit'))return;
+    var pr=pin.getBoundingClientRect(), rr=run.getBoundingClientRect(), H=rr.height||1;
+    var p=Math.min(1,Math.max(0,(pr.bottom-rr.top)/H)), n=lines.length;
+    lines.forEach(function(x,i){
+      var a=i/(n+0.4), b=(i+1)/(n+0.4), t=Math.min(1,Math.max(0,(p-a)/(b-a)));
+      x.style.opacity=(0.16+0.84*t).toFixed(3);
+    });
+  }
+
+  /* ===== 2. Selector de pasos ===== */
+  /* El dato clave de cada servicio de Airbnb es la última oración de su
+     descripción ("Vos ni te enterás."), en el idioma que esté activo. */
+  var derived=[];
+  function lastSentence(el){
+    var t=(el&&el.textContent||'').replace(/\s+/g,' ').trim();
+    var m=t.match(/[^.!?]+[.!?]+\s*$/);
+    return m?m[0].trim():'';
+  }
+  function fillDerived(){derived.forEach(function(d){d.node.textContent=lastSentence(d.src);});}
+  var KINDS={
+    proc:{n:'.proc-n', more:['.proc-d','.proc-pill'],
+      label:function(st){return st.querySelector('.proc-tag');},
+      hi:function(st){var p=st.querySelector('.proc-pill');return p?copyOf(p,'ph-p'):null;}},
+    svc:{n:'.sc-n', more:['.sc-desc','.sc-tag'],
+      label:function(st,sec){return sec.querySelector('[data-i18n="svc_eb"]');},
+      hi:function(st){var t=st.querySelector('.sc-tag');return t?copyOf(t,'ph-p'):null;}},
+    abnb:{n:'.abnb-n', more:['.abnb-d'],
+      label:function(st,sec){return sec.querySelector('[data-i18n="abnb_eb"]');},
+      hi:function(st){
+        var src=st.querySelector('.abnb-d'); if(!src)return null;
+        var s=mk('span','ph-p'); derived.push({node:s,src:src}); return s;}}
+  };
+  var scenes=[];
+  function build(el){
+    var K=KINDS[el.getAttribute('data-scn')];
+    var steps=[].slice.call(el.querySelectorAll('.scn-step'));
+    var ph=el.querySelector('.scn-ph'), track=el.querySelector('.scn-steps');
+    if(!K||!steps.length||!ph||!track)return null;
+    var sec=el.closest('section')||document;
+    var total=pad(steps.length), items=[];
+    steps.forEach(function(st,k){
+      var nEl=st.querySelector(K.n), num=pad(nEl&&nEl.textContent.trim()?nEl.textContent:(k+1));
+      /* "1" pasa a "01": el mismo número que muestra la tarjeta */
+      if(nEl&&nEl.textContent.trim()!==num)nEl.textContent=num;
+      /* Tarjeta del paso */
+      var it=mk('div','stage-item'), top=mk('div','ph-top');
+      var lab=K.label(st,sec);
+      top.appendChild(lab?copyOf(lab,'ph-k'):mk('span','ph-k'));
+      var cnt=mk('span','ph-c'); cnt.textContent=num+' / '+total; top.appendChild(cnt);
+      var big=mk('div','ph-n'); big.textContent=num;
+      var foot=mk('div','ph-foot'), hi=K.hi(st);
+      if(hi)foot.appendChild(hi);
+      var bar=mk('div','ph-bar');
+      for(var j=0;j<steps.length;j++){var seg=mk('i');if(j<=k)seg.className='on';bar.appendChild(seg);}
+      foot.appendChild(bar);
+      it.appendChild(top); it.appendChild(big); it.appendChild(foot);
+      ph.appendChild(it); items.push(it);
+      /* Lo que se abre al elegir el paso (en celular siempre está abierto) */
+      var more=mk('div','scn-more'), inner=mk('div','scn-more-in');
+      K.more.forEach(function(q){var x=st.querySelector(q);if(x)inner.appendChild(x);});
+      more.appendChild(inner); st.appendChild(more);
+      var prog=mk('span','scn-prog'); prog.setAttribute('aria-hidden','true'); prog.appendChild(mk('i')); st.appendChild(prog);
+      st.setAttribute('tabindex','0'); st.setAttribute('role','button'); st.setAttribute('aria-expanded','false');
+    });
+    el.classList.add('live');
+    var s={el:el,steps:steps,items:items,track:track,cur:-1,visible:false,stopped:false,hold:false,prog:false,progT:0,raf:0};
+
+    steps.forEach(function(st,k){
+      st.addEventListener('click',function(){choose(s,k);});
+      st.addEventListener('keydown',function(e){
+        var n=-1;
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();choose(s,k);return;}
+        if(e.key==='ArrowDown'||e.key==='ArrowRight')n=Math.min(steps.length-1,k+1);
+        else if(e.key==='ArrowUp'||e.key==='ArrowLeft')n=Math.max(0,k-1);
+        if(n>-1&&n!==k){e.preventDefault();steps[n].focus({preventScroll:true});choose(s,n);}
+      });
+    });
+    /* Cuando la línea de progreso del paso activo se llena, sigue el próximo */
+    el.addEventListener('animationend',function(e){
+      if(e.animationName==='scnProg'&&e.target.parentNode&&e.target.parentNode.classList.contains('scn-prog'))advance(s);
+    });
+    el.addEventListener('pointerenter',function(e){if(e.pointerType==='mouse'){s.hold=true;sync(s);}});
+    el.addEventListener('pointerleave',function(e){if(e.pointerType==='mouse'){s.hold=false;sync(s);}});
+    el.addEventListener('focusin',function(){s.hold=true;sync(s);});
+    el.addEventListener('focusout',function(){s.hold=false;sync(s);});
+    /* Celular: deslizar elige la tarjeta; tocar detiene el avance solo */
+    track.addEventListener('scroll',function(){if(!wide())onTrack(s);},{passive:true});
+    track.addEventListener('touchstart',function(){stop(s);},{passive:true});
+    track.addEventListener('pointerdown',function(e){if(e.pointerType!=='mouse')stop(s);});
+    return s;
+  }
+  function setStep(s,i){
+    if(i===s.cur)return; s.cur=i;
+    s.items.forEach(function(it,k){it.classList.toggle('on',k===i);});
+    s.steps.forEach(function(st,k){
+      var on=k===i; st.classList.toggle('on',on); st.setAttribute('aria-expanded',on?'true':'false');
+    });
+  }
+  function choose(s,i){stop(s);setStep(s,i);if(!wide())toCard(s,i,true);}
+  function advance(s){var n=(s.cur+1)%s.steps.length;setStep(s,n);if(!wide())toCard(s,n,true);}
+  function cardX(s,i){var a=s.steps[0],b=s.steps[i];return (b&&a)?b.offsetLeft-a.offsetLeft:0;}
+  function toCard(s,i,smooth){
+    var tr=s.track, x=cardX(s,i);
+    if(Math.abs(tr.scrollLeft-x)<2)return;
+    s.prog=true; clearTimeout(s.progT);
+    try{tr.scrollTo({left:x,behavior:(smooth&&!reduce)?'smooth':'auto'});}catch(e){tr.scrollLeft=x;}
+    s.progT=setTimeout(function(){s.prog=false;},800);
+  }
+  function onTrack(s){
+    if(s.prog||s.raf)return;
+    s.raf=requestAnimationFrame(function(){
+      s.raf=0;
+      var x=s.track.scrollLeft, best=0, bd=Infinity;
+      for(var k=0;k<s.steps.length;k++){var d=Math.abs(cardX(s,k)-x);if(d<bd){bd=d;best=k;}}
+      setStep(s,best);
+    });
+  }
+  /* Avanza solo mientras está a la vista, sin movimiento reducido y si la
+     persona no eligió un paso. El cursor encima o el foco lo pausan. */
+  function sync(s){
+    var play=!reduce&&s.visible&&!s.stopped;
+    s.el.classList.toggle('auto',play);
+    s.el.classList.toggle('hold',play&&s.hold);
+  }
+  function stop(s){if(!s.stopped){s.stopped=true;sync(s);}}
+
+  [].forEach.call(document.querySelectorAll('.scn[data-scn]'),function(el){
+    var s=build(el); if(s)scenes.push(s);
+  });
+  fillDerived();
+  scenes.forEach(function(s){setStep(s,0);});
+  if(scenes.length&&'IntersectionObserver' in window){
+    var sio=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        for(var i=0;i<scenes.length;i++){
+          var s=scenes[i]; if(s.el!==e.target)continue;
+          s.visible=e.isIntersecting&&e.intersectionRatio>=0.35;
+          /* Al salir de la vista se rearma: la próxima vez vuelve a avanzar solo */
+          if(!e.isIntersecting)s.stopped=false;
+          sync(s);
+        }
+      });
+    },{threshold:[0,0.35,0.6]});
+    scenes.forEach(function(s){sio.observe(s.el);});
+  }
+  /* Al pasar de computadora a celular (o girar el iPad), la tarjeta activa
+     queda a la vista en el carrusel */
+  function relayout(){if(!wide())scenes.forEach(function(s){toCard(s,s.cur,false);});}
+  if(mqWide){
+    if(mqWide.addEventListener)mqWide.addEventListener('change',relayout);
+    else if(mqWide.addListener)mqWide.addListener(relayout);
+  }
+
+  /* ===== 4. WhatsApp flotante =====
+     Aparece cuando el botón del héroe sale de vista y se aparta en la
+     consulta gratuita y en el pie. Igual que en Expansión. */
+  var waFl=document.querySelector('.wa-fl'), waTip=document.getElementById('waTip');
+  if(waFl&&'IntersectionObserver' in window){
+    var watch=[document.querySelector('#scene-hero .hero-btns'),document.getElementById('contacto'),document.querySelector('footer')].filter(Boolean);
+    var seen=watch.map(function(){return false;});
+    waFl.classList.add('off');
+    var wio=new IntersectionObserver(function(es){
+      es.forEach(function(e){var i=watch.indexOf(e.target);if(i>-1)seen[i]=e.isIntersecting;});
+      var off=seen.some(Boolean);
+      waFl.classList.toggle('off',off);
+      if(off&&waTip)waTip.classList.remove('show');
+    },{threshold:0});
+    watch.forEach(function(el){wio.observe(el);});
+  }
+
+  /* ===== Idioma: al cambiarlo, la frase se vuelve a partir y los datos
+     derivados se rehacen ===== */
+  if(typeof window.applyLang==='function'){
+    var _apply=window.applyLang;
+    window.applyLang=function(l){
+      _apply(l);
+      try{splitStory();fillDerived();layoutStory();onScroll();}catch(e){}
+    };
+  }
+
+  /* ===== Un solo bucle de desplazamiento (la frase) ===== */
+  var ticking=false;
+  function onScroll(){
+    if(ticking)return; ticking=true;
+    requestAnimationFrame(function(){ticking=false;updStory();});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});
+  window.addEventListener('resize',function(){layoutStory();onScroll();relayout();},{passive:true});
+
+  function init(){
+    splitStory(); layoutStory(); updStory();
+    /* Con la tipografía final cambia el alto del texto: se vuelve a medir */
+    if(document.fonts&&document.fonts.ready&&document.fonts.ready.then){
+      document.fonts.ready.then(function(){layoutStory();onScroll();}).catch(function(){});
+    }
+    window.addEventListener('load',function(){layoutStory();onScroll();});
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init); else init();
 })();
 </script>
 </body>

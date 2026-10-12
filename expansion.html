@@ -716,7 +716,7 @@ try{if(localStorage.getItem('nld_lang')==='en')d.lang='en';}catch(e){}})();
       <p class="cta-or" data-i18n="ct_or">O escríbanos directo</p>
       <div class="cta-opts">
         <a class="cta-opt" data-cta href="https://wa.me/50362073860" target="_blank" rel="noopener"><span class="cta-opt-k">WhatsApp</span><span class="cta-opt-v">+503&nbsp;6207-3860</span></a>
-        <a class="cta-opt" href="mailto:info@nextleveldemographic.com"><span class="cta-opt-k" data-i18n="ct_mail_k">Correo</span><span class="cta-opt-v">info@nextleveldemographic.com</span></a>
+        <a class="cta-opt" data-mail-pre href="mailto:info@nextleveldemographic.com?subject=Reuni%C3%B3n%3A%20mi%20marca%20en%20Estados%20Unidos&amp;body=Hola%2C%20vi%20la%20p%C3%A1gina%20de%20Next%20Level%20Demographic%20y%20me%20interesa%20llevar%20mi%20marca%20a%20Estados%20Unidos.%20%C2%BFPodemos%20agendar%20una%20reuni%C3%B3n%3F"><span class="cta-opt-k" data-i18n="ct_mail_k">Correo</span><span class="cta-opt-v">info@nextleveldemographic.com</span></a>
       </div>
     </div>
   </div>
@@ -843,6 +843,9 @@ try{if(localStorage.getItem('nld_lang')==='en')d.lang='en';}catch(e){}})();
     var href=NLD.wa
       ? 'https://wa.me/'+NLD.wa+'?text='+encodeURIComponent(MSG[lang])
       : 'mailto:'+NLD.email+'?subject='+encodeURIComponent(SUBJ[lang])+'&body='+encodeURIComponent(MSG[lang]);
+    /* v43.4: el correo también llega escrito (asunto y mensaje); solo hay que enviarlo */
+    var mail='mailto:'+NLD.email+'?subject='+encodeURIComponent(SUBJ[lang])+'&body='+encodeURIComponent(MSG[lang]);
+    document.querySelectorAll('[data-mail-pre]').forEach(function(a){a.href=mail;});
     document.querySelectorAll('[data-cta]').forEach(function(a){
       a.href=href;
       if(NLD.wa){a.target='_blank';a.rel='noopener';}else{a.removeAttribute('target');}

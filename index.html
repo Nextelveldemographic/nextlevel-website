@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- NLD v42.0 · Klaric · etiqueta de confianza a la derecha del rotulo; barra fija sin progreso ni pildora -->
-<!-- NLD v43.4 · Servicio adicional en banda oscura propia; invitación a Expansión discreta; sin cápsula de avance en celular.
+<!-- NLD v43.5 · B2B sale del carrusel y usa el selector de pasos de "Después del cierre"; Aliados queda como sección propia.
+     v43.4 · Servicio adicional en banda oscura propia; invitación a Expansión discreta; sin cápsula de avance en celular.
      v43.2 · La frase de las 20 familias se ilumina al desplazar. Metodología, Después del cierre y Servicio
      adicional con selector de pasos compacto (iPad y PC: lista + tarjeta que avanza sola; celular: tarjetas que se
      deslizan). Después del cierre y Servicio
@@ -38,7 +39,7 @@ document.documentElement.className+=" js-hero";
 <link rel="dns-prefetch" href="https://c.basemaps.cartocdn.com">
 <link rel="dns-prefetch" href="https://photon.komoot.io">
 <link rel="dns-prefetch" href="https://formsubmit.co">
-<meta name="version" content="v43.4.3-2026-10">
+<meta name="version" content="v43.5-2026-10">
 <!-- Favicons v5.2 · PNG base64 (compatible con Safari) · logo de marca (fondo negro + ola azul + ave blanca) -->
 <link rel="icon" type="image/png" sizes="32x32" href="data:image/png;base64,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">
 <link rel="icon" type="image/png" sizes="16x16" href="data:image/png;base64,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">
@@ -2249,17 +2250,21 @@ body{overflow-x:hidden;overflow-x:clip}
 /* Las tarjetas de Airbnb eran gris sobre gris en la banda gris: pasan a blanco, como las de servicios */
 .sec-chalk .abnb-card{background:var(--w)}
 .scn.live{--scn-line:var(--divider-2);--scn-dim:var(--grey);--scn-ink:var(--dark);--scn-muted:var(--grey-2);--scn-acc:var(--blue)}
-.scn.live .abnb-grid,.scn.live .svc-grid{margin:0}
+.scn.live .abnb-grid,.scn.live .svc-grid,.scn.live .dev-grid{margin:0}
+/* B2B: el número del paso solo existe con el selector; la categoría pasa a la tarjeta */
+.dev-num{display:none}
+.scn.live .dev-num{display:block}
+.scn.live .dev-n{display:none}
 /* Los emojis se van: el selector lo llevan el número y el texto */
 .scn.live .sc-icon,.scn.live .abnb-icon{display:none}
 .scn.live .scn-step{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent;outline:none}
 .scn.live .scn-step:hover{transform:none}
 .scn.live .scn-step:focus-visible{outline:2px solid var(--scn-acc);outline-offset:4px;border-radius:10px}
-.scn.live .proc-tag,.scn.live .sc-n,.scn.live .abnb-n{font-family:var(--sf-mono);font-size:11px;font-weight:500;
+.scn.live .proc-tag,.scn.live .sc-n,.scn.live .abnb-n,.scn.live .dev-num{font-family:var(--sf-mono);font-size:11px;font-weight:500;
   letter-spacing:.06em;text-transform:uppercase;line-height:1.3;color:var(--scn-acc);margin:0 0 6px}
-.scn.live .proc-t,.scn.live .sc-title,.scn.live .abnb-t{font-size:clamp(19px,1.9vw,24px);font-weight:600;letter-spacing:-.02em;
+.scn.live .proc-t,.scn.live .sc-title,.scn.live .abnb-t,.scn.live .dev-t{font-size:clamp(19px,1.9vw,24px);font-weight:600;letter-spacing:-.02em;
   line-height:1.2;color:var(--scn-ink);margin:0;overflow-wrap:normal;text-wrap:balance;transition:color .3s var(--ease)}
-.scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d{font-size:16px;line-height:1.5;color:var(--scn-muted);margin:0;
+.scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d,.scn.live .dev-d{font-size:16px;line-height:1.5;color:var(--scn-muted);margin:0;
   flex-grow:0;text-wrap:pretty}
 .scn-more{display:grid;grid-template-rows:1fr}
 .scn-more-in{min-height:0;overflow:hidden}
@@ -2303,7 +2308,7 @@ body{overflow-x:hidden;overflow-x:clip}
     margin:0 calc(-1 * var(--scn-pad));padding:2px var(--scn-pad) 8px;scroll-padding-inline:var(--scn-pad);transform:none!important}
   .scn.live>.scn-steps::-webkit-scrollbar{display:none}
   .scn.live .scn-step,
-  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card{
+  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card,.scn.live .scn-step.dev-card{
     flex:0 0 86%;min-width:0;min-height:0;scroll-snap-align:start;padding:22px 20px 26px!important;border-radius:var(--r-xl);
     display:flex;flex-direction:column;justify-content:flex-start;overflow:hidden;opacity:.5;transition:opacity .4s var(--ease)}
   .scn.live .scn-step.on{opacity:1}
@@ -2329,14 +2334,14 @@ body{overflow-x:hidden;overflow-x:clip}
   .sec-dark .scn.live{--scn-line:rgba(255,255,255,.14);--scn-dim:rgba(245,245,247,.45);--scn-ink:#F5F5F7;--scn-muted:#A1A1A6;--scn-acc:#5AB0FF}
   .scn.live>.scn-steps{display:flex;flex-direction:column;gap:0;margin:0;padding:0;border-top:1px solid var(--scn-line);transform:none!important}
   .scn.live .scn-step,
-  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card{
+  .scn.live .scn-step.proc-card,.scn.live .scn-step.sc-card,.scn.live .scn-step.abnb-card,.scn.live .scn-step.dev-card{
     display:block;min-height:0;padding:16px 4px 17px!important;background:transparent!important;border-radius:0;box-shadow:none;
     border-bottom:1px solid var(--scn-line);overflow:visible}
-  .scn.live .scn-step:not(.on) .proc-t,.scn.live .scn-step:not(.on) .sc-title,.scn.live .scn-step:not(.on) .abnb-t{color:var(--scn-dim)}
-  .scn.live .scn-step:not(.on):hover .proc-t,.scn.live .scn-step:not(.on):hover .sc-title,.scn.live .scn-step:not(.on):hover .abnb-t{color:var(--scn-ink)}
+  .scn.live .scn-step:not(.on) .proc-t,.scn.live .scn-step:not(.on) .sc-title,.scn.live .scn-step:not(.on) .abnb-t,.scn.live .scn-step:not(.on) .dev-t{color:var(--scn-dim)}
+  .scn.live .scn-step:not(.on):hover .proc-t,.scn.live .scn-step:not(.on):hover .sc-title,.scn.live .scn-step:not(.on):hover .abnb-t,.scn.live .scn-step:not(.on):hover .dev-t{color:var(--scn-ink)}
   .scn.live .scn-more{grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease)}
   .scn.live .scn-step.on .scn-more{grid-template-rows:1fr}
-  .scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d{max-width:52ch}
+  .scn.live .proc-d,.scn.live .sc-desc,.scn.live .abnb-d,.scn.live .dev-d{max-width:52ch}
   /* El dato clave de cada paso vive en la tarjeta */
   .scn.live .proc-pill,.scn.live .sc-tag{display:none}
 
@@ -2378,6 +2383,9 @@ body{overflow-x:hidden;overflow-x:clip}
 /* ---------- 5c. "¿Y si vendés tu propiedad en US?" en su propia sección ---------- */
 #scene-vender .life-callout{margin-bottom:0}
 .scn.live + .abnb-cta-wrap{margin-top:32px}
+/* v43.5: B2B con selector de pasos; el llamado se alinea con la lista */
+#scene-b2b .scn.live + .dev-cta-wrap{margin-top:32px;justify-content:flex-start;gap:12px 24px}
+@media (max-width:699px){#scene-b2b .dev-cta-wrap{flex-direction:column;align-items:flex-start}}
 /* v43.4: Servicio adicional va sobre banda oscura, como Metodología. El botón
    negro "Conocer más sobre gestión Airbnb" pasa a enlace azul con flecha. */
 .sec-dark .section-h .grey{color:#86868B}
@@ -2463,7 +2471,7 @@ body{overflow-x:hidden;overflow-x:clip}
     <li><a href="#scene-process" data-i18n="nav_process">Proceso</a></li>
     <li><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a></li>
     <li><a href="#scene-partners" data-i18n="nav_allies">Aliados</a></li>
-    <li><a href="#scene-partners" data-i18n="nav_b2b">B2B</a></li>
+    <li><a href="#scene-b2b" data-i18n="nav_b2b">B2B</a></li>
   </ul>
   <div class="nav-r">
     <div class="lang-sel" id="langSel">
@@ -2490,7 +2498,7 @@ body{overflow-x:hidden;overflow-x:clip}
   <a href="#scene-team" onclick="hm()" data-i18n="nav_team">Equipo</a>
   <a href="#scene-projects" onclick="hm()" data-i18n="nav_projects">Proyectos</a>
   <a href="#scene-partners" onclick="hm()" data-i18n="nav_allies">Aliados</a>
-  <a href="#scene-partners" onclick="hm()" data-i18n="nav_b2b">B2B</a>
+  <a href="#scene-b2b" onclick="hm()" data-i18n="nav_b2b">B2B</a>
   <a href="#contacto" onclick="hm()" data-i18n="btn_consult_arrow">Consulta gratuita ›</a>
   <div class="mob-actions"><button type="button" class="mob-theme" onclick="toggleTheme()"><svg class="theme-icon-sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg><svg class="theme-icon-moon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg><span>Tema</span></button>
   <div class="mob-lang"><button type="button" onclick="setLang('es');hm()" data-lng="es"><svg class="flag-svg" viewBox="0 0 18 10" width="20" height="11" aria-hidden="true"><rect width="18" height="10" fill="#0F47AF"/><rect y="3.33" width="18" height="3.34" fill="#fff"/><circle cx="9" cy="5" r="1.1" fill="#C9A227"/></svg> ES</button><button type="button" onclick="setLang('en');hm()" data-lng="en"><svg class="flag-svg" viewBox="0 0 19 10" width="21" height="11" aria-hidden="true"><rect width="19" height="10" fill="#B22234"/><g fill="#fff"><rect y="0.77" width="19" height="0.77"/><rect y="2.31" width="19" height="0.77"/><rect y="3.85" width="19" height="0.77"/><rect y="5.38" width="19" height="0.77"/><rect y="6.92" width="19" height="0.77"/><rect y="8.46" width="19" height="0.77"/></g><rect width="7.6" height="5.38" fill="#3C3B6E"/></svg> EN</button><button type="button" onclick="setLang('fr');hm()" data-lng="fr">🇫🇷 FR</button><button type="button" onclick="setLang('it');hm()" data-lng="it">🇮🇹 IT</button><button type="button" onclick="setLang('de');hm()" data-lng="de">🇩🇪 DE</button><button type="button" onclick="setLang('pt');hm()" data-lng="pt">🇧🇷 PT</button></div>
@@ -3016,25 +3024,22 @@ body{overflow-x:hidden;overflow-x:clip}
   </div>
 </section>
 
-<section id="scene-partners" class="sec-white" data-scene>
-  <div class="pcar pcar1">
-    <div class="pcar-viewport">
-      <div class="pcar-track" id="pcarTrack">
-        <div class="pcar-slide">
+<section id="scene-b2b" class="sec-chalk" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="dev_eb">B2B · Para desarrolladoras</div>
     <h2 class="section-h anim d1" data-i18n="dev_h">¿Eres desarrolladora? <br><span class="grey">Conectemos tus proyectos con la diáspora.</span></h2>
     <p class="section-sub anim d2" data-i18n="dev_sub">Tú tienes los proyectos. Nosotros tenemos acceso directo a 2.3M de salvadoreños en EE.UU. con poder adquisitivo y conexión emocional al país.</p>
-    <div class="dev-bento">
-      <div class="dev-card anim d3"><div class="dev-n" data-i18n="dev_1_n">1 · DISTRIBUCIÓN</div><div class="dev-t" data-i18n="dev_1_t">Acceso directo a la diáspora</div><div class="dev-d" data-i18n="dev_1_d">Base de leads cualificados de salvadoreños en EE.UU. con presupuesto verificado.</div></div>
-      <div class="dev-card anim d4"><div class="dev-n" data-i18n="dev_2_n">2 · MARKETING</div><div class="dev-t" data-i18n="dev_2_t">Estrategia bilingüe especializada</div><div class="dev-d" data-i18n="dev_2_d">Contenido, redes y campañas digitales pensadas para audiencia migrante salvadoreña.</div></div>
-      <div class="dev-card anim d5"><div class="dev-n" data-i18n="dev_3_n">3 · CIERRE</div><div class="dev-t" data-i18n="dev_3_t">Operación internacional integrada</div><div class="dev-d" data-i18n="dev_3_d">Manejamos contratos, poderes notariales y escrituración remota desde EE.UU.</div></div>
-      <div class="dev-card anim d6"><div class="dev-n" data-i18n="dev_4_n">4 · MODELO</div><div class="dev-t" data-i18n="dev_4_t">Solo pagas cuando vendemos</div><div class="dev-d" data-i18n="dev_4_d">Comisión por venta cerrada. Sin costos fijos, sin retainers, sin tarifas iniciales.</div></div>
-    </div>
+    <div class="scn" data-scn="dev"><div class="dev-grid scn-steps">
+      <div class="dev-card scn-step"><div class="dev-num">1</div><div class="dev-n" data-i18n="dev_1_n">1 · DISTRIBUCIÓN</div><div class="dev-t" data-i18n="dev_1_t">Acceso directo a la diáspora</div><div class="dev-d" data-i18n="dev_1_d">Base de leads cualificados de salvadoreños en EE.UU. con presupuesto verificado.</div></div>
+      <div class="dev-card scn-step"><div class="dev-num">2</div><div class="dev-n" data-i18n="dev_2_n">2 · MARKETING</div><div class="dev-t" data-i18n="dev_2_t">Estrategia bilingüe especializada</div><div class="dev-d" data-i18n="dev_2_d">Contenido, redes y campañas digitales pensadas para audiencia migrante salvadoreña.</div></div>
+      <div class="dev-card scn-step"><div class="dev-num">3</div><div class="dev-n" data-i18n="dev_3_n">3 · CIERRE</div><div class="dev-t" data-i18n="dev_3_t">Operación internacional integrada</div><div class="dev-d" data-i18n="dev_3_d">Manejamos contratos, poderes notariales y escrituración remota desde EE.UU.</div></div>
+      <div class="dev-card scn-step"><div class="dev-num">4</div><div class="dev-n" data-i18n="dev_4_n">4 · MODELO</div><div class="dev-t" data-i18n="dev_4_t">Solo pagas cuando vendemos</div><div class="dev-d" data-i18n="dev_4_d">Comisión por venta cerrada. Sin costos fijos, sin retainers, sin tarifas iniciales.</div></div>
+    </div><div class="scn-stage" aria-hidden="true"><div class="scn-sticky"><div class="scn-ph"></div></div></div></div>
     <div class="dev-cta-wrap anim d7"><a href="#contacto" class="dev-cta" onclick="setDevForm()" data-i18n="dev_cta">Solicitar alianza</a><span class="cta-x" data-i18n="dev_cta_x">o escríbenos directo por <a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WhatsApp</a></span></div>
   </div>
-</div>
-        <div class="pcar-slide">
+</section>
+
+<section id="scene-partners" class="sec-white" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="ally_eb">Red de aliados comerciales</div>
     <h2 class="section-h anim d1" data-i18n="ally_h">Empresas que construyen <br><span class="grey">el ecosistema con nosotros.</span></h2>
@@ -3059,14 +3064,6 @@ body{overflow-x:hidden;overflow-x:clip}
       </div>
     </article></div>
   </div>
-</div>
-      </div>
-    </div>
-    <div class="pcar-dots">
-      <button type="button" class="pcar-dot active" aria-label="B2B"></button>
-      <button type="button" class="pcar-dot" aria-label="Aliados"></button>
-    </div>
-  </div>
 </section>
 
 <section id="scene-expansion" class="sec-white" data-scene>
@@ -3086,7 +3083,7 @@ body{overflow-x:hidden;overflow-x:clip}
     <div class="ft-grid">
       <div class="ft-b"><div class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="64" height="64"></div><span class="logo-tx">Next Level Demographic</span></div><div class="soc-r"><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" class="sc-soc" rel="noopener noreferrer">Fb</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" class="sc-soc" rel="noopener noreferrer">Ig</a><a href="https://www.linkedin.com/company/next-level-demographic/" target="_blank" class="sc-soc" rel="noopener noreferrer">Li</a><a href="https://www.tiktok.com/@nextleveldemograp" target="_blank" class="sc-soc" rel="noopener noreferrer">Tk</a><a href="https://www.youtube.com/@nextleveldemographic" target="_blank" class="sc-soc" aria-label="YouTube" rel="noopener noreferrer">Yt</a></div></div>
       <div class="ft-col"><h3 class="ft-h" data-i18n="ft_nav">Navegar</h3><a href="#scene-lifestyle" data-i18n="nav_market">Mercado</a><a href="#scene-process" data-i18n="nav_process">Proceso</a><a href="#scene-projects" data-i18n="nav_projects">Proyectos</a><a href="#scene-cases" data-i18n="nav_cases">Casos</a><a href="#scene-faq" data-i18n="ft_faq">FAQ</a></div>
-      <div class="ft-col"><h3 class="ft-h" data-i18n="ft_company">Empresa</h3><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-extras" data-i18n="ft_services">Servicios</a><a href="#scene-partners" data-i18n="nav_allies">Aliados</a><a href="#scene-partners" data-i18n="nav_b2b">B2B</a><a href="/expansion" data-linea="expansion" data-i18n="expi_eb">Expansión internacional</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
+      <div class="ft-col"><h3 class="ft-h" data-i18n="ft_company">Empresa</h3><a href="#scene-team" data-i18n="nav_team">Equipo</a><a href="#scene-extras" data-i18n="ft_services">Servicios</a><a href="#scene-partners" data-i18n="nav_allies">Aliados</a><a href="#scene-b2b" data-i18n="nav_b2b">B2B</a><a href="/expansion" data-linea="expansion" data-i18n="expi_eb">Expansión internacional</a><a href="#contacto" data-i18n="ft_contact">Contacto</a></div>
       <div class="ft-col"><h3 class="ft-h" data-i18n="ft_contact">Contacto</h3><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer">WA +503 6207-3860</a><a href="#contacto" data-i18n="ft_form">Formulario</a><a href="https://www.facebook.com/share/1B3jQB2LpW/" target="_blank" rel="noopener noreferrer">Facebook</a><a href="https://www.instagram.com/nextleveldemographic" target="_blank" rel="noopener noreferrer">Instagram</a><a href="https://www.youtube.com/@nextleveldemographic" target="_blank" rel="noopener noreferrer">YouTube</a></div>
     </div>
     <div class="ft-bot"><span data-i18n="ft_rights">© 2026 Next Level Demographic. Todos los derechos reservados.</span><span><a href="#" data-i18n="ft_privacy">Privacidad</a> · <a href="#" data-i18n="ft_terms">Términos</a></span></div>
@@ -4725,7 +4722,7 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
     /* v43: en las escenas se revelan las piezas de cada paso, no el paso,
        que usa su opacidad para encenderse cuando es el activo. */
     '.proc-tag','.proc-t','.proc-d','.proc-pill','.sc-n','.sc-title','.sc-desc','.sc-tag',
-    '.abnb-n','.abnb-t','.abnb-d','.scn-stage',
+    '.abnb-n','.abnb-t','.abnb-d','.dev-num','.dev-t','.dev-d','.scn-stage',
     /* v43.1: el comparativo entra fila por fila, no columna por columna */
     '.life-flag','.life-row',
     '.dn','.prob-card','.life-geo-card','.faq-item','.abnb-card','.life-col',
@@ -6166,7 +6163,12 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     var m=t.match(/[^.!?]+[.!?]+\s*$/);
     return m?m[0].trim():'';
   }
-  function fillDerived(){derived.forEach(function(d){d.node.textContent=lastSentence(d.src);});}
+  /* B2B: la categoría de cada paso ("1 · DISTRIBUCIÓN" -> "Distribución") */
+  function category(el){
+    var t=(el&&el.textContent||'').replace(/\s+/g,' ').replace(/^\s*\d+\s*[·.\-–]\s*/,'').trim().toLowerCase();
+    return t?t.charAt(0).toUpperCase()+t.slice(1):'';
+  }
+  function fillDerived(){derived.forEach(function(d){d.node.textContent=(d.fn||lastSentence)(d.src);});}
   var KINDS={
     proc:{n:'.proc-n', more:['.proc-d','.proc-pill'],
       label:function(st){return st.querySelector('.proc-tag');},
@@ -6178,7 +6180,13 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       label:function(st,sec){return sec.querySelector('[data-i18n="abnb_eb"]');},
       hi:function(st){
         var src=st.querySelector('.abnb-d'); if(!src)return null;
-        var s=mk('span','ph-p'); derived.push({node:s,src:src}); return s;}}
+        var s=mk('span','ph-p'); derived.push({node:s,src:src}); return s;}},
+    /* v43.5: B2B · Para desarrolladoras, con la misma estructura que "Después del cierre" */
+    dev:{n:'.dev-num', more:['.dev-d'],
+      label:function(st,sec){return sec.querySelector('[data-i18n="dev_eb"]');},
+      hi:function(st){
+        var src=st.querySelector('.dev-n'); if(!src)return null;
+        var s=mk('span','ph-p'); derived.push({node:s,src:src,fn:category}); return s;}}
   };
   var scenes=[];
   function build(el){

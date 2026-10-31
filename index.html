@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- NLD v44 · Vista rápida: botón ▶ en cada tarjeta (Particulares y Proyectos) y en la foto de la ficha.
+<!-- NLD v45 · Proyectos: las tarjetas muestran la foto en movimiento (recorrido) y la ficha abre con el
+     recorrido; las flechas llevan a las fotos y tocar el recorrido abre la vista rápida. Particulares igual. -->
+<!-- NLD v44 ·Vista rápida: botón ▶ en cada tarjeta (Particulares y Proyectos) y en la foto de la ficha.
      Con video real (campo `video` en PROJDATA: ID o enlace de YouTube, o .mp4) se reproduce ese video;
      sin video, recorrido de ~15 s con fotos y datos, rotulado "Vista rápida". Interruptor: QV_GENERADA.
      "Recorrido en video" de la ficha ya no precarga YouTube: portada que abre el mismo reproductor. -->
@@ -3144,6 +3146,26 @@ body.qv-lock{overflow:hidden}
   .qv-vcta .qv-cta-wa .qv-wa-t{display:none}
 }
 @media (prefers-reduced-motion:reduce){.qv-ph{transition:none}}
+
+/* ===== v45 · Recorrido en Proyectos =====
+   Las tarjetas de Proyectos muestran la foto en movimiento lento, como un
+   recorrido, y la ficha abre con ese recorrido; las flechas llevan a las
+   fotos. Usa scale/translate sueltos (no transform) para no pisar la
+   entrada de las fotos ni la inclinación 3D de las tarjetas. Solo se mueve
+   lo que está en pantalla. */
+@keyframes nldTour{
+  0%{scale:1.06;translate:-2.2% .6%}
+  100%{scale:1.16;translate:2.2% -1.2%}
+}
+#scene-projects .proj-photo img{animation:nldTour 16s cubic-bezier(.37,0,.63,1) infinite alternate both;animation-play-state:paused}
+#scene-projects .proj-card.qv-live .proj-photo img{animation-play-state:running}
+#scene-projects .proj-card:nth-child(2n) .proj-photo img{animation-direction:alternate-reverse;animation-duration:18s}
+#scene-projects .proj-card:nth-child(3n) .proj-photo img{animation-delay:-6s}
+.pm-slide-tour{overflow:hidden;cursor:pointer}
+.pm-tour-ly{position:absolute;inset:0;background-size:cover;background-position:center;
+  animation:nldTour 14s cubic-bezier(.37,0,.63,1) infinite alternate both;animation-play-state:paused}
+.pm-slide-tour.on .pm-tour-ly{animation-play-state:running}
+@media (prefers-reduced-motion:reduce){#scene-projects .proj-photo img,.pm-tour-ly{animation:none}}
 </style>
 </head>
 <body>
@@ -8338,6 +8360,78 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   }
   window.NLDQuickView={abrir:function(nombre){var c=document.querySelector('.proj-card[data-pname="'+(window.CSS&&CSS.escape?CSS.escape(nombre):nombre)+'"]');if(c)abrir(c,'enlace');},cerrar:cerrar};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
+})();
+</script>
+<script>
+/* ===== v45 · Recorrido en Proyectos =====
+   Tarjetas: la foto se mueve solo mientras la tarjeta está a la vista.
+   Ficha: la galería abre con el recorrido y se queda ahí (no avanza sola);
+   las flechas llevan a las fotos. Tocar el recorrido abre la vista rápida
+   a pantalla completa. Particulares no cambia. */
+(function(){
+  'use strict';
+  var L={es:'Recorrido',en:'Tour',fr:'Visite',it:'Tour',de:'Rundgang',pt:'Tour'};
+  function lang(){var l=String((typeof curLang!=='undefined'&&curLang)||'es').slice(0,2);return L[l]?l:'es';}
+  var sec=document.getElementById('scene-projects');
+  if(sec&&'IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){e.target.classList.toggle('qv-live',e.isIntersecting);});
+    },{threshold:.2});
+    [].forEach.call(sec.querySelectorAll('.proj-card'),function(c){io.observe(c);});
+  }else if(sec){
+    [].forEach.call(sec.querySelectorAll('.proj-card'),function(c){c.classList.add('qv-live');});
+  }
+
+  var tour=false;
+  function card(){return (typeof _pmCurCard!=='undefined')?_pmCurCard:null;}
+  function ponerRecorrido(fotos){
+    var c=card();
+    if(!c||!c.closest||!c.closest('#scene-projects')||!fotos||!fotos.length)return;
+    var g=document.getElementById('pmGallery'), segs=document.getElementById('pmSegs');
+    if(!g||!segs)return;
+    var sl=document.createElement('div'); sl.className='pm-slide pm-slide-tour';
+    sl.setAttribute('role','img'); sl.setAttribute('aria-label',L[lang()]);
+    var ly=document.createElement('div'); ly.className='pm-tour-ly';
+    ly.style.backgroundImage='url("'+String(fotos[0]).replace(/"/g,'%22')+'")';
+    sl.appendChild(ly);
+    g.insertBefore(sl,g.querySelector('.pm-slide')||segs);
+    var n=g.querySelectorAll('.pm-slide').length, h='';
+    for(var k=0;k<n;k++)h+='<button class="pm-seg" onclick="pmGo('+k+')" aria-label="'+(k===0?L[lang()]:'Foto '+k)+'"><span class="pm-seg-fill"></span></button>';
+    segs.innerHTML=h; segs.style.display='';
+    [].forEach.call(g.querySelectorAll('.pm-gnav'),function(b){b.style.display='';});
+    pmG.n=n; tour=true;
+    pmGo(0);
+  }
+  if(typeof window._pmArmarGaleria==='function'){
+    var _arm=window._pmArmarGaleria;
+    window._pmArmarGaleria=function(emoji,fotos){
+      tour=false;
+      var r=_arm.apply(this,arguments);
+      try{ponerRecorrido(fotos);}catch(e){}
+      return r;
+    };
+  }
+  /* En modo recorrido la galería no avanza sola: cada indicador queda
+     lleno hasta la posición actual. */
+  if(typeof window.pmGo==='function'){
+    var _go=window.pmGo;
+    window.pmGo=function(){
+      var r=_go.apply(this,arguments);
+      if(tour){
+        try{clearTimeout(pmG.t);}catch(e){}
+        [].forEach.call(document.querySelectorAll('#pmGallery .pm-seg-fill'),function(f,i){
+          f.style.transition='none'; f.style.width=(i<=pmG.i)?'100%':'0';
+        });
+      }
+      return r;
+    };
+  }
+  var g=document.getElementById('pmGallery');
+  if(g)g.addEventListener('click',function(e){
+    if(!e.target.closest('.pm-slide-tour')||e.target.closest('button,a'))return;
+    var c=card();
+    if(c&&window.NLDQuickView)window.NLDQuickView.abrir(c.getAttribute('data-pname'));
+  });
 })();
 </script>
 </body>

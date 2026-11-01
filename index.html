@@ -3168,6 +3168,9 @@ body.qv-lock{overflow:hidden}
 @keyframes qvmS0{0%{opacity:0;translate:0 8px}3%,22%{opacity:1;translate:0 0}25%,100%{opacity:0;translate:0 -4px}}
 @keyframes qvmS1{0%,25%{opacity:0;translate:0 8px}28%,47%{opacity:1;translate:0 0}50%,100%{opacity:0;translate:0 -4px}}
 @keyframes qvmS2{0%,50%{opacity:0;translate:0 8px}53%,72%{opacity:1;translate:0 0}75%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmT0{0%{opacity:0;translate:0 8px}3%,30%{opacity:1;translate:0 0}33.3%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmT1{0%,33.3%{opacity:0;translate:0 8px}36%,63%{opacity:1;translate:0 0}66.6%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmT2{0%,66.6%{opacity:0;translate:0 8px}70%,97%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -4px}}
 @keyframes qvmS3{0%,75%{opacity:0;translate:0 8px}78%,97%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -4px}}
 /* v47: una tarjeta a la vez. Quieta, la foto queda en el mismo encuadre
    con que empieza y termina el recorrido, así no salta al cambiar. */
@@ -3184,7 +3187,9 @@ body.qv-lock{overflow:hidden}
 .qv-on .qvm::before,.pm-slide-tour .qvm::before{opacity:1}
 .qvm-sc{animation-duration:12s;animation-iteration-count:1;animation-fill-mode:both}
 .qv-on .qvm-s0,.pm-slide-tour.run .qvm-s0{animation-name:qvmS0}.qv-on .qvm-s1,.pm-slide-tour.run .qvm-s1{animation-name:qvmS1}
-.qv-on .qvm-s2,.pm-slide-tour.run .qvm-s2{animation-name:qvmS2}.qv-on .qvm-s3,.pm-slide-tour.run .qvm-s3{animation-name:qvmS3}
+.qv-on .qvm-s2,.pm-slide-tour.run .qvm-s2{animation-name:qvmS2}
+/* v48: en la tarjeta no va el precio (ya está debajo): 3 escenas de 4 s */
+.qv-on .qvm-3 .qvm-s0{animation-name:qvmT0}.qv-on .qvm-3 .qvm-s1{animation-name:qvmT1}.qv-on .qvm-3 .qvm-s2{animation-name:qvmT2}.qv-on .qvm-s3,.pm-slide-tour.run .qvm-s3{animation-name:qvmS3}
 @media (max-width:560px){
   .qvm-sc{left:9px;right:46px;bottom:10px;font-size:11.5px;line-height:1.25}
   .qvm-s0,.qvm-s1,.qvm-s2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
@@ -8428,8 +8433,9 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       '<span class="qvm-k">'+esc(D.precioLbl)+'</span><b>'+esc(D.precio)+'</b>'
     ];
   }
-  function mini(D,barras){
-    return escenas(D).map(function(s,k){return '<div class="qvm-sc qvm-s'+k+'">'+s+'</div>';}).join('');
+  function mini(D,n){
+    var e=escenas(D); if(n)e=e.slice(0,n);
+    return e.map(function(s,k){return '<div class="qvm-sc qvm-s'+k+'">'+s+'</div>';}).join('');
   }
 
   /* ---------- tarjetas ---------- */
@@ -8440,7 +8446,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       var ph=c.querySelector('.proj-photo'), D=datos(c); if(!ph||!D)return;
       var m=ph.querySelector('.qvm'), img=ph.querySelector('img');
       if(!m){m=document.createElement('div');m.className='qvm';m.setAttribute('aria-hidden','true');ph.insertBefore(m,img?img.nextSibling:null);}
-      m.innerHTML=mini(D,false);
+      m.className='qvm qvm-3'; m.innerHTML=mini(D,3);
     });
     /* si una estaba corriendo, vuelve a empezar con los textos nuevos */
     var cur=actual();

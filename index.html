@@ -3234,7 +3234,7 @@ body.qv-lock{overflow:hidden}
 </style>
 </head>
 <body>
-<a href="#scene-lifestyle" class="skip-link" data-i18n="skip_main">Saltar al contenido</a>
+<a href="#scene-hero" class="skip-link" data-i18n="skip_main">Saltar al contenido</a>
 <nav id="nav"><div class="nav-inner">
   <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="64" height="64"></div><span class="logo-tx">Next Level Demographic</span></a></div>
   <ul class="nav-c">
@@ -3279,7 +3279,19 @@ body.qv-lock{overflow:hidden}
 </div>
 <div id="top"></div>
 
-<!-- Portada retirada (nov 2026): el sitio abre directo en la comparativa de retiro. -->
+<section id="scene-hero" data-scene>
+  <div class="wrap">
+    <div class="hero-eb anim" data-i18n="hero_badge">Para la diáspora salvadoreña</div>
+    <h1 class="hero-h anim d1" data-i18n="hero_h1">Volvé. <br>El país <em>ya está listo.</em> <br>¿Y vos?</h1>
+    <p class="hero-sub anim d2" data-i18n="hero_sub">Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.</p>
+    <div class="intent-toggle anim d3" role="tablist" aria-label="Objetivo">
+      <button type="button" class="intent-btn active" data-intent="retiro" onclick="setIntent('retiro')" role="tab" aria-selected="true">🌴️ <span data-i18n="intent_retiro">Retiro</span></button>
+      <button type="button" class="intent-btn" data-intent="inversion" onclick="setIntent('inversion')" role="tab" aria-selected="false">📈️ <span data-i18n="intent_inversion">Inversión</span></button>
+      <button type="button" class="intent-btn" data-intent="segunda" onclick="setIntent('segunda')" role="tab" aria-selected="false">🏡️ <span data-i18n="intent_segunda">Segunda casa</span></button>
+    </div>
+    <div class="hero-btns anim d4"><a href="#contacto" class="btn-blue" data-i18n="hero_btn1">Ver cómo se ve tu retiro</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
+  </div>
+</section>
 
 <section id="scene-lifestyle" class="sec-chalk" data-scene>
   <div class="wrap">
@@ -8746,9 +8758,6 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
 .np-st{position:relative;background:#fff;border-radius:calc(var(--r-l) - 4px);overflow:hidden;height:clamp(340px,34vw,400px);color:#1D1D1F}
 @media(max-width:560px){.np-st{height:360px}}
 @media(min-width:760px){.nps-it{font-size:16px;padding:11px 16px}.nps-list{max-width:380px}.nps-tower{width:130px}.nps-phone{width:150px}}
-/* Sin portada: la comparativa abre el sitio y necesita aire bajo la barra fija. */
-#scene-lifestyle{padding-top:96px}
-@media(max-width:600px){#scene-lifestyle{padding-top:76px}}
 .np-st-top{position:absolute;top:14px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;z-index:2}
 .np-st-step{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
 .np-st-step i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#0071E3;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}

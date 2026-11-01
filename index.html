@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- NLD v47 · Proyectos: el recorrido corre en una tarjeta a la vez (las visibles, en orden); sin barras de progreso.
+<!-- NLD v48 · Proyectos: la ficha muestra solo el recorrido en bucle (sin fotos fijas, flechas ni indicadores)
+     y ya no tiene botón de vista rápida; la vista rápida queda solo en las tarjetas.
+     v47 · Proyectos: el recorrido corre en una tarjeta a la vez (las visibles, en orden); sin barras de progreso.
      v46 · Proyectos: el recorrido animado (foto en movimiento + ubicación, datos, amenidades y precio)
      corre en cada tarjeta como GIF y abre la ficha; al terminar pasa a las fotos.
      v45 · Proyectos: las tarjetas muestran la foto en movimiento (recorrido) y la ficha abre con el
@@ -3192,7 +3194,7 @@ body.qv-lock{overflow:hidden}
   .pm-slide-tour .qvm-s1 .qvm-k,.pm-slide-tour .qvm-s2 .qvm-k{display:block}
   .pm-slide-tour .qvm-sc{left:18px;right:18px;bottom:76px;font-size:17px}
 }
-.pm-slide-tour{overflow:hidden;cursor:pointer}
+.pm-slide-tour{overflow:hidden}
 .pm-tour-ly{position:absolute;inset:0;background-size:cover;background-position:center}
 .pm-slide-tour .qvm{z-index:1}
 .pm-slide-tour .qvm-sc{left:24px;right:24px;bottom:78px;font-size:clamp(17px,2.4vw,26px)}
@@ -8032,9 +8034,11 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       heroBtn.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();var c=cardActual();if(c)abrir(c,'ficha',heroBtn);});
       g.appendChild(heroBtn);
     }
-    heroBtn.hidden=!modo;
+    /* v48: la vista rápida vive solo en las tarjetas de Proyectos, no en su ficha */
+    var esProyecto=!!(card&&card.closest&&card.closest('#scene-projects'));
+    heroBtn.hidden=!modo||esProyecto;
     var nombre=document.getElementById('pmName');nombre=nombre?nombre.textContent:'';
-    if(modo)rotular(heroBtn,modo,nombre);
+    if(modo&&!esProyecto)rotular(heroBtn,modo,nombre);
     var vp=document.querySelector('#pmVideo .pm-vposter');
     if(vp)vp.setAttribute('aria-label',t('poster')+' '+nombre);
   }
@@ -8496,18 +8500,29 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     var sl=document.createElement('div'); sl.className='pm-slide pm-slide-tour';
     sl.setAttribute('role','img'); sl.setAttribute('aria-label',L[lang()]+': '+D.nombre);
     sl.innerHTML='<div class="pm-tour-ly" style="background-image:url(&quot;'+esc(String(fotos[0]).replace(/"/g,'%22'))+'&quot;)"></div><div class="qvm" aria-hidden="true">'+mini(D,false)+'</div>';
-    g.insertBefore(sl,g.querySelector('.pm-slide')||segs);
-    var n=g.querySelectorAll('.pm-slide').length, h='';
-    for(var k=0;k<n;k++)h+='<button class="pm-seg" onclick="pmGo('+k+')" aria-label="'+(k===0?L[lang()]:'Foto '+k)+'"><span class="pm-seg-fill"></span></button>';
-    segs.innerHTML=h; segs.style.display='';
-    [].forEach.call(g.querySelectorAll('.pm-gnav'),function(b){b.style.display='';});
-    pmG.n=n; tour=true;
-    pmGo(0);
+    /* v48: en la ficha de Proyectos solo queda el recorrido, en bucle.
+       Las fotos fijas, las flechas y los indicadores se quitan. */
+    [].forEach.call(g.querySelectorAll('.pm-slide'),function(s){s.remove();});
+    g.insertBefore(sl,segs);
+    segs.innerHTML=''; segs.style.display='none';
+    [].forEach.call(g.querySelectorAll('.pm-gnav'),function(b){b.style.display='none';});
+    clearTimeout(pmG.t); pmG.i=0; pmG.n=1; tour=true;
+    pmGo(0); bucle();
+  }
+  var loopT=null;
+  function bucle(){
+    clearInterval(loopT);
+    if(reduce)return;
+    loopT=setInterval(function(){
+      var sl=document.querySelector('#pmGallery .pm-slide-tour');
+      if(!sl){clearInterval(loopT);return;}
+      sl.classList.remove('run'); void sl.offsetWidth; sl.classList.add('run');
+    },TOUR_MS+400);
   }
   if(typeof window._pmArmarGaleria==='function'){
     var _arm=window._pmArmarGaleria;
     window._pmArmarGaleria=function(emoji,fotos){
-      tour=false; pmG.dur=5000;
+      tour=false; pmG.dur=5000; clearInterval(loopT);
       var r=_arm.apply(this,arguments);
       try{ponerRecorrido(fotos);}catch(e){}
       return r;
@@ -8527,12 +8542,6 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       return _go.apply(this,arguments);
     };
   }
-  var g=document.getElementById('pmGallery');
-  if(g)g.addEventListener('click',function(e){
-    if(!e.target.closest('.pm-slide-tour')||e.target.closest('button,a'))return;
-    var c=card();
-    if(c&&window.NLDQuickView)window.NLDQuickView.abrir(c.getAttribute('data-pname'));
-  });
 
   if(typeof window.applyLang==='function'){
     var _a=window.applyLang;

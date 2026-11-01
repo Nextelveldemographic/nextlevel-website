@@ -99,9 +99,10 @@ html.pres .how-sticky{position:static}
 .pbar{position:fixed;z-index:55;left:50%;bottom:max(16px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   display:flex;align-items:center;gap:2px;padding:4px;border-radius:var(--r-pill);
   background:var(--glass-a);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);
-  box-shadow:0 0 0 1px var(--glass-edge),0 10px 30px var(--shade);color:var(--fg);transition:opacity .5s var(--ease)}
-.pbar.idle{opacity:0}
-.pbar:hover{opacity:1}
+  box-shadow:0 0 0 1px var(--glass-edge),0 10px 30px var(--shade);color:var(--fg);transition:opacity .3s var(--ease)}
+.pbar.idle{opacity:0;pointer-events:none}
+@media (hover:hover) and (pointer:fine){.pbar:hover{opacity:1;pointer-events:auto}}
+html.pres-reset .slide.on .rv,html.pres-reset .slide.on :is(.hero-eb,.hero-h,.hero-sub,.hero-btns,.hero-device){transition:none!important}
 .pbar button{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;color:inherit}
 .pbar button:hover{background:var(--hover)}
 .pbar svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
@@ -1239,7 +1240,6 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
       <svg class="ic-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" aria-hidden="true"><path d="M20.4 14.3A8.4 8.4 0 0 1 9.7 3.6a8.4 8.4 0 1 0 10.7 10.7z"/></svg>
       <svg class="ic-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5.35 5.35l1.5 1.5M17.15 17.15l1.5 1.5M5.35 18.65l1.5-1.5M17.15 6.85l1.5-1.5"/></svg>
     </button>
-    <a class="nav-cta" data-cta href="https://wa.me/50362073860" target="_blank" rel="noopener">Agendar</a>
   </div>
 </div><div class="prog" aria-hidden="true"></div></nav>
 
@@ -2601,6 +2601,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     x.querySelectorAll('.phone.anim').forEach(function(p){p.classList.add('go');});
     setTimeout(function(){x.style.transitionDelay='';},1600);
   }
+  window.__nldReveal=reveal;
 
   /* ===== Cómo funciona: el celular fijo cambia con cada paso ===== */
   var how=document.querySelector('.how'), mqWide=null, steps=[], items=[];
@@ -3703,16 +3704,39 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     slides.forEach(function(w){var c=getComputedStyle(w.firstElementChild).backgroundColor;if(!c||c==='transparent'||/rgba\(0, 0, 0, 0\)/.test(c))c=body;w.style.background=c;});
   }
   function fit(){
-    var vh=window.innerHeight||800, nh=nav?nav.offsetHeight:48, avail=vh-nh-12;
+    var vh=window.innerHeight||800, nh=nav?nav.offsetHeight:48, avail=vh-nh-12-56;
     slides.forEach(function(w){
       var s=w.firstElementChild;s.style.transform='none';
       var f=Math.min(1,avail/Math.max(1,s.offsetHeight));
-      s.style.transform='scale('+f.toFixed(4)+')';w.style.paddingTop=nh+'px';
+      s.style.transform='scale('+f.toFixed(4)+')';w.style.paddingTop=nh+'px';w.style.paddingBottom='56px';
     });
   }
   function paintStory(){sl.forEach(function(x,i){x.classList.toggle('pon',i<sk);});}
   function paintHow(){hs.forEach(function(x,i){x.classList.toggle('on',i===hk);});hi.forEach(function(x,i){x.classList.toggle('on',i===hk);});}
-  function poke(){if(!bar)return;bar.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(function(){if(bar)bar.classList.add('idle');},2600);}
+  function poke(){if(!bar)return;bar.classList.remove('idle');clearTimeout(idleT);idleT=setTimeout(function(){if(bar)bar.classList.add('idle');},1100);}
+  var reduceM=mq('(prefers-reduced-motion: reduce)'), animT=[];
+  function animSlide(w,delay){
+    if(reduceM||!w)return;
+    var s=w.firstElementChild;if(!s)return;
+    animT.forEach(clearTimeout);animT=[];
+    var hero=[].slice.call(s.querySelectorAll('.hero-eb,.hero-h,.hero-sub,.hero-btns,.hero-device'));
+    var rv=[].slice.call(s.querySelectorAll('.rv'));
+    var ph=[].slice.call(s.querySelectorAll('.phone.anim'));
+    var els=hero.concat(rv);
+    if(!els.length)return;
+    d.classList.add('pres-reset');
+    els.forEach(function(x){x.classList.remove('in');x.style.transitionDelay='';});
+    ph.forEach(function(p){p.classList.remove('go');});
+    void s.offsetHeight;
+    d.classList.remove('pres-reset');
+    els.forEach(function(x,i){
+      x.style.transitionDelay=(Math.min(i,8)*0.07).toFixed(2)+'s';
+      animT.push(setTimeout(function(){
+        if(window.__nldReveal&&x.classList.contains('rv'))window.__nldReveal(x);
+        else{x.classList.add('in');setTimeout(function(){x.style.transitionDelay='';},1600);}
+      },delay));
+    });
+  }
   function go(i,dir){
     i=Math.max(0,Math.min(slides.length-1,i));k=i;
     d.style.setProperty('--k',k);
@@ -3720,6 +3744,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     var s=slides[k].firstElementChild;
     if(s===story&&sl.length){sk=dir<0?sl.length:1;paintStory();}
     if(how&&s.contains(how)&&hs.length){hk=dir<0?hs.length-1:0;paintHow();}
+    if(dir!==undefined&&slides[k])animSlide(slides[k],dir===0?60:320);
     if(cnt)cnt.textContent=(k+1)+' / '+slides.length;
     if(prog)prog.style.transform='scaleX('+(slides.length>1?k/(slides.length-1):1)+')';
     if(nav)nav.classList.toggle('on-band',!!(s.classList.contains('story')||s.classList.contains('close')));
@@ -3749,7 +3774,8 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     var i0=startIndex();on=true;
     build();d.classList.add('pres','pres-snap');paintBg();fit();go(i0,0);
     requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.remove('pres-snap');});});
-    wantFs=!standalone&&!fsEl()&&req();
+    var touch=mq('(pointer: coarse)')||(navigator.maxTouchPoints>1);
+    wantFs=!standalone&&!touch&&!fsEl()&&req();
     paintBtn();
   }
   function exit(){
@@ -3808,4 +3834,5 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   paintBtn();
 })();
 </script>
+
 </body></html>

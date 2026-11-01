@@ -1,0 +1,1257 @@
+<!doctype html><html><head><meta charset=utf-8><meta name="robots" content="noindex,nofollow"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Carisma</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+/* Layout: una sola columna centrada que crece en iPad y navegador; la escena manda en el reproductor. */
+:root{
+  --bg:#F5F5F7;--card:#FFFFFF;--ink:#1D1D1F;--gray:#6E6E73;--mute:#86868B;--line:#D2D2D7;--line2:#E5E5EA;
+  --blue:#0071E3;--tint:#E8F1FE;--oth:#6E6E73;--ex:#C7C7CC;--hair:#3A3A3C;--face:#FFFFFF;--prop:#1D1D1F;--stage:#FFFFFF;
+  --font:Arial,Helvetica,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#000000;--card:#1C1C1E;--ink:#F5F5F7;--gray:#A1A1A6;--mute:#86868B;--line:#3A3A3C;--line2:#2C2C2E;
+  --blue:#2997FF;--tint:#0A2540;--oth:#A1A1A6;--ex:#48484A;--hair:#E5E5EA;--face:#1C1C1E;--prop:#F5F5F7;--stage:#111113;color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000;--card:#1C1C1E;--ink:#F5F5F7;--gray:#A1A1A6;--mute:#86868B;--line:#3A3A3C;--line2:#2C2C2E;
+  --blue:#2997FF;--tint:#0A2540;--oth:#A1A1A6;--ex:#48484A;--hair:#E5E5EA;--face:#1C1C1E;--prop:#F5F5F7;--stage:#111113;color-scheme:dark}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+html,body{min-height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.45;-webkit-text-size-adjust:100%}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+button,textarea,input{font:inherit;color:inherit}
+button{cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible,textarea:focus-visible,[tabindex]:focus-visible{outline:3px solid var(--blue);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;padding-block:18px 32px;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+:root[data-view="tablet"] .wrap{max-width:780px;padding-block:26px 40px;padding-left:max(32px,env(safe-area-inset-left,0px));padding-right:max(32px,env(safe-area-inset-right,0px))}
+:root[data-view="desktop"] .wrap{max-width:880px;padding-block:32px 48px;padding-left:max(40px,env(safe-area-inset-left,0px));padding-right:max(40px,env(safe-area-inset-right,0px))}
+h1{font-size:30px;line-height:1.15;font-weight:700;letter-spacing:-.01em;text-wrap:balance}
+:root[data-view="tablet"] h1,:root[data-view="desktop"] h1{font-size:38px}
+h2{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray);margin:28px 0 12px}
+.eyebrow{color:var(--blue);font-weight:700;font-size:14px;margin-bottom:6px}
+.lead{color:var(--gray);margin-top:10px;max-width:60ch}
+.hdr{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:22px}
+.brand{font-weight:700;font-size:17px;letter-spacing:-.01em}
+.ctl{display:flex;gap:8px}
+.seg{display:flex;background:var(--line2);border-radius:980px;padding:3px}
+.seg button{border:0;background:none;border-radius:980px;padding:6px 11px;color:var(--gray);line-height:0;display:grid;place-items:center;transition:background .25s,color .25s}
+.seg button svg{width:17px;height:17px}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg.txt button{line-height:1.2;font-size:14px;padding:8px 14px}
+.seg.txt button.on{font-weight:700}
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:13px;color:var(--gray)}
+.legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
+.lvls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.lvl{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:12px;text-align:left;transition:border-color .2s,background .2s}
+.lvl b{display:block;font-size:15px}
+.lvl span{display:block;font-size:12px;color:var(--gray);margin-top:3px;line-height:1.3}
+.lvl.on{border-color:var(--blue);background:var(--tint)}
+.lvl.on b{color:var(--blue)}
+.mods{display:grid;gap:10px}
+.mod{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px 16px;text-align:left;width:100%;transition:transform .18s,box-shadow .25s}
+.mod:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.07)}
+.num{flex:none;width:36px;height:36px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px}
+.mod .t{flex:1;min-width:0}
+.mod b{display:block;font-size:16px}
+.mod .t span{display:block;font-size:13px;color:var(--gray)}
+.pips{display:flex;gap:4px;flex:none}
+.pips i{width:8px;height:8px;border-radius:50%;background:var(--line2);border:1px solid var(--line)}
+.pips i.r{background:var(--blue);border-color:var(--blue)}
+.pips i.cur{box-shadow:0 0 0 2px var(--tint)}
+.list{display:grid;gap:10px}
+.story{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:16px;text-align:left;width:100%}
+.story .t{flex:1;min-width:0}
+.story b{display:block;font-size:17px}
+.story .ctx{font-size:13px;color:var(--gray);margin-top:2px}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font-size:12px;border:1px solid var(--line);border-radius:980px;padding:3px 9px;color:var(--gray);background:var(--card)}
+.chip.b{color:var(--blue);border-color:var(--blue);background:var(--tint);font-weight:700}
+.chipbtn{border:1.5px solid var(--line);background:var(--card);border-radius:980px;padding:8px 13px;font-size:14px}
+.chipbtn.on{border-color:var(--blue);background:var(--tint);color:var(--blue);font-weight:700}
+.ai{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:16px;margin-top:10px}
+.ai p{color:var(--gray);font-size:14px;margin-top:4px}
+textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--card);resize:vertical;margin-top:10px}
+.cta{width:100%;border:0;border-radius:980px;padding:15px;font-weight:700;font-size:17px;background:var(--blue);color:#fff}
+.cta[disabled]{background:var(--line);color:var(--gray);cursor:default}
+.ghost{width:100%;border:1.5px solid var(--line);border-radius:980px;padding:14px;font-weight:700;background:none}
+.row2{display:grid;grid-template-columns:1fr 2fr;gap:10px}
+.top{display:flex;align-items:center;gap:12px}
+.x{background:none;border:0;font-size:22px;color:var(--gray);padding:4px 6px;line-height:1;flex:none}
+.ib{background:none;border:0;color:var(--gray);padding:6px;line-height:0;border-radius:10px;flex:none}
+.ib svg{width:22px;height:22px}
+.ib.on{color:var(--blue);background:var(--tint)}
+.ttl{flex:1;min-width:0;font-size:14px;color:var(--gray);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.track{height:4px;background:var(--line2);border-radius:4px;overflow:hidden;margin-top:10px}
+.track i{display:block;height:100%;background:var(--blue);border-radius:4px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.cast{display:grid;gap:10px;margin-top:18px}
+.who{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:12px 14px}
+.who .dt{flex:none;width:12px;height:12px;border-radius:50%}
+.who b{display:block}
+.who span{font-size:13px;color:var(--gray)}
+.intro{font-size:18px;line-height:1.5;margin-top:16px;max-width:60ch}
+/* escena */
+.stagebox{margin-top:14px;background:var(--stage);border:1px solid var(--line2);border-radius:20px;overflow:hidden;cursor:pointer;position:relative}
+.stagebox svg{display:block;width:100%;height:auto}
+.nv{display:flex;gap:10px;align-items:flex-start;padding:10px 14px 12px;border-top:1px solid var(--line2);font-size:14px;line-height:1.4;min-height:44px}
+.nv .lab{flex:none;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--blue);padding-top:2px}
+.nv.empty{color:var(--mute)}
+.fig,.fig g{transition:transform .7s cubic-bezier(.3,.7,.2,1),opacity .5s}
+.fig .mouth{transition:d .4s}
+.hlr{fill:var(--blue);fill-opacity:.08;stroke:var(--blue);stroke-width:1.6;stroke-dasharray:4 3;animation:hlp 1.8s ease-in-out infinite}
+.dline{stroke:var(--blue);stroke-width:1.6;stroke-dasharray:4 3;animation:hlp 1.8s ease-in-out infinite}
+@keyframes hlp{0%,100%{opacity:.45}50%{opacity:1}}
+.nod{animation:nod .9s ease-in-out}
+@keyframes nod{0%,100%{transform:rotate(0)}25%{transform:rotate(9deg)}50%{transform:rotate(0)}75%{transform:rotate(7deg)}}
+.shk{animation:shk .9s ease-in-out}
+@keyframes shk{0%,100%{transform:rotate(0)}25%{transform:rotate(-7deg)}50%{transform:rotate(6deg)}75%{transform:rotate(-4deg)}}
+.bnc{animation:bnc .8s ease-in-out}
+@keyframes bnc{0%,100%{transform:translateY(0)}25%{transform:translateY(-4px)}50%{transform:translateY(0)}75%{transform:translateY(-3px)}}
+/* chat */
+.chat{margin-top:14px;background:var(--stage);border:1px solid var(--line2);border-radius:20px;overflow:hidden}
+.chead{display:flex;gap:10px;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line2)}
+.av{width:34px;height:34px;border-radius:50%;background:var(--oth);color:var(--face);display:grid;place-items:center;font-weight:700}
+.chead b{display:block;font-size:15px}.chead span{font-size:12px;color:var(--gray)}
+.cbody{display:flex;flex-direction:column;gap:6px;padding:14px 12px 16px;min-height:220px;max-height:46vh;overflow-y:auto}
+.msg{max-width:80%;padding:9px 13px 7px;border-radius:18px;font-size:15px;line-height:1.35;position:relative;transition:box-shadow .3s}
+.msg.o{align-self:flex-start;background:var(--card);border:1px solid var(--line2);border-bottom-left-radius:6px}
+.msg.m{align-self:flex-end;background:var(--blue);color:#fff;border-bottom-right-radius:6px}
+.msg .ts{display:block;font-size:11px;opacity:.7;margin-top:3px;text-align:right}
+.msg.o .ts{text-align:left}
+.msg.old{opacity:.72}
+.msg.hi{box-shadow:0 0 0 2px var(--blue)}
+.ts.hi{opacity:1;font-weight:700;color:var(--blue)}
+.msg.m .ts.hi{color:#fff;text-decoration:underline}
+.stt{font-size:11px;color:var(--mute);align-self:flex-end;margin-top:-2px}
+.div{align-self:center;font-size:12px;color:var(--gray);background:var(--line2);border-radius:980px;padding:4px 12px;margin:6px 0}
+.typing{display:inline-flex;gap:4px}.typing i{width:7px;height:7px;border-radius:50%;background:var(--mute);animation:dot 1s infinite}.typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,100%{opacity:.3;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
+.pop{animation:pop .35s cubic-bezier(.2,.8,.2,1)}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* línea */
+.beat{margin-top:14px;background:var(--card);border:1px solid var(--line2);border-radius:20px;padding:16px 18px}
+.spk{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--gray)}
+.spk i{width:10px;height:10px;border-radius:50%}
+.beat.m .spk{color:var(--blue)}
+.line{font-size:20px;line-height:1.4;font-weight:700;margin-top:6px}
+:root[data-view="tablet"] .line,:root[data-view="desktop"] .line{font-size:23px}
+.beat.n .line{font-weight:400;font-style:italic;color:var(--gray);font-size:17px}
+.note{margin-top:12px;padding-top:12px;border-top:1px solid var(--line2)}
+.lab{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--gray)}
+.note.mv .lab{color:var(--blue)}
+.note b{display:block;font-size:16px;margin-top:3px}
+.note p{color:var(--ink);font-size:15px;margin-top:3px;max-width:62ch}
+.nav{display:grid;grid-template-columns:1fr 2fr;gap:10px;margin-top:16px}
+.grow{flex:1}
+.pctl{display:flex;justify-content:center;align-items:center;gap:22px;margin-top:14px}
+.playb{width:64px;height:64px;border-radius:50%;border:0;background:var(--blue);color:#fff;display:grid;place-items:center}
+.playb svg{width:28px;height:28px}
+.ib2{width:48px;height:48px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center}
+.ib2 svg{width:20px;height:20px}
+.popts{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:16px}
+.seg.txt.sm button{font-size:13px;padding:6px 11px}
+.chipbtn.sm{font-size:13px;padding:6px 12px}
+.popts .ib{padding:7px}
+.popts .ib svg{width:20px;height:20px}
+.beat.think .line{color:var(--blue)}
+.hint{color:var(--gray);font-size:14px;margin-top:4px}
+.tbar{height:4px;background:var(--line2);border-radius:4px;overflow:hidden;margin-top:12px}
+.tbar i{display:block;height:100%;width:0;background:var(--blue);animation:tfill linear forwards}
+@keyframes tfill{to{width:100%}}
+.auto{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:22px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:14px 16px;font-size:15px}
+.auto .cd{font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums;flex:none}
+.playall{display:flex;gap:14px;align-items:center;width:100%;text-align:left;margin-top:18px;background:var(--tint);border:0;border-radius:18px;padding:14px 16px;color:var(--ink)}
+.playall .pi{flex:none;width:40px;height:40px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center}
+.playall .pi svg{width:18px;height:18px}
+.playall b{display:block;font-size:16px}
+.playall .t span{display:block;font-size:13px;color:var(--gray)}
+/* resultado */
+.win{margin-top:8px;font-size:20px;line-height:1.4}
+.keys{display:grid;gap:10px;margin-top:6px}
+.key{display:flex;gap:12px;align-items:flex-start;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:14px}
+.key .num{width:30px;height:30px;font-size:13px}
+.key .m{font-size:13px;color:var(--gray)}
+.key b{display:block;font-size:16px;margin-top:2px}
+.quote{background:var(--tint);border-radius:20px;padding:20px;font-size:20px;font-weight:700;line-height:1.4;color:var(--ink)}
+.btns{display:grid;gap:10px;margin-top:22px}
+/* guion */
+.sc{display:grid;gap:0;margin-top:10px}
+.sl{padding:14px 0;border-top:1px solid var(--line2)}
+.sl:first-child{border-top:0}
+.sl .who2{font-size:12px;font-weight:700;color:var(--gray)}
+.sl.m .who2{color:var(--blue)}
+.sl .tx{font-size:17px;margin-top:3px}
+.sl.n .tx{font-style:italic;color:var(--gray)}
+.sl .an{font-size:14px;color:var(--gray);margin-top:6px;padding-left:12px;border-left:2px solid var(--line)}
+.sl.m .an{border-left-color:var(--blue)}
+.sl .an b{color:var(--ink)}
+.empty{color:var(--gray);font-size:14px;padding:6px 0}
+.load{display:flex;gap:10px;align-items:center;color:var(--gray);margin-top:12px;font-size:14px}
+.err{color:var(--gray);font-size:14px;margin-top:10px}
+.in{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+button:active:not([disabled]){transform:scale(.98)}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+@media (max-width:380px){.lvl span{display:none}h1{font-size:26px}.line{font-size:18px}}
+</style>
+
+<div id="app" class="wrap"></div>
+<script>
+/* ================= CARISMA · motor ================= */
+const M=[
+ {id:"ven",n:"Vender",d:"Ventas difíciles que Max cierra"},
+ {id:"neg",n:"Negociar",d:"Comisión, plazos y ultimátums"},
+ {id:"per",n:"Persuadir",d:"Mover a quien no se quería mover"},
+ {id:"des",n:"Destilar",d:"Una frase, en el momento justo"},
+ {id:"act",n:"Actitud",d:"Calma frente al desdén y la presión"},
+ {id:"con",n:"Confrontar",d:"Decir lo difícil sin romper nada"},
+ {id:"sed",n:"Seducir",d:"Interés, juego y respeto"},
+ {id:"sen",n:"Señales",d:"Chats, emojis y tiempos"},
+ {id:"int",n:"Intenciones",d:"Saber cuándo quiere negociar"},
+ {id:"nov",n:"No verbal",d:"Cuerpo, mirada, distancia y pies"},
+ {id:"eve",n:"Eventos",d:"Bodas, coworking, ferias, apps y citas"}
+];
+const LV=[null,
+ {n:"Exigente",d:"Hay resistencia, pero la puerta está abierta"},
+ {n:"Difícil",d:"Desconfianza, objeciones y un mal momento"},
+ {n:"Extremo",d:"Todo en contra al inicio: ataque, prisa o rechazo"}];
+const CTX=[
+ {id:"boda",n:"Boda",mode:"p",bg:"boda"},
+ {id:"cowork",n:"Coworking",mode:"p",bg:"cowork"},
+ {id:"evento",n:"Evento o feria",mode:"p",bg:"coctel"},
+ {id:"app",n:"App de citas",mode:"c"},
+ {id:"cita",n:"Cita",mode:"p",bg:"cita"},
+ {id:"oficina",n:"Reunión de trabajo",mode:"p",bg:"oficina"},
+ {id:"wa",n:"WhatsApp",mode:"c"},
+ {id:"video",n:"Videollamada",mode:"p",bg:"video"},
+ {id:"cafe",n:"Café",mode:"p",bg:"cafe"}
+];
+const H=[];function S(o){H.push(o)}
+const MOD=id=>M.find(m=>m.id===id)||M[0];
+
+/* ---------- estado ---------- */
+const KEY="carisma_v1";
+function loadLocal(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
+let st=Object.assign({theme:"light",view:"mobile",lvl:1,read:{},gen:[],speed:"normal",voice:true,think:false},loadLocal());
+function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
+let DB=null,UID=null,G=[],SM=null,SCR="home",CUR=null,CMOD=null,GEN=null,GENCTL=null;
+
+/* ---------- utilidades ---------- */
+const $=s=>document.querySelector(s);
+const app=()=>document.getElementById("app");
+function esc(t){return String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function str(v,n){return typeof v==="string"?v.trim().slice(0,n):""}
+const SV='fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"';
+const IC={
+ light:`<svg viewBox="0 0 24 24" ${SV}><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M2.5 12h2M19.5 12h2M5.3 5.3l1.4 1.4M17.3 17.3l1.4 1.4M5.3 18.7l1.4-1.4M17.3 6.7l1.4-1.4"/></svg>`,
+ dark:`<svg viewBox="0 0 24 24" ${SV}><path d="M19.5 14.6A8 8 0 1 1 9.4 4.5a6.4 6.4 0 0 0 10.1 10.1z"/></svg>`,
+ auto:`<svg viewBox="0 0 24 24" ${SV}><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor" stroke="none"/></svg>`,
+ mobile:`<svg viewBox="0 0 24 24" ${SV}><rect x="7" y="2.5" width="10" height="19" rx="2.6"/><path d="M11 18.6h2"/></svg>`,
+ tablet:`<svg viewBox="0 0 24 24" ${SV}><rect x="3.5" y="3" width="17" height="18" rx="2.6"/><path d="M11 18.1h2"/></svg>`,
+ desktop:`<svg viewBox="0 0 24 24" ${SV}><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M8.5 20.5h7M12 16.5v4"/></svg>`,
+ script:`<svg viewBox="0 0 24 24" ${SV}><path d="M5 6h14M5 10h14M5 14h9M5 18h6"/></svg>`,
+ chat:`<svg viewBox="0 0 24 24" ${SV}><path d="M4 5h16v11H9l-5 4z"/></svg>`,
+ play:`<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg>`,
+ pause:`<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/><rect x="13.5" y="5" width="4" height="14" rx="1.2" fill="currentColor"/></svg>`,
+ prev:`<svg viewBox="0 0 24 24" ${SV}><path d="M6 5v14M18 6l-9 6 9 6z"/></svg>`,
+ next:`<svg viewBox="0 0 24 24" ${SV}><path d="M18 5v14M6 6l9 6-9 6z"/></svg>`,
+ voice:`<svg viewBox="0 0 24 24" ${SV}><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>`,
+ mute:`<svg viewBox="0 0 24 24" ${SV}><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>`,
+ person:`<svg viewBox="0 0 24 24" ${SV}><circle cx="8" cy="7" r="2.6"/><circle cx="16" cy="7" r="2.6"/><path d="M4 20v-5a4 4 0 0 1 8 0v5M12 20v-5a4 4 0 0 1 8 0v5"/></svg>`
+};
+const LB={light:"Tema claro",dark:"Tema oscuro",auto:"Tema automático",mobile:"Vista móvil",tablet:"Vista iPad",desktop:"Vista navegador"};
+function applyTheme(){const r=document.documentElement;if(st.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",st.theme)}
+function applyView(){document.documentElement.setAttribute("data-view",st.view||"mobile")}
+function setTheme(t){st.theme=t;saveLocal();applyTheme();document.querySelectorAll(".tseg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
+function setView(v){st.view=v;saveLocal();applyView();document.querySelectorAll(".vseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===v))}
+function ctlHTML(){return `<div class="ctl"><div class="seg tseg" role="group" aria-label="Tema">${["light","dark","auto"].map(t=>`<button type="button" data-t="${t}" class="${st.theme===t?"on":""}" aria-label="${LB[t]}" title="${LB[t]}" onclick="setTheme('${t}')">${IC[t]}</button>`).join("")}</div><div class="seg vseg" role="group" aria-label="Vista">${["mobile","tablet","desktop"].map(v=>`<button type="button" data-v="${v}" class="${st.view===v?"on":""}" aria-label="${LB[v]}" title="${LB[v]}" onclick="setView('${v}')">${IC[v]}</button>`).join("")}</div></div>`}
+function anim(){[...app().children].forEach((el,i)=>{el.classList.remove("in");void el.offsetWidth;el.style.animationDelay=(i*35)+"ms";el.classList.add("in")})}
+function allStories(){return H.concat(G)}
+function byId(id){return allStories().find(s=>s.id===id)}
+function storiesOf(mid){return allStories().filter(s=>s.m===mid)}
+function isRead(id){return !!st.read[id]}
+
+/* ---------- inicio ---------- */
+function home(){
+  SCR="home";CUR=null;CMOD=null;
+  app().innerHTML=`<div class="hdr"><span class="brand">Carisma</span>${ctlHTML()}</div>
+  <p class="eyebrow">Max siempre gana</p>
+  <h1>Aprendé qué decir, cuándo y por qué.</h1>
+  <p class="lead">Historias de conversaciones difíciles que terminan bien. En cada línea ves qué hizo Max, en qué momento y por qué funcionó.</p>
+  <h2>Nivel de dificultad</h2>
+  <div class="lvls">${[1,2,3].map(l=>`<button class="lvl ${st.lvl===l?"on":""}" onclick="setLvl(${l})"><b>${LV[l].n}</b><span>${LV[l].d}</span></button>`).join("")}</div>
+  <div class="legend"><span><i style="background:var(--blue)"></i>Max</span><span><i style="background:var(--oth)"></i>La otra persona</span><span><i style="border:1.5px dashed var(--blue);width:11px;height:11px"></i>Dónde mirar</span></div>
+  <button class="playall" onclick="playLevel()"><span class="pi">${IC.play}</span><span class="t"><b>Reproducir todo el nivel ${LV[st.lvl].n.toLowerCase()}</b><span>Las 11 historias seguidas, en vivo</span></span></button>
+  <h2>Módulos</h2>
+  <div class="mods">${M.map((m,i)=>{const ss=storiesOf(m.id);const mine=ss.filter(s=>s.gen).length;
+    const pips=[1,2,3].map(l=>{const L=ss.filter(s=>s.l===l&&!s.gen);const r=L.length&&L.every(s=>isRead(s.id));return `<i class="${r?"r":""} ${l===st.lvl?"cur":""}" title="${LV[l].n}"></i>`}).join("");
+    return `<button class="mod" onclick="modPage('${m.id}')"><div class="num">${i+1}</div><div class="t"><b>${esc(m.n)}</b><span>${esc(m.d)}${mine?` · ${mine} tuya${mine>1?"s":""}`:""}</span></div><div class="pips" aria-label="Leídas por nivel">${pips}</div></button>`}).join("")}</div>`;
+  anim();window.scrollTo(0,0);
+}
+function setLvl(l){st.lvl=l;saveLocal();if(SCR==="mod")modPage(CMOD,true);else home()}
+
+/* ---------- módulo ---------- */
+function storyCard(s){
+  return `<button class="story" onclick="openStory('${s.id}')"><div class="ib" style="padding:2px">${s.mode==="c"?IC.chat:IC.person}</div><div class="t"><b>${esc(s.t)}</b><div class="ctx">${esc(s.ctx)}</div><div class="chips"><span class="chip ${s.l===st.lvl?"b":""}">${LV[s.l].n}</span>${s.mode==="c"?`<span class="chip">Chat</span>`:`<span class="chip">En persona</span>`}${s.gen?`<span class="chip">Creada con IA</span>`:""}${isRead(s.id)?`<span class="chip">Leída</span>`:""}</div></div></button>`;
+}
+function modPage(mid,keep){
+  SCR="mod";CMOD=mid;CUR=null;const m=MOD(mid);const ss=storiesOf(mid);
+  const here=ss.filter(s=>s.l===st.lvl).sort((a,b)=>(a.gen?1:0)-(b.gen?1:0));
+  const rest=ss.filter(s=>s.l!==st.lvl).sort((a,b)=>a.l-b.l||(a.gen?1:0)-(b.gen?1:0));
+  app().innerHTML=`<div class="top"><button class="x" aria-label="Volver" onclick="home()">✕</button><span class="ttl">Carisma</span></div>
+  <p class="eyebrow" style="margin-top:16px">${esc(m.n)}</p><h1>${esc(m.d)}</h1>
+  <div class="seg txt" role="group" aria-label="Nivel" style="margin-top:18px;align-self:flex-start">${[1,2,3].map(l=>`<button class="${st.lvl===l?"on":""}" onclick="setLvl(${l})">${LV[l].n}</button>`).join("")}</div>
+  <button class="playall" onclick="playModule('${mid}')"><span class="pi">${IC.play}</span><span class="t"><b>Reproducir el módulo completo</b><span>${ss.length} historia${ss.length>1?"s":""} seguidas, de menor a mayor dificultad</span></span></button>
+  <h2>${LV[st.lvl].n}</h2>
+  <div class="list">${here.map(storyCard).join("")||`<p class="empty">Todavía no hay historias de este nivel.</p>`}</div>
+  ${rest.length?`<h2>Otros niveles</h2><div class="list">${rest.map(storyCard).join("")}</div>`:""}
+  <h2>Historia nueva</h2>
+  <div class="ai" id="aibox">${aiBox()}</div>`;
+  if(!keep)anim();if(!keep)window.scrollTo(0,0);
+}
+let GSEL={ctx:"evento",extra:""};
+function aiBox(){
+  if(GEN)return `<b>Escribiendo una historia de ${esc(MOD(CMOD).n.toLowerCase())}, nivel ${LV[st.lvl].n.toLowerCase()}</b><div class="load"><span class="typing"><i></i><i></i><i></i></span>Suele tardar entre 30 segundos y un minuto.</div><button class="ghost" style="margin-top:12px" onclick="stopGen()">Detener</button>`;
+  if(!SM)return `<b>Crear con IA</b><p>Disponible cuando abrís Carisma desde Claude. Escribe una historia nueva de este módulo, en el nivel que elegiste y en el lugar que quieras.</p>`;
+  return `<b>Crear con IA</b><p>Una historia nueva de ${esc(MOD(CMOD).n.toLowerCase())}, nivel ${LV[st.lvl].n.toLowerCase()}. Elegí dónde pasa.</p>
+  <div class="chips" style="margin-top:12px">${CTX.map(c=>`<button class="chipbtn ${GSEL.ctx===c.id?"on":""}" onclick="GSEL.ctx='${c.id}';document.getElementById('aibox').innerHTML=aiBox()">${esc(c.n)}</button>`).join("")}</div>
+  <textarea id="gx" placeholder="Opcional: la situación que querés ver. Ej.: un desarrollador que me deja en visto después de la propuesta." oninput="GSEL.extra=this.value">${esc(GSEL.extra)}</textarea>
+  <button class="cta" style="margin-top:12px" onclick="genStory()">Escribir historia</button>
+  <p class="err" id="gerr" hidden></p>`;
+}
+
+/* ---------- escena: figuras ---------- */
+const POS={far:[82,278],mid:[118,242],near:[140,220],close:[146,214]};
+const ARMS={relax:[[-6,-4],[8,4]],cross:[[18,-112],[20,-108]],palms:[[-40,-30],[-22,-35]],reach:[[-75,-5],[8,4]],phone:[[10,-115],[8,4]],pocket:[[2,0],[-2,0]],glass:[[6,-100],[8,4]],card:[[-45,-35],[8,4]],think:[[-25,-140],[8,4]],watch:[[8,-108],[8,4]]};
+const GAZE={look:[0,0],away:[-13,0],down:[-1,3],up:[0,-3]};
+const MOUTH={neutral:"M7 -112 L13 -112",smile:"M7 -113 Q10 -109.5 13 -113",frown:"M7 -110.5 Q10 -113.5 13 -110.5",laugh:"M7 -113.5 Q10 -107 13 -113.5 Z"};
+const REG={brazos:[8,-80,18],manos:[22,-78,16],pies:[4,-3,15],cara:[6,-118,18],mirada:[6,-118,18],torso:[0,-78,30]};
+const TOK=new Set(Object.keys(ARMS).concat(Object.keys(GAZE),Object.keys(MOUTH),["lean+","lean-","lean0","feet+","feet-","tilt","tilt0","turn","face","hide","show","nod","shake"]));
+const HLS=new Set(Object.keys(REG).concat(["distancia","tiempo","emoji"]));
+function pose0(){return {arms:"relax",lean:0,gaze:"look",feet:1,face:"neutral",tilt:0,turn:0,hide:0}}
+function tok(ps,str,an){(str||"").split(/\s+/).filter(Boolean).forEach(t=>{
+  if(ARMS[t]){ps.arms=t;if(t==="phone"||t==="watch")ps.gaze="down"}
+  else if(GAZE[t])ps.gaze=t;else if(MOUTH[t]){ps.face=t;if(t==="laugh"&&an)an.push("bnc")}
+  else if(t==="lean+")ps.lean=7;else if(t==="lean-")ps.lean=-7;else if(t==="lean0")ps.lean=0;
+  else if(t==="feet+")ps.feet=1;else if(t==="feet-")ps.feet=-1;else if(t==="tilt")ps.tilt=8;else if(t==="tilt0")ps.tilt=0;
+  else if(t==="turn")ps.turn=1;else if(t==="face")ps.turn=0;else if(t==="hide")ps.hide=1;else if(t==="show")ps.hide=0;
+  else if((t==="nod"||t==="shake")&&an)an.push(t==="nod"?"nod":"shk");
+})}
+function stateAt(s,i){
+  const ex=s.ex||[];const figs=[pose0(),pose0()].concat(ex.map(pose0));
+  let d=(s.start&&s.start.d)||"mid";const an=figs.map(()=>[]);
+  tok(figs[0],s.start&&s.start.m);tok(figs[1],s.start&&s.start.o);ex.forEach((e,j)=>tok(figs[2+j],e.p));
+  for(let k=0;k<=i&&k<s.b.length;k++){const b=s.b[k];const cur=k===i;
+    tok(figs[0],b.mp,cur?an[0]:null);tok(figs[1],b.p,cur?an[1]:null);
+    if(b.ex)Object.keys(b.ex).forEach(j=>{const n=2+(+j);if(figs[n])tok(figs[n],b.ex[j],cur?an[n]:null)});
+    if(b.d&&POS[b.d])d=b.d}
+  return {d,figs,an};
+}
+function figX(s,k,d){const ex=s.ex||[];if(k>=2)return ex[k-2].x;if(s.bg==="video")return k===0?78:268;return POS[d][k]}
+function figBase(s,k){if(k===0)return 1;if(k===1)return -1;return (s.ex[k-2].f||-1)}
+function armSVG(cls,x,C,props){
+  const O='stroke="var(--stage)" stroke-width="10" stroke-linecap="round" fill="none"',I=`stroke="${C}" stroke-width="7" stroke-linecap="round" fill="none"`;
+  return `<g class="arm${cls}" style="transform-origin:${x}px -96px"><path d="M${x} -96 L${x} -75" ${O}/><path d="M${x} -96 L${x} -75" ${I}/><g class="fore${cls}" style="transform-origin:${x}px -75px"><path d="M${x} -75 L${x} -56" ${O}/><path d="M${x} -75 L${x} -56" ${I}/><circle cx="${x}" cy="-55" r="3.8" fill="${C}"/>${props||""}</g></g>`;
+}
+function figSVG(s,k,g,C,opa){
+  const props=`<rect class="pr phone" x="0" y="-63" width="8" height="12" rx="1.6" fill="var(--prop)" opacity="0"/><g class="pr glass" opacity="0"><path d="M1 -70 L9 -70 L8 -60 L2 -60 Z" fill="none" stroke="var(--prop)" stroke-width="1.4"/></g><rect class="pr card" x="3" y="-60" width="12" height="7.5" rx="1" fill="var(--card)" stroke="var(--prop)" stroke-width="1.2" opacity="0"/>`;
+  const hair=g==="f"?`<path d="M-12 -114 C-15 -133 4 -137 14 -127 C10 -130 1 -130 -4 -125 C-8 -117 -7 -106 -15 -98 C-18 -105 -15 -110 -12 -114 Z" fill="var(--hair)"/>`:"";
+  return `<g class="fig" id="f${k}" style="transform:translate(${figX(s,k,"mid")}px,190px);opacity:${opa}"><g class="dir" style="transform:scaleX(${figBase(s,k)})"><g class="bob">
+   <g class="hlh"></g>
+   <g class="feet"><path d="M-8 -1.5 L0 -1.5 M8 -1.5 L16 -1.5" stroke="${C}" stroke-width="5" stroke-linecap="round" fill="none"/></g>
+   <path d="M-6 -52 L-8 -4 M6 -52 L8 -4" stroke="${C}" stroke-width="8" stroke-linecap="round" fill="none"/>
+   <g class="up" style="transform-origin:0px -52px">
+    ${armSVG("B",-3,C,"")}
+    <rect x="-12" y="-103" width="24" height="54" rx="11" fill="${C}"/>
+    <g class="hd" style="transform-origin:0px -104px">${hair}<circle cx="2" cy="-119" r="13" fill="${C}"/><g class="eyes"><circle cx="7" cy="-121" r="1.8" fill="var(--face)"/><circle cx="12" cy="-121" r="1.8" fill="var(--face)"/></g><path class="mouth" d="${MOUTH.neutral}" stroke="var(--face)" stroke-width="1.8" stroke-linecap="round" fill="none"/></g>
+    ${armSVG("F",3,C,props)}
+   </g></g></g></g>`;
+}
+function bgSVG(bg){
+  const L='stroke="var(--line)" stroke-width="1.6" fill="none" stroke-linecap="round"';const F='fill="var(--line2)"';
+  let h=`<line x1="0" y1="190" x2="360" y2="190" stroke="var(--line2)" stroke-width="2"/>`;
+  const table=(x,w)=>`<rect x="${x}" y="140" width="${w}" height="5" rx="2" ${F}/><path d="M${x+6} 145 L${x+6} 190 M${x+w-6} 145 L${x+w-6} 190" ${L}/>`;
+  if(bg==="sala")h+=`<rect x="150" y="34" width="60" height="50" rx="3" ${L}/><path d="M180 34 V84 M150 59 H210" ${L}/><path d="M24 190 L30 168 L44 168 L50 190 M37 168 C30 150 22 148 20 140 M37 168 C40 150 52 146 56 136 M37 168 V140" ${L}/>`;
+  if(bg==="oficina")h+=`<rect x="145" y="28" width="70" height="42" rx="3" ${L}/>`+table(150,60);
+  if(bg==="cafe")h+=table(158,44)+`<path d="M166 132 h9 v8 h-9 z M187 132 h9 v8 h-9 z" ${L}/>`;
+  if(bg==="cita")h+=table(156,48)+`<rect x="177" y="126" width="6" height="14" rx="1" ${F}/><ellipse cx="180" cy="121" rx="2.4" ry="4" fill="var(--mute)"/>`;
+  if(bg==="boda"){h+=`<path d="M0 20 Q90 54 180 20 Q270 54 360 20" ${L}/>`;for(let i=0;i<9;i++){const x=20+i*40;const y=x<=180?20+34*Math.sin(Math.PI*x/180)*0.9:20+34*Math.sin(Math.PI*(x-180)/180)*0.9;h+=`<circle cx="${x}" cy="${(y+4).toFixed(1)}" r="3" fill="var(--line)"/>`}h+=`<ellipse cx="320" cy="150" rx="26" ry="5" ${F}/><path d="M320 155 V190" ${L}/>`}
+  if(bg==="cowork")h+=`<rect x="16" y="30" width="96" height="62" rx="3" ${L}/><path d="M48 30 V92 M80 30 V92" ${L}/><rect x="300" y="140" width="60" height="5" ${F}/><path d="M306 145 V190" ${L}/><path d="M318 140 L322 124 L346 124 L344 140" ${L}/>`;
+  if(bg==="feria")h+=`<rect x="12" y="30" width="100" height="36" rx="4" fill="var(--tint)" stroke="var(--blue)" stroke-width="1.4"/><text x="62" y="54" text-anchor="middle" font-family="Arial" font-weight="700" font-size="16" fill="var(--blue)">NLD</text><rect x="8" y="140" width="64" height="50" rx="2" fill="var(--line2)"/>`;
+  if(bg==="coctel")h+=`<ellipse cx="34" cy="146" rx="18" ry="4" ${F}/><path d="M34 150 V190" ${L}/><ellipse cx="330" cy="146" rx="18" ry="4" ${F}/><path d="M330 150 V190" ${L}/>`;
+  if(bg==="video")h+=`<rect x="178" y="18" width="170" height="178" rx="14" ${L}/><circle cx="194" cy="33" r="3.5" fill="var(--blue)"/><text x="203" y="37" font-family="Arial" font-size="11" fill="var(--gray)">En llamada</text>`;
+  if(bg==="ascensor")h+=`<rect x="150" y="36" width="64" height="154" rx="2" ${L}/><path d="M182 36 V190" ${L}/><circle cx="226" cy="110" r="3" ${F}/>`;
+  if(bg==="escenario")h+=`<path d="M62 190 V122 M54 122 h16" ${L}/><circle cx="62" cy="116" r="5" ${F}/><path d="M20 10 L0 190 M100 10 L150 190" stroke="var(--line2)" stroke-width="1" fill="none"/>`;
+  if(bg==="pasillo")h+=`<rect x="300" y="60" width="44" height="130" rx="2" ${L}/><circle cx="335" cy="128" r="2.4" ${F}/>`;
+  return h;
+}
+function stageHTML(s){
+  const ex=s.ex||[];
+  let figs=figSVG(s,0,"m","var(--blue)",1)+figSVG(s,1,s.o.g,"var(--oth)",1)+ex.map((e,j)=>figSVG(s,2+j,e.g||"m","var(--ex)",1)).join("");
+  return `<div class="stagebox" onclick="usr(1)" role="img" aria-label="Escena animada"><svg viewBox="0 14 360 196" aria-hidden="true"><g>${bgSVG(s.bg)}</g><g id="dl"></g>${figs}</svg><div class="nv" id="nv" hidden><span class="lab">Cuerpo</span><span id="nvt"></span></div></div>`;
+}
+function stageUpd(s,i){
+  const {d,figs,an}=stateAt(s,i);const b=i>=0?s.b[i]:null;
+  figs.forEach((ps,k)=>{const el=document.getElementById("f"+k);if(!el)return;
+    const q=c=>el.querySelector(c);const A=ARMS[ps.arms]||ARMS.relax;const g=GAZE[ps.gaze]||GAZE.look;
+    el.style.transform=`translate(${figX(s,k,d)}px,190px)`;el.style.opacity=ps.hide?0:1;
+    q(".dir").style.transform=`scaleX(${figBase(s,k)*(ps.turn?-1:1)})`;
+    q(".up").style.transform=`rotate(${ps.lean}deg)`;q(".feet").style.transform=`scaleX(${ps.feet})`;
+    q(".armF").style.transform=`rotate(${A[0][0]}deg)`;q(".foreF").style.transform=`rotate(${A[0][1]}deg)`;
+    q(".armB").style.transform=`rotate(${A[1][0]}deg)`;q(".foreB").style.transform=`rotate(${A[1][1]}deg)`;
+    q(".eyes").style.transform=`translate(${g[0]}px,${g[1]}px)`;
+    const mo=q(".mouth");mo.setAttribute("d",MOUTH[ps.face]||MOUTH.neutral);mo.setAttribute("fill",ps.face==="laugh"?"var(--face)":"none");
+    ["phone","glass","card"].forEach(p=>{const e=q(".pr."+p);if(e)e.setAttribute("opacity",ps.arms===p?1:0)});
+    const hd=q(".hd"),bob=q(".bob");hd.classList.remove("nod","shk");bob.classList.remove("bnc");
+    hd.style.transform=`rotate(${ps.tilt}deg)`;
+    if(an[k].length){void el.getBoundingClientRect();an[k].forEach(a=>{if(a==="bnc")bob.classList.add("bnc");else hd.classList.add(a)})}
+    const hh=q(".hlh");hh.innerHTML="";
+    if(b&&b.hl&&REG[b.hl]&&k===(b.hw==="m"?0:1)){const r=REG[b.hl];hh.innerHTML=`<circle class="hlr" cx="${r[0]}" cy="${r[1]}" r="${r[2]}"/>`}
+  });
+  const dl=document.getElementById("dl");if(dl){dl.innerHTML="";if(b&&b.hl==="distancia"){const a=figX(s,0,d)+16,z=figX(s,1,d)-16;dl.innerHTML=`<path class="dline" d="M${a} 202 L${z} 202 M${a} 197 V207 M${z} 197 V207" fill="none"/>`}}
+  const nv=document.getElementById("nv");if(nv){if(b&&b.nv){nv.hidden=false;document.getElementById("nvt").textContent=b.nv}else nv.hidden=true}
+}
+
+/* ---------- escena: chat ---------- */
+function chatHTML(s){return `<div class="chat"><div class="chead"><div class="av">${esc((s.o.n||"?")[0])}</div><div><b>${esc(s.o.n)}</b><span>${esc(s.o.r||"")}</span></div></div><div class="cbody" id="cb" aria-live="polite"></div></div>`}
+let typT=null;
+function chatUpd(s,i,fwd){
+  const cb=document.getElementById("cb");if(!cb)return;clearTimeout(typT);
+  const one=(b,cur)=>{if(b.w==="n")return `<div class="div${cur?" pop":""}">${esc(b.t)}</div>`;
+    const hi=cur&&b.hl;return `<div class="msg ${b.w}${cur?" pop":" old"}${hi&&b.hl!=="tiempo"?" hi":""}">${esc(b.t)}${b.at?`<span class="ts${hi&&b.hl==="tiempo"?" hi":""}">${esc(b.at)}</span>`:""}</div>${b.st?`<div class="stt">${esc(b.st)}</div>`:""}`};
+  let h="";for(let k=0;k<i;k++)h+=one(s.b[k],false);
+  const b=i>=0?s.b[i]:null;
+  if(b&&fwd&&b.w==="o"&&!matchMedia("(prefers-reduced-motion: reduce)").matches){
+    cb.innerHTML=h+`<div class="msg o pop"><span class="typing"><i></i><i></i><i></i></span></div>`;cb.scrollTop=cb.scrollHeight;
+    typT=setTimeout(()=>{cb.innerHTML=h+one(b,true);cb.scrollTop=cb.scrollHeight},750);
+  }else{cb.innerHTML=h+(b?one(b,true):`<div class="div">${esc(s.ctx)}</div>`);cb.scrollTop=cb.scrollHeight}
+}
+
+/* ---------- reproductor ---------- */
+function prevLine(s,i){for(let k=i-1;k>=0&&k>=i-2;k--){const b=s.b[k];if(b.w==="o")return b.t;if(b.w==="m")return null}return null}
+function cut(t,n){t=String(t||"");return t.length>n?t.slice(0,n-1).trim()+"…":t}
+function beatHTML(s,i){
+  const b=s.b[i];const who=b.w==="m"?"Max":b.w==="o"?s.o.n:"Escena";const col=b.w==="m"?"var(--blue)":b.w==="o"?"var(--oth)":"var(--line)";
+  const pv=b.w==="m"&&b.k?prevLine(s,i):null;
+  return `<div class="beat ${b.w}" id="beat"><div class="spk"><i style="background:${col}"></i>${esc(who)}</div>
+  <p class="line">${b.w==="n"?esc(b.t):"«"+esc(b.t)+"»"}</p>
+  ${b.k?`<div class="note mv"><span class="lab">Jugada de Max</span><b>${esc(b.k)}</b>${pv?`<p style="color:var(--gray);font-size:13px">Momento: después de «${esc(cut(pv,90))}»</p>`:""}${b.y?`<p>${esc(b.y)}</p>`:""}</div>`:""}
+  ${b.s?`<div class="note"><span class="lab">Lectura</span><p>${esc(b.s)}</p></div>`:""}</div>`;
+}
+function openStory(id){const s=byId(id);if(!s)return;CUR={s,i:-1};SCR="play";renderPlay(true)}
+function playTop(s,i){const n=s.b.length;return `<div class="top"><button class="x" aria-label="Salir" onclick="closeStory()">✕</button><span class="ttl">${esc(s.t)}</span><button class="ib" aria-label="Guion completo" title="Guion completo" onclick="scriptView()">${IC.script}</button></div><div class="track"><i style="width:${Math.max(0,(i+1)/n*100)}%"></i></div>`}
+function renderPlay(full){
+  const {s,i}=CUR;
+  if(i<0){
+    app().innerHTML=`${playTop(s,i)}
+    <p class="eyebrow" style="margin-top:18px">${esc(MOD(s.m).n)} · ${LV[s.l].n}</p><h1>${esc(s.t)}</h1>
+    <div class="chips"><span class="chip">${esc(s.ctx)}</span>${s.gen?`<span class="chip">Creada con IA</span>`:""}</div>
+    <p class="intro">${esc(s.intro)}</p>
+    <div class="cast"><div class="who"><span class="dt" style="background:var(--blue)"></span><div><b>Max</b><span>Asesor de NLD. Siempre gana.</span></div></div><div class="who"><span class="dt" style="background:var(--oth)"></span><div><b>${esc(s.o.n)}</b><span>${esc(s.o.r||"")}</span></div></div></div>
+    ${s.mode==="c"?chatHTML(s):stageHTML(s)}
+    <div class="grow"></div>
+    ${optsHTML()}<div class="btns"><button class="cta" onclick="play()">Reproducir en vivo</button><button class="ghost" onclick="usr(1)">Paso a paso</button>${s.gen?`<button class="ghost" id="delb" onclick="delStory('${s.id}')">Quitar esta historia</button>`:""}</div>`;
+    if(s.mode==="c")chatUpd(s,-1,false);else stageUpd(s,-1);
+    anim();window.scrollTo(0,0);return;
+  }
+  const last=i===s.b.length-1;
+  if(full||!document.getElementById("beatwrap")){
+    app().innerHTML=`${playTop(s,i)}${s.mode==="c"?chatHTML(s):stageHTML(s)}<div id="beatwrap"></div><div class="grow"></div>${optsHTML()}<div class="pctl"><button class="ib2" aria-label="Anterior" title="Anterior" onclick="usr(-1)">${IC.prev}</button><button class="playb" id="pb" aria-label="Reproducir" onclick="toggle()">${IC.play}</button><button class="ib2" id="nx" aria-label="Siguiente" title="Siguiente" onclick="usr(1)">${IC.next}</button></div>`;
+    if(s.mode!=="c"){stageUpd(s,i-1);const sv=app().querySelector(".stagebox svg");if(sv)void sv.getBoundingClientRect()}
+  }
+  app().querySelector(".track i").style.width=((i+1)/s.b.length*100)+"%";
+  document.getElementById("beatwrap").innerHTML=beatHTML(s,i);
+  const bt=document.getElementById("beat");bt.classList.add("pop");
+  updBar();
+  if(s.mode==="c")chatUpd(s,i,CUR.fwd);else requestAnimationFrame(()=>stageUpd(s,i));
+}
+function go(d){
+  if(SCR!=="play"||!CUR)return;const s=CUR.s;let i=CUR.i+d;
+  if(i>=s.b.length){result();return}
+  if(i<-1)return;
+  const from=CUR.i;CUR.i=i;CUR.fwd=d>0;renderPlay(from<0||i<0);
+}
+function closeStory(){stopPlay(true);clearTimeout(typT);const m=CUR?CUR.s.m:null;CUR=null;m?modPage(m):home()}
+function markRead(id){if(st.read[id])return;st.read[id]=1;saveLocal();syncRead()}
+function result(){
+  const s=CUR.s;SCR="result";markRead(s.id);clearTimeout(typT);clearTimeout(PL.T);
+  const auto=PL.on&&PL.list&&PL.li<PL.list.length-1;const nx=auto?byId(PL.list[PL.li+1]):nextStory(s);
+  if(!auto)stopPlay(false);
+  app().innerHTML=`<div class="top"><button class="x" aria-label="Salir" onclick="closeStory()">✕</button><span class="ttl">${esc(s.t)}</span></div>
+  <p class="eyebrow" style="margin-top:18px">Max ganó</p><h1>${esc(s.t)}</h1>
+  <p class="win">${esc(s.win)}</p>
+  <h2>Las jugadas clave</h2>
+  <div class="keys">${(s.keys||[]).map((k,j)=>`<div class="key"><div class="num">${j+1}</div><div><span class="m">${esc(k[0])}</span><b>${esc(k[1])}</b></div></div>`).join("")}</div>
+  ${s.frase?`<h2>La frase para llevarte</h2><div class="quote">${esc(s.frase)}</div>`:""}
+  ${auto?`<div class="auto"><span>Sigue: <b>${esc(nx.t)}</b></span><span class="cd" id="cd"></span></div><div class="btns"><button class="cta" onclick="nextInList()">Ver ahora</button><button class="ghost" onclick="stopPlay(true);result()">Detener la reproducción</button></div>`:
+  `<div class="btns"><button class="cta" onclick="replay()">Reproducir otra vez en vivo</button>${nx?`<button class="ghost" onclick="openStory('${nx.id}')">Siguiente: ${esc(nx.t)}</button>`:""}<button class="ghost" onclick="scriptView()">Leer el guion completo</button></div>`}`;
+  anim();window.scrollTo(0,0);
+  if(auto){if(st.voice&&TTS)say((s.frase?"Max ganó. "+s.frase:"Max ganó. "+s.win),"n",s,()=>{});let n=Math.round(9*SPD[st.speed]);const cd=()=>{const e=document.getElementById("cd");if(!PL.on||SCR!=="result")return;if(n<=0){nextInList();return}if(e)e.textContent=n+" s";n--;PL.T=setTimeout(cd,1000)};cd()}
+}
+function nextStory(s){
+  const L=H.filter(x=>x.l===s.l);const ix=L.findIndex(x=>x.id===s.id);
+  for(let k=1;k<=L.length;k++){const c=L[(Math.max(ix,0)+k)%L.length];if(c&&c.id!==s.id&&!isRead(c.id))return c}
+  const c=L[(Math.max(ix,0)+1)%L.length];return c&&c.id!==s.id?c:null;
+}
+function scriptView(){
+  stopPlay(true);const s=CUR.s;const back=SCR==="result"?"result()":"SCR='play';renderPlay(true)";SCR="script";clearTimeout(typT);
+  app().innerHTML=`<div class="top"><button class="x" aria-label="Volver" onclick="${back}">✕</button><span class="ttl">Guion completo</span></div>
+  <p class="eyebrow" style="margin-top:18px">${esc(MOD(s.m).n)} · ${LV[s.l].n}</p><h1>${esc(s.t)}</h1><p class="intro" style="font-size:16px">${esc(s.intro)}</p>
+  <div class="sc">${s.b.map((b,i)=>{const who=b.w==="m"?"Max":b.w==="o"?s.o.n:"Escena";const pv=b.w==="m"&&b.k?prevLine(s,i):null;
+    return `<div class="sl ${b.w}"><div class="who2">${esc(who)}${b.at?` · ${esc(b.at)}`:""}</div><div class="tx">${b.w==="n"?esc(b.t):"«"+esc(b.t)+"»"}</div>
+    ${b.k?`<div class="an"><b>${esc(b.k)}</b>${pv?` · después de «${esc(cut(pv,70))}»`:""}<br>${esc(b.y||"")}</div>`:""}
+    ${b.s?`<div class="an">${esc(b.s)}</div>`:""}${b.nv?`<div class="an">Cuerpo: ${esc(b.nv)}</div>`:""}</div>`}).join("")}</div>
+  <p class="win" style="margin-top:18px"><b>Resultado:</b> ${esc(s.win)}</p>`;
+  anim();window.scrollTo(0,0);
+}
+document.addEventListener("keydown",e=>{if(SCR!=="play")return;if(e.target&&/TEXTAREA|INPUT|BUTTON/.test(e.target.tagName))return;if(e.key===" "){e.preventDefault();toggle()}if(e.key==="ArrowRight")usr(1);if(e.key==="ArrowLeft")usr(-1)});
+/* ---------- reproducción en vivo ---------- */
+const SPD={lento:1.4,normal:1,rapido:0.7};
+const TTS=("speechSynthesis" in window)&&window.SpeechSynthesisUtterance?window.speechSynthesis:null;let VO=[];
+function loadVoices(){try{VO=TTS.getVoices().filter(v=>/^es/i.test(v.lang))}catch(e){VO=[]}}
+if(TTS){loadVoices();try{TTS.addEventListener("voiceschanged",loadVoices)}catch(e){}}
+const MALE=/jorge|diego|juan|carlos|pablo|enrique|miguel|andr[eé]s|alvaro|álvaro|ra[uú]l|manuel|jos[eé]|male|hombre|antonio|gonzalo|rodrigo|eduardo|tom[aá]s/i;
+const FEM=/paulina|m[oó]nica|luciana|marisol|female|mujer|paloma|sabina|helena|elvira|laura|lupe|camila|isabela|francisca|soledad|angelica|ang[eé]lica|esperanza|valeria|catalina|ximena|sof[ií]a|elena|carmen|marta|google espa/i;
+function rankV(v){return (/es[-_](419|MX|US|SV|GT|CO|AR)/i.test(v.lang)?2:0)+(/natural|neural|premium|enhanced|google/i.test(v.name)?1:0)}
+function voiceFor(w,g){
+  if(!VO.length)return {v:null,p:1};const sorted=VO.slice().sort((a,b)=>rankV(b)-rankV(a));
+  const m=sorted.find(v=>MALE.test(v.name)),f=sorted.find(v=>FEM.test(v.name)&&!MALE.test(v.name));
+  const base=sorted[0];
+  if(w==="m"){const v=m||base;return {v,p:m?1:0.85}}
+  if(w==="o"){if(g==="f"){const v=f||sorted.find(x=>x!==(m||base))||base;return {v,p:f?1:1.3}}const v=sorted.find(x=>x!==(m||base)&&!FEM.test(x.name))||m||base;return {v,p:v===(m||base)?0.75:1}}
+  const v=f||sorted.find(x=>x!==(m||base))||base;return {v,p:1}
+}
+function sayText(t){return String(t||"").replace(/[«»"()]/g,"").replace(/\p{Extended_Pictographic}/gu,"").replace(/\s+/g," ").trim()}
+let SPK=null;
+function say(text,w,s,cb){
+  const t=sayText(text);if(!TTS||!t){cb();return}
+  let fired=false;const fin=()=>{if(fired)return;fired=true;clearTimeout(fb);cb()};
+  const fb=setTimeout(fin,(t.split(" ").length*620+3500)*SPD[st.speed]);
+  try{TTS.cancel();const u=new SpeechSynthesisUtterance(t);const vv=voiceFor(w,s&&s.o?s.o.g:"m");if(vv.v){u.voice=vv.v;u.lang=vv.v.lang}else u.lang="es-MX";
+    u.pitch=vv.p;u.rate={lento:0.88,normal:1.02,rapido:1.22}[st.speed]||1;u.onend=fin;u.onerror=fin;SPK=u;TTS.speak(u)}catch(e){fin()}
+}
+function stopSpeak(){try{if(TTS)TTS.cancel()}catch(e){}}
+function wc(t){return String(t||"").split(/\s+/).filter(Boolean).length}
+function noteMs(b){return (1300+(wc(b.k)+wc(b.y)+wc(b.s)+wc(b.nv))*240)*SPD[st.speed]}
+function lineMs(b){return Math.max(2000,wc(b.t)*380+700)*SPD[st.speed]}
+let PL={on:false,T:null,list:null,li:0,wl:null};
+function wakeOn(){try{if(navigator.wakeLock&&!PL.wl)navigator.wakeLock.request("screen").then(w=>{PL.wl=w}).catch(()=>{})}catch(e){}}
+function wakeOff(){try{if(PL.wl){PL.wl.release();PL.wl=null}}catch(e){}}
+function updBar(){const b=document.getElementById("pb");if(b){b.innerHTML=PL.on?IC.pause:IC.play;b.setAttribute("aria-label",PL.on?"Pausar":"Reproducir")}}
+function stopPlay(all){PL.on=false;clearTimeout(PL.T);stopSpeak();wakeOff();if(all){PL.list=null;PL.li=0}updBar()}
+function play(){if(!CUR)return;if(CUR.i>=CUR.s.b.length-1){CUR.i=-1}PL.on=true;wakeOn();updBar();tick()}
+function toggle(){if(PL.on)stopPlay(false);else play()}
+function usr(d){if(PL.on)stopPlay(false);go(d)}
+function replay(){if(!CUR)return;CUR.i=-1;SCR="play";renderPlay(true);play()}
+function tick(){
+  if(!PL.on||!CUR)return;clearTimeout(PL.T);
+  const s=CUR.s,ni=CUR.i+1;
+  if(ni>=s.b.length){result();return}
+  const b=s.b[ni];
+  if(st.think&&b.w==="m"&&!PL.thought){PL.thought=true;showThink(s,ni);return}
+  PL.thought=false;
+  CUR.i=ni;CUR.fwd=true;const from=ni-1;renderPlay(from<0);
+  const after=()=>{if(!PL.on)return;PL.T=setTimeout(tick,noteMs(b))};
+  if(st.voice&&TTS){const go2=()=>{if(PL.on)say(b.t,b.w,s,after)};if(s.mode==="c"&&b.w==="o")PL.T=setTimeout(go2,850);else go2()}
+  else PL.T=setTimeout(tick,lineMs(b)+noteMs(b));
+}
+function showThink(s,ni){
+  const w=document.getElementById("beatwrap");const ms=4500*SPD[st.speed];
+  if(w){w.innerHTML=`<div class="beat m think pop"><div class="spk"><i style="background:var(--blue)"></i>Max</div><p class="line">¿Qué dirías vos?</p><p class="hint">Decilo en voz alta antes de ver la jugada de Max.</p><div class="tbar"><i style="animation-duration:${ms}ms"></i></div></div>`}
+  if(st.voice&&TTS)say("¿Qué dirías vos?","n",s,()=>{});
+  PL.T=setTimeout(tick,ms);
+}
+function playList(ids){ids=ids.filter(Boolean);if(!ids.length)return;stopPlay(true);PL.list=ids;PL.li=0;openStory(ids[0]);play()}
+function nextInList(){clearTimeout(PL.T);if(!PL.list||PL.li>=PL.list.length-1){stopPlay(true);return}PL.li++;const keep=PL.list,li=PL.li;openStory(keep[li]);PL.list=keep;PL.li=li;play()}
+function setOpt(k,v){st[k]=v;saveLocal();document.querySelectorAll(".popts").forEach(e=>e.outerHTML=optsHTML())}
+function optsHTML(){
+  return `<div class="popts"><div class="seg txt sm" role="group" aria-label="Velocidad">${[["lento","Lento"],["normal","Normal"],["rapido","Rápido"]].map(([k,n])=>`<button class="${st.speed===k?"on":""}" onclick="setOpt('speed','${k}')">${n}</button>`).join("")}</div>
+  ${TTS?`<button class="ib ${st.voice?"on":""}" aria-label="${st.voice?"Quitar voz":"Activar voz"}" title="${st.voice?"Voz activada":"Voz apagada"}" onclick="setOpt('voice',${!st.voice});if(!st.voice)stopSpeak()">${st.voice?IC.voice:IC.mute}</button>`:""}
+  <button class="chipbtn sm ${st.think?"on":""}" onclick="setOpt('think',${!st.think})" title="Pausa antes de cada línea de Max para que pienses qué dirías">Pensar antes</button></div>`;
+}
+
+/* ---------- IA ---------- */
+function stopGen(){if(GENCTL)GENCTL.abort()}
+function promptFor(mid,l,c,extra){
+  const m=MOD(mid);const chat=c.mode==="c";
+  return `Escribí una historia para «Carisma», una app que enseña comunicación con historias donde la conversación sale bien.
+El protagonista es Max: salvadoreño, asesor de Next Level Demographic (ayuda a salvadoreños que viven en Estados Unidos a comprar casa o jubilarse en El Salvador; también hace alianzas con desarrolladores y empresas). Max es tranquilo, escucha, pregunta, habla poco y claro, y no manipula. Max SIEMPRE gana al final, pero no es fácil: la otra persona pone resistencia real.
+Módulo: ${m.n} (${m.d}).
+Nivel de dificultad: ${LV[l].n}: ${LV[l].d}.
+Lugar: ${c.n}.${extra?`\nSituación que pidió el usuario: ${extra.slice(0,400)}`:""}
+Reglas: español centroamericano con voseo, natural. Frases de Max de máximo 25 palabras. Entre 8 y 11 líneas en "b". La historia enseña qué decir, en qué momento y por qué.
+Cada línea de Max ("w":"m") lleva "k" (nombre de la jugada, máximo 6 palabras) e "y" (por qué funciona, 1 o 2 frases). Las líneas de la otra persona ("w":"o") pueden llevar "s" (lectura: qué está pasando de verdad o qué señal hay). Las líneas "w":"n" son de escena: acciones, silencios, tiempo que pasa.
+${chat?`Es un chat. Cada mensaje lleva "at" (por ejemplo "Mar 9:14"). Un mensaje de Max puede llevar "st" (por ejemplo "Visto 9:20"). "hl" puede ser "tiempo" o "emoji" cuando esa sea la señal a mirar. Usá emojis solo dentro de los mensajes, como los usaría esa persona. No uses "p", "mp" ni "nv".`:
+`Es en persona. Para animar la escena usá "p" (poses de la otra persona) y "mp" (poses de Max): palabras separadas por espacio, solo de esta lista: relax cross palms reach phone pocket glass card think watch lean+ lean- lean0 look away down up feet+ feet- smile neutral frown laugh tilt tilt0 turn face nod shake. Las poses se acumulan de una línea a la siguiente. "d" cambia la distancia: far mid near close. Cuando cambie algo del cuerpo, poné "nv": una frase que explique qué significa. "hl" marca dónde mirar: brazos manos pies cara torso distancia; agregá "hw":"m" si es en el cuerpo de Max.`}
+Respondé SOLO con un objeto JSON, sin texto antes ni después, con esta forma:
+{"t":"título de 2 a 5 palabras","ctx":"lugar y situación en una línea","o":{"n":"nombre","g":"m o f","r":"quién es, en una línea"},"intro":"dos frases: qué está en juego y por qué es difícil",${chat?"":`"start":{"m":"poses iniciales de Max","o":"poses iniciales de la otra persona","d":"mid"},`}"b":[{"w":"o","t":"texto"}],"win":"qué ganó Max, en una frase","keys":[["momento","jugada"],["momento","jugada"],["momento","jugada"]],"frase":"la frase de Max para recordar, entre comillas angulares"}`;
+}
+function cleanStory(o,mid,l,c){
+  o=o&&typeof o==="object"?o:{};const tk=v=>String(v||"").split(/\s+/).filter(t=>TOK.has(t)).join(" ");
+  const b=(Array.isArray(o.b)?o.b:[]).slice(0,16).map(x=>{x=x||{};const r={w:["o","m","n"].includes(x.w)?x.w:"n",t:str(x.t,420)};
+    [["k",80],["y",320],["s",320],["nv",240],["at",24],["st",40]].forEach(([f,n])=>{const v=str(x[f],n);if(v)r[f]=v});
+    const p=tk(x.p),mp=tk(x.mp);if(p)r.p=p;if(mp)r.mp=mp;if(POS[x.d])r.d=x.d;if(HLS.has(x.hl))r.hl=x.hl;if(x.hw==="m")r.hw="m";return r}).filter(x=>x.t);
+  if(b.length<4)throw {code:"short"};
+  const keys=(Array.isArray(o.keys)?o.keys:[]).slice(0,3).map(k=>Array.isArray(k)?[str(k[0],120),str(k[1],120)]:["",str(k,120)]).filter(k=>k[1]);
+  const oo=o.o||{};
+  return {id:"g"+Date.now().toString(36)+Math.random().toString(36).slice(2,6),m:mid,l,gen:1,
+    t:str(o.t,60)||"Historia nueva",ctx:str(o.ctx,120)||c.n,mode:c.mode,bg:c.bg||"",
+    o:{n:str(oo.n,30)||"Alguien",g:oo.g==="f"?"f":"m",r:str(oo.r,120)},intro:str(o.intro,500),
+    start:c.mode==="c"?undefined:{m:tk(o.start&&o.start.m),o:tk(o.start&&o.start.o),d:POS[o.start&&o.start.d]?o.start.d:"mid"},
+    b,win:str(o.win,300),keys,frase:str(o.frase,240)};
+}
+async function genStory(){
+  if(!SM||GEN)return;const c=CTX.find(x=>x.id===GSEL.ctx)||CTX[0];const mid=CMOD,l=st.lvl;
+  GEN=true;GENCTL=new AbortController();const box=document.getElementById("aibox");if(box)box.innerHTML=aiBox();
+  let err=null,s=null;
+  try{const o=await SM.json(promptFor(mid,l,c,GSEL.extra.trim()),{signal:GENCTL.signal,cache:false});s=cleanStory(o,mid,l,c)}
+  catch(e){err=e}
+  GEN=false;GENCTL=null;
+  if(s){await saveGen(s);GSEL.extra="";if(SCR==="mod"&&CMOD===mid){openStory(s.id);return}}
+  if(SCR==="mod"){const b2=document.getElementById("aibox");if(b2){b2.innerHTML=aiBox();if(err&&err.code!=="cancelled"){const g=document.getElementById("gerr");g.hidden=false;g.textContent=genErr(err)}}}
+}
+function genErr(e){const c=e&&e.code;
+  if(c==="not_granted"||c==="sampling_disabled"||c==="not_declared"||c==="capability_disabled"){SM=null;return "Carisma no tiene permiso para usar Claude en esta vista."}
+  if(c==="rate_limited")return "Demasiadas solicitudes seguidas. Probá de nuevo en unos minutos.";
+  if(c==="invalid_json"||c==="short")return "La historia salió incompleta. Probá otra vez.";
+  if(c==="refused")return "Claude no escribió esa historia. Cambiá la situación y probá de nuevo.";
+  return "No se pudo escribir la historia. Probá otra vez.";}
+
+/* ---------- guardado ---------- */
+async function saveGen(s){
+  if(DB&&UID){try{await DB.collection("data/users/"+UID).doc(s.id).set({kind:"historia",s:JSON.parse(JSON.stringify(s)),at:Date.now()});if(!G.find(x=>x.id===s.id))G.push(s);return}catch(e){}}
+  st.gen=(st.gen||[]).concat([s]).slice(-30);saveLocal();G=st.gen.slice();
+}
+let delArm=null;
+async function delStory(id){
+  const b=document.getElementById("delb");
+  if(delArm!==id){delArm=id;if(b)b.textContent="Tocá otra vez para quitarla";return}
+  delArm=null;
+  if(DB&&UID){try{await DB.collection("data/users/"+UID).doc(id).delete()}catch(e){}}
+  st.gen=(st.gen||[]).filter(x=>x.id!==id);saveLocal();G=G.filter(x=>x.id!==id);
+  const m=CUR?CUR.s.m:CMOD;CUR=null;modPage(m);
+}
+let rdT=null;
+function syncRead(){if(!DB||!UID)return;clearTimeout(rdT);rdT=setTimeout(()=>{DB.doc("data/users/"+UID+"/progreso").set({kind:"progreso",read:st.read}).catch(()=>{})},800)}
+async function initCaps(){
+  G=(st.gen||[]).slice();
+  if(!window.claude||!claude.use)return;
+  claude.use("sample").then(s=>{SM=s||null;if(SM&&SCR==="mod"){const b=document.getElementById("aibox");if(b)b.innerHTML=aiBox()}}).catch(()=>{});
+  try{const [db,user]=await Promise.all([claude.use("db"),claude.use("user")]);if(!db||!user)return;
+    const id=await user.id();if(!id)return;DB=db;UID=id;
+    DB.collection("data/users/"+UID).onSnapshot(snap=>{
+      const g=[];let prog=null;snap.docs.forEach(d=>{const v=d.data()||{};if(v.kind==="historia"&&v.s&&v.s.id)g.push(v.s);else if(d.id==="progreso")prog=v});
+      const local=(st.gen||[]).filter(x=>!g.find(y=>y.id===x.id));G=g.concat(local);
+      let changed=false;if(prog&&prog.read)Object.keys(prog.read).forEach(k=>{if(!st.read[k]){st.read[k]=1;changed=true}});
+      if(changed)saveLocal();
+      if(SCR==="home")home();else if(SCR==="mod"&&!GEN)modPage(CMOD,true);
+    },()=>{});
+  }catch(e){}
+}
+
+function playLevel(){playList(M.map(m=>{const x=H.find(s=>s.m===m.id&&s.l===st.lvl);return x&&x.id}))}
+function playModule(mid){playList(storiesOf(mid).slice().sort((a,b)=>a.l-b.l||(a.gen?1:0)-(b.gen?1:0)).map(s=>s.id))}
+/* ---------- arranque ---------- */
+function boot(){applyTheme();applyView();home();initCaps()}
+
+/* ===== VENDER ===== */
+S({id:"ven1",m:"ven",l:1,t:"Lo vamos a pensar",ctx:"Visita a un apartamento en la Escalón",mode:"p",bg:"sala",
+o:{n:"Don Ramón",g:"m",r:"Comprador de Houston, de visita con su esposa"},
+intro:"Don Ramón vino desde Houston a ver el apartamento. Recorrió todo en silencio. Al final, en la sala, cruza los brazos.",
+start:{m:"relax",o:"cross neutral",d:"mid"},
+b:[
+{w:"o",t:"Bonito todo. Lo vamos a pensar y le avisamos.",p:"feet-",s:"«Lo vamos a pensar» casi siempre esconde una duda concreta que no dijo.",nv:"Brazos cruzados y pies hacia la puerta: quiere cerrar la visita, no la compra.",hl:"brazos"},
+{w:"m",t:"Me parece bien pensarlo. Antes de que se vayan: ¿qué parte les gustaría pensar más?",mp:"palms smile",k:"Aceptar y preguntar qué parte",y:"No discute el «lo pensamos». Lo acepta y pide el dato que falta, con una pregunta abierta y sin presión."},
+{w:"o",t:"Pues... el precio está bien. Es que mi esposa vio el parqueo y lo sintió pequeño.",p:"relax feet+",s:"Ahí está la duda real. Ya no es «lo pensamos»: es el parqueo.",nv:"Descruza los brazos justo cuando dice lo que le preocupa.",hl:"brazos"},
+{w:"m",t:"El parqueo. ¿Qué carro tienen?",mp:"relax",k:"Reflejar y concretar",y:"Repite la palabra clave y pide un dato. No defiende el parqueo todavía: primero entiende."},
+{w:"o",t:"Una Highlander. Allá en Houston la dejo en la calle, pero aquí me dijeron que mejor no.",s:"Le preocupa la seguridad del carro, no los metros."},
+{w:"m",t:"Entonces la pregunta no es el tamaño, es si la Highlander queda segura. Bajemos a medirla ahorita.",mp:"palms lean+",d:"near",k:"Nombrar la duda de fondo y probarla",y:"Traduce la objeción a lo que de verdad le importa y la resuelve con una prueba física, no con argumentos."},
+{w:"n",t:"Bajan. Max mide el espacio con la cinta del portero. La Highlander cabe con cuarenta centímetros de sobra. La esposa sonríe por primera vez.",p:"smile lean+",nv:"Se inclina hacia Max y sonríe: la tensión se fue del cuerpo.",hl:"torso"},
+{w:"o",t:"Ah, pues sí cabe. ¿Y cuánto hay que dar para apartarlo?",s:"Pregunta el cuánto: intención de compra. Es el momento de cerrar.",hl:"cara"},
+{w:"m",t:"Quinientos dólares, y se devuelven si el banco no aprueba. ¿Lo dejamos a nombre de los dos?",mp:"card",k:"Cierre con alternativa",y:"Da el dato corto, quita el riesgo y pregunta por un detalle del cierre, no por el sí."},
+{w:"o",t:"A nombre de los dos. Dele.",p:"reach smile",nv:"Extiende la mano: el acuerdo llega al cuerpo antes que al papel.",hl:"manos"}],
+win:"Reservan el apartamento esa misma tarde.",
+keys:[["Cuando dijo «lo vamos a pensar»","Aceptó y preguntó qué parte"],["Cuando apareció el parqueo","Lo convirtió en una prueba real"],["Cuando preguntó cuánto","Dio el dato y cerró con una alternativa"]],
+frase:"«Me parece bien pensarlo. ¿Qué parte les gustaría pensar más?»"});
+
+S({id:"ven2",m:"ven",l:2,t:"¿Y si es estafa?",ctx:"Videollamada con una compradora en Los Ángeles",mode:"p",bg:"video",
+o:{n:"Karla",g:"f",r:"Enfermera en Los Ángeles; ahorró ocho años"},
+intro:"Karla quiere comprar para jubilarse, pero a una prima le quitaron dinero con un «asesor» de Facebook. Lleva diez minutos seria y con poca paciencia.",
+start:{m:"relax",o:"cross lean- frown"},
+b:[
+{w:"o",t:"Le voy a ser sincera. Yo no le compro nada a nadie que no conozca en persona.",s:"No es una objeción al producto: es miedo. Cualquier dato ahora suena a venta.",nv:"Brazos cruzados y espalda contra la silla: se protege.",hl:"brazos"},
+{w:"m",t:"Tiene lógica. Seguramente piensa que soy uno más de los de Facebook, que pide un depósito y desaparece.",mp:"palms",k:"Auditoría de acusaciones",y:"Dice en voz alta lo peor que ella piensa de él antes que ella. El miedo pierde fuerza cuando alguien lo nombra."},
+{w:"o",t:"...Pues sí. A mi prima le quitaron cuatro mil.",p:"relax down",s:"Confirma. Ahora el miedo tiene historia y nombre.",nv:"Baja la mirada y suelta los brazos: deja de defenderse.",hl:"brazos"},
+{w:"m",t:"Cuatro mil. Lo siento mucho. ¿Qué tendría que haber pasado para que su prima no perdiera ese dinero?",k:"Etiqueta y pregunta calibrada",y:"No defiende a NLD. Le pide a ella que diseñe la protección: lo que ella diga es lo que va a aceptar."},
+{w:"o",t:"Que alguien de confianza revisara los papeles. Y no mandar el dinero a una cuenta personal.",p:"look lean0",s:"Acaba de dar sus dos condiciones de compra."},
+{w:"m",t:"Entonces hagamos eso. Usted escoge el abogado, aquí o allá, y el pago va directo al desarrollador. Yo no toco su dinero.",mp:"palms lean+",k:"Usar sus criterios, no los propios",y:"Cada condición que ella puso queda cumplida con sus propias palabras. Ya no hay que convencerla."},
+{w:"o",t:"¿Y usted cómo gana, entonces?",s:"Es la pregunta de alguien que ya está evaluando en serio."},
+{w:"m",t:"Me paga el desarrollador cuando usted firma. Si no compra, no cobro. Por eso me conviene que compre bien, no rápido.",k:"Decir cómo gana uno",y:"Explicar el propio incentivo elimina la sospecha de una agenda oculta. Una frase, sin justificarse."},
+{w:"o",t:"Eso nadie me lo había dicho así.",p:"smile lean+",nv:"Se acerca a la cámara: baja la guardia.",hl:"torso"},
+{w:"m",t:"¿Le parece si el jueves hacemos veinte minutos con el abogado que usted escoja?",k:"Paso pequeño con fecha",y:"No pide la compra. Pide un avance que ella controla."},
+{w:"o",t:"El jueves a las siete, hora de aquí. Voy a invitar a mi prima también.",p:"nod",s:"Acepta con fecha y suma a otra persona: intención real."}],
+win:"Karla agenda la llamada con su abogado y con su prima. Tres semanas después firma la reserva.",
+keys:[["Cuando dijo que no compra sin conocer","Dijo en voz alta su peor sospecha"],["Cuando contó lo de su prima","Le pidió que ella diseñara la protección"],["Cuando preguntó cómo gana","Explicó su incentivo en una frase"]],
+frase:"«Seguramente piensa que soy uno más de los de Facebook.»"});
+
+S({id:"ven3",m:"ven",l:3,t:"Ya me quemaron una vez",ctx:"Boda de un cliente, frente a media mesa",mode:"p",bg:"boda",
+o:{n:"Don Mauricio",g:"m",r:"Tío de la novia; empresario en Virginia"},
+intro:"El tío de la novia escucha que Max «vende casas». Se acerca con el vaso en la mano y con ganas de pelea. Media mesa está escuchando.",
+start:{m:"relax",o:"glass frown",d:"mid"},
+b:[
+{w:"o",t:"¿Usted es el de las casas? Yo compré en un proyecto así y llevo tres años esperando la llave. Ustedes son todos iguales.",p:"lean+",d:"near",s:"Ataque en público. Si Max se defiende, pierde frente a la mesa entera.",nv:"Invade el espacio y habla fuerte: busca público, no respuestas.",hl:"distancia"},
+{w:"m",t:"Tres años esperando una llave. Eso da rabia.",mp:"look neutral",k:"Etiquetar la emoción sin defenderse",y:"No explica que él es distinto. Nombra lo que siente el otro. En público, el que se mantiene calmado se gana la sala."},
+{w:"o",t:"¡Claro que da rabia! Y nadie contesta el teléfono.",s:"Sigue alto, pero ya le habla a Max, no a la mesa."},
+{w:"n",t:"Max no contesta. Asiente y deja que siga. Cuenta hasta cinco por dentro.",mp:"nod",nv:"Silencio con mirada estable y cuerpo quieto: calma que no es sumisión.",hl:"cara",hw:"m"},
+{w:"o",t:"...Y lo peor es que mi hermana quiere comprar aquí también, y yo le digo que no se meta.",p:"relax lean0",s:"Debajo del enojo hay una preocupación: proteger a su hermana. Ahí está la puerta.",nv:"Baja el vaso y la voz.",hl:"manos"},
+{w:"m",t:"Usted la quiere proteger de lo que le pasó a usted.",k:"Reflejar la intención de fondo",y:"Le da crédito a su motivo. El tío deja de ser el que ataca y pasa a ser el que cuida."},
+{w:"o",t:"Exacto. ¿Usted qué le diría a ella?",p:"look",s:"Le pidió consejo. El ataque terminó."},
+{w:"m",t:"Que no compre en planos a nadie que no le enseñe obras ya entregadas. Ni a mí. Y que antes de firmar lo llame a usted.",mp:"palms",k:"Dar valor sin vender",y:"Su consejo sirve aunque nunca le compren. Y pone al tío de guardián: estatus para él frente a todos."},
+{w:"o",t:"Ja, usted es el primero que me dice que no le compren.",p:"laugh",nv:"Se ríe con el cuerpo entero: ya es aliado."},
+{w:"m",t:"Si su hermana quiere, le paso la lista de entregas y usted la revisa primero. ¿Me da su número?",mp:"phone",k:"Un paso que lo pone a él al mando",y:"El tío controla el siguiente paso. Así es fácil decir que sí."},
+{w:"o",t:"Apúntelo. Y venga, siéntese con nosotros.",p:"reach smile",s:"Lo invita a su mesa: aceptación social frente a todos.",hl:"manos"}],
+win:"Termina sentado en la mesa del tío. La hermana le escribe el lunes y el tío revisa la lista en la llamada.",
+keys:[["Cuando lo atacó en público","Nombró la rabia, sin defenderse"],["Cuando apareció la hermana","Reflejó su intención de protegerla"],["Cuando le pidió consejo","Dio valor y lo puso de guardián"]],
+frase:"«Tres años esperando una llave. Eso da rabia.»"});
+
+/* ===== NEGOCIAR ===== */
+S({id:"neg1",m:"neg",l:1,t:"El 2.5 es mucho",ctx:"Segunda reunión con un desarrollador",mode:"p",bg:"oficina",
+o:{n:"Ing. Portillo",g:"m",r:"Gerente comercial de un desarrollador"},
+intro:"El desarrollador quiere trabajar con NLD, pero quiere pagar menos. Max ya sabe su mínimo y tiene otros dos desarrolladores interesados.",
+start:{m:"relax",o:"relax",d:"mid"},
+b:[
+{w:"o",t:"Nos gusta lo que hacen. Pero el 2.5 es mucho. Aquí los corredores cobran 1.5.",p:"lean- palms",s:"Si discute el precio, ya aceptó trabajar juntos. Ahora negocia el número."},
+{w:"m",t:"Parece que el número les pesa más que el resultado.",k:"Etiqueta",y:"Nombra la tensión sin aceptar ni rechazar el número. El otro se siente entendido y sigue hablando."},
+{w:"o",t:"Es que el directorio ve el porcentaje y se asusta.",p:"relax",s:"El problema no es su opinión: es cómo lo explica a su directorio. Eso cambia la jugada."},
+{w:"m",t:"¿Qué tendría que ver su directorio para que el 2.5 se vea barato?",k:"Pregunta calibrada",y:"Le pide que él diseñe el argumento que necesita. Max le da munición en vez de pelear."},
+{w:"o",t:"Ventas que no hubiéramos hecho nosotros. Compradores de afuera, no los mismos de siempre."},
+{w:"m",t:"Entonces cobremos el 2.5 solo por compradores de Estados Unidos que ustedes no tengan registrados. Si ya estaban en su base, no cobro.",mp:"palms lean+",k:"Condicionar en vez de bajar",y:"No baja el porcentaje: cambia sobre qué se cobra. El directorio ve riesgo cero."},
+{w:"o",t:"Mmm. ¿Y exclusividad para la diáspora?",p:"think",s:"Pide algo más: está construyendo el trato, no saliéndose.",nv:"Mano en la barbilla: está evaluando.",hl:"manos"},
+{w:"m",t:"Si nos dan exclusividad seis meses, invierto en campañas en Houston y Los Ángeles para su proyecto.",k:"Si..., entonces...",y:"Toda concesión tiene precio. Exclusividad a cambio de inversión, nunca gratis."},
+{w:"n",t:"Casi diez segundos de silencio. Max no habla.",mp:"look neutral",nv:"Max sostiene la mirada, tranquilo. El que habla primero después de una oferta suele ceder.",hl:"cara",hw:"m"},
+{w:"o",t:"Hecho. Mándeme eso por escrito y lo llevo al directorio el martes.",p:"reach smile",hl:"manos"}],
+win:"El 2.5% queda intacto, con exclusividad de seis meses y presentación al directorio con fecha.",
+keys:[["Cuando dijo «el 2.5 es mucho»","Etiquetó sin aceptar ni rechazar"],["Cuando apareció el directorio","Preguntó qué necesitaban ver"],["Cuando pidió exclusividad","La cambió por inversión y se calló"]],
+frase:"«¿Qué tendría que ver su directorio para que el 2.5 se vea barato?»"});
+
+S({id:"neg2",m:"neg",l:2,t:"El ultimátum del viernes",ctx:"Café con un posible socio para la data del censo",mode:"p",bg:"cafe",
+o:{n:"Rodrigo",g:"m",r:"Quiere licenciar la data de salvadoreños en EE. UU."},
+intro:"Rodrigo quiere la base de datos del censo de NLD. Hoy llegó con prisa y con una amenaza.",
+start:{m:"relax",o:"relax",d:"mid"},
+b:[
+{w:"o",t:"Te voy a ser claro: o me das 40% de descuento antes del viernes o me voy con otra agencia.",p:"lean+ frown palms",d:"near",s:"Ultimátum con plazo. Suele ser presión, no decisión. Si fuera verdad, ya se habría ido.",nv:"Se inclina y gesticula fuerte: quiere que Max reaccione en caliente.",hl:"torso"},
+{w:"m",t:"Suena a que el viernes es importante para vos.",mp:"relax lean0",k:"Etiqueta sobre el plazo",y:"No acepta ni rechaza el ultimátum. Explora por qué existe el viernes."},
+{w:"o",t:"El viernes presento el presupuesto del año a mis socios.",p:"lean0 relax",s:"El plazo es de él, no de Max. El ultimátum perdió fuerza."},
+{w:"m",t:"¿Cómo querés llegar a esa reunión?",k:"Pregunta calibrada",y:"Lo pone a pensar en su propio éxito. Max se vuelve aliado, no proveedor."},
+{w:"o",t:"Con un número que no me rechacen. Y con algo que funcione rápido."},
+{w:"m",t:"Entonces no necesitás 40% menos: necesitás pagar menos al principio. Empecemos con un estado completo. Si convierte, firmamos el resto.",mp:"palms",k:"Resolver el interés, no la posición",y:"Su posición era «40% menos». Su interés es «no fracasar el viernes». Max ofrece eso sin regalar el precio."},
+{w:"o",t:"¿Y si la otra agencia me da todo más barato?",s:"Prueba a ver si Max se asusta."},
+{w:"m",t:"Podés ir. Prefiero perder el trato que venderte data que no te funcione.",mp:"relax look",k:"Mostrar el plan B sin amenazar",y:"Calma ante la amenaza. Deja claro que tiene alternativa y que no negocia contra sí mismo."},
+{w:"n",t:"Rodrigo se ríe, se recuesta y saca el celular para ver su calendario.",p:"phone lean- smile",d:"mid",nv:"Recostarse y sacar el calendario: pasó de pelear a planear.",hl:"manos"},
+{w:"o",t:"Texas completo. Si funciona, el resto en enero. Mandame el contrato hoy.",p:"look"}],
+win:"Piloto de Texas a precio completo, con el resto comprometido para enero. Cero descuento.",
+keys:[["Cuando lanzó el ultimátum","Preguntó por qué el viernes"],["Cuando dijo qué necesitaba","Resolvió el interés, no el 40%"],["Cuando mencionó a la competencia","Mostró su plan B con calma"]],
+frase:"«Prefiero perder el trato que venderte data que no te funcione.»"});
+
+S({id:"neg3",m:"neg",l:3,t:"La dueña que se levanta",ctx:"Negociar la renta del local para la oficina",mode:"p",bg:"oficina",
+o:{n:"Doña Celina",g:"f",r:"Dueña del local; fama de dura"},
+intro:"Max quiere ese local para la oficina de NLD. Doña Celina ya dijo dos veces que no baja el precio.",
+start:{m:"relax",o:"cross lean-",d:"mid"},
+b:[
+{w:"o",t:"Mil doscientos al mes. Ya se lo dije. Si no le conviene, hay otros interesados.",s:"Posición firme y escasez. Puede ser verdad o táctica.",nv:"Brazos cruzados y espalda atrás: posición cerrada.",hl:"brazos"},
+{w:"m",t:"Mil doscientos. ¿Y qué es lo que más le preocupa de un inquilino nuevo?",k:"Espejo y pregunta por su interés",y:"Repite el número sin pelearlo y lleva la conversación al riesgo de ella, no al precio de él."},
+{w:"o",t:"Que se vaya a los seis meses y me deje el local vacío. Ya me pasó.",p:"relax lean0",s:"Su interés real es la estabilidad. Eso vale más que unos dólares."},
+{w:"m",t:"Entonces le firmo dos años. ¿En cuánto queda si firmamos dos años y le pago tres meses por adelantado?",mp:"palms",k:"Dar lo que a ella le importa",y:"La estabilidad a Max le cuesta poco y a ella le vale mucho. Ese es el intercambio."},
+{w:"o",t:"Mil ciento cincuenta."},
+{w:"m",t:"Novecientos.",mp:"relax",k:"Ancla firme, sin justificar",y:"Una contraoferta corta. Justificar de más debilita el número."},
+{w:"o",t:"No, eso ya es falta de respeto. Mejor ahí lo dejamos.",p:"turn frown feet-",d:"far",s:"El abandono de la mesa: la táctica más vieja. Si Max la persigue, pierde.",nv:"Se levanta y se da la vuelta hacia la puerta.",hl:"pies"},
+{w:"m",t:"Doña Celina, la entiendo. Antes de irse: ¿qué número le parecería justo para alguien que le garantiza dos años sin un mes vacío?",mp:"look",k:"No perseguir; dejar la puerta abierta",y:"No se levanta ni sube su oferta. Le devuelve la pregunta con el valor de lo que ofrece."},
+{w:"n",t:"Ella se detiene en la puerta y se queda de lado, todavía con la cartera.",p:"face",nv:"Se detiene y gira medio cuerpo: el abandono era para presionar, no definitivo.",hl:"pies"},
+{w:"o",t:"Mil. Y usted pinta.",d:"mid",s:"Contraoferta con condición: quiere cerrar."},
+{w:"m",t:"Mil, yo pinto, y usted cambia el portón antes de que entremos.",mp:"reach smile",k:"Aceptar pidiendo algo a cambio",y:"Nunca acepta sin pedir algo. El portón le ahorra a Max un gasto real."},
+{w:"o",t:"Ay, usted es necio. Va, trato hecho.",p:"reach smile feet+",d:"near",hl:"manos"}],
+win:"Local a 1,000 en vez de 1,200 por dos años, con portón nuevo: 4,800 dólares menos.",
+keys:[["Cuando dijo «hay otros interesados»","Preguntó qué le preocupa de un inquilino"],["Cuando se levantó","No la persiguió ni subió la oferta"],["Cuando dio un número","Aceptó pidiendo algo a cambio"]],
+frase:"«¿Qué número le parecería justo para alguien que le garantiza dos años?»"});
+
+/* ===== PERSUADIR ===== */
+S({id:"per1",m:"per",l:1,t:"Después lo vemos",ctx:"Cinco minutos con el jefe en el pasillo",mode:"p",bg:"pasillo",
+o:{n:"Ernesto",g:"m",r:"Su jefe en la empresa"},
+intro:"Max tiene una idea que le ahorraría horas al equipo. Su jefe siempre la manda para después. Hoy lo encuentra en el pasillo.",
+start:{m:"relax",o:"phone",d:"mid"},
+b:[
+{w:"o",t:"Interesante. Después lo vemos con calma.",p:"feet-",s:"«Después lo vemos» sin fecha es un no cortés. Insistir con más datos lo empeora.",nv:"Mira el celular y tiene los pies hacia el ascensor: quiere irse.",hl:"pies"},
+{w:"m",t:"Dale. Una sola pregunta: ¿cuál es el número que te piden mejorar este trimestre?",k:"De tu idea a su métrica",y:"Deja de vender su idea y pregunta por la presión del jefe. Ahí está lo que lo mueve."},
+{w:"o",t:"El tiempo de respuesta a clientes. Estamos en 48 horas y quieren 24.",p:"relax look feet+",s:"Guardó el celular y giró: le tocaron su problema.",nv:"Guarda el celular y gira los pies hacia Max: ahora sí está.",hl:"pies"},
+{w:"m",t:"Mi idea lo baja a 20. Te pido dos semanas con un solo equipo. Si no baja, no hablamos más del tema.",mp:"palms",k:"Su número, una prueba pequeña",y:"Una frase con su métrica, riesgo mínimo y una salida fácil. Decir que sí no le cuesta nada."},
+{w:"o",t:"¿Dos semanas? ¿Y quién lo hace?",p:"think",s:"Pregunta el cómo: ya lo está considerando."},
+{w:"m",t:"Yo, con mi equipo. Vos solo me das permiso para cambiar el proceso en esos diez casos.",k:"Quitarle trabajo al que decide",y:"Le deja claro que no le pide recursos, solo una firma."},
+{w:"o",t:"Va. Empezá el lunes y me mandás el número el viernes.",p:"smile nod relax"}],
+win:"Piloto aprobado en tres minutos, con fecha de inicio y de reporte.",
+keys:[["Cuando dijo «después lo vemos»","Preguntó por su métrica"],["Cuando dio el número","Tradujo su idea a ese número"],["Cuando preguntó quién","Le quitó todo el trabajo"]],
+frase:"«¿Cuál es el número que te piden mejorar este trimestre?»"});
+
+S({id:"per2",m:"per",l:2,t:"La socia que no quiere",ctx:"Café con su socia de otro proyecto",mode:"p",bg:"cafe",
+o:{n:"Andrea",g:"f",r:"Socia de Max en un proyecto paralelo"},
+intro:"Max quiere abrir una línea nueva: ayudar a empresas salvadoreñas a vender en Estados Unidos. Andrea cree que es distraerse, y tiene parte de razón.",
+start:{m:"relax",o:"cross frown lean-",d:"mid"},
+b:[
+{w:"o",t:"No. Ya estamos en demasiadas cosas. Esta es tu idea de la semana.",s:"Rechazo con una crítica personal. Si Max se defiende, se vuelve pelea.",nv:"Brazos cruzados y espalda atrás: viene cerrada.",hl:"brazos"},
+{w:"m",t:"Tenés razón en algo: he abierto muchos frentes. ¿Qué te preocupa más, el tiempo o el dinero?",mp:"palms",k:"Conceder lo que es cierto",y:"Darle la razón en lo justo baja la defensa. La pregunta de dos opciones la obliga a concretar."},
+{w:"o",t:"El tiempo. Lo principal todavía no despega del todo.",p:"relax",s:"Su objeción real: el foco del negocio principal."},
+{w:"m",t:"Entonces la regla la ponés vos: si esto le quita una hora a lo principal, lo cerramos. ¿Qué tendría que pasar para que sume en vez de restar?",k:"Darle la regla de salida",y:"Quien pone las condiciones siente control. Max no pide un sí: pide criterios."},
+{w:"o",t:"Que nos traiga clientes para lo principal. Si no, no me interesa.",p:"think",s:"Acaba de dar el criterio para aprobarlo."},
+{w:"m",t:"Eso es justo lo que pasa: una sola empresa de regalos tiene doce mil clientes salvadoreños en Los Ángeles.",mp:"palms lean+",k:"Su criterio y un número",y:"El argumento es el criterio de ella, no el entusiasmo de él. Un número concreto pesa más que tres adjetivos."},
+{w:"o",t:"¿Doce mil? ¿Con datos de contacto?",p:"lean+ look relax",s:"Pregunta el detalle: ya está evaluando.",nv:"Se inclina hacia adelante: interés.",hl:"torso"},
+{w:"m",t:"Con permiso para campañas. Te propongo un mes con una sola empresa, y lo medís vos.",k:"Un piloto que ella mide",y:"Ella es la jueza. Así la persuasión se vuelve decisión de ella."},
+{w:"o",t:"Un mes. Y lo mido yo.",p:"smile nod"}],
+win:"Andrea aprueba un piloto de un mes y queda como responsable de medirlo.",
+keys:[["Cuando lo acusó de dispersarse","Le dio la razón en lo justo"],["Cuando dijo «el tiempo»","Le dio la regla para cerrarlo"],["Cuando dio su criterio","Lo conectó con un número"]],
+frase:"«Tenés razón en algo. ¿Qué te preocupa más, el tiempo o el dinero?»"});
+
+S({id:"per3",m:"per",l:3,t:"La sala en contra",ctx:"Pitch a cuatro inversionistas",mode:"p",bg:"oficina",
+o:{n:"Lic. Ayala",g:"m",r:"El inversionista más influyente y más escéptico"},
+ex:[{x:300,g:"m",f:-1,p:"relax"},{x:334,g:"f",f:-1,p:"relax"}],
+intro:"A los dos minutos del pitch, el inversionista más influyente interrumpe. Los otros lo miran a él, no a Max.",
+start:{m:"palms",o:"cross lean-",d:"mid"},
+b:[
+{w:"o",t:"Perdón que lo interrumpa. Esto ya lo vi diez veces. Las inmobiliarias para la diáspora no escalan.",s:"No es una pregunta: es un veredicto para la sala. Los demás siguen a quien tiene estatus.",ex:{0:"turn",1:"turn"},nv:"Los otros dos inversionistas se giran hacia él: la sala sigue al de más estatus.",hl:"brazos"},
+{w:"m",t:"Tiene razón: la mayoría no escala. ¿Puedo decirle por qué creo que no escalan?",mp:"relax",k:"Conceder y pedir permiso",y:"Darle la razón desarma el ataque. Pedir permiso hace que él mismo le dé la palabra frente a todos."},
+{w:"o",t:"A ver.",p:"relax",s:"Le dio la palabra. El estatus se empezó a compartir."},
+{w:"m",t:"Porque buscan clientes de uno en uno. Nosotros sabemos en qué código postal vive cada salvadoreño en Estados Unidos. No buscamos: llegamos.",mp:"palms",k:"Una diferencia, una imagen",y:"Una sola idea, contrastada con lo que él ya vio diez veces. «No buscamos: llegamos» se repite fácil."},
+{w:"o",t:"Datos tiene cualquiera.",p:"lean-",s:"Segunda prueba: mide si Max se pone nervioso."},
+{w:"m",t:"Cierto. Lo que no tiene cualquiera son tres cierres con esos datos en cuatro meses. ¿Qué número tendría que ver usted para creerlo?",mp:"relax look",k:"Prueba concreta y pregunta calibrada",y:"No discute: muestra un resultado y le pide su criterio. Su respuesta será el compromiso que tendrá que cumplir."},
+{w:"n",t:"Silencio. Uno de los otros inversionistas se gira hacia Max y saca su libreta.",ex:{0:"face lean+",1:"face"},nv:"La sala cambia de dirección: los cuerpos giran hacia Max. Ahí se ganó la sala."},
+{w:"o",t:"Diez cierres en seis meses. Si llega a eso, entro.",p:"lean0 smile"},
+{w:"m",t:"Diez en seis meses. Le mando el avance cada mes, a usted primero.",mp:"reach smile",k:"Recap y lugar especial",y:"Repite el compromiso exacto y le da un lugar especial. El escéptico se vuelve padrino."}],
+win:"El inversionista más escéptico pone una meta en público y queda como padrino del proyecto.",
+keys:[["Cuando lo interrumpió","Concedió y pidió permiso"],["Cuando dijo «datos tiene cualquiera»","Mostró resultado y pidió su número"],["Cuando dio la meta","La repitió y le dio un lugar"]],
+frase:"«Tiene razón: la mayoría no escala. ¿Puedo decirle por qué?»"});
+
+/* ===== DESTILAR ===== */
+S({id:"des1",m:"des",l:1,t:"¿Y usted a qué se dedica?",ctx:"Mesa de una boda, con la música alta",mode:"p",bg:"boda",
+o:{n:"Tío Beto",g:"m",r:"Tío de la novia"},
+intro:"El tío le pregunta a Max a qué se dedica. Hay música alta y tiene unos diez segundos antes de que el tío pierda el interés.",
+start:{m:"glass",o:"glass",d:"mid"},
+b:[
+{w:"o",t:"¿Y usted a qué se dedica?",s:"Pregunta social. Pide el titular, no la historia."},
+{w:"m",t:"Ayudo a salvadoreños que viven en Estados Unidos a jubilarse aquí.",mp:"smile",k:"El titular en una frase",y:"Quién, qué y para qué, en doce palabras. Sin «PropTech» ni modelo de negocio."},
+{w:"o",t:"¡Mire! Mi hermano en Maryland siempre dice que se quiere regresar.",p:"relax lean+ smile",s:"Engancha y lo conecta con su vida: ahora sí quiere más.",nv:"Deja el vaso y se inclina: atención total.",hl:"torso"},
+{w:"m",t:"¿Y qué lo detiene?",mp:"relax",k:"Preguntar en vez de explicar",y:"Cuando el otro engancha, Max no suelta su pitch. Pregunta por el caso del otro."},
+{w:"o",t:"Que no sabe por dónde empezar. Y le da miedo que lo estafen.",p:"lean0"},
+{w:"m",t:"Son las dos cosas que más escuchamos. ¿Le mando algo corto para su hermano?",k:"Un paso pequeño",y:"Una frase, un dato y un paso. En una boda no cabe nada más."},
+{w:"o",t:"Sí, mándeselo. Tome, este es el número de él.",p:"phone smile"}],
+win:"Sale de la boda con el número del hermano y con la presentación hecha por el tío.",
+keys:[["Cuando le preguntó a qué se dedica","Dio el titular en doce palabras"],["Cuando mencionó al hermano","Preguntó qué lo detiene"],["Cuando contó el miedo","Propuso un paso pequeño"]],
+frase:"«Ayudo a salvadoreños que viven en Estados Unidos a jubilarse aquí.»"});
+
+S({id:"des2",m:"des",l:2,t:"Seis pisos de ascensor",ctx:"Ascensor del coworking",mode:"p",bg:"ascensor",
+o:{n:"Sra. Rivas",g:"f",r:"Directora de un desarrollador que nunca le contestó"},
+intro:"Max coincide en el ascensor con la directora de un desarrollador al que nunca ha podido llegar. Son seis pisos.",
+start:{m:"relax",o:"phone",d:"mid"},
+b:[
+{w:"n",t:"Ella entra con prisa, revisando el celular.",nv:"Celular y mirada abajo: no está disponible para una conversación larga.",hl:"cara"},
+{w:"m",t:"Buenos días. Usted es del proyecto de la Escalón, ¿verdad?",mp:"smile",k:"Abrir con algo de ella",y:"Empieza por ella, no por él. Una pregunta de sí o no se contesta fácil aunque haya prisa."},
+{w:"o",t:"Sí. ¿Por?",p:"look neutral",s:"Le da medio segundo. Si Max se extiende, la pierde."},
+{w:"m",t:"Le traigo compradores de Estados Unidos que sus vendedores no alcanzan.",mp:"relax",k:"Su beneficio en una frase",y:"Habla de lo que ella gana, no de lo que es NLD. Doce palabras."},
+{w:"o",t:"¿Cuántos?",p:"relax",s:"Pregunta el cuánto: pide un dato. Señal de interés."},
+{w:"m",t:"Tres cierres en cuatro meses con otro desarrollador.",k:"Un número y silencio",y:"Da el dato y se calla. No le agrega adjetivos."},
+{w:"n",t:"El ascensor llega al piso. Ella sostiene la puerta con la mano.",p:"reach",nv:"Sostener la puerta es ganar tiempo para seguir hablando: interés.",hl:"manos"},
+{w:"o",t:"Mándeme algo.",s:"Puede ser cortesía. Falta convertirlo en un avance."},
+{w:"m",t:"Mejor: el jueves le enseño los tres casos en quince minutos, aquí mismo. ¿A las diez o a las cuatro?",k:"De «mándeme algo» a una cita",y:"Un correo se pierde. Quince minutos con hora y dos opciones es un avance."},
+{w:"o",t:"A las diez. Piso seis.",p:"relax smile"}],
+win:"Reunión de quince minutos el jueves con una directora que nunca le contestaba correos.",
+keys:[["Cuando entró con prisa","Abrió con algo de ella"],["Cuando dijo «¿por?»","Dio su beneficio en una frase"],["Cuando dijo «mándeme algo»","Pidió quince minutos con hora"]],
+frase:"«Le traigo compradores de Estados Unidos que sus vendedores no alcanzan.»"});
+
+S({id:"des3",m:"des",l:3,t:"Al grano",ctx:"Cinco minutos por videollamada con un inversionista",mode:"p",bg:"video",
+o:{n:"Mr. Castro",g:"m",r:"Inversionista salvadoreño en Nueva York"},
+intro:"El inversionista aceptó cinco minutos. Al anterior lo cortó a los veinte segundos. Max lo sabe.",
+start:{m:"relax",o:"cross lean-"},
+b:[
+{w:"o",t:"Tienes dos minutos. Al grano.",s:"Prueba de foco. Cada palabra de más cuenta en contra.",hl:"brazos",nv:"Brazos cruzados y espalda atrás: te mide antes de escucharte."},
+{w:"m",t:"Necesito ciento cincuenta mil para triplicar las ventas en Texas en un año.",k:"Conclusión primero",y:"Número, para qué y en cuánto tiempo. Sin introducción ni historia."},
+{w:"o",t:"¿Por qué Texas?",p:"relax lean0",s:"Pregunta el porqué: pide un nivel más de detalle."},
+{w:"m",t:"Porque ahí viven trescientos mil salvadoreños y cada cliente cuesta la mitad que en California.",k:"Un porqué, un dato",y:"Contesta solo lo que le preguntaron. No mete el resto del plan."},
+{w:"o",t:"¿Y cómo sé que no se va en anuncios que no venden?",p:"lean+",s:"Pregunta el cómo: ya está evaluando en serio.",hl:"torso",nv:"Se acerca a la cámara: subió el interés."},
+{w:"m",t:"Solo pago campañas en códigos postales donde ya cerramos. Si un mes no convierte, lo corto.",k:"Un mecanismo concreto",y:"Muestra la regla de control en una frase. Sin defenderse."},
+{w:"n",t:"Seis segundos de silencio. Max no los llena.",mp:"look neutral",nv:"Max sostiene la mirada a la cámara, sin sonrisa nerviosa.",hl:"cara",hw:"m"},
+{w:"o",t:"Mándame el modelo. Si cuadra, hablamos el lunes con mi socio.",p:"smile",s:"Avance con fecha que incluye a quien decide."}],
+win:"En cuatro minutos y medio consigue la reunión con el socio que decide.",
+keys:[["Cuando dijo «al grano»","Número, para qué y plazo"],["Cuando preguntó por qué Texas","Un dato, nada más"],["Cuando se hizo silencio","Max también se calló"]],
+frase:"«Necesito ciento cincuenta mil para triplicar las ventas en Texas en un año.»"});
+
+/* ===== ACTITUD ===== */
+S({id:"act1",m:"act",l:1,t:"De arriba abajo",ctx:"Coctel de empresarios",mode:"p",bg:"coctel",
+o:{n:"Don Federico",g:"m",r:"Empresario conocido; trata a todos con desdén"},
+intro:"Max se presenta. El empresario lo mira de pies a cabeza, no le da la mano y sigue hablando con otro.",
+start:{m:"relax",o:"glass away lean-",d:"mid"},
+b:[
+{w:"o",t:"Ajá. ¿Y de qué empresa me dijo?",s:"Desdén de estatus: prueba si Max necesita su aprobación.",nv:"No lo mira y se echa para atrás: marca distancia.",hl:"cara"},
+{w:"m",t:"Next Level Demographic. Pero sigan con lo suyo, se los veía entretenidos.",mp:"smile",k:"No perseguir la aprobación",y:"No se explica ni insiste. Le devuelve la libertad. Quien no necesita la atención termina recibiéndola."},
+{w:"n",t:"Max se gira hacia la persona de al lado y le pregunta por el vino.",mp:"turn glass",nv:"Max le quita el cuerpo con naturalidad: la calma se ve en que no se queda esperando.",hl:"torso",hw:"m"},
+{w:"o",t:"Oiga, espere. ¿Next Level, los de la data de salvadoreños en Estados Unidos?",p:"look lean+",d:"near",s:"El desdén era una prueba. Al ver que Max no la necesitaba, cambió."},
+{w:"m",t:"Esos mismos.",mp:"face smile",k:"Respuesta corta",y:"No se emociona ni se sobreexplica. Corto y tranquilo mantiene el marco."},
+{w:"o",t:"Mi hija trabaja en una aseguradora que quiere entrar a ese mercado.",p:"relax"},
+{w:"m",t:"Qué bien. ¿Qué buscan exactamente?",mp:"relax",k:"Curiosidad, no venta",y:"Pregunta por lo de él. Se mantiene en posición de igual."},
+{w:"o",t:"Mejor que se lo explique ella. Tome su tarjeta.",p:"card smile",hl:"manos",nv:"Le ofrece la tarjeta con el cuerpo de frente: ahora es él quien busca a Max."}],
+win:"El que lo ignoró termina dándole la tarjeta de su hija.",
+keys:[["Cuando lo miró de arriba abajo","No buscó su aprobación"],["Cuando el otro volvió","Respondió corto"],["Cuando apareció la oportunidad","Preguntó en vez de vender"]],
+frase:"«Sigan con lo suyo, se los veía entretenidos.»"});
+
+S({id:"act2",m:"act",l:2,t:"Veinte minutos tarde",ctx:"Reunión con una gerente; Max llega tarde",mode:"p",bg:"cafe",
+o:{n:"Lic. Mejía",g:"f",r:"Gerente de una cadena de restaurantes"},
+intro:"Hubo un choque en la Masferrer y Max llega veinte minutos tarde. Ella ya pidió la cuenta.",
+start:{m:"relax",o:"cross frown",d:"mid"},
+b:[
+{w:"o",t:"Ya me iba. Tengo otra reunión en diez minutos.",p:"phone",s:"Molestia legítima. Una excusa larga la molesta más.",nv:"Celular en la mano y mirada abajo: está lista para irse.",hl:"manos"},
+{w:"m",t:"Llegué veinte minutos tarde. Es mi responsabilidad y le costó su tiempo.",mp:"look neutral",k:"Asumir sin excusas",y:"Una frase de responsabilidad, sin contar el tráfico. El que se justifica se ve débil; el que asume, confiable."},
+{w:"o",t:"Pues sí.",p:"look cross",s:"Sigue molesta, pero escucha."},
+{w:"m",t:"Le propongo esto: en los diez minutos que tiene le doy lo único importante, y si le sirve, la próxima vez voy yo a donde usted esté.",mp:"palms",k:"Reparar con algo concreto",y:"No pide perdón tres veces. Ofrece una compensación y usa bien el tiempo que queda."},
+{w:"o",t:"Diez minutos. Adelante.",p:"relax",s:"Le dio otra oportunidad."},
+{w:"m",t:"Sus clientes salvadoreños de Estados Unidos llegan a sus restaurantes en diciembre. Deles un motivo para volver en vez de irse a la competencia.",mp:"relax",k:"Directo al valor",y:"Después de un error, la mejor disculpa es ser útil rápido."},
+{w:"o",t:"¿Y cómo sé cuántos son?",p:"lean+",hl:"torso",nv:"Se inclina: el enojo dio paso al interés."},
+{w:"m",t:"Le llevo el número por sucursal el jueves, a su oficina.",k:"Cumplir la reparación ofrecida",y:"Cumple de inmediato lo que prometió: ir él a donde está ella."},
+{w:"o",t:"Jueves a las tres. Y no llegue tarde.",p:"laugh"}],
+win:"Convierte un error en una segunda reunión, en la oficina de ella.",
+keys:[["Cuando ella ya se iba","Asumió en una frase"],["Cuando dijo «pues sí»","Ofreció reparar con algo concreto"],["Cuando le dio diez minutos","Fue directo al valor"]],
+frase:"«Llegué veinte minutos tarde. Es mi responsabilidad.»"});
+
+S({id:"act3",m:"act",l:3,t:"La burla en el panel",ctx:"Panel de inversión frente a doscientas personas",mode:"p",bg:"escenario",
+o:{n:"Un asistente",g:"m",r:"Toma el micrófono en la ronda de preguntas"},
+intro:"Max está en un panel sobre inversión. En la ronda de preguntas, alguien toma el micrófono para burlarse frente a todo el salón.",
+start:{m:"relax",o:"relax",d:"far"},
+b:[
+{w:"o",t:"Pregunta para el de las casas: ¿y a cuántos ya les vendieron un terreno en la luna?",p:"smile palms away",s:"Burla pública. La sala espera ver si Max se ofende.",nv:"Se ríe mirando al público, no a Max: busca aliados.",hl:"cara"},
+{w:"n",t:"Risas en el salón. Max sonríe, deja que pasen y toma agua con calma.",mp:"glass smile",nv:"Pausa visible: el que no tiene prisa por defenderse se ve seguro.",hl:"manos",hw:"m"},
+{w:"m",t:"A la luna, ninguno. A la tierra de su abuela, tres este año.",mp:"relax smile",k:"Humor que devuelve sin atacar",y:"Usa la imagen del otro y la gira hacia lo emocional. La sala se ríe con Max, no del otro."},
+{w:"n",t:"Aplausos. El hombre levanta las manos, riéndose.",p:"laugh palms look"},
+{w:"m",t:"Y en serio, la duda es válida: pídanle a cualquier asesor la lista de proyectos entregados. Si no la tiene, no le compren.",mp:"palms",k:"Rescatar la duda real",y:"Toma la pregunta que había detrás de la broma y da un consejo útil para todos. Queda como el más confiable del salón."},
+{w:"o",t:"¿Y usted la tiene?",p:"relax neutral",s:"El que se burló ahora pregunta en serio: ya está interesado."},
+{w:"m",t:"Se la doy al terminar. Busque la mesa de NLD.",mp:"smile",k:"Una invitación concreta",y:"No la lee en voz alta ni se defiende: invita a un paso."},
+{w:"n",t:"Después del panel, el hombre es el primero en llegar a la mesa de NLD.",p:"smile reach",d:"near",hl:"distancia",nv:"El que estaba lejos se acercó solo: la distancia dice quién busca a quién."}],
+win:"El que se burló es el primero en pedir la lista. Tres personas más se acercan por la misma respuesta.",
+keys:[["Cuando se burló","Pausa y humor sin atacar"],["Cuando la sala se rio","Rescató la duda real"],["Cuando preguntó en serio","Lo invitó a la mesa"]],
+frase:"«A la luna, ninguno. A la tierra de su abuela, tres este año.»"});
+
+/* ===== CONFRONTAR ===== */
+S({id:"con1",m:"con",l:1,t:"El crédito ajeno",ctx:"Cocina del coworking, a solas",mode:"p",bg:"cowork",
+o:{n:"Julio",g:"m",r:"Colega que presentó la idea de Max como suya"},
+intro:"En la reunión, Julio presentó como suya la idea de Max. Max no dijo nada en ese momento. Ahora lo busca a solas.",
+start:{m:"relax",o:"glass smile",d:"mid"},
+b:[
+{w:"m",t:"Julio, ¿tenés dos minutos?",k:"En privado y con permiso",y:"Confrontar en privado protege la relación. Pedir permiso baja la defensa."},
+{w:"o",t:"Sí, claro. ¿Qué pasó?"},
+{w:"m",t:"En la reunión presentaste la idea de las campañas por código postal. Esa idea la armé yo y te la mostré el martes.",mp:"look neutral",k:"Hechos, sin adjetivos",y:"Qué pasó y cuándo. Sin «me robaste» ni «siempre hacés lo mismo». Los hechos no se discuten."},
+{w:"o",t:"Bueno, pero la trabajamos entre todos, ¿no?",p:"cross lean- neutral",s:"Defensa típica: diluir. Si Max pelea el detalle, se pierde el punto.",nv:"Cruza los brazos y se echa para atrás: se defiende.",hl:"brazos"},
+{w:"m",t:"La mejoramos entre todos, sí. El problema es que el gerente cree que fue tuya. ¿Cómo lo arreglamos?",mp:"relax",k:"Conceder lo cierto y pedir solución",y:"Le da la razón en lo que es justo y deja la solución en sus manos."},
+{w:"o",t:"...Tenés razón. Le escribo al gerente que la idea fue tuya.",p:"relax down lean0",nv:"Mirada abajo y brazos sueltos: lo reconoce.",hl:"brazos"},
+{w:"m",t:"Gracias. Y la próxima, presentémosla juntos.",mp:"reach smile",k:"Cerrar hacia adelante",y:"No lo humilla. Cierra con un acuerdo para el futuro que protege la relación."}],
+win:"Julio corrige el crédito por escrito y la relación queda intacta.",
+keys:[["Antes de hablar","Lo buscó en privado"],["Al decirlo","Usó hechos sin adjetivos"],["Cuando se defendió","Concedió y preguntó cómo arreglarlo"]],
+frase:"«Esa idea la armé yo. ¿Cómo lo arreglamos?»"});
+
+S({id:"con2",m:"con",l:2,t:"El cliente que grita",ctx:"Oficina de NLD, sin cita",mode:"p",bg:"oficina",
+o:{n:"Don Óscar",g:"m",r:"Cliente con la entrega atrasada"},
+intro:"La entrega del apartamento de Don Óscar se atrasó dos meses por culpa del desarrollador. Llega a la oficina sin cita y gritando.",
+start:{m:"relax",o:"frown",d:"mid"},
+b:[
+{w:"o",t:"¡Me están viendo la cara! ¡Dos meses! ¡Quiero mi dinero de vuelta ya!",p:"lean+ palms",d:"near",s:"Furia legítima. Primero sale la emoción; la solución viene después.",nv:"Muy cerca y con las manos fuertes: descarga.",hl:"distancia"},
+{w:"n",t:"Max no retrocede ni se acerca. Deja que termine sin interrumpir.",mp:"look neutral",nv:"Firmeza tranquila: no huye, tampoco confronta.",hl:"pies",hw:"m"},
+{w:"m",t:"Dos meses de atraso, y nadie le explicó nada. Yo también estaría furioso.",k:"Etiquetar sin defenderse",y:"Valida la emoción con palabras de él. Nunca «cálmese»: eso enciende más."},
+{w:"o",t:"¡Exacto! Nadie me contesta.",p:"lean0 relax",s:"Bajó el volumen: ya es queja, no grito."},
+{w:"m",t:"¿Qué es lo que más le afecta del atraso?",k:"Buscar el daño concreto",y:"Detrás de «quiero mi dinero» hay un problema puntual. Ese es el que se puede resolver."},
+{w:"o",t:"Que ya entregué el apartamento donde vivo. En noviembre me quedo en la calle.",p:"down",s:"Ese es el problema real: dónde vivir en noviembre, no el dinero.",hl:"cara",nv:"Baja la mirada: debajo del enojo había miedo."},
+{w:"m",t:"Entonces lo urgente es dónde vive en noviembre. Hoy hablo con el desarrollador para que cubra su renta hasta la entrega, y le confirmo antes de las seis.",mp:"palms",k:"Solución concreta con hora",y:"Resuelve el daño real con un compromiso medible. Promete solo lo que va a gestionar hoy."},
+{w:"o",t:"...¿Antes de las seis?",p:"look",s:"Ya no pide su dinero de vuelta."},
+{w:"m",t:"Antes de las seis. Siéntese, ¿le traigo un café?",mp:"smile",d:"mid",k:"Bajar la temperatura",y:"Un gesto pequeño y humano después del compromiso."},
+{w:"n",t:"A las cinco y cuarto Max le confirma que el desarrollador cubre la renta. Un mes después, Don Óscar le refiere a su cuñado.",p:"smile"}],
+win:"No pidió reembolso, el desarrollador cubrió la renta y el cliente refirió a un familiar.",
+keys:[["Cuando gritó","Lo dejó terminar sin retroceder"],["Cuando bajó el volumen","Preguntó qué le afectaba más"],["Cuando habló de noviembre","Solución concreta con hora"]],
+frase:"«Yo también estaría furioso. ¿Qué es lo que más le afecta?»"});
+
+S({id:"con3",m:"con",l:3,t:"El socio que no cumple",ctx:"Café con un amigo y socio",mode:"p",bg:"cafe",
+o:{n:"Daniel",g:"m",r:"Socio y amigo; tercera entrega fallada"},
+intro:"Tercera vez que Daniel no entrega lo que prometió. Es amigo de Max desde hace años. Si esto sigue, el proyecto se cae.",
+start:{m:"relax",o:"relax smile",d:"mid"},
+b:[
+{w:"m",t:"Daniel, quiero hablar de las entregas. Es incómodo, y te lo digo de frente porque te aprecio.",k:"Anunciar la conversación difícil",y:"Nombrar la incomodidad y el aprecio al principio evita que el otro se sienta emboscado."},
+{w:"o",t:"Uy... ¿qué pasó?",p:"lean- neutral"},
+{w:"m",t:"Las tres últimas fechas no se cumplieron: el 2, el 16 y ayer. Cuando pasa, el cliente me llama a mí y quedo mal.",mp:"look neutral",k:"Situación, conducta, impacto",y:"Fechas exactas, qué pasó y qué causó. Sin «sos irresponsable»."},
+{w:"o",t:"Mirá, no es justo. Vos me cargás de cosas y después me reclamás.",p:"cross frown",s:"Contraataque. Tiene una parte de verdad que conviene escuchar.",nv:"Brazos cruzados: se protege.",hl:"brazos"},
+{w:"m",t:"Puede ser. ¿Qué te estoy cargando que no te deja cumplir?",mp:"relax",k:"No defenderse: investigar",y:"Acepta que puede ser parte del problema. Así la conversación sigue en vez de volverse pelea."},
+{w:"o",t:"El diseño y las cotizaciones. No me da el día. Y me da pena decirte que no.",p:"relax down",s:"La causa real: no sabe decir que no. Eso tiene solución.",nv:"Descruza y baja la mirada: vergüenza, no rebeldía.",hl:"brazos"},
+{w:"m",t:"Gracias por decírmelo. Prefiero un no a tiempo que un sí que no se cumple. ¿Qué dejás de hacer para cumplir el diseño?",k:"Premiar la honestidad y pedir una decisión",y:"Le da permiso para decir que no y lo obliga a priorizar."},
+{w:"o",t:"Las cotizaciones. Que las haga otro.",p:"look"},
+{w:"m",t:"Hecho. Y si una fecha está en riesgo, me avisás dos días antes. ¿Trato?",mp:"reach",k:"Acuerdo con una regla clara",y:"Cierra con una regla simple y medible para lo que viene."},
+{w:"o",t:"Trato. Gracias por no explotar.",p:"reach smile",hl:"manos"}],
+win:"Daniel suelta las cotizaciones y cumple las cuatro entregas siguientes. La amistad sigue.",
+keys:[["Al empezar","Anunció que era incómodo"],["Al decirlo","Fechas exactas e impacto"],["Cuando contraatacó","Preguntó qué le estaba cargando"]],
+frase:"«Prefiero un no a tiempo que un sí que no se cumple.»"});
+
+/* ===== SEDUCIR ===== */
+S({id:"sed1",m:"sed",l:1,t:"La boda",ctx:"Boda en Los Planes, cerca de la mesa de postres",mode:"p",bg:"boda",
+o:{n:"Sofía",g:"f",r:"Amiga de la novia"},ex:[{x:300,g:"f",f:-1,p:"glass"}],
+intro:"Sofía está con una amiga cerca de la mesa de postres. Max no la conoce.",
+start:{m:"glass",o:"relax",d:"far"},
+b:[
+{w:"n",t:"Ella mira dos veces hacia Max y vuelve con su amiga, riéndose.",p:"look smile",nv:"Dos miradas en poco tiempo y el cuerpo medio abierto hacia el salón: hay entrada.",hl:"cara"},
+{w:"m",t:"¿Ustedes son del lado de la novia o del novio? Necesito saber con quién no hablar mal del otro.",mp:"smile",d:"mid",k:"Abrir con el contexto y humor ligero",y:"Una pregunta del lugar, fácil de contestar, con algo de juego. Incluye a la amiga para no romper el grupo."},
+{w:"o",t:"Jaja, de la novia. Así que cuidado.",p:"laugh",s:"Se ríe y juega de vuelta: está abierta."},
+{w:"m",t:"Cuidado entonces. ¿De dónde la conocés?",k:"Seguir el hilo de ella",y:"Pregunta sobre lo que ella dijo. La conversación es de ella, no un interrogatorio."},
+{w:"o",t:"Del colegio, desde los doce años. ¿Y vos qué hacés aquí?",p:"lean+ smile",d:"near",s:"Pregunta de vuelta: interés recíproco.",nv:"Se inclina hacia Max y acorta la distancia.",hl:"torso"},
+{w:"m",t:"Al novio lo conozco del trabajo. Pero lo mejor de esta boda hasta ahora es esta conversación.",k:"Mostrar intención con claridad",y:"Deja claro el interés sin presión: una frase y una sonrisa."},
+{w:"n",t:"La amiga se va a bailar. Sofía se queda.",ex:{0:"hide"},p:"look",nv:"Se queda cuando la amiga se va: decide seguir hablando.",hl:"pies"},
+{w:"m",t:"El jueves hay un concierto de jazz en el Centro Histórico. ¿Te gustaría ir?",mp:"relax smile",k:"Propuesta concreta",y:"Plan con día y lugar. La invitación vaga («a ver cuándo») no compromete a nadie."},
+{w:"o",t:"El jueves no puedo. ¿El sábado?",p:"smile tilt",s:"Contrapropone: interés claro."},
+{w:"m",t:"Sábado. Dame tu número y te mando los detalles.",mp:"phone smile",k:"Cerrar el plan",y:"Acepta su fecha y concreta en el momento."}],
+win:"Cita confirmada para el sábado y número guardado.",
+keys:[["Al abrir","Preguntó por el contexto, con humor"],["Cuando ella preguntó de vuelta","Mostró interés con claridad"],["Cuando contrapropuso","Cerró el plan de una vez"]],
+frase:"«Lo mejor de esta boda hasta ahora es esta conversación.»"});
+
+S({id:"sed2",m:"sed",l:2,t:"El match de monosílabos",ctx:"Chat en una app de citas",mode:"c",
+o:{n:"Valeria",g:"f",r:"Match en la app"},
+intro:"Hicieron match hace dos días. Valeria contesta con monosílabos y la conversación se está muriendo.",
+b:[
+{w:"m",t:"¿Qué tal tu semana?",at:"18:02"},
+{w:"o",t:"bien",at:"20:47",hl:"tiempo",s:"Casi tres horas y una palabra. Poca inversión, pero contestó: la puerta no está cerrada."},
+{w:"m",t:"«Bien» es la respuesta oficial. Tu segunda foto, la del volcán con niebla: ¿Santa Ana o Izalco?",at:"20:50",k:"Romper el patrón con algo de ella",y:"Deja de preguntar en genérico. Una observación concreta de su perfil, con algo de juego, invita a contar."},
+{w:"o",t:"Santa Ana!! subí a las 5am, casi muero jaja",at:"20:52",hl:"tiempo",s:"Dos minutos, signos y risa: cambió la energía. Le tocó algo que le importa."},
+{w:"m",t:"A las 5am merecés medalla. ¿Sos de las que planean todo o de las que dicen «vamos» y van?",at:"20:53",k:"Pregunta de elección, con juego",y:"Fácil de contestar y revela personalidad. Mantiene el ritmo."},
+{w:"o",t:"De las que dicen vamos 😅 y vos?",at:"20:54",hl:"emoji",s:"Pregunta de vuelta y emoji: interés recíproco."},
+{w:"m",t:"Igual. Entonces te propongo un «vamos»: café el sábado temprano en El Boquerón, antes de que suba la gente.",at:"20:56",k:"Del chat al plan",y:"No alarga el chat: aprovecha el pico de energía para proponer algo concreto."},
+{w:"o",t:"jajaja ok me gusta, a qué hora?",at:"20:57",s:"Acepta y pregunta la hora: avance."},
+{w:"m",t:"A las ocho. Te paso la ubicación.",at:"20:57",st:"Visto 20:57",k:"Concretar corto",y:"Hora y lugar. Sin celebrar de más."}],
+win:"De monosílabos a cita confirmada en quince minutos.",
+keys:[["Cuando contestó «bien»","Comentó algo específico de su perfil"],["Cuando subió la energía","Hizo una pregunta de elección"],["En el pico de energía","Propuso un plan concreto"]],
+frase:"«Bien» es la respuesta oficial."});
+
+S({id:"sed3",m:"sed",l:3,t:"La cita que empezó fría",ctx:"Primera cita en un restaurante",mode:"p",bg:"cita",
+o:{n:"Daniela",g:"f",r:"Primera cita; se conocieron por amigos"},
+intro:"Daniela llegó quince minutos tarde, se sentó con los brazos cruzados y ya revisó el celular dos veces.",
+start:{m:"relax",o:"cross neutral lean-",d:"mid"},
+b:[
+{w:"o",t:"Perdón la tardanza. Día pesado.",p:"phone",s:"Señales cerradas. Pueden ser por la cita o por su día: no hay que adivinar.",nv:"Celular en la mano y espalda contra la silla.",hl:"manos"},
+{w:"m",t:"Suena a que venís con el día encima. ¿Qué pasó?",mp:"relax",k:"Nombrar lo que se ve, con curiosidad",y:"No se lo toma personal. Pregunta por su día en vez de forzar alegría."},
+{w:"o",t:"Mi jefe me hizo rehacer una presentación entera a las cinco de la tarde.",p:"relax look",s:"La frialdad era por el día, no por Max. Ya habla."},
+{w:"m",t:"A las cinco. Qué crueldad.",k:"Reflejo corto",y:"Valida sin dar consejos. No le dice cómo manejar a su jefe."},
+{w:"o",t:"¡Sí! Y lo peor es que la primera versión estaba bien.",p:"laugh lean+",s:"Primera risa. Su cuerpo se adelanta.",nv:"Se ríe y se inclina hacia Max: se está soltando.",hl:"torso"},
+{w:"m",t:"Te propongo algo: olvidemos el restaurante. Hay una heladería a dos cuadras y la noche está bonita. ¿Caminamos?",mp:"palms smile",k:"Cambiar el escenario",y:"Caminar lado a lado baja la tensión de estar frente a frente. Y propone, no pregunta «¿qué querés hacer?»."},
+{w:"o",t:"Ay, sí. Necesito aire.",p:"smile"},
+{w:"n",t:"Caminan. Ella va a su lado, a su ritmo, y le toca el brazo cuando se ríe.",p:"reach laugh",mp:"smile",d:"close",nv:"Mismo ritmo y contacto en el brazo: sincronía y confianza.",hl:"manos"},
+{w:"o",t:"Esto estuvo mucho mejor de lo que pensé. ¿Repetimos la otra semana?",p:"relax smile tilt",s:"Ella propone la segunda cita: interés claro."},
+{w:"m",t:"Me encanta. Yo elijo el lugar.",mp:"smile",k:"Aceptar y liderar",y:"Acepta sin sobreactuar y toma la iniciativa del siguiente plan."}],
+win:"Una cita que empezó cerrada termina con ella proponiendo la segunda.",
+keys:[["Cuando llegó cerrada","Preguntó por su día sin tomarlo personal"],["Cuando se rio","Cambió el escenario"],["Mientras caminaban","Dejó que ella propusiera"]],
+frase:"«Suena a que venís con el día encima.»"});
+
+/* ===== SEÑALES ===== */
+S({id:"sen1",m:"sen",l:1,t:"El pulgar del desarrollador",ctx:"WhatsApp con un desarrollador después de la propuesta",mode:"c",
+o:{n:"Ing. Portillo",g:"m",r:"Gerente comercial"},
+intro:"Max mandó la propuesta de alianza el lunes. El desarrollador respondió solo con un pulgar.",
+b:[
+{w:"m",t:"Ing., le comparto la propuesta. Cualquier duda, con gusto.",at:"Lun 9:12"},
+{w:"o",t:"👍",at:"Lun 11:40",hl:"emoji",s:"Un 👍 dice «recibido», no «aceptado». No es sí ni no."},
+{w:"n",t:"Dos días sin respuesta."},
+{w:"m",t:"Ing., ¿le sirve si el jueves lo vemos quince minutos? Le resuelvo dudas antes de su reunión con el equipo.",at:"Mié 8:30",k:"Un solo mensaje con paso concreto",y:"No pregunta «¿la vio?». Propone algo pequeño, con fecha y con razón. Un mensaje, no tres."},
+{w:"o",t:"Jueves no puedo. Viernes 10?",at:"Mié 8:52",hl:"tiempo",s:"Contestó en 22 minutos y contrapropone día y hora: hay intención."},
+{w:"m",t:"Viernes a las 10, perfecto. Llego a su oficina.",at:"Mié 8:53",k:"Confirmar sin entusiasmo de más",y:"Corto y seguro. Sin signos ni emojis de celebración."},
+{w:"o",t:"Ok. Traiga casos de otros proyectos",at:"Mié 9:01",s:"Pide algo para la reunión: ya se está preparando para decidir."}],
+win:"Del pulgar a una reunión con agenda, con un solo mensaje.",
+keys:[["Cuando mandó 👍","No lo leyó como un sí"],["Después de dos días","Un mensaje con paso y fecha"],["Cuando contrapropuso","Confirmó corto"]],
+frase:"«¿Le sirve si el jueves lo vemos quince minutos?»"});
+
+S({id:"sen2",m:"sen",l:2,t:"Cordial o interesada",ctx:"WhatsApp con una compañera del coworking",mode:"c",
+o:{n:"Paola",g:"f",r:"Trabaja en el escritorio de enfrente"},
+intro:"Paola es amable con todo el mundo. Max quiere saber si hay algo más, sin malinterpretar ni quedar mal.",
+b:[
+{w:"o",t:"Hola! Viste que hoy hay pupusas gratis en la terraza? 😊",at:"Mar 11:58",hl:"emoji",s:"Amable, pero es un aviso general. Ella usa 😊 con todos: es su línea base."},
+{w:"m",t:"No las había visto, gracias. Subo en un rato.",at:"Mar 12:01",k:"Responder dentro de su marco",y:"No lee de más. Responde amable y corto."},
+{w:"n",t:"Al día siguiente."},
+{w:"o",t:"Oye, ¿al final fuiste? No te vi 🙈",at:"Mié 9:15",hl:"tiempo",s:"Ella inicia otra vez y se fijó en que él no estaba. Empieza un patrón: inicia y lo nota."},
+{w:"m",t:"Me agarró una llamada. Te debo una pupusa, entonces.",at:"Mié 9:20",k:"Abrir una puerta pequeña",y:"Una invitación ligera, casi implícita. Si hay interés, ella la toma; si no, nadie queda mal."},
+{w:"o",t:"Jaja te la cobro! El viernes salgo a las 5 😌",at:"Mié 9:21",hl:"tiempo",s:"Da día y hora sin que se lo pidieran. Esa es la señal clara."},
+{w:"m",t:"Viernes a las 5, entonces. Yo invito.",at:"Mié 9:23",k:"Concretar",y:"Ella abrió la puerta; Max la cruza con un plan concreto."},
+{w:"o",t:"Trato 🙌",at:"Mié 9:23"}],
+win:"Salida el viernes, sin presionar y sin malinterpretar.",
+keys:[["Cuando usó 😊","No lo leyó como interés"],["Cuando ella inició de nuevo","Abrió una puerta pequeña"],["Cuando dio día y hora","Concretó el plan"]],
+frase:"«Te debo una pupusa, entonces.»"});
+
+S({id:"sen3",m:"sen",l:3,t:"Dos días en visto",ctx:"WhatsApp con un inversionista en Nueva York",mode:"c",
+o:{n:"Mr. Castro",g:"m",r:"Inversionista"},
+intro:"Max mandó el modelo financiero. El inversionista lo dejó en visto dos días. A Max le dan ganas de escribirle tres veces.",
+b:[
+{w:"m",t:"Mr. Castro, le comparto el modelo de Texas que hablamos.",at:"Lun 10:00",st:"Visto 10:14"},
+{w:"n",t:"Dos días después, sin respuesta."},
+{w:"n",t:"Max escribe tres mensajes y los borra. Manda solo uno."},
+{w:"m",t:"Le hago una sola pregunta: ¿hay algo del modelo que no le cuadra?",at:"Mié 9:00",k:"Una pregunta que invita a decir no",y:"Es más fácil contestar «no me convence esto» que «¿lo vio?». Darle permiso de objetar destraba el visto."},
+{w:"o",t:"El costo por cliente en Houston me parece optimista.",at:"Mié 9:35",hl:"tiempo",s:"El visto no era desinterés: tenía una objeción y no la había dicho."},
+{w:"m",t:"Puede ser. En Houston lo calculé con la campaña de julio. ¿Lo bajamos a un escenario conservador y lo vemos juntos?",at:"Mié 9:37",k:"Conceder y revisar juntos",y:"No defiende el número. Lo abre a revisión y lo invita a construirlo con él."},
+{w:"o",t:"Sí. Jueves 4pm NY.",at:"Mié 9:40",s:"Fecha y hora: avance."},
+{w:"m",t:"Jueves 4pm NY. Llevo los dos escenarios.",at:"Mié 9:40",k:"Recap",y:"Repite el acuerdo exacto. Nada más."}],
+win:"Un solo mensaje convierte el visto en una reunión con la objeción ya sobre la mesa.",
+keys:[["Cuando lo dejó en visto","No mandó tres mensajes"],["Al escribir","Preguntó qué no le cuadraba"],["Cuando objetó","Concedió y propuso revisar juntos"]],
+frase:"«¿Hay algo del modelo que no le cuadra?»"});
+
+/* ===== INTENCIONES ===== */
+S({id:"int1",m:"int",l:1,t:"Mándeme información",ctx:"Stand de NLD en una feria en Houston",mode:"p",bg:"feria",
+o:{n:"Don Julio",g:"m",r:"Visitante de la feria"},
+intro:"Un señor se detiene en el stand, mira las fotos y dice la frase de siempre.",
+start:{m:"relax",o:"relax",d:"mid"},
+b:[
+{w:"o",t:"Qué bonito. Mándeme información al correo.",p:"feet-",s:"«Mándeme info» puede ser interés o una salida cortés. Una pregunta lo distingue.",nv:"Pies hacia el pasillo: tiene medio cuerpo afuera.",hl:"pies"},
+{w:"m",t:"Con gusto. ¿Qué es lo que más le interesa ver, para no mandarle de todo?",mp:"smile",k:"Probar la intención con una pregunta",y:"Si no hay interés, dirá «de todo un poco». Si hay, dirá algo concreto."},
+{w:"o",t:"Casas cerca de la playa. Que no pasen de cien mil. Es para cuando me jubile, en tres años.",p:"feet+ look palms",s:"Dio zona, precio y plazo: tres datos que cuestan. Intención clara.",nv:"Gira los pies hacia Max y gesticula: ya está adentro de la conversación.",hl:"pies"},
+{w:"m",t:"Playa, menos de cien mil, en tres años. ¿Lo decide usted o con su esposa?",mp:"relax",k:"Recap y quién decide",y:"Repite sus datos (se siente escuchado) y averigua quién decide."},
+{w:"o",t:"Con mi esposa. Está allá en las pupusas.",p:"smile relax"},
+{w:"m",t:"¿La llamamos y les enseño tres opciones en cinco minutos, aquí mismo?",mp:"palms",k:"Avance inmediato",y:"Aprovecha que la intención está caliente y que la que decide está cerca."},
+{w:"n",t:"Vuelve con su esposa. Se sientan en el stand.",p:"smile lean+",d:"near",nv:"Volver y sentarse: la intención pasó del dicho al hecho.",hl:"distancia"}],
+win:"De «mándeme información» a una pareja sentada viendo opciones en el stand.",
+keys:[["Cuando pidió información","Preguntó qué le interesaba"],["Cuando dio tres datos","Hizo recap y preguntó quién decide"],["Con la intención caliente","Propuso verlo ahí mismo"]],
+frase:"«¿Qué es lo que más le interesa ver, para no mandarle de todo?»"});
+
+S({id:"int2",m:"int",l:2,t:"El que critica todo",ctx:"Visita a un apartamento con un comprador de Virginia",mode:"p",bg:"sala",
+o:{n:"Wilfredo",g:"m",r:"Comprador de Virginia"},
+intro:"Wilfredo critica todo: el tamaño, la cocina, el precio. Cualquiera pensaría que no le interesa.",
+start:{m:"relax",o:"cross frown",d:"mid"},
+b:[
+{w:"o",t:"El cuarto principal está chiquito, la cocina es oscura y el precio está inflado.",s:"Muchas objeciones concretas. El que no está interesado no se toma la molestia de criticar.",hl:"brazos",nv:"Brazos cruzados, pero sigue adentro del apartamento: se queda a discutir."},
+{w:"m",t:"Tres cosas no le gustan: el cuarto, la cocina y el precio. ¿Cuál pesa más?",k:"Ordenar las objeciones",y:"Resume sin defender y le pide que priorice. La primera que nombre es la real."},
+{w:"o",t:"El precio. Lo demás se arregla.",p:"relax",s:"Las otras eran cortina. Negocia el precio: intención de compra."},
+{w:"m",t:"¿Qué precio tendría sentido para usted?",k:"Dejar que él ancle",y:"Max sabe que el desarrollador tiene algo de margen. Primero escucha su número."},
+{w:"o",t:"Ciento diez. Ni un dólar más.",p:"palms"},
+{w:"m",t:"Ciento diez está debajo de lo que se ha vendido en el edificio. Si paga el 30% en el primer mes, puedo pedir ciento dieciocho con la cocina remodelada.",mp:"palms",k:"Contraoferta condicionada con valor",y:"No parte la diferencia. Cambia precio por algo que el desarrollador valora: pago rápido."},
+{w:"o",t:"Ciento quince, con la cocina.",p:"lean+ look relax",s:"Se movió cinco mil: quiere cerrar.",hl:"torso",nv:"Se inclina hacia adelante: está negociando para comprar."},
+{w:"m",t:"Ciento dieciséis, con la cocina, y lo presento hoy para que no se lo gane otro comprador.",k:"Un último paso pequeño",y:"Un movimiento mínimo y una razón real para cerrar hoy."},
+{w:"o",t:"Dele. Ciento dieciséis.",p:"reach smile",hl:"manos"}],
+win:"Venta cerrada en 116 mil con cocina incluida, con un cliente que lo criticaba todo.",
+keys:[["Cuando criticó todo","Pidió la objeción que más pesaba"],["Cuando dijo «el precio»","Dejó que él pusiera el número"],["Cuando ancló bajo","Contraofertó con una condición"]],
+frase:"«Tres cosas no le gustan. ¿Cuál pesa más?»"});
+
+S({id:"int3",m:"int",l:3,t:"El seco que sí quiere",ctx:"Oficina de un desarrollador famoso por cortante",mode:"p",bg:"oficina",
+o:{n:"Ing. Funes",g:"m",r:"Dueño de un desarrollador; casi nunca sonríe"},
+intro:"Su equipo dice que al ingeniero Funes no le interesan los intermediarios. Contesta con frases cortas y nunca da la mano dos veces.",
+start:{m:"relax",o:"cross neutral lean-",d:"mid"},
+b:[
+{w:"o",t:"Tiene quince minutos.",s:"Seco, pero aceptó la reunión. Línea base: así es con todos.",hl:"brazos",nv:"Brazos cruzados desde el inicio: es su postura normal, no una señal todavía."},
+{w:"m",t:"Le voy a hacer tres preguntas y usted decide si seguimos. ¿Cuántas unidades le quedan sin vender?",k:"Darle el control desde el inicio",y:"A una persona dominante se la persuade dándole el mando, no peleándoselo."},
+{w:"o",t:"Cuarenta.",s:"Da un dato interno sin dudar: está más abierto de lo que parece."},
+{w:"m",t:"¿Cuántas de las que vendió fueron a salvadoreños de afuera?",k:"Preguntas cortas, de su negocio",y:"Cada pregunta lo hace pensar en su problema, no en el producto de Max."},
+{w:"o",t:"Pocas. ¿Cómo funcionaría el pago si el comprador está en Estados Unidos?",p:"think lean+",s:"Pregunta el cómo. Para alguien así de seco, preguntar por el proceso es mucha intención.",nv:"Mano en la barbilla y se inclina: está evaluando.",hl:"manos"},
+{w:"m",t:"El comprador firma con poder notarial y paga directo a su cuenta. Usted no cambia nada de su proceso.",k:"Respuesta corta al cómo",y:"Contesta solo lo preguntado y quita el miedo de fondo: que le compliquen la operación."},
+{w:"o",t:"Mmm.",p:"relax",s:"Para él, «mmm» es casi un sí. Comparado con su línea base, es interés."},
+{w:"m",t:"Le propongo cinco unidades por noventa días. Si no vendo ninguna, no le cuesta nada.",mp:"palms",k:"Piloto sin riesgo",y:"Un paso pequeño y medible para alguien que no regala su confianza."},
+{w:"o",t:"Diez unidades. Y me reporta cada dos semanas.",s:"Le duplicó el piloto: su forma seca de decir que sí.",hl:"cara"},
+{w:"m",t:"Diez, cada dos semanas. Le mando el acuerdo hoy.",mp:"reach",k:"Recap exacto",y:"Repite el trato como lo dijo él. Nada que discutir."},
+{w:"n",t:"El ingeniero le da la mano. Por segunda vez.",p:"reach",nv:"Una segunda mano en alguien que nunca lo hace: la señal más fuerte de la reunión.",hl:"manos"}],
+win:"Diez unidades en exclusiva por noventa días con el desarrollador más difícil de la ciudad.",
+keys:[["Al empezar","Le dio el control"],["Cuando preguntó cómo se paga","Leyó intención contra su línea base"],["Cuando dijo «mmm»","Propuso un piloto sin riesgo"]],
+frase:"«Le voy a hacer tres preguntas y usted decide si seguimos.»"});
+
+/* ===== NO VERBAL ===== */
+S({id:"nov1",m:"nov",l:1,t:"Grupo abierto, grupo cerrado",ctx:"Coctel de networking",mode:"p",bg:"coctel",
+o:{n:"Claudia",g:"f",r:"Organizadora de eventos de la diáspora"},ex:[{x:304,g:"m",f:-1,p:"glass"}],
+intro:"Max quiere conocer a Claudia, la organizadora. Ella está hablando con alguien.",
+start:{m:"glass",o:"turn glass",d:"far"},
+b:[
+{w:"n",t:"Claudia y su amigo hablan de frente, muy cerca, con los pies apuntando el uno al otro.",s:"Grupo cerrado. Entrar ahora sería interrumpir.",nv:"Cuerpos y pies de frente, sin espacio libre: grupo cerrado.",hl:"pies"},
+{w:"n",t:"Max no se acerca. Toma algo y se queda a una distancia cómoda, a la vista.",mp:"look",nv:"Esperar a la vista, sin mirar fijo: disponible sin invadir.",hl:"cara",hw:"m"},
+{w:"n",t:"La conversación se relaja. Claudia gira el cuerpo y abre el círculo hacia el salón.",p:"face smile",nv:"Grupo abierto: dejaron un hueco en forma de V. Es una invitación implícita.",hl:"pies"},
+{w:"n",t:"Claudia mira un segundo hacia Max.",p:"look",nv:"Contacto visual breve desde un grupo abierto: luz verde.",hl:"cara"},
+{w:"m",t:"Perdón que me meta. Claudia, ¿verdad? Quería felicitarte por el evento de Houston.",mp:"smile relax",d:"mid",k:"Entrar por el hueco, con algo de ella",y:"Entra por el lado abierto, se presenta corto y habla de algo de ella. Saluda también al amigo."},
+{w:"o",t:"¡Gracias! ¿Y vos sos...?",p:"palms smile",s:"Le hace espacio y pregunta: lo integra al grupo."},
+{w:"m",t:"Max, de Next Level. Asesoramos a salvadoreños que quieren invertir aquí. Pero no les quiero robar mucho tiempo.",k:"Titular y salida fácil",y:"Ofrecer irse pronto baja la presión. Paradójicamente, hace que lo inviten a quedarse."},
+{w:"o",t:"No, quedate. Justo estábamos buscando aliados para el evento de Los Ángeles.",p:"reach smile",d:"near",hl:"manos",ex:{0:"smile"}}],
+win:"Entra al grupo en el momento justo y sale con una alianza para el evento de Los Ángeles.",
+keys:[["Con el grupo cerrado","Esperó a la vista"],["Cuando el grupo se abrió","Entró por el hueco"],["Al entrar","Titular y salida fácil"]],
+frase:"«Pero no les quiero robar mucho tiempo.»"});
+
+S({id:"nov2",m:"nov",l:2,t:"Los pies hacia la puerta",ctx:"Final de un evento de negocios",mode:"p",bg:"pasillo",
+o:{n:"Ricardo",g:"m",r:"Gerente de una aseguradora; posible aliado"},
+intro:"La conversación con Ricardo va bien. Pero algo cambió y Max lo nota antes de que Ricardo diga nada.",
+start:{m:"relax",o:"relax smile",d:"mid"},
+b:[
+{w:"o",t:"Sí, sí, interesante lo del censo.",p:"feet-",s:"Dice «interesante», pero sus pies giraron hacia la salida.",nv:"Los pies son la parte del cuerpo que menos controlamos: apuntan a donde queremos ir.",hl:"pies"},
+{w:"n",t:"Ricardo mira el reloj y después hacia la puerta.",p:"watch",nv:"Reloj y pies hacia la puerta: dos señales juntas. Ya no es una señal suelta.",hl:"manos"},
+{w:"m",t:"Te noto con prisa. ¿Tenés que irte?",mp:"relax",k:"Nombrar lo que se ve",y:"En vez de seguir hablando, nombra la señal. Le quita al otro la incomodidad de cortar."},
+{w:"o",t:"La verdad, sí. Tengo que recoger a mi hija a las siete.",p:"relax look",s:"Agradece que se lo hicieran fácil."},
+{w:"m",t:"Andá tranquilo. Solo una cosa: ¿un café el martes para terminar esto con calma?",mp:"smile",k:"Cerrar rápido con un paso",y:"Quince segundos: libera al otro y consigue un avance con fecha."},
+{w:"o",t:"Martes en la mañana, perfecto. Gracias por entender.",p:"reach smile feet+",hl:"pies",nv:"Al despedirse, los pies vuelven hacia Max: buena señal para el martes."},
+{w:"n",t:"El martes, Ricardo llega diez minutos antes.",p:"relax"}],
+win:"En vez de una conversación forzada, una reunión con toda su atención.",
+keys:[["Cuando giró los pies","Vio la señal antes que las palabras"],["Con dos señales juntas","Nombró la prisa"],["Al soltarlo","Pidió un paso con fecha"]],
+frase:"«Te noto con prisa. ¿Tenés que irte?»"});
+
+S({id:"nov3",m:"nov",l:3,t:"Los brazos cruzados",ctx:"Reunión con el gerente y la directora financiera",mode:"p",bg:"oficina",
+o:{n:"Lic. Arévalo",g:"f",r:"Directora financiera; es quien firma"},ex:[{x:306,g:"m",f:-1,p:"smile palms"}],
+intro:"El gerente general está encantado con la propuesta. La directora financiera, que es quien firma, no ha dicho una palabra.",
+start:{m:"relax",o:"cross neutral",d:"mid"},
+b:[
+{w:"n",t:"Mientras el gerente habla, la directora sigue con los brazos cruzados, como desde el inicio.",s:"Línea base: así ha estado toda la reunión.",nv:"Brazos cruzados desde el principio: puede ser su postura normal. Sin un cambio, no significa nada.",hl:"brazos"},
+{w:"m",t:"...y el costo para ustedes es cero hasta que se vende la unidad.",mp:"palms",k:"Observar la reacción al dato clave",y:"Max dice el dato de dinero y mira cómo reacciona cada persona, no solo el que ya está de acuerdo."},
+{w:"n",t:"Al oír «costo», ella aprieta los labios y se echa para atrás.",p:"frown lean-",nv:"Cambio contra su línea base: labios apretados y se aleja justo con el dinero. Esa sí es una señal.",hl:"cara"},
+{w:"m",t:"Licenciada, me parece que hay algo de los números que no le termina de convencer.",mp:"relax look",k:"Nombrar la señal y hablarle a quien decide",y:"Deja de hablarle al que ya está de acuerdo y se dirige a quien firma. La invita a objetar."},
+{w:"o",t:"Cero hasta que se vende, sí. ¿Pero qué pasa con las unidades que ustedes congelan y no venden?",p:"lean+ palms",s:"Ahí estaba la objeción real: el costo de oportunidad.",hl:"torso"},
+{w:"m",t:"Si en sesenta días no hay comprador, la unidad regresa a su lista sin penalidad.",k:"Respuesta concreta a su miedo",y:"Contesta exactamente su objeción, con un número y sin defensa."},
+{w:"n",t:"Ella descruza los brazos y anota.",p:"relax down lean0",nv:"Descruza y anota: pasó de evaluar el riesgo a planear.",hl:"brazos"},
+{w:"o",t:"Sesenta días. Póngalo en el contrato y lo firmo.",p:"look smile"}],
+win:"Firma la persona que parecía en contra, porque Max leyó el cambio y no la postura.",
+keys:[["Con los brazos cruzados","Los tomó como línea base"],["Cuando cambió su cara","Le habló directo a ella"],["Con su objeción","Respuesta concreta, con un número"]],
+frase:"«Me parece que hay algo de los números que no le termina de convencer.»"});
+
+/* ===== EVENTOS ===== */
+S({id:"eve1",m:"eve",l:1,t:"El vecino del coworking",ctx:"Escritorios compartidos del coworking",mode:"p",bg:"cowork",
+o:{n:"Ernesto",g:"m",r:"Vecino de escritorio desde hace un mes"},
+intro:"Ernesto se sienta al lado de Max desde hace un mes. Solo se saludan. Hoy suspira fuerte frente a la computadora.",
+start:{m:"relax",o:"relax",d:"mid"},
+b:[
+{w:"n",t:"Ernesto suspira y se frota la cara.",p:"think frown",nv:"Mano en la cara y suspiro: frustración. Una puerta para conectar, si se toca con cuidado.",hl:"manos"},
+{w:"m",t:"Ese suspiro sonó a Excel.",mp:"smile",k:"Humor sobre lo que se ve",y:"Nombra el momento con ligereza. Es fácil de contestar y no invade."},
+{w:"o",t:"Peor: un cliente que me cambió todo a las cuatro de la tarde.",p:"laugh relax",s:"Abrió. Ahora toca escuchar, no aconsejar."},
+{w:"m",t:"A las cuatro. ¿De qué es tu empresa?",k:"Reflejo y curiosidad",y:"Repite el detalle y pregunta por él. No cuenta sus propios clientes difíciles."},
+{w:"o",t:"Seguros de viaje. Mucho cliente salvadoreño de Estados Unidos que viene en diciembre.",p:"palms",s:"Mercado en común. Max no salta a vender: deja que fluya."},
+{w:"m",t:"Mirá vos. Mis clientes son justo esos. Un día de estos almorzamos y comparamos notas.",k:"Algo ligero, entre iguales",y:"Sin pitch: propone un almuerzo de pares. Así nace una alianza."},
+{w:"o",t:"¿Y si mejor mañana? Aquí abajo hacen buen almuerzo.",p:"smile lean+",s:"Él adelanta la fecha: interés claro.",hl:"torso"}],
+win:"Un suspiro abre un almuerzo, y el almuerzo una alianza de referidos.",
+keys:[["Cuando suspiró","Humor sobre lo que se veía"],["Cuando contó su día","Reflejó y preguntó por él"],["Al descubrir el mercado en común","Propuso almorzar como pares"]],
+frase:"«Ese suspiro sonó a Excel.»"});
+
+S({id:"eve2",m:"eve",l:2,t:"El stand vacío",ctx:"Feria de la diáspora en Los Ángeles",mode:"p",bg:"feria",
+o:{n:"Doña Marta",g:"f",r:"Visitante de la feria"},
+intro:"El stand de NLD está entre una agencia de viajes y uno que regala pupusas. Nadie se detiene.",
+start:{m:"cross",o:"relax turn",d:"far"},
+b:[
+{w:"n",t:"La gente pasa de largo. Max está detrás de la mesa, como en los demás stands.",nv:"Detrás de la mesa y con los brazos cruzados, el stand dice «no se acerquen».",hl:"brazos",hw:"m"},
+{w:"n",t:"Max sale de detrás de la mesa y se pone al lado del pasillo con un mapa de El Salvador en la mano.",mp:"card smile",d:"mid",nv:"Fuera de la mesa y con algo en la mano: se ve accesible, no vendedor.",hl:"torso",hw:"m"},
+{w:"m",t:"¿De qué parte de El Salvador es su familia?",k:"Pregunta de identidad, no de venta",y:"Nadie se detiene por «casas en venta». Todos se detienen a hablar de su pueblo."},
+{w:"o",t:"¡De Chalatenango! De Nueva Concepción.",p:"face smile look",d:"near",s:"Se detuvo y sonríe: le tocó su historia."},
+{w:"m",t:"Nueva Concepción. ¿Hace cuánto no va?",mp:"relax",k:"Reflejo y pregunta emocional",y:"Sigue el camino emocional, no el lógico."},
+{w:"o",t:"Doce años. Mi mamá todavía vive allá y yo quisiera regresar cuando me retire.",p:"down",s:"Ahí aparece la intención, sola, sin que Max venda nada.",hl:"cara",nv:"Mirada hacia abajo al hablar de su mamá: está en un recuerdo."},
+{w:"m",t:"Regresar cerca de su mamá. ¿Le enseño cómo se ve hoy la zona? Tengo fotos de este mes.",mp:"phone",k:"Un paso visual y ligero",y:"Ofrece algo emocional y concreto antes que precios."},
+{w:"o",t:"¡Ay, sí! Venga, Rosa, mire esto.",p:"look laugh",s:"Llama a una amiga: el stand empieza a llenarse."},
+{w:"n",t:"En diez minutos hay cuatro personas alrededor de Max preguntando por sus pueblos.",mp:"smile palms"}],
+win:"El stand que nadie veía termina la tarde con doce contactos.",
+keys:[["Con el stand vacío","Salió de detrás de la mesa"],["Al abrir","Preguntó por su pueblo"],["Cuando habló de su mamá","Siguió el camino emocional"]],
+frase:"«¿De qué parte de El Salvador es su familia?»"});
+
+S({id:"eve3",m:"eve",l:3,t:"La boda del cliente",ctx:"Boda de un cliente de NLD",mode:"p",bg:"boda",
+o:{n:"Doña Rosa",g:"f",r:"Mamá del novio; desconfía de los vendedores"},
+intro:"Un cliente invita a Max a su boda. La mamá del novio cree que Max vino a venderle casas a los invitados, y se lo dice.",
+start:{m:"glass",o:"cross frown",d:"mid"},
+b:[
+{w:"o",t:"Usted es el de las casas. Espero que no venga a hacer negocio en la boda de mi hijo.",d:"near",s:"Advertencia directa. Cualquier explicación larga sonaría a defensa.",hl:"brazos",nv:"Se acerca con los brazos cruzados: viene a marcar territorio."},
+{w:"m",t:"Para nada. Vine porque su hijo me invitó y le tengo cariño. Hoy solo vengo a comer y a bailar.",mp:"relax smile",k:"Calmar su miedo en una frase",y:"Responde justo al miedo de ella y se compromete en público: hoy no se vende."},
+{w:"o",t:"Mmm. Eso dicen todos.",s:"Todavía no le cree. Las palabras no bastan: la van a convencer los hechos."},
+{w:"n",t:"Max cumple: baila con la abuela, ayuda a mover mesas y no menciona una sola casa en toda la noche.",mp:"laugh",p:"turn",d:"far",nv:"Lo que Max hace durante la noche pesa más que cualquier frase."},
+{w:"n",t:"Al final de la fiesta, Doña Rosa se acerca sola.",p:"face relax smile",d:"mid",nv:"Se acerca ella y sin los brazos cruzados: cambió de opinión.",hl:"brazos"},
+{w:"o",t:"Usted cumplió. Bailó más que mi marido.",p:"laugh"},
+{w:"m",t:"Su familia hace fácil quedarse. Gracias por recibirme.",mp:"smile",k:"Agradecer sin aprovechar",y:"Ni ahora menciona el negocio. La paciencia es la jugada."},
+{w:"o",t:"Oiga... mi hermana en Texas quiere comprar algo aquí. ¿Usted le podría ayudar?",p:"relax lean+",s:"Ella misma abre el negocio. Lo ganó cumpliendo su palabra.",hl:"torso"},
+{w:"m",t:"Con mucho gusto. El lunes la llamo; hoy es día de fiesta.",k:"Aceptar sin romper la promesa",y:"Lo deja para el lunes. Cumple su palabra hasta el final y gana todavía más confianza."}],
+win:"La persona que más desconfiaba le refiere a su hermana. Y lo invitan al bautizo.",
+keys:[["Cuando lo acusó","Calmó su miedo con una promesa clara"],["Durante la fiesta","Cumplió con hechos"],["Cuando ella abrió el negocio","Lo dejó para el lunes"]],
+frase:"«Hoy solo vengo a comer y a bailar.»"});
+
+boot();
+</script>
+
+</body></html>

@@ -7,6 +7,7 @@
 <title>Remesas El Salvador · Tablero geográfico</title>
 <style>
 :root{
+  --ease:cubic-bezier(.28,.16,.22,1);
   /* Sistema visual NLD — versión clara */
   --bg:#FFFFFF; --panel:#F5F5F7; --panel-2:#FFFFFF; --line:#E5E5EA; --line-2:#D2D2D7;
   --ink:#1D1D1F; --ink-2:#6E6E73; --ink-3:#86868B; --ink-4:#A1A1A6;
@@ -45,22 +46,30 @@ h1{font-size:27px;font-weight:700;letter-spacing:-.02em;margin:0;color:var(--ink
 .btn:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
 
 /* ---------- filtros ---------- */
-.filterdock{position:relative;z-index:30;margin-bottom:16px}
-.dockbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--panel);
-  border-radius:var(--r);padding:11px 16px;cursor:default}
+.filterdock{position:relative;margin-bottom:16px;background:var(--panel);border-radius:var(--r)}
+.dockbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;
+  border-radius:var(--r);padding:10px 12px 10px 16px;cursor:pointer}
 .dockbar .dsum{font-size:12.5px;color:var(--ink-2)}
 .dockbar .dsum b{color:var(--ink)}
-.dockhint{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-3)}
 .dockhint .pinbtn{background:#FFFFFF;border:1px solid var(--line-2);border-radius:9px;padding:5px 11px;font-size:12px;color:var(--ink-2);cursor:pointer}
 .dockhint .pinbtn.on{background:var(--teal);border-color:var(--teal);color:#FFFFFF;font-weight:700}
-.filters{position:absolute;left:0;right:0;top:calc(100% + 8px);
-  background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:0 14px 34px rgba(0,0,0,.10);padding:20px 22px;display:grid;
-  grid-template-columns:1.05fr 1.6fr .95fr;gap:26px;
-  opacity:0;visibility:hidden;transform:translateY(-6px);
-  transition:opacity .16s ease,transform .16s ease,visibility .16s}
-.filterdock:hover .filters,.filterdock:focus-within .filters,.filterdock.pin .filters{
-  opacity:1;visibility:visible;transform:translateY(0)}
+.ftog{margin-left:auto;display:inline-flex;align-items:center;gap:7px;background:#FFFFFF;border:1px solid var(--line-2);
+  border-radius:999px;padding:7px 12px 7px 13px;font-size:12.5px;font-weight:700;color:var(--ink);cursor:pointer;
+  transition:background .2s,border-color .2s,color .2s}
+.ftog:hover{border-color:var(--ink-4)}
+.ftog svg{width:15px;height:15px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ftog .chev{transition:transform .45s var(--ease)}
+.ftog .fcount{display:none;min-width:18px;height:18px;border-radius:9px;background:var(--teal);color:#FFFFFF;font-size:11px;line-height:18px;text-align:center;padding:0 5px}
+.ftog .fcount.on{display:inline-block}
+.filterdock.open .ftog{background:var(--tint);border-color:#B8D6FA;color:var(--teal)}
+.filterdock.open .ftog .chev{transform:rotate(180deg)}
+.fwrap{display:grid;grid-template-rows:0fr;transition:grid-template-rows .5s var(--ease)}
+.filterdock.open .fwrap{grid-template-rows:1fr}
+.fclip{min-height:0;overflow:hidden}
+.filters{display:grid;grid-template-columns:1.05fr 1.6fr .95fr;gap:26px;margin:0 12px 12px;padding:20px 22px;
+  background:#FFFFFF;border:1px solid var(--line);border-radius:14px;
+  opacity:0;transform:translateY(-8px);transition:opacity .35s var(--ease),transform .5s var(--ease)}
+.filterdock.open .filters{opacity:1;transform:none}
 .serieband{margin-bottom:16px}
 .fgroup>.flabel{font-size:10px;font-weight:700;color:var(--ink-3);letter-spacing:.07em;text-transform:uppercase;margin-bottom:9px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
@@ -160,7 +169,6 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   .kpis{grid-template-columns:repeat(3,1fr)}
   .grid{grid-template-columns:1fr}
   .filters{grid-template-columns:1fr}
-  .filterdock .filters{position:static;box-shadow:none;transform:none;margin-top:8px}
 }
 @media(max-width:640px){
   .shell{padding:16px 14px 40px}
@@ -168,14 +176,36 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   .kpi .k-v{font-size:26px}
   h1{font-size:21px}
 }
-@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+/* ---------- animaciones ---------- */
+.js .rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
+.js .rv.in{opacity:1;transform:none}
+.js .kpis.rv{opacity:1;transform:none}
+.js .kpis.rv .kpi{opacity:0;transform:translateY(16px);transition:opacity .8s var(--ease),transform .9s var(--ease),border-color .2s;transition-delay:calc(var(--i,0)*70ms)}
+.js .kpis.rv.in .kpi{opacity:1;transform:none}
+.kpi .k-v{animation:kv .5s var(--ease) both}
+@keyframes kv{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.sline,.sarea{animation:wipe 1.4s var(--ease) .1s both}
+@keyframes wipe{from{-webkit-clip-path:inset(-20px 100% -20px -20px);clip-path:inset(-20px 100% -20px -20px)}to{-webkit-clip-path:inset(-20px -20px -20px -20px);clip-path:inset(-20px -20px -20px -20px)}}
+.sdots,.svals{animation:fadein .8s var(--ease) both}
+.sdots{animation-delay:.7s}.svals{animation-delay:.9s}
+@keyframes fadein{from{opacity:0}to{opacity:1}}
+#rank rect,#chan rect{transform-box:fill-box;transform-origin:left center;animation:grow .8s var(--ease) both;animation-delay:calc(var(--i,0)*35ms)}
+@keyframes grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+#rank .barval,#chan .barval{animation:fadein .6s var(--ease) both;animation-delay:calc(.35s + var(--i,0)*35ms)}
+.geo{animation:fadein .7s var(--ease) both}
+.rv:not(.in) .sline,.rv:not(.in) .sarea,.rv:not(.in) .sdots,.rv:not(.in) .svals,
+.rv:not(.in) #rank rect,.rv:not(.in) #chan rect,.rv:not(.in) .barval,.rv:not(.in) .geo{animation-play-state:paused}
+.kpi,.card{transition:box-shadow .3s var(--ease),border-color .2s}
+.kpi:hover{border-color:var(--line-2);box-shadow:0 10px 28px rgba(0,0,0,.06)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.js .rv,.js .kpis.rv .kpi{opacity:1!important;transform:none!important}.sline,.sarea{-webkit-clip-path:none;clip-path:none}}
 
 </style>
 </head>
 <body>
+<script>document.documentElement.classList.add('js');</script>
 <div class="shell">
 
-<header class="top">
+<header class="top rv">
   <div>
     <div class="eyebrow">Next Level Demographic · Inteligencia de mercado</div>
     <h1>Remesas familiares por destino geográfico</h1>
@@ -199,12 +229,16 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   <div id="uplog"></div>
 </div>
 
-<div class="filterdock" id="filterdock">
+<div class="filterdock rv" id="filterdock">
 <div class="dockbar" id="dockbar">
   <div class="activebar" id="activebar"></div>
-  <div class="dockhint"><span id="dockTip">Acercá el mouse para abrir los filtros</span>
-    <button class="pinbtn" id="pinBtn">Fijar</button></div>
+  <button class="ftog" id="pinBtn" type="button" aria-expanded="false" aria-controls="fpanel">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+    <span>Filtros</span><span class="fcount" id="fcount"></span>
+    <svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
 </div>
+<div class="fwrap" id="fpanel"><div class="fclip">
 <div class="filters">
   <div class="fgroup">
     <div class="flabel">Período</div>
@@ -232,11 +266,12 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
     <div class="hint" style="margin:0;font-size:11.5px">Escribí y elegí de la lista: el tablero completo se filtra a ese municipio.</div>
   </div>
 </div>
+</div></div>
 </div>
 
-<div class="kpis" id="kpis"></div>
+<div class="kpis rv" id="kpis"></div>
 
-<div class="card alt serieband">
+<div class="card alt serieband rv">
   <div class="cardhead">
     <div><h2 id="serieTitle">Evolución mensual</h2><div class="hint" id="serieHint">—</div></div>
     <div class="mini"><button id="cmpToggle">Comparar con total nacional</button></div>
@@ -245,7 +280,7 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
 </div>
 
 <div class="grid">
-  <div class="card">
+  <div class="card rv">
     <div class="cardhead">
       <div><h2 id="mapTitle">Concentración de remesas</h2>
         <div class="hint" id="mapHint">Clic para filtrar todo el tablero. Rueda para acercar, arrastre para desplazar.</div></div>
@@ -267,14 +302,14 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   </div>
 
   <div style="display:flex;flex-direction:column;gap:16px">
-    <div class="card alt">
+    <div class="card alt rv">
       <div class="cardhead">
         <div><h2 id="rankTitle">Ranking</h2><div class="hint">Clic en una barra para aislar ese territorio.</div></div>
         <div class="mini"><button data-rk="12" class="on">Top 12</button><button data-rk="25">Top 25</button></div>
       </div>
       <svg id="rank" class="chart" viewBox="0 0 640 330"></svg>
     </div>
-    <div class="card">
+    <div class="card rv">
       <div class="cardhead">
         <div><h2>Canales sin destino geográfico</h2>
         <div class="hint">El BCR reporta estos montos fuera del desglose territorial. Suman aparte y explican la diferencia con el total nacional.</div></div>
@@ -284,7 +319,7 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   </div>
 </div>
 
-<div class="card" style="margin-top:16px">
+<div class="card rv" style="margin-top:16px">
   <div class="cardhead">
     <div><h2>Tabla dinámica</h2><div class="hint" id="tblHint">—</div></div>
     <div class="mini" id="grpBtns">
@@ -297,7 +332,7 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
 </div>
 
-<footer>
+<footer class="rv">
   Fuente: Banco Central de Reserva de El Salvador, “Monto de remesas familiares según destino geográfico”. Cifras preliminares (p), en millones de US$.
   El BCR revisa sus series cada enero, ajustando hasta tres años previos.
   La métrica per cápita usa población del marco censal del archivo cartográfico base (2007) y sirve solo como orden de magnitud relativo, no como cifra oficial.
@@ -522,8 +557,8 @@ function renderKpis(){
      v: sc.length>1 ? nf(100*top5/tot,1)+'<span class="k-u">%</span>' : (pc==null?'—':'$'+nf(pc,1)),
      s: sc.length>1 ? `${sc.length} municipios en el alcance · HHI ${nf(hhi,3)}` : 'Base poblacional referencial'}
   ];
-  $('#kpis').innerHTML = cards.map(c=>`
-    <div class="kpi"><div class="k-src">${c.src||'BCR · '+m.label}</div><div class="k-l">${c.l}</div><div class="k-v num">${c.v}</div>
+  $('#kpis').innerHTML = cards.map((c,i)=>`
+    <div class="kpi" style="--i:${i}"><div class="k-src">${c.src||'BCR · '+m.label}</div><div class="k-l">${c.l}</div><div class="k-v num">${c.v}</div>
     <div class="k-s">${c.s||''}</div>${c.spark?sparkSvg(c.spark):''}</div>`).join('');
 }
 function sparkSvg(s){
@@ -738,8 +773,8 @@ function renderSerie(){
   }).join('') : '';
   $('#serie').innerHTML = `<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0071E3" stop-opacity=".22"/><stop offset="100%" stop-color="#0071E3" stop-opacity="0"/></linearGradient></defs>
-    ${g}<polygon points="${area}" fill="url(#ag)"/>
-    <polyline points="${line}" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linejoin="round"/>${cmp}${dots}${vlabels}${lbls}`;
+    ${g}<polygon class="sarea" points="${area}" fill="url(#ag)"/>
+    <polyline class="sline" points="${line}" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linejoin="round"/>${cmp}<g class="sdots">${dots}</g><g class="svals">${vlabels}</g>${lbls}`;
   $('#serieTitle').textContent = 'Evolución mensual · '+scopeLabel();
   $('#serieHint').innerHTML = showCmp
     ? 'Línea sólida: alcance filtrado. Línea punteada azul: total nacional, en su propia escala.'
@@ -776,7 +811,7 @@ function renderRank(){
     const t=Math.min(5,Math.floor(Math.abs(r.val)/mx*5.999));
     const col = r.val<0 ? '#C7C7CC' : RAMP[Math.max(2,t)];
     const short = r.k.length>31 ? r.k.slice(0,30)+'…' : r.k;
-    return `<g class="bar" data-k="${esc(r.k)}">
+    return `<g class="bar" data-k="${esc(r.k)}" style="--i:${i}">
       <text class="barlbl" x="${ml-8}" y="${y+rowH*0.62}" text-anchor="end">${esc(short)}</text>
       <rect x="${ml}" y="${y+2}" width="${bw}" height="${rowH-7}" rx="2.5" fill="${col}"/>
       <text class="barval" x="${ml+bw+7}" y="${y+rowH*0.62}">${fmt(r.val)}<tspan fill="#86868B" font-weight="normal">  ·  ${nf(100*r.val/grand,1)}%</tspan></text>
@@ -806,7 +841,7 @@ function renderChan(){
   const cols=['#0071E3','#2997FF','#9FC6F5','#C7C7CC'];
   const body=rows.map((r,i)=>{
     const y=i*rowH+8, bw=r.v/mx*(W-ml-mr);
-    return `<g><text class="barlbl" x="${ml-8}" y="${y+15}" text-anchor="end">${esc(r.n)}</text>
+    return `<g style="--i:${i}"><text class="barlbl" x="${ml-8}" y="${y+15}" text-anchor="end">${esc(r.n)}</text>
       <rect x="${ml}" y="${y+4}" width="${bw}" height="16" rx="3" fill="${cols[i%4]}" opacity=".85"/>
       <text class="barval" x="${ml+bw+7}" y="${y+16}">${money(r.v)}<tspan fill="#86868B" font-weight="normal">  ·  ${nf(100*r.v/grand,1)}%</tspan></text></g>`;
   }).join('');
@@ -999,27 +1034,39 @@ function loadWorkbook(ab,fname){
 })();
 
 /* ============================================================
-   Dock de filtros: se abre al acercar el mouse, se puede fijar
+   Dock de filtros: un botón los despliega dentro de la página,
+   sin taparle nada al tablero. Recuerda si quedaron abiertos.
    ============================================================ */
 (function(){
-  const dock=$('#filterdock'), pin=$('#pinBtn'), bar=$('#dockbar'), tip=$('#dockTip');
-  const isTouch = window.matchMedia('(hover: none)').matches;
-  function setPin(v){
-    dock.classList.toggle('pin',v);
-    pin.classList.toggle('on',v);
-    pin.textContent = v?'Fijado':'Fijar';
-    tip.textContent = v?'Los filtros quedan abiertos':'Acercá el mouse para abrir los filtros';
+  const dock=$('#filterdock'), btn=$('#pinBtn'), bar=$('#dockbar');
+  const K='nld_bcr_filtros';
+  function setOpen(v,save){
+    dock.classList.toggle('open',v);
+    btn.setAttribute('aria-expanded',v?'true':'false');
+    if(save){try{localStorage.setItem(K,v?'1':'0');}catch(e){}}
   }
-  pin.onclick=e=>{e.stopPropagation(); setPin(!dock.classList.contains('pin'));};
-  if(isTouch){ setPin(false); tip.textContent='Tocá la barra para abrir los filtros';
-    bar.onclick=()=>setPin(!dock.classList.contains('pin')); }
-  document.addEventListener('keydown',e=>{ if(e.key==='Escape') setPin(false); });
+  btn.onclick=e=>{e.stopPropagation(); setOpen(!dock.classList.contains('open'),true);};
+  bar.onclick=e=>{ if(e.target.closest('button,a,input,select')) return; setOpen(!dock.classList.contains('open'),true); };
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape') setOpen(false,true); });
+  let start=false; try{start=localStorage.getItem(K)==='1';}catch(e){}
+  setOpen(start,false);
+})();
+
+/* ============================================================
+   Animaciones de entrada: cada bloque aparece al llegar a la vista
+   ============================================================ */
+(function(){
+  const els=[...document.querySelectorAll('.rv')];
+  if(!('IntersectionObserver' in window)){els.forEach(e=>e.classList.add('in'));return;}
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{rootMargin:'0px 0px -8% 0px',threshold:.08});
+  els.forEach(e=>io.observe(e));
 })();
 
 /* ============================================================
    Render maestro
    ============================================================ */
 function render(){
+  try{const c=$('#fcount'), n=S.zonas.size+S.deptos.size+S.muns.size; c.textContent=n; c.classList.toggle('on',n>0);}catch(e){}
   renderChipStates(); renderKpis(); renderMap(); renderSerie();
   renderRank(); renderChan(); renderTable();
 }

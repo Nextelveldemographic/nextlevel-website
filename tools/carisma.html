@@ -260,7 +260,10 @@ const IC={
 };
 const LB={light:"Tema claro",dark:"Tema oscuro",auto:"Tema automático",mobile:"Vista móvil",tablet:"Vista iPad",desktop:"Vista navegador"};
 function applyTheme(){const r=document.documentElement;if(st.theme==="auto")r.removeAttribute("data-theme");else r.setAttribute("data-theme",st.theme)}
-function applyView(){document.documentElement.setAttribute("data-view",st.view||"mobile")}
+function applyView(){document.documentElement.setAttribute("data-view",st.view||"mobile");fitView()}
+/* Ancho estándar NLD Tools: en iPad y navegador la app escala hasta llenar la pantalla, sin dejar columnas vacías a los lados */
+function fitView(){var w=document.querySelector(".wrap");if(!w)return;var v=st.view||"mobile",base=v==="desktop"?880:v==="tablet"?780:0;if(!base||!("zoom" in w.style)){w.style.zoom="";return}var g=Math.min(56,Math.max(28,window.innerWidth*.035));var f=Math.min(1.5,Math.max(1,(window.innerWidth-2*g)/base));w.style.zoom=f>1.02?f.toFixed(3):""}
+window.addEventListener("resize",function(){fitView()},{passive:true});
 function setTheme(t){st.theme=t;saveLocal();applyTheme();document.querySelectorAll(".tseg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function setView(v){st.view=v;saveLocal();applyView();document.querySelectorAll(".vseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===v))}
 function ctlHTML(){return `<div class="ctl"><div class="seg tseg" role="group" aria-label="Tema">${["light","dark","auto"].map(t=>`<button type="button" data-t="${t}" class="${st.theme===t?"on":""}" aria-label="${LB[t]}" title="${LB[t]}" onclick="setTheme('${t}')">${IC[t]}</button>`).join("")}</div><div class="seg vseg" role="group" aria-label="Vista">${["mobile","tablet","desktop"].map(v=>`<button type="button" data-v="${v}" class="${st.view===v?"on":""}" aria-label="${LB[v]}" title="${LB[v]}" onclick="setView('${v}')">${IC[v]}</button>`).join("")}</div></div>`}

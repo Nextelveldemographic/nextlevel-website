@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>
 /* Tema y vista antes del primer pintado */
-(function(){var r=document.documentElement,t='light',v='mobile';try{t=localStorage.getItem('nld-theme')||'light';v=localStorage.getItem('nld-view')||'mobile';}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+(function(){var r=document.documentElement,t='light',v='mobile';try{t=localStorage.getItem('nld-theme')||'light';v=localStorage.getItem('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop');}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
 </script>
 <style>
 /* Layout: una sola columna que escala completa (tipografía + ancho en rem) según la vista móvil / iPad / navegador. Sistema NLD claro. */
@@ -34,8 +34,8 @@
   --accent:#2997FF; --accent-soft:#0B2742; --on-accent:#FFFFFF;
   --contrast-bg:#111214; --contrast-ink:#F5F5F7; --contrast-muted:#A1A1A6; --contrast-line:#2C2C2E;
   color-scheme:dark}
-:root[data-view="tablet"]{--base:19px; --maxw:40rem}
-:root[data-view="desktop"]{--base:21px; --maxw:42rem}
+:root[data-view="tablet"]{--base:18px; --maxw:1680px}
+:root[data-view="desktop"]{--base:17px; --maxw:1680px}
 *{box-sizing:border-box}
 html{font-size:var(--base)}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:1rem;line-height:1.45;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -159,6 +159,16 @@ section{display:flex;flex-direction:column;gap:1rem}
 .step p{font-size:.86rem;color:var(--muted)}
 
 footer{font-size:.7rem;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding-top:1rem}
+/* ===== Ancho estándar NLD Tools: iPad y navegador llenan la pantalla a dos columnas ===== */
+:root:is([data-view="tablet"],[data-view="desktop"]) .wrap{padding-left:max(clamp(16px,3.5vw,56px),env(safe-area-inset-left,0px));padding-right:max(clamp(16px,3.5vw,56px),env(safe-area-inset-right,0px))}
+@media (min-width:900px){
+  :root:is([data-view="tablet"],[data-view="desktop"]) .wrap{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:2.6rem 3rem;align-items:start}
+  :root:is([data-view="tablet"],[data-view="desktop"]) .wrap>:is(.top,.hero,.contrast,footer){grid-column:1 / -1}
+  :root:is([data-view="tablet"],[data-view="desktop"]) .hero p{max-width:70ch}
+  :root:is([data-view="tablet"],[data-view="desktop"]) .contrast{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.1rem 2rem;padding:1.8rem 1.8rem}
+  :root:is([data-view="tablet"],[data-view="desktop"]) .contrast>:not(.cx){grid-column:1 / -1}
+  :root:is([data-view="tablet"],[data-view="desktop"]) .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 @media (max-width:360px){.kpis{grid-template-columns:1fr}.trio{grid-template-columns:1fr}}
 @media (prefers-reduced-motion:no-preference){.fill,.iqr,.rangefill{transition:width .6s cubic-bezier(.2,.8,.2,1)}}
 </style>
@@ -314,11 +324,11 @@ footer{font-size:.7rem;color:var(--faint);line-height:1.6;border-top:1px solid v
 (function(){
   var root=document.documentElement;
   function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
-  function setView(v){root.setAttribute('data-view',v);document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});store('nld-view',v)}
+  function setView(v){root.setAttribute('data-view',v);document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});store('nld-view-propi',v)}
   function setTheme(t){root.setAttribute('data-theme',t);document.querySelectorAll('[data-t]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===t)});store('nld-theme',t)}
   document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.v)})});
   document.querySelectorAll('[data-t]').forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.t)})});
-  setView(store('nld-view')||'mobile');
+  setView(store('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop'));
   setTheme(store('nld-theme')||'light');
 
   var fmt=function(n){return n.toLocaleString('en-US')};

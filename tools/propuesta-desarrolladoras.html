@@ -1224,6 +1224,11 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   .hero-msg{width:min(272px,calc(100vw - 48px));left:50%;right:auto;top:auto;bottom:21%;margin-left:calc(min(272px,calc(100vw - 48px)) / -2)}
 }
 
+
+/* ===== Ancho estándar NLD Tools: ancho completo, margen lateral proporcional, tope 1680 px ===== */
+:root{--max:1680px}
+@media (min-width:900px){:root{--gutter:clamp(28px,3.5vw,56px)}}
+.nav-in{max-width:var(--max)}
 </style>
 <script>(function(){var d=document.documentElement;d.lang='es';d.classList.add('js');try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-hero');}catch(e){}try{if(localStorage.getItem('nld_dev_tema')==='oscuro')d.setAttribute('data-tema','oscuro');}catch(e){}})();</script>
 <nav class="nav" aria-label="Principal"><div class="nav-in">

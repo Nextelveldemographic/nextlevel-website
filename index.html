@@ -1,5 +1,7 @@
 <!DOCTYPE html>
-<!-- NLD v45 · Proyectos: las tarjetas muestran la foto en movimiento (recorrido) y la ficha abre con el
+<!-- NLD v46 · Proyectos: el recorrido animado (foto en movimiento + ubicación, datos, amenidades y precio)
+     corre en cada tarjeta como GIF y abre la ficha; al terminar pasa a las fotos.
+     v45 · Proyectos: las tarjetas muestran la foto en movimiento (recorrido) y la ficha abre con el
      recorrido; las flechas llevan a las fotos y tocar el recorrido abre la vista rápida. Particulares igual. -->
 <!-- NLD v44 ·Vista rápida: botón ▶ en cada tarjeta (Particulares y Proyectos) y en la foto de la ficha.
      Con video real (campo `video` en PROJDATA: ID o enlace de YouTube, o .mp4) se reproduce ese video;
@@ -3147,25 +3149,69 @@ body.qv-lock{overflow:hidden}
 }
 @media (prefers-reduced-motion:reduce){.qv-ph{transition:none}}
 
-/* ===== v45 · Recorrido en Proyectos =====
-   Las tarjetas de Proyectos muestran la foto en movimiento lento, como un
-   recorrido, y la ficha abre con ese recorrido; las flechas llevan a las
-   fotos. Usa scale/translate sueltos (no transform) para no pisar la
-   entrada de las fotos ni la inclinación 3D de las tarjetas. Solo se mueve
-   lo que está en pantalla. */
+/* ===== v46 · Recorrido animado en Proyectos =====
+   Tarjetas: la foto se mueve como toma de cámara y encima corren cuatro
+   escenas (ubicación, datos, amenidades, precio) con barras de progreso,
+   en un ciclo de 12 s, como un GIF. Solo corre lo que está en pantalla.
+   Ficha: la galería abre con ese recorrido desde el inicio y al terminar
+   pasa a las fotos. Usa scale/translate sueltos (no transform) para no
+   pisar la entrada de las fotos ni la inclinación 3D de las tarjetas. */
 @keyframes nldTour{
-  0%{scale:1.06;translate:-2.2% .6%}
-  100%{scale:1.16;translate:2.2% -1.2%}
+  0%,100%{scale:1.08;translate:-3% 1%}
+  25%{scale:1.16;translate:3% -1%}
+  50%{scale:1.24;translate:-2% -3%}
+  75%{scale:1.14;translate:3% 2%}
 }
-#scene-projects .proj-photo img{animation:nldTour 16s cubic-bezier(.37,0,.63,1) infinite alternate both;animation-play-state:paused}
+@keyframes qvmS0{0%{opacity:0;translate:0 8px}3%,22%{opacity:1;translate:0 0}25%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmS1{0%,25%{opacity:0;translate:0 8px}28%,47%{opacity:1;translate:0 0}50%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmS2{0%,50%{opacity:0;translate:0 8px}53%,72%{opacity:1;translate:0 0}75%,100%{opacity:0;translate:0 -4px}}
+@keyframes qvmS3{0%,75%{opacity:0;translate:0 8px}78%,97%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -4px}}
+@keyframes qvmB0{0%{transform:scaleX(0)}25%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes qvmB1{0%,25%{transform:scaleX(0)}50%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes qvmB2{0%,50%{transform:scaleX(0)}75%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+@keyframes qvmB3{0%,75%{transform:scaleX(0)}99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
+#scene-projects .proj-photo img{animation:nldTour 12s ease-in-out infinite both;animation-play-state:paused}
 #scene-projects .proj-card.qv-live .proj-photo img{animation-play-state:running}
-#scene-projects .proj-card:nth-child(2n) .proj-photo img{animation-direction:alternate-reverse;animation-duration:18s}
-#scene-projects .proj-card:nth-child(3n) .proj-photo img{animation-delay:-6s}
+.qvm{position:absolute;inset:0;z-index:2;pointer-events:none;color:#fff;font-family:var(--sf)}
+.qvm::before{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,.22) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 44%,rgba(0,0,0,.64) 100%)}
+.qvm-bars{position:absolute;left:8px;right:8px;top:5px;display:flex;gap:3px}
+.qvm-bars i{flex:1;height:2px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
+.qvm-bars b{display:block;height:100%;background:#fff;transform:scaleX(0);transform-origin:0 50%}
+.qvm-sc{position:absolute;left:12px;right:132px;bottom:12px;opacity:0;font-size:var(--fs-13);font-weight:600;line-height:1.3;
+  letter-spacing:-.01em;text-shadow:0 1px 10px rgba(0,0,0,.45)}
+.qvm-sc b{display:block;font-size:1.6em;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.qvm-k{display:block;font-size:var(--fs-10);font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.82;margin-bottom:3px}
+.qvm-sc svg{width:.95em;height:.95em;vertical-align:-.12em;margin-right:4px}
+.qvm-sc,.qvm-bars b{animation-duration:12s;animation-iteration-count:infinite;animation-fill-mode:both;animation-play-state:paused}
+.qvm-s0{animation-name:qvmS0}.qvm-s1{animation-name:qvmS1}.qvm-s2{animation-name:qvmS2}.qvm-s3{animation-name:qvmS3}
+.qvm-bars i:nth-child(1) b{animation-name:qvmB0;animation-timing-function:linear}
+.qvm-bars i:nth-child(2) b{animation-name:qvmB1;animation-timing-function:linear}
+.qvm-bars i:nth-child(3) b{animation-name:qvmB2;animation-timing-function:linear}
+.qvm-bars i:nth-child(4) b{animation-name:qvmB3;animation-timing-function:linear}
+.proj-card.qv-live .qvm-sc,.proj-card.qv-live .qvm-bars b{animation-play-state:running}
+@media (max-width:560px){
+  .qvm-sc{left:9px;right:46px;bottom:10px;font-size:11.5px;line-height:1.25}
+  .qvm-s0,.qvm-s1,.qvm-s2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
+  .qvm-s1 .qvm-k,.qvm-s2 .qvm-k{display:none}
+  .qvm-sc b{font-size:1.45em}
+  .pm-slide-tour .qvm-s0,.pm-slide-tour .qvm-s1,.pm-slide-tour .qvm-s2{display:block;-webkit-line-clamp:unset}
+  .pm-slide-tour .qvm-s1 .qvm-k,.pm-slide-tour .qvm-s2 .qvm-k{display:block}
+  .pm-slide-tour .qvm-sc{left:18px;right:18px;bottom:76px;font-size:17px}
+}
 .pm-slide-tour{overflow:hidden;cursor:pointer}
-.pm-tour-ly{position:absolute;inset:0;background-size:cover;background-position:center;
-  animation:nldTour 14s cubic-bezier(.37,0,.63,1) infinite alternate both;animation-play-state:paused}
-.pm-slide-tour.on .pm-tour-ly{animation-play-state:running}
-@media (prefers-reduced-motion:reduce){#scene-projects .proj-photo img,.pm-tour-ly{animation:none}}
+.pm-tour-ly{position:absolute;inset:0;background-size:cover;background-position:center}
+.pm-slide-tour .qvm{z-index:1}
+.pm-slide-tour .qvm-bars{display:none}
+.pm-slide-tour .qvm-sc{left:24px;right:24px;bottom:78px;font-size:clamp(17px,2.4vw,26px)}
+.pm-slide-tour .qvm-k{font-size:var(--fs-12)}
+.pm-slide-tour:not(.run) .qvm-sc,.pm-slide-tour:not(.run) .pm-tour-ly{animation:none}
+.pm-slide-tour.run .pm-tour-ly{animation:nldTour 12s ease-in-out infinite both}
+.pm-slide-tour.run .qvm-sc{animation-play-state:running}
+@media (prefers-reduced-motion:reduce){
+  #scene-projects .proj-photo img,.pm-tour-ly,.pm-slide-tour.run .pm-tour-ly{animation:none}
+  .qvm-sc,.qvm-bars{display:none}
+}
 </style>
 </head>
 <body>
@@ -8358,42 +8404,73 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     var _a=window.applyLang;
     window.applyLang=function(){var r=_a.apply(this,arguments);try{pintarTarjetas();botonFicha();}catch(e){}return r;};
   }
-  window.NLDQuickView={abrir:function(nombre){var c=document.querySelector('.proj-card[data-pname="'+(window.CSS&&CSS.escape?CSS.escape(nombre):nombre)+'"]');if(c)abrir(c,'enlace');},cerrar:cerrar};
+  window.NLDQuickView={datos:datos,abrir:function(nombre){var c=document.querySelector('.proj-card[data-pname="'+(window.CSS&&CSS.escape?CSS.escape(nombre):nombre)+'"]');if(c)abrir(c,'enlace');},cerrar:cerrar};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
 })();
 </script>
 <script>
-/* ===== v45 · Recorrido en Proyectos =====
-   Tarjetas: la foto se mueve solo mientras la tarjeta está a la vista.
-   Ficha: la galería abre con el recorrido y se queda ahí (no avanza sola);
-   las flechas llevan a las fotos. Tocar el recorrido abre la vista rápida
-   a pantalla completa. Particulares no cambia. */
+/* ===== v46 · Recorrido animado en Proyectos =====
+   Tarjetas: recorrido de 12 s en bucle, como GIF, solo mientras se ven.
+   Ficha: abre con el recorrido desde el inicio; al terminar pasa a las
+   fotos y vuelve a empezar. Tocar el recorrido abre la vista rápida a
+   pantalla completa. Particulares no cambia. */
 (function(){
   'use strict';
+  var TOUR_MS=12000;
   var L={es:'Recorrido',en:'Tour',fr:'Visite',it:'Tour',de:'Rundgang',pt:'Tour'};
+  var PIN='<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 14.6s4.6-4.2 4.6-8A4.6 4.6 0 0 0 3.4 6.6c0 3.8 4.6 8 4.6 8z" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="8" cy="6.5" r="1.7" fill="currentColor"/></svg>';
   function lang(){var l=String((typeof curLang!=='undefined'&&curLang)||'es').slice(0,2);return L[l]?l:'es';}
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function datos(c){try{return window.NLDQuickView&&window.NLDQuickView.datos?window.NLDQuickView.datos(c):null;}catch(e){return null;}}
+  function escenas(D){
+    var U=(typeof PM_UI!=='undefined'&&(PM_UI[lang()]||PM_UI.es))||{};
+    var hechos=D.hechos.slice(0,2).map(function(x){return x[1];}).join(' · ');
+    var amen=D.amen.slice(0,3).join(' · ');
+    return [
+      PIN+esc(D.loc||D.nombre),
+      hechos?('<span class="qvm-k">'+esc(D.hechos[0][0])+'</span>'+esc(hechos)):esc(D.nombre),
+      amen?('<span class="qvm-k">'+esc(U.amen||'Amenidades')+'</span>'+esc(amen)):esc(D.loc),
+      '<span class="qvm-k">'+esc(D.precioLbl)+'</span><b>'+esc(D.precio)+'</b>'
+    ];
+  }
+  function mini(D,barras){
+    return (barras?'<div class="qvm-bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>':'')+
+      escenas(D).map(function(s,k){return '<div class="qvm-sc qvm-s'+k+'">'+s+'</div>';}).join('');
+  }
+
+  /* ---------- tarjetas ---------- */
   var sec=document.getElementById('scene-projects');
+  function tarjetas(){return sec?sec.querySelectorAll('.proj-card'):[];}
+  function pintarTarjetas(){
+    [].forEach.call(tarjetas(),function(c){
+      var ph=c.querySelector('.proj-photo'), D=datos(c); if(!ph||!D)return;
+      var m=ph.querySelector('.qvm'), img=ph.querySelector('img');
+      if(!m){m=document.createElement('div');m.className='qvm';m.setAttribute('aria-hidden','true');ph.insertBefore(m,img?img.nextSibling:null);}
+      m.innerHTML=mini(D,true);
+      /* reinicia la foto para que vaya al compás de los textos */
+      if(img){img.style.animation='none';void img.offsetWidth;img.style.animation='';}
+    });
+  }
   if(sec&&'IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
       es.forEach(function(e){e.target.classList.toggle('qv-live',e.isIntersecting);});
     },{threshold:.2});
-    [].forEach.call(sec.querySelectorAll('.proj-card'),function(c){io.observe(c);});
-  }else if(sec){
-    [].forEach.call(sec.querySelectorAll('.proj-card'),function(c){c.classList.add('qv-live');});
+    [].forEach.call(tarjetas(),function(c){io.observe(c);});
+  }else{
+    [].forEach.call(tarjetas(),function(c){c.classList.add('qv-live');});
   }
 
+  /* ---------- ficha ---------- */
   var tour=false;
   function card(){return (typeof _pmCurCard!=='undefined')?_pmCurCard:null;}
   function ponerRecorrido(fotos){
     var c=card();
     if(!c||!c.closest||!c.closest('#scene-projects')||!fotos||!fotos.length)return;
-    var g=document.getElementById('pmGallery'), segs=document.getElementById('pmSegs');
-    if(!g||!segs)return;
+    var g=document.getElementById('pmGallery'), segs=document.getElementById('pmSegs'), D=datos(c);
+    if(!g||!segs||!D)return;
     var sl=document.createElement('div'); sl.className='pm-slide pm-slide-tour';
-    sl.setAttribute('role','img'); sl.setAttribute('aria-label',L[lang()]);
-    var ly=document.createElement('div'); ly.className='pm-tour-ly';
-    ly.style.backgroundImage='url("'+String(fotos[0]).replace(/"/g,'%22')+'")';
-    sl.appendChild(ly);
+    sl.setAttribute('role','img'); sl.setAttribute('aria-label',L[lang()]+': '+D.nombre);
+    sl.innerHTML='<div class="pm-tour-ly" style="background-image:url(&quot;'+esc(String(fotos[0]).replace(/"/g,'%22'))+'&quot;)"></div><div class="qvm" aria-hidden="true">'+mini(D,false)+'</div>';
     g.insertBefore(sl,g.querySelector('.pm-slide')||segs);
     var n=g.querySelectorAll('.pm-slide').length, h='';
     for(var k=0;k<n;k++)h+='<button class="pm-seg" onclick="pmGo('+k+')" aria-label="'+(k===0?L[lang()]:'Foto '+k)+'"><span class="pm-seg-fill"></span></button>';
@@ -8405,25 +8482,24 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   if(typeof window._pmArmarGaleria==='function'){
     var _arm=window._pmArmarGaleria;
     window._pmArmarGaleria=function(emoji,fotos){
-      tour=false;
+      tour=false; pmG.dur=5000;
       var r=_arm.apply(this,arguments);
       try{ponerRecorrido(fotos);}catch(e){}
       return r;
     };
   }
-  /* En modo recorrido la galería no avanza sola: cada indicador queda
-     lleno hasta la posición actual. */
+  /* El recorrido dura lo que dura (12 s) y empieza siempre desde el
+     inicio; las fotos siguen con su ritmo normal. */
   if(typeof window.pmGo==='function'){
     var _go=window.pmGo;
-    window.pmGo=function(){
-      var r=_go.apply(this,arguments);
+    window.pmGo=function(k){
       if(tour){
-        try{clearTimeout(pmG.t);}catch(e){}
-        [].forEach.call(document.querySelectorAll('#pmGallery .pm-seg-fill'),function(f,i){
-          f.style.transition='none'; f.style.width=(i<=pmG.i)?'100%':'0';
-        });
-      }
-      return r;
+        var n=pmG.n||1, t=((k%n)+n)%n;
+        pmG.dur=(t===0)?TOUR_MS:5000;
+        var sl=document.querySelector('#pmGallery .pm-slide-tour');
+        if(sl){sl.classList.remove('run');if(t===0){void sl.offsetWidth;sl.classList.add('run');}}
+      }else{pmG.dur=5000;}
+      return _go.apply(this,arguments);
     };
   }
   var g=document.getElementById('pmGallery');
@@ -8432,6 +8508,12 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     var c=card();
     if(c&&window.NLDQuickView)window.NLDQuickView.abrir(c.getAttribute('data-pname'));
   });
+
+  if(typeof window.applyLang==='function'){
+    var _a=window.applyLang;
+    window.applyLang=function(){var r=_a.apply(this,arguments);try{pintarTarjetas();}catch(e){}return r;};
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
 })();
 </script>
 </body>

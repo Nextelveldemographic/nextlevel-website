@@ -82,7 +82,10 @@ main{display:flex;flex-direction:column;gap:18px;padding-block:12px 28px}
 .ph p{margin:2px 0 0;color:var(--muted);font-size:.85em}
 
 /* Map */
-.mapbox{position:relative;height:var(--map-h);min-height:300px;border-radius:var(--radius);overflow:hidden;background:var(--map-bg);touch-action:none}
+.mapbox{position:relative;height:var(--map-h);min-height:300px;border-radius:var(--radius);overflow:hidden;background:var(--map-bg);touch-action:pan-y;box-shadow:inset 0 0 0 0 transparent;transition:box-shadow .3s var(--ease)}
+.mapbox.active{touch-action:none;box-shadow:inset 0 0 0 2px var(--accent)}
+.maphint{position:absolute;left:50%;top:50%;z-index:4;transform:translate(-50%,-50%);background:rgba(0,0,0,.72);color:#fff;font-size:.88em;font-weight:700;padding:10px 16px;border-radius:999px;pointer-events:none;opacity:0;transition:opacity .25s var(--ease);white-space:nowrap;max-width:calc(100% - 32px);overflow:hidden;text-overflow:ellipsis}
+.maphint.show{opacity:1}
 .mapbox canvas{outline:none}
 .mapctl{position:absolute;top:10px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:flex-start;gap:8px;pointer-events:none;z-index:2}
 .mapctl > *{pointer-events:auto}
@@ -207,7 +210,7 @@ footer p{margin:0;max-width:80ch}
   </section>
 
   <section class="panel rv" style="animation-delay:.16s" aria-labelledby="h-map">
-    <div class="ph"><div><h2 id="h-map">Dónde viven</h2><p id="mapSub">Desde lejos se agrupan por zona; al acercarte se separan hasta cada código postal.</p></div></div>
+    <div class="ph"><div><h2 id="h-map">Dónde viven</h2><p id="mapSub">Desde lejos se agrupan por zona; al acercarte se separan hasta cada código postal. Haz clic en el mapa para usar el zoom.</p></div></div>
     <div class="mapbox" id="mapbox">
       <div class="mapctl">
         <span></span>
@@ -227,6 +230,7 @@ footer p{margin:0;max-width:80ch}
         <div class="lg"><span class="lg-pulse" aria-hidden="true"></span><span>Mayor concentración en la vista. Acércate o toca un grupo para separarlo.</span></div>
       </div>
       <div class="mapinfo" id="mapinfo" hidden aria-live="polite"><button id="miClose" aria-label="Cerrar detalle"><svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button><b id="miZip">—</b><span class="mi-c" id="miCity">—</span><span class="mi-v num" id="miVal">—</span><span class="mi-p num" id="miPct">—</span></div>
+      <div class="maphint" id="maphint" aria-live="polite"></div>
       <div class="mapmsg" id="mapmsg">Cargando mapa…</div>
     </div>
   </section>
@@ -653,8 +657,39 @@ $('resetView').addEventListener('click', () => { hideInfo(); fitInitial(true); }
 $('americas').addEventListener('click', () => { hideInfo(); setVS(fitView(AMERICAS), 'fly'); });
 
 /* presentation */
+/* activación: el mapa solo toma la rueda (y el dedo en pantallas táctiles)
+   después de un clic o toque; así desplazar la página no lo mueve. */
+const TOUCH = window.matchMedia('(pointer: coarse)').matches;
+let mapActive = false, hintT = null;
+function ctrlFor(){ return { dragRotate:false, touchRotate:false, keyboard:true, scrollZoom:{ smooth:false, speed:.02 }, doubleClickZoom:true, inertia:true }; }
+function setActive(on){
+  on = on || S.presenting;
+  if(on === mapActive || !deckgl) return;
+  mapActive = on; $('mapbox').classList.toggle('active', on);
+  const c = $('mapbox').querySelector('canvas'); if(c) c.style.touchAction = on ? 'none' : 'pan-y';
+  if(on) hint('');
+}
+function hint(msg){
+  const h = $('maphint'); clearTimeout(hintT);
+  if(!msg){ h.classList.remove('show'); return; }
+  h.textContent = msg; h.classList.add('show'); hintT = setTimeout(() => h.classList.remove('show'), 1400);
+}
+/* Mientras el mapa está inactivo, sus eventos no llegan al motor del mapa:
+   la rueda (y el dedo en táctil) desplazan la página con normalidad. */
+$('mapbox').addEventListener('wheel', e => { if(!mapActive){ e.stopPropagation(); hint('Haz clic en el mapa para usar el zoom'); } }, { capture:true, passive:true });
+['pointerdown','pointermove','pointerup','pointercancel','touchstart','touchmove','touchend'].forEach(type => {
+  $('mapbox').addEventListener(type, e => {
+    if(mapActive || !TOUCH) return;
+    if(e.pointerType && e.pointerType !== 'touch') return;
+    if(type === 'touchstart' && e.touches.length > 1) hint('Toca el mapa para moverlo y hacer zoom');
+    e.stopPropagation();
+  }, { capture:true, passive:true });
+});
+$('mapbox').addEventListener('mouseleave', () => { if(!TOUCH) setActive(false); });
+document.addEventListener('pointerdown', e => { if(mapActive && !e.target.closest('#mapbox')) setActive(false); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape' && mapActive && !S.presenting) setActive(false); });
 function setPresenting(on){
-  S.presenting = on; const box = $('mapbox'); box.classList.toggle('presenting', on); document.body.style.overflow = on ? 'hidden' : '';
+  S.presenting = on; const box = $('mapbox'); box.classList.toggle('presenting', on); document.body.style.overflow = on ? 'hidden' : ''; mapActive = !on; setActive(on);
   $('present').setAttribute('aria-label', on ? 'Salir de presentación' : 'Modo presentación');
   $('presentIcon').innerHTML = on ? '<path d="M6 6l12 12M18 6L6 18"/>' : '<path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/>';
   requestAnimationFrame(() => requestAnimationFrame(() => fitInitial(true)));
@@ -674,7 +709,7 @@ function initMap(){
     VS = Object.assign({ pitch:0, bearing:0, minZoom:1, maxZoom:MAXZ }, { longitude:-85, latitude:12, zoom:1.6 });
     let lastPan = 0, panTimer = null;
     deckgl = new deck.Deck({ parent: $('mapbox'), viewState: VS, views: new deck.MapView({ repeat:false }), useDevicePixels: Math.min(window.devicePixelRatio || 1, 2), getTooltip: tooltip,
-      controller:{ dragRotate:false, touchRotate:false, keyboard:true, scrollZoom:{ smooth:false, speed:.02 }, doubleClickZoom:true, inertia:true },
+      controller: ctrlFor(),
       onViewStateChange: ({ viewState }) => {
         stopCam(); VS = Object.assign({}, viewState, { pitch:0, bearing:0 }); deckgl.setProps({ viewState: VS });
         if(zoomLevel() !== curZ) recluster(true);
@@ -682,9 +717,11 @@ function initMap(){
       } });
     // toques y clics: se resuelven aquí para que funcionen igual con mouse y con dedo
     const box = $('mapbox'); let down = null;
-    box.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+    box.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; }, { capture:true });
     box.addEventListener('click', e => {
       if(e.target.tagName !== 'CANVAS') return;
+      const wasActive = mapActive; setActive(true);
+      if(TOUCH && !wasActive) return; // en táctil el primer toque solo activa el mapa
       if(down && Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 6) return;
       const r = e.target.getBoundingClientRect();
       const x = e.clientX - r.left, y = e.clientY - r.top, hit = hitDot(x, y);
@@ -703,7 +740,7 @@ function initMap(){
     buildIndex(); setVS(fitView(AMERICAS), null); drawBase();
     setTimeout(() => fitInitial(true), reduceMotion ? 0 : 1600);
     pulseLoop();
-    if('IntersectionObserver' in window) new IntersectionObserver(es => { mapVisible = es[0].isIntersecting; }).observe($('mapbox'));
+    if('IntersectionObserver' in window) new IntersectionObserver(es => { mapVisible = es[0].isIntersecting; if(!mapVisible) setActive(false); }).observe($('mapbox'));
     if('ResizeObserver' in window){ let to; new ResizeObserver(() => { clearTimeout(to); to = setTimeout(() => { deckgl.redraw(true); recluster(false); }, 80); }).observe($('mapbox')); }
   } catch(e){ msg.hidden = false; msg.textContent = 'Este dispositivo no pudo iniciar el mapa. El resto del tablero sigue funcionando.'; console.error(e); }
 }

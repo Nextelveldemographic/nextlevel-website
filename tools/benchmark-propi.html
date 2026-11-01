@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex,nofollow">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Benchmark Propi Inmediato</title>
+<link rel="icon" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<script>
+/* Tema y vista antes del primer pintado */
+(function(){var r=document.documentElement,t='light',v='mobile';try{t=localStorage.getItem('nld-theme')||'light';v=localStorage.getItem('nld-view')||'mobile';}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+</script>
+<style>
+/* Layout: una sola columna que escala completa (tipografía + ancho en rem) según la vista móvil / iPad / navegador. Sistema NLD claro. */
+:root{
+  --bg:#FFFFFF; --surface:#F5F5F7; --line:#D2D2D7; --line-soft:#E5E5EA;
+  --ink:#1D1D1F; --muted:#6E6E73; --faint:#86868B;
+  --accent:#0071E3; --accent-soft:#E8F1FE; --on-accent:#FFFFFF;
+  --contrast-bg:#000000; --contrast-ink:#F5F5F7; --contrast-muted:#A1A1A6; --contrast-line:#2C2C2E;
+  --font:"Helvetica Neue",Arial,system-ui,sans-serif;
+  --base:16px; --maxw:30rem;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000; --surface:#1C1C1E; --line:#38383A; --line-soft:#2C2C2E;
+  --ink:#F5F5F7; --muted:#A1A1A6; --faint:#86868B;
+  --accent:#2997FF; --accent-soft:#0B2742; --on-accent:#FFFFFF;
+  --contrast-bg:#111214; --contrast-ink:#F5F5F7; --contrast-muted:#A1A1A6; --contrast-line:#2C2C2E;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000; --surface:#1C1C1E; --line:#38383A; --line-soft:#2C2C2E;
+  --ink:#F5F5F7; --muted:#A1A1A6; --faint:#86868B;
+  --accent:#2997FF; --accent-soft:#0B2742; --on-accent:#FFFFFF;
+  --contrast-bg:#111214; --contrast-ink:#F5F5F7; --contrast-muted:#A1A1A6; --contrast-line:#2C2C2E;
+  color-scheme:dark}
+:root[data-view="tablet"]{--base:19px; --maxw:40rem}
+:root[data-view="desktop"]{--base:21px; --maxw:42rem}
+*{box-sizing:border-box}
+html{font-size:var(--base)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font);font-size:1rem;line-height:1.45;-webkit-font-smoothing:antialiased;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+[hidden]{display:none!important}
+.wrap{max-width:var(--maxw);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:1rem 3rem;display:flex;flex-direction:column;gap:2.4rem}
+h1,h2,h3{margin:0;text-wrap:balance}
+p{margin:0}
+.num{font-variant-numeric:tabular-nums}
+
+/* barra superior */
+.top{display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.brand{font-weight:700;font-size:.8rem;letter-spacing:.08em;color:var(--ink);text-decoration:none}
+.brand span{color:var(--accent)}
+.ctrls{display:flex;gap:.4rem}
+.seg{display:flex;background:var(--surface);border-radius:999px;padding:.18rem}
+.seg button{all:unset;cursor:pointer;width:1.9rem;height:1.7rem;display:grid;place-items:center;border-radius:999px;color:var(--faint)}
+.seg button[aria-pressed="true"]{background:var(--bg);color:var(--accent);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.seg svg{width:.95rem;height:.95rem}
+
+/* hero */
+.eyebrow{font-size:.78rem;font-weight:700;color:var(--accent);letter-spacing:.02em}
+.hero{display:flex;flex-direction:column;gap:.6rem}
+.hero h1{font-size:2rem;line-height:1.1;letter-spacing:-.02em}
+.hero p{color:var(--muted);font-size:.95rem}
+
+/* secciones */
+section{display:flex;flex-direction:column;gap:1rem}
+.sh{display:flex;gap:.7rem;align-items:flex-start}
+.dot{flex:none;width:1.55rem;height:1.55rem;border-radius:50%;background:var(--accent);color:var(--on-accent);font-weight:700;font-size:.72rem;display:grid;place-items:center;margin-top:.15rem}
+.sh h2{font-size:1.35rem;line-height:1.2;letter-spacing:-.01em}
+.sh .eyebrow{display:block;margin-bottom:.15rem}
+.micro{font-size:.62rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--faint)}
+
+/* etiquetas de certeza */
+.tag{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.12rem .45rem;border-radius:999px;vertical-align:.12em;white-space:nowrap}
+.t-seg{background:var(--accent);color:var(--on-accent)}
+.t-pro{background:var(--accent-soft);color:var(--accent)}
+.t-sup{border:1px dashed var(--faint);color:var(--muted)}
+
+/* contraste */
+.contrast{background:var(--contrast-bg);color:var(--contrast-ink);border-radius:1.1rem;padding:1.4rem 1.2rem;display:flex;flex-direction:column;gap:1.1rem}
+.contrast .eyebrow{color:#2997FF}
+.contrast h2{font-size:1.4rem;line-height:1.2}
+.cx{display:flex;flex-direction:column;gap:.3rem;padding-top:1rem;border-top:1px solid var(--contrast-line)}
+.cx b{font-size:.98rem}
+.cx p{color:var(--contrast-muted);font-size:.88rem}
+.cx .big{font-size:1.7rem;font-weight:700;letter-spacing:-.02em;color:var(--contrast-ink)}
+.cx .big s{color:var(--contrast-muted);font-weight:400;font-size:1.1rem;margin-right:.4rem}
+.contrast .t-pro{background:#0B2742;color:#2997FF}
+.contrast .t-seg{background:#2997FF;color:#fff}
+
+/* KPIs */
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:.6rem}
+.kpi{background:var(--surface);border-radius:1rem;padding:1rem .9rem;display:flex;flex-direction:column;gap:.3rem;min-width:0}
+.kpi .v{font-size:1.75rem;font-weight:700;letter-spacing:-.03em;line-height:1.05}
+.kpi .v small{font-size:.85rem;color:var(--accent);font-weight:700;letter-spacing:0;margin-left:.1rem}
+.kpi .d{color:var(--muted);font-size:.78rem}
+
+/* gráficos de barras */
+.chart{background:var(--surface);border-radius:1rem;padding:1rem .9rem;display:flex;flex-direction:column;gap:.75rem}
+.row{display:grid;grid-template-columns:6.3rem 1fr auto;align-items:center;gap:.6rem;font-size:.8rem}
+.row .lb{color:var(--ink);min-width:0;overflow-wrap:anywhere;line-height:1.2}
+.row .lb em{display:block;font-style:normal;color:var(--faint);font-size:.68rem}
+.track{height:.75rem;background:var(--line-soft);border-radius:999px;position:relative;overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:999px}
+.fill.soft{background:var(--faint);opacity:.55}
+.row .vl{font-weight:700;text-align:right;min-width:3.4rem}
+.row .vl em{display:block;font-style:normal;font-weight:400;color:var(--faint);font-size:.68rem}
+.note{font-size:.82rem;color:var(--muted)}
+.note b{color:var(--ink)}
+
+/* rango por tipo */
+.rng{position:relative;height:1.6rem}
+.rng .ax{position:absolute;left:0;right:0;top:50%;height:1px;background:var(--line)}
+.rng .iqr{position:absolute;top:30%;height:40%;background:var(--accent-soft);border:1.5px solid var(--accent);border-radius:999px}
+.rng .med{position:absolute;top:15%;height:70%;width:3px;margin-left:-1.5px;background:var(--accent);border-radius:2px}
+.scale{position:relative;height:1rem;margin-left:calc(6.3rem + .6rem);margin-right:calc(3.4rem + .6rem);font-size:.62rem;color:var(--faint)}
+.scale span{position:absolute;transform:translateX(-50%)}
+
+/* tira de puntos Escalón */
+.strip{display:flex;flex-direction:column;gap:.9rem}
+.lane{display:grid;grid-template-columns:4.2rem 1fr;gap:.6rem;align-items:center}
+.lane .lb{font-size:.78rem}
+.lane .lb em{display:block;font-style:normal;color:var(--faint);font-size:.66rem}
+.plot{position:relative;height:2.6rem;border-left:1px solid var(--line);border-right:1px solid var(--line)}
+.plot .band{position:absolute;top:0;bottom:0;background:var(--accent-soft);border-radius:.3rem}
+.plot .pt{position:absolute;width:.62rem;height:.62rem;border-radius:50%;background:var(--accent);opacity:.85;transform:translate(-50%,-50%);border:1.5px solid var(--surface)}
+.plot .md{position:absolute;top:-.15rem;bottom:-.15rem;width:2px;background:var(--ink);transform:translateX(-50%)}
+.plot .md span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);font-size:.62rem;font-weight:700;white-space:nowrap;color:var(--ink)}
+.xaxis{position:relative;height:1rem;margin-left:4.8rem;font-size:.62rem;color:var(--faint)}
+.xaxis span{position:absolute;transform:translateX(-50%)}
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.trio div{background:var(--surface);border-radius:.9rem;padding:.75rem .7rem;display:flex;flex-direction:column;gap:.15rem;min-width:0}
+.trio b{font-size:1.15rem;letter-spacing:-.02em}
+.trio span{font-size:.7rem;color:var(--muted)}
+
+/* hipótesis */
+.hyp{display:flex;flex-direction:column;gap:.6rem}
+.card{border:1px solid var(--line);border-radius:1rem;padding:1rem;display:flex;flex-direction:column;gap:.55rem}
+.card h3{font-size:1rem;line-height:1.25}
+.card p{font-size:.86rem;color:var(--muted)}
+.card p b{color:var(--ink)}
+.prob{display:flex;align-items:center;gap:.6rem;font-size:.75rem;color:var(--muted)}
+.prob .track{flex:1;height:.4rem}
+.prob .rangefill{position:absolute;top:0;bottom:0;background:var(--accent);border-radius:999px}
+.weak{font-size:.8rem;background:var(--surface);border-radius:.7rem;padding:.6rem .7rem;color:var(--muted)}
+.weak b{color:var(--ink)}
+
+/* supuestos */
+.kac{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.kac div{display:flex;flex-direction:column;gap:.25rem;padding:.85rem 0;border-bottom:1px solid var(--line)}
+.kac b{font-size:.92rem}
+.kac p{font-size:.84rem;color:var(--muted)}
+
+/* ciclo */
+.steps{display:flex;flex-direction:column;gap:.9rem}
+.step{display:grid;grid-template-columns:1.55rem 1fr;gap:.7rem}
+.step .dot{margin-top:0}
+.step b{display:block;font-size:.92rem;margin-bottom:.15rem}
+.step p{font-size:.86rem;color:var(--muted)}
+
+footer{font-size:.7rem;color:var(--faint);line-height:1.6;border-top:1px solid var(--line);padding-top:1rem}
+@media (max-width:360px){.kpis{grid-template-columns:1fr}.trio{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.fill,.iqr,.rangefill{transition:width .6s cubic-bezier(.2,.8,.2,1)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <a class="brand" href="/tools#estrategia" aria-label="Volver a NLD Tools">NEXT LEVEL <span>DEMOGRAPHIC</span></a>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="Vista">
+        <button data-v="mobile" aria-label="Vista móvil" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></button>
+        <button data-v="tablet" aria-label="Vista iPad" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="2.5" width="16" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></button>
+        <button data-v="desktop" aria-label="Vista navegador" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+      </div>
+      <div class="seg" role="group" aria-label="Tema">
+        <button data-t="light" aria-label="Tema claro" aria-pressed="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button data-t="dark" aria-label="Tema oscuro" aria-pressed="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg></button>
+      </div>
+    </div>
+  </div>
+
+  <header class="hero">
+    <span class="eyebrow">Benchmark Propi · Entrega inmediata · consulta 26 oct 2026</span>
+    <h1>Lo que tu competidor tiene listo para entregar hoy</h1>
+    <p>168 anuncios públicos de Propi El Salvador marcados como “entrega inmediata”. Son precios pedidos, no precios de cierre. Leído con ojos de NLD.</p>
+  </header>
+
+  <!-- 01 -->
+  <section class="contrast" aria-labelledby="s1">
+    <div>
+      <span class="eyebrow">01 · Lo incómodo primero</span>
+      <h2 id="s1">El resumen ejecutivo del archivo no está listo para compartirse</h2>
+    </div>
+    <div class="cx">
+      <b>La primera fila de la tabla de precios está rota <span class="tag t-seg">Seguro</span></b>
+      <div class="big num"><s>929 · 1,346%</s>2 · 2.9%</div>
+      <p>El rango “menos de US$200 mil” dice 929 apartamentos. En la hoja de detalle son 2 de 69. Y el resto de porcentajes está guardado como fracción (0.14 en lugar de 14%).</p>
+    </div>
+    <div class="cx">
+      <b>Los promedios distorsionan la lectura <span class="tag t-seg">Seguro</span></b>
+      <div class="big num"><s>$671,692</s>$227,000</div>
+      <p>Terrenos: promedio contra mediana. Un solo lote de $5.4M en San Benito arrastra el promedio. En este dashboard todo va en medianas.</p>
+    </div>
+    <div class="cx">
+      <b>Si llega así a una desarrolladora, lo primero que leen está mal <span class="tag t-pro">Probable</span></b>
+      <p>Corrige la tabla del resumen antes de mandarlo. Es un error de cinco minutos que cuesta credibilidad en una conversación donde NLD compite contra Propi.</p>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section aria-labelledby="s2">
+    <div class="sh"><span class="dot">02</span><div><span class="eyebrow">Los cuatro números que importan</span><h2 id="s2">El apartamento típico listo: $295 mil, 110 m²</h2></div></div>
+    <div class="kpis">
+      <div class="kpi"><span class="micro">Muestra</span><span class="v num">168</span><span class="d">69 apartamentos · 72 casas · 27 terrenos</span><span><span class="tag t-seg">Seguro</span></span></div>
+      <div class="kpi"><span class="micro">Mediana apartamento</span><span class="v num">$295<small>mil</small></span><span class="d">Rango total $135 mil a $1.35 M</span><span><span class="tag t-seg">Seguro</span></span></div>
+      <div class="kpi"><span class="micro">Apartamento por m²</span><span class="v num">$2,778</span><span class="d">La mitad central entre $2,500 y $3,077</span><span><span class="tag t-pro">Probable</span></span></div>
+      <div class="kpi"><span class="micro">Zona de mercado</span><span class="v num">71<small>%</small></span><span class="d">de los apartamentos piden entre $250 y $399 mil</span><span><span class="tag t-seg">Seguro</span></span></div>
+    </div>
+    <p class="note">El m² va como <b>Probable</b> porque el archivo no aclara si cada anuncio reporta área construida, útil o de terreno.</p>
+  </section>
+
+  <!-- 03 -->
+  <section aria-labelledby="s3">
+    <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Apartamentos por rango de precio (corregido)</span><h2 id="s3">Bajo $200 mil casi no hay nada listo</h2></div></div>
+    <div class="chart" id="bands"></div>
+    <p class="note">Quien tiene menos de $200 mil no encuentra apartamento listo en Propi: encuentra casa. Hay <b>15 casas bajo $200 mil</b> contra 2 apartamentos, casi todas en Apopa, Opico, Colón y San Luis Talpa. Ciudad Marsella aparece desde <b>$60 mil</b>. <span class="tag t-seg">Seguro</span></p>
+  </section>
+
+  <!-- 04 -->
+  <section aria-labelledby="s4">
+    <div class="sh"><span class="dot">04</span><div><span class="eyebrow">Precio por m² según tipo · mediana y mitad central</span><h2 id="s4">El m² de apartamento cuesta 1.8 veces el de casa</h2></div></div>
+    <div class="chart" id="types"></div>
+    <p class="note">La comparación casa contra apartamento es orientativa: en casas el m² puede incluir terreno, lo que baja artificialmente el precio por m². <span class="tag t-pro">Probable</span></p>
+  </section>
+
+  <!-- 05 -->
+  <section aria-labelledby="s5">
+    <div class="sh"><span class="dot">05</span><div><span class="eyebrow">Apartamentos · mediana $/m² por zona anunciada</span><h2 id="s5">San Benito arriba, Nuevo Cuscatlán como alternativa más barata</h2></div></div>
+    <div class="chart" id="zones"></div>
+    <p class="note">Las barras grises tienen <b>menos de 5 anuncios</b>: sirven para orientarse, no para fijar un precio. Escalón y Escalón Norte juntos suman 27 de 69 apartamentos, el estante más lleno de Propi.</p>
+  </section>
+
+  <!-- 06 -->
+  <section aria-labelledby="s6">
+    <div class="sh"><span class="dot">06</span><div><span class="eyebrow">Comparables Escalón y Escalón Norte · 50 a 120 m²</span><h2 id="s6">El ancla de precio para Citalá Haus</h2></div></div>
+    <div class="trio">
+      <div><span class="micro">Mediana</span><b class="num">$2,900</b><span>por m²</span></div>
+      <div><span class="micro">Mitad central</span><b class="num">$2,710–3,095</b><span>por m²</span></div>
+      <div><span class="micro">Ticket</span><b class="num">$280 mil</b><span>97 m² mediano</span></div>
+    </div>
+    <div class="chart">
+      <div class="strip" id="strip"></div>
+      <div class="xaxis" id="xaxis"></div>
+    </div>
+    <p class="note">Cada punto es un anuncio. La franja azul es la mitad central de la muestra. <b>Los de 1–2 habitaciones piden 13% más por m²</b> que los de 3 ($3,158 contra $2,803). En toda la muestra de apartamentos el patrón se repite: 12%. <span class="tag t-seg">Seguro</span></p>
+    <p class="note">Para la tesis de comprar y rentar en Airbnb: la unidad chica baja el ticket, pero el inversionista paga el m² más caro del edificio. Ese sobreprecio tiene que justificarse con renta, no con plusvalía. <span class="tag t-pro">Probable</span></p>
+  </section>
+
+  <!-- 07 -->
+  <section aria-labelledby="s7">
+    <div class="sh"><span class="dot">07</span><div><span class="eyebrow">Hipótesis · dónde puede jugar NLD</span><h2 id="s7">Tres huecos en el estante de Propi</h2></div></div>
+    <div class="hyp">
+      <article class="card">
+        <span class="micro">H1 · Costa</span>
+        <h3>Casi no hay apartamentos de playa listos para entregar</h3>
+        <p><b>1 de 69</b> apartamentos está en la costa (LOFT Sunset View, La Libertad, $329,844). En cambio, <b>14 de 27 terrenos</b> están en la franja costera. Propi vende playa como lote, no como apartamento listo. <span class="tag t-seg">Seguro</span></p>
+        <div class="prob"><span>Prob. de hueco real</span><div class="track"><div class="rangefill" style="left:55%;width:10%"></div></div><span class="num">55–65%</span></div>
+        <div class="weak"><b>Supuesto más débil:</b> que esta muestra refleje todo Propi y que Encuentra24 no tenga ese inventario. Prueba: mismo filtro en Encuentra24 y dos desarrolladoras costeras. <span class="tag t-sup">Suposición</span></div>
+      </article>
+      <article class="card">
+        <span class="micro">H2 · Ticket de entrada</span>
+        <h3>La diáspora con presupuesto corto termina en casa de periferia</h3>
+        <p><b>15 casas bajo $200 mil</b> contra 2 apartamentos. Ciudad Marsella publica a <b>$60 mil y $98 mil</b>: es la referencia de reventa para las propiedades inactivas que quieres administrar en Airbnb.</p>
+        <div class="prob"><span>Prob. de que el segmento exista</span><div class="track"><div class="rangefill" style="left:65%;width:15%"></div></div><span class="num">65–80%</span></div>
+        <div class="weak"><b>Supuesto más débil:</b> que ese comprador quiera periferia y no espere a juntar más para Escalón. Prueba: preguntar presupuesto real a los próximos 10 leads. <span class="tag t-sup">Suposición</span></div>
+      </article>
+      <article class="card">
+        <span class="micro">H3 · Concentración</span>
+        <h3>Competir en Escalón es competir donde Propi es más fuerte</h3>
+        <p>Escalón, Escalón Norte y Nuevo Cuscatlán suman <b>37 de 69</b> apartamentos (54%). Torres Artea sola pone 7. Es probable que ahí Propi tenga acuerdos de inventario. <span class="tag t-sup">Suposición</span></p>
+        <div class="prob"><span>Prob. de acuerdo comercial</span><div class="track"><div class="rangefill" style="left:50%;width:20%"></div></div><span class="num">50–70%</span></div>
+        <div class="weak"><b>Supuesto más débil:</b> que el volumen de anuncios signifique exclusividad. Un proyecto puede publicar en Propi y aceptar a NLD a la vez. Prueba: preguntarlo directo a Torres Artea.</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section aria-labelledby="s8">
+    <div class="sh"><span class="dot">08</span><div><span class="eyebrow">Revisión de supuestos clave</span><h2 id="s8">Qué tiene que ser cierto para usar estos números</h2></div></div>
+    <div class="kac">
+      <div><b>Precio pedido ≈ precio de cierre <span class="tag t-sup">Suposición</span></b><p>Si el cierre real tiene descuento, todos los $/m² de esta página bajan. No hay dato de cierre en el archivo; el tamaño del descuento es desconocido.</p></div>
+      <div><b>Los m² son comparables entre anuncios <span class="tag t-seg">Seguro que no</span></b><p>El archivo lo advierte: no está homologado. Pesa poco en apartamentos y mucho en casas y terrenos.</p></div>
+      <div><b>La muestra representa el catálogo <span class="tag t-pro">Probable en zonas grandes</span></b><p>Con 18 anuncios en Escalón la mediana aguanta. Con 2 en La Mascota no.</p></div>
+      <div><b>“Entrega inmediata” es real <span class="tag t-sup">Suposición</span></b><p>Es una etiqueta del portal. Confirmar disponibilidad y estado legal antes de citarla a un cliente.</p></div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section aria-labelledby="s9">
+    <div class="sh"><span class="dot">09</span><div><span class="eyebrow">Ciclo de decisión</span><h2 id="s9">Cómo convertir esto en un precio defendible</h2></div></div>
+    <div class="steps">
+      <div class="step"><span class="dot">1</span><div><b>Hipótesis</b><p>Un apartamento listo de 75 a 110 m² en Escalón se pide entre $2,700 y $3,100 por m², con prima de ~13% si es de 1–2 habitaciones.</p></div></div>
+      <div class="step"><span class="dot">2</span><div><b>Supuesto más débil</b><p>Que precio pedido sea precio de cierre. Prueba: conseguir 3 cierres reales recientes en Escalón con desarrolladoras o corredores aliados.</p></div></div>
+      <div class="step"><span class="dot">3</span><div><b>Decidir con la certeza real</b><p>Hoy la hipótesis está en ~60% <span class="tag t-sup">Suposición</span>. Suficiente para orientar una conversación con desarrolladora; insuficiente para fijar precio de lista.</p></div></div>
+      <div class="step"><span class="dot">4</span><div><b>Registrar y corregir</b><p>Anotar este benchmark con fecha y repetir la misma consulta a los 30 días: qué bajó de precio y qué desapareció dice más que la foto de hoy.</p></div></div>
+    </div>
+  </section>
+
+  <footer>Fuente: catálogo público de Propi El Salvador (propilatam.com), filtro “entrega inmediata”, consulta del 26 de octubre de 2026. Precios de oferta, no de cierre. Muestra amplia, no exhaustiva. Cálculos de medianas y rangos sobre las hojas de detalle del archivo. Preparado el 31 de octubre de 2026.</footer>
+</div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
+  function setView(v){root.setAttribute('data-view',v);document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});store('nld-view',v)}
+  function setTheme(t){root.setAttribute('data-theme',t);document.querySelectorAll('[data-t]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===t)});store('nld-theme',t)}
+  document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.v)})});
+  document.querySelectorAll('[data-t]').forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.t)})});
+  setView(store('nld-view')||'mobile');
+  setTheme(store('nld-theme')||'light');
+
+  var fmt=function(n){return n.toLocaleString('en-US')};
+  function row(label,sub,pct,val,valsub,soft){
+    return '<div class="row"><span class="lb">'+label+(sub?'<em>'+sub+'</em>':'')+'</span><div class="track"><div class="fill'+(soft?' soft':'')+'" style="width:'+pct+'%"></div></div><span class="vl num">'+val+(valsub?'<em>'+valsub+'</em>':'')+'</span></div>';
+  }
+
+  // 03 bandas de precio (corregidas desde el detalle)
+  var bands=[['Menos de $200k',2],['$200–249k',10],['$250–299k',26],['$300–399k',23],['$400k o más',8]];
+  var tot=69, mx=26;
+  document.getElementById('bands').innerHTML=bands.map(function(b){
+    var core=b[0]==='$250–299k'||b[0]==='$300–399k';
+    return row(b[0],null,b[1]/mx*100,b[1],(b[1]/tot*100).toFixed(1)+'%',!core);
+  }).join('')+'<p class="micro">Azul: la zona donde está el 71% de la oferta</p>';
+
+  // 04 rango por tipo
+  var types=[['Apartamento','69 anuncios',2500,2778,3077],['Casa','72 anuncios',1119,1507,1832],['Terreno','27 anuncios',111,225,391]];
+  var MAX=3500;
+  var h=types.map(function(t){
+    return '<div class="row"><span class="lb">'+t[0]+'<em>'+t[1]+'</em></span><div class="rng"><div class="ax"></div><div class="iqr" style="left:'+(t[2]/MAX*100)+'%;width:'+Math.max((t[4]-t[2])/MAX*100,1.2)+'%"></div><div class="med" style="left:'+(t[3]/MAX*100)+'%"></div></div><span class="vl num">$'+fmt(t[3])+'<em>/m² mediana</em></span></div>';
+  }).join('');
+  h+='<div class="scale">'+[0,1000,2000,3000].map(function(v){return '<span style="left:'+(v/MAX*100)+'%">$'+(v/1000)+'k</span>'}).join('')+'</div>';
+  document.getElementById('types').innerHTML=h;
+
+  // 05 zonas
+  var zones=[['San Benito',4,3500],['La Mascota',2,3441],['Antiguo Cuscatlán',2,3365],['Nu Lomas',4,3071],['Colonia Escalón',18,2900],['Escalón Norte',9,2844],['Nuevo Cuscatlán',10,2555],['Flor Blanca',2,2506],['Col. San Francisco',3,2443],['San Salvador (otras)',7,2339]];
+  document.getElementById('zones').innerHTML=zones.map(function(z){
+    return row(z[0],z[1]+' anuncio'+(z[1]>1?'s':''),z[2]/3600*100,'$'+fmt(z[2]),null,z[1]<5);
+  }).join('');
+
+  // 06 tira Escalón
+  var pts=[[2507,3],[2516,2],[2537,2],[2573,3],[2650,3],[2685,3],[2718,3],[2727,3],[2802,3],[2804,3],[2844,3],[2897,2],[2902,3],[2999,3],[3000,2],[3065,3],[3067,2],[3077,3],[3150,3],[3250,2],[3333,2],[3365,2],[3581,2],[3618,1]];
+  var lo=2400,hi=3700,p=function(v){return (v-lo)/(hi-lo)*100};
+  var lanes=[['1–2 hab','10 anuncios',function(h){return h<=2},3158],['3 hab','14 anuncios',function(h){return h===3},2803]];
+  document.getElementById('strip').innerHTML=lanes.map(function(L){
+    var sel=pts.filter(function(x){return L[2](x[1])});
+    var dots=sel.map(function(x,i){return '<span class="pt" style="left:'+p(x[0])+'%;top:'+(i%2?66:34)+'%"></span>'}).join('');
+    return '<div class="lane"><span class="lb">'+L[0]+'<em>'+L[1]+'</em></span><div class="plot"><div class="band" style="left:'+p(2710)+'%;width:'+(p(3095)-p(2710))+'%"></div>'+dots+'<div class="md" style="left:'+p(L[3])+'%"><span class="num">$'+fmt(L[3])+'</span></div></div></div>';
+  }).join('');
+  document.getElementById('xaxis').innerHTML=[2500,2750,3000,3250,3500].map(function(v){return '<span class="num" style="left:'+p(v)+'%">$'+fmt(v)+'</span>'}).join('');
+})();
+</script>
+</body>
+</html>

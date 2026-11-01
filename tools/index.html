@@ -25,7 +25,7 @@
   --glass:rgba(245,245,247,.82);--hover:rgba(0,0,0,.05);
   --lift:0 1px 2px rgba(0,0,0,.04),0 14px 34px rgba(0,0,0,.07);
   --ease:cubic-bezier(.28,.16,.22,1);
-  --max:760px;--gutter:16px;
+  --max:760px;--max-wide:1280px;--gutter:16px;
 }
 :root[data-tema="oscuro"]{
   color-scheme:dark;
@@ -75,6 +75,11 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 
 /* tarjetas */
 .list{display:grid;gap:14px;padding-bottom:40px}
+.tool>div{display:flex;flex-direction:column;min-height:100%}
+.tool .foot{margin-top:auto}
+.tool p.txt{margin-bottom:16px}
+@media (min-width:900px){:root{--max:var(--max-wide)}.list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.lead{max-width:44em}}
+@media (min-width:1280px){.list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .tool{position:relative;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
   background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 20px 20px;
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
@@ -143,6 +148,13 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
    ============================================================ */
 var HERRAMIENTAS = [
   {
+    url: '/tools/mapa-diaspora',
+    etiqueta: 'Tablero · Censo EE. UU. 2023',
+    titulo: 'Mapa de la Diáspora',
+    texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa 2D y 3D, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
+    meta: '19 países · 20,784 códigos postales'
+  },
+  {
     url: '/tools/propuesta-desarrolladoras',
     etiqueta: 'Presentación · Desarrolladoras',
     titulo: 'Propuesta para desarrolladoras',
@@ -157,11 +169,11 @@ var HERRAMIENTAS = [
     meta: 'Datos hasta: marzo 2026'
   },
   {
-    url: '/tools/carisma',
-    etiqueta: 'Entrenamiento · Comunicación',
-    titulo: 'Carisma',
-    texto: 'Historias de conversaciones difíciles que Max siempre gana: vender, negociar, persuadir y leer señales. En cada línea ves qué hizo, cuándo y por qué funcionó.',
-    meta: 'Once módulos · tres niveles'
+    url: '/tools/airbnb',
+    etiqueta: 'Video · Gestión de Airbnb',
+    titulo: 'Una casa vacía cuesta. Gestionada, genera.',
+    texto: 'El video de gestión de Airbnb para la diáspora en dos versiones, Don José (Texas) y Doña María (California), en vertical para redes y horizontal para web. Con descarga y guion.',
+    meta: '2 versiones · 1:09'
   },
   {
     url: '/tools/jubilacion',
@@ -171,18 +183,11 @@ var HERRAMIENTAS = [
     meta: '4 historias · 8 episodios'
   },
   {
-    url: '/tools/airbnb',
-    etiqueta: 'Video · Gestión de Airbnb',
-    titulo: 'Una casa vacía cuesta. Gestionada, genera.',
-    texto: 'El video de gestión de Airbnb para la diáspora en dos versiones, Don José (Texas) y Doña María (California), en vertical para redes y horizontal para web. Con descarga y guion.',
-    meta: '2 versiones · 1:09'
-  },
-  {
-    url: '/tools/mapa-diaspora',
-    etiqueta: 'Tablero · Censo EE. UU. 2023',
-    titulo: 'Mapa de la Diáspora',
-    texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa 2D y 3D, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
-    meta: '19 países · 20,784 códigos postales'
+    url: '/tools/carisma',
+    etiqueta: 'Entrenamiento · Comunicación',
+    titulo: 'Carisma',
+    texto: 'Historias de conversaciones difíciles que Max siempre gana: vender, negociar, persuadir y leer señales. En cada línea ves qué hizo, cuándo y por qué funcionó.',
+    meta: 'Once módulos · tres niveles'
   }
 ];
 
@@ -194,7 +199,7 @@ var HERRAMIENTAS = [
     var n = (i+1<10?'0':'')+(i+1);
     return '<a class="tool rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="'+esc(h.url)+'">'+
       '<span class="num" aria-hidden="true">'+n+'</span>'+
-      '<div><p class="tag">'+esc(h.etiqueta)+'</p><h2>'+esc(h.titulo)+'</h2><p>'+esc(h.texto)+'</p>'+
+      '<div><p class="tag">'+esc(h.etiqueta)+'</p><h2>'+esc(h.titulo)+'</h2><p class="txt">'+esc(h.texto)+'</p>'+
       '<div class="foot"><span class="meta">'+esc(h.meta||'')+'</span><span class="open">Abrir'+flecha+'</span></div></div></a>';
   }).join('');
 

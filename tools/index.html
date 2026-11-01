@@ -78,6 +78,12 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 .tool>div{display:flex;flex-direction:column;min-height:100%}
 .tool .foot{margin-top:auto}
 .tool p.txt{margin-bottom:16px}
+.tl{list-style:none;margin:0 0 16px;padding:0;display:flex;flex-direction:column;gap:6px}
+.tl li{font-size:14px;color:var(--fg);display:flex;gap:8px;align-items:baseline}
+.tl li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--blue);flex:none;transform:translateY(-2px)}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--blue);margin-bottom:18px}
+.back[hidden]{display:none}
+.back svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @media (min-width:900px){:root{--max:var(--max-wide)}.list{grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}.lead{max-width:44em}}
 @media (min-width:1280px){.list{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .tool{position:relative;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
@@ -125,9 +131,10 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 
 <main class="wrap">
   <section class="head">
-    <p class="eyebrow rv">Herramientas internas</p>
-    <h1 class="rv" style="animation-delay:.06s">Lo que usamos en NLD, en un solo lugar.</h1>
-    <p class="lead rv" style="animation-delay:.12s">Elige una herramienta para abrirla. Todo lo que está aquí es privado del equipo.</p>
+    <a class="back rv" id="back" href="#" hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H6M11 6l-6 6 6 6"/></svg>Todas las áreas</a>
+    <p class="eyebrow rv" id="eb">Herramientas internas</p>
+    <h1 class="rv" style="animation-delay:.06s" id="h1">Lo que usamos en NLD, en un solo lugar.</h1>
+    <p class="lead rv" style="animation-delay:.12s" id="lead">Elige un área para ver sus herramientas. Todo lo que está aquí es privado del equipo.</p>
     <p class="who rv" style="animation-delay:.18s" id="who" hidden>Sesión · <b id="who-mail"></b></p>
   </section>
 
@@ -144,11 +151,21 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
       (ejemplo: tools/mi-herramienta.html).
    2. Agrega aquí un bloque con su ruta, sin ".html"
       (ejemplo: url: '/tools/mi-herramienta').
+   3. Ponle su área (area: 'marketing', 'ventas', ...). Las áreas
+      están en la lista AREAS; un área sin herramientas no se muestra.
    El candado de acceso la protege sola por estar dentro de /tools.
    ============================================================ */
+var AREAS = [
+  { id: 'marketing',   nombre: 'Marketing',   titulo: 'Contenido y campañas.',           texto: 'Videos para redes y la web, y la segmentación por código postal para pautar donde vive la diáspora.' },
+  { id: 'ventas',      nombre: 'Ventas',      titulo: 'Material para cerrar.',           texto: 'Lo que se presenta a desarrolladoras y clientes en reuniones y seguimientos.' },
+  { id: 'estrategia',  nombre: 'Estrategia',  titulo: 'Datos para decidir.',             texto: 'Inteligencia de mercado: remesas, territorio y tendencias que sostienen las decisiones de NLD.' },
+  { id: 'operaciones', nombre: 'Operaciones', titulo: 'Cómo trabajamos.',                texto: 'Procesos, seguimiento y herramientas del día a día.' },
+  { id: 'formacion',   nombre: 'Formación',   titulo: 'Entrenamiento del equipo.',       texto: 'Práctica de comunicación, venta y negociación para el equipo.' }
+];
 var HERRAMIENTAS = [
   {
     url: '/tools/mapa-diaspora',
+    area: 'marketing',
     etiqueta: 'Tablero · Censo EE. UU. 2023',
     titulo: 'Mapa de la Diáspora',
     texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa 2D y 3D, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
@@ -156,6 +173,7 @@ var HERRAMIENTAS = [
   },
   {
     url: '/tools/propuesta-desarrolladoras',
+    area: 'ventas',
     etiqueta: 'Presentación · Desarrolladoras',
     titulo: 'Propuesta para desarrolladoras',
     texto: 'La propuesta comercial de NLD para torres y proyectos: la oportunidad, cómo funciona, la plataforma y el podcast. Se presenta con las flechas del teclado.',
@@ -163,6 +181,7 @@ var HERRAMIENTAS = [
   },
   {
     url: '/tools/bcr-remesas',
+    area: 'estrategia',
     etiqueta: 'Tablero · Datos del BCR',
     titulo: 'Remesas por destino geográfico',
     texto: 'Tablero interactivo de remesas por departamento y municipio: mapa, ranking, canales y evolución mensual. Acepta el Excel nuevo del BCR para actualizarse.',
@@ -170,6 +189,8 @@ var HERRAMIENTAS = [
   },
   {
     url: '/tools/airbnb',
+    area: 'marketing',
+    nombre: 'Video de gestión de Airbnb',
     etiqueta: 'Video · Gestión de Airbnb',
     titulo: 'Una casa vacía cuesta. Gestionada, genera.',
     texto: 'El video de gestión de Airbnb para la diáspora en dos versiones, Don José (Texas) y Doña María (California), en vertical para redes y horizontal para web. Con descarga y guion.',
@@ -177,6 +198,8 @@ var HERRAMIENTAS = [
   },
   {
     url: '/tools/jubilacion',
+    area: 'marketing',
+    nombre: 'Video Jubilarse en El Salvador',
     etiqueta: 'Video · Jubilación',
     titulo: 'Jubilarse en El Salvador',
     texto: 'La serie animada completa: ¿Será verdad?, cuatro historias por estado de EE. UU., y El después, los episodios de cada personaje ya viviendo en El Salvador. Narrada, en vertical, horizontal y vista de redes.',
@@ -184,6 +207,7 @@ var HERRAMIENTAS = [
   },
   {
     url: '/tools/carisma',
+    area: 'formacion',
     etiqueta: 'Entrenamiento · Comunicación',
     titulo: 'Carisma',
     texto: 'Historias de conversaciones difíciles que Max siempre gana: vender, negociar, persuadir y leer señales. En cada línea ves qué hizo, cuándo y por qué funcionó.',
@@ -195,13 +219,43 @@ var HERRAMIENTAS = [
   var lista = document.getElementById('lista');
   var flecha = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
-  lista.innerHTML = HERRAMIENTAS.map(function(h,i){
-    var n = (i+1<10?'0':'')+(i+1);
+  function dos(i){ return (i<10?'0':'')+i; }
+  function tarjetaTool(h,i){
     return '<a class="tool rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="'+esc(h.url)+'">'+
-      '<span class="num" aria-hidden="true">'+n+'</span>'+
+      '<span class="num" aria-hidden="true">'+dos(i+1)+'</span>'+
       '<div><p class="tag">'+esc(h.etiqueta)+'</p><h2>'+esc(h.titulo)+'</h2><p class="txt">'+esc(h.texto)+'</p>'+
       '<div class="foot"><span class="meta">'+esc(h.meta||'')+'</span><span class="open">Abrir'+flecha+'</span></div></div></a>';
-  }).join('');
+  }
+  function deArea(id){ return HERRAMIENTAS.filter(function(h){ return h.area===id; }); }
+  var conTools = AREAS.filter(function(a){ return deArea(a.id).length; });
+  var eb=document.getElementById('eb'), h1=document.getElementById('h1'), lead=document.getElementById('lead'), back=document.getElementById('back');
+  function reanima(){ [eb,h1,lead,back].forEach(function(e){ e.classList.remove('rv'); void e.offsetWidth; e.classList.add('rv'); }); }
+  function render(){
+    var id = decodeURIComponent((location.hash||'').slice(1)), a = null;
+    AREAS.forEach(function(x){ if(x.id===id) a=x; });
+    if (a && deArea(a.id).length) {
+      back.hidden = false; eb.textContent = a.nombre; h1.textContent = a.titulo; lead.textContent = a.texto;
+      lista.innerHTML = deArea(a.id).map(tarjetaTool).join('');
+      document.title = a.nombre + ' · NLD Tools';
+    } else {
+      back.hidden = true; eb.textContent = 'Herramientas internas'; h1.textContent = 'Lo que usamos en NLD, en un solo lugar.';
+      lead.textContent = 'Elige un área para ver sus herramientas. Todo lo que está aquí es privado del equipo.';
+      lista.innerHTML = conTools.map(function(a,i){
+        var ts = deArea(a.id), n = ts.length;
+        return '<a class="tool rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="#'+a.id+'">'+
+          '<span class="num" aria-hidden="true">'+dos(i+1)+'</span>'+
+          '<div><p class="tag">'+esc(a.nombre)+'</p><h2>'+esc(a.titulo)+'</h2><p class="txt">'+esc(a.texto)+'</p>'+
+          '<ul class="tl">'+ts.map(function(h){ return '<li>'+esc(h.nombre||h.titulo)+'</li>'; }).join('')+'</ul>'+
+          '<div class="foot"><span class="meta">'+n+(n===1?' herramienta':' herramientas')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';
+      }).join('');
+      document.title = 'NLD Tools';
+    }
+    reanima();
+  }
+  back.addEventListener('click', function(e){ e.preventDefault(); history.pushState('', document.title, location.pathname); render(); window.scrollTo(0,0); });
+  window.addEventListener('hashchange', function(){ render(); window.scrollTo(0,0); });
+  window.addEventListener('popstate', render);
+  render();
 
   // correo de la sesión (lo deja el candado al entrar)
   var m = document.cookie.match(/(?:^|;\s*)nld_tools_usuario=([^;]+)/);

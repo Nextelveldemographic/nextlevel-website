@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<!-- NLD v46 · Proyectos: el recorrido animado (foto en movimiento + ubicación, datos, amenidades y precio)
+<!-- NLD v47 · Proyectos: el recorrido corre en una tarjeta a la vez (las visibles, en orden); sin barras de progreso.
+     v46 · Proyectos: el recorrido animado (foto en movimiento + ubicación, datos, amenidades y precio)
      corre en cada tarjeta como GIF y abre la ficha; al terminar pasa a las fotos.
      v45 · Proyectos: las tarjetas muestran la foto en movimiento (recorrido) y la ficha abre con el
      recorrido; las flechas llevan a las fotos y tocar el recorrido abre la vista rápida. Particulares igual. -->
@@ -3166,30 +3167,22 @@ body.qv-lock{overflow:hidden}
 @keyframes qvmS1{0%,25%{opacity:0;translate:0 8px}28%,47%{opacity:1;translate:0 0}50%,100%{opacity:0;translate:0 -4px}}
 @keyframes qvmS2{0%,50%{opacity:0;translate:0 8px}53%,72%{opacity:1;translate:0 0}75%,100%{opacity:0;translate:0 -4px}}
 @keyframes qvmS3{0%,75%{opacity:0;translate:0 8px}78%,97%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -4px}}
-@keyframes qvmB0{0%{transform:scaleX(0)}25%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
-@keyframes qvmB1{0%,25%{transform:scaleX(0)}50%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
-@keyframes qvmB2{0%,50%{transform:scaleX(0)}75%,99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
-@keyframes qvmB3{0%,75%{transform:scaleX(0)}99.9%{transform:scaleX(1)}100%{transform:scaleX(0)}}
-#scene-projects .proj-photo img{animation:nldTour 12s ease-in-out infinite both;animation-play-state:paused}
-#scene-projects .proj-card.qv-live .proj-photo img{animation-play-state:running}
+/* v47: una tarjeta a la vez. Quieta, la foto queda en el mismo encuadre
+   con que empieza y termina el recorrido, así no salta al cambiar. */
+#scene-projects .proj-photo img{scale:1.08;translate:-3% 1%}
+#scene-projects .proj-card.qv-on .proj-photo img{animation:nldTour 12s ease-in-out 1 both}
 .qvm{position:absolute;inset:0;z-index:2;pointer-events:none;color:#fff;font-family:var(--sf)}
-.qvm::before{content:"";position:absolute;inset:0;
+.qvm::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .6s ease;
   background:linear-gradient(180deg,rgba(0,0,0,.22) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 44%,rgba(0,0,0,.64) 100%)}
-.qvm-bars{position:absolute;left:8px;right:8px;top:5px;display:flex;gap:3px}
-.qvm-bars i{flex:1;height:2px;border-radius:2px;background:rgba(255,255,255,.35);overflow:hidden}
-.qvm-bars b{display:block;height:100%;background:#fff;transform:scaleX(0);transform-origin:0 50%}
 .qvm-sc{position:absolute;left:12px;right:132px;bottom:12px;opacity:0;font-size:var(--fs-13);font-weight:600;line-height:1.3;
   letter-spacing:-.01em;text-shadow:0 1px 10px rgba(0,0,0,.45)}
 .qvm-sc b{display:block;font-size:1.6em;font-weight:700;letter-spacing:-.02em;line-height:1.1}
 .qvm-k{display:block;font-size:var(--fs-10);font-weight:700;letter-spacing:.08em;text-transform:uppercase;opacity:.82;margin-bottom:3px}
 .qvm-sc svg{width:.95em;height:.95em;vertical-align:-.12em;margin-right:4px}
-.qvm-sc,.qvm-bars b{animation-duration:12s;animation-iteration-count:infinite;animation-fill-mode:both;animation-play-state:paused}
-.qvm-s0{animation-name:qvmS0}.qvm-s1{animation-name:qvmS1}.qvm-s2{animation-name:qvmS2}.qvm-s3{animation-name:qvmS3}
-.qvm-bars i:nth-child(1) b{animation-name:qvmB0;animation-timing-function:linear}
-.qvm-bars i:nth-child(2) b{animation-name:qvmB1;animation-timing-function:linear}
-.qvm-bars i:nth-child(3) b{animation-name:qvmB2;animation-timing-function:linear}
-.qvm-bars i:nth-child(4) b{animation-name:qvmB3;animation-timing-function:linear}
-.proj-card.qv-live .qvm-sc,.proj-card.qv-live .qvm-bars b{animation-play-state:running}
+.qv-on .qvm::before,.pm-slide-tour .qvm::before{opacity:1}
+.qvm-sc{animation-duration:12s;animation-iteration-count:1;animation-fill-mode:both}
+.qv-on .qvm-s0,.pm-slide-tour.run .qvm-s0{animation-name:qvmS0}.qv-on .qvm-s1,.pm-slide-tour.run .qvm-s1{animation-name:qvmS1}
+.qv-on .qvm-s2,.pm-slide-tour.run .qvm-s2{animation-name:qvmS2}.qv-on .qvm-s3,.pm-slide-tour.run .qvm-s3{animation-name:qvmS3}
 @media (max-width:560px){
   .qvm-sc{left:9px;right:46px;bottom:10px;font-size:11.5px;line-height:1.25}
   .qvm-s0,.qvm-s1,.qvm-s2{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden}
@@ -3202,15 +3195,13 @@ body.qv-lock{overflow:hidden}
 .pm-slide-tour{overflow:hidden;cursor:pointer}
 .pm-tour-ly{position:absolute;inset:0;background-size:cover;background-position:center}
 .pm-slide-tour .qvm{z-index:1}
-.pm-slide-tour .qvm-bars{display:none}
 .pm-slide-tour .qvm-sc{left:24px;right:24px;bottom:78px;font-size:clamp(17px,2.4vw,26px)}
 .pm-slide-tour .qvm-k{font-size:var(--fs-12)}
 .pm-slide-tour:not(.run) .qvm-sc,.pm-slide-tour:not(.run) .pm-tour-ly{animation:none}
 .pm-slide-tour.run .pm-tour-ly{animation:nldTour 12s ease-in-out infinite both}
-.pm-slide-tour.run .qvm-sc{animation-play-state:running}
 @media (prefers-reduced-motion:reduce){
   #scene-projects .proj-photo img,.pm-tour-ly,.pm-slide-tour.run .pm-tour-ly{animation:none}
-  .qvm-sc,.qvm-bars{display:none}
+  .qvm-sc{display:none}
 }
 </style>
 </head>
@@ -8434,8 +8425,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
     ];
   }
   function mini(D,barras){
-    return (barras?'<div class="qvm-bars"><i><b></b></i><i><b></b></i><i><b></b></i><i><b></b></i></div>':'')+
-      escenas(D).map(function(s,k){return '<div class="qvm-sc qvm-s'+k+'">'+s+'</div>';}).join('');
+    return escenas(D).map(function(s,k){return '<div class="qvm-sc qvm-s'+k+'">'+s+'</div>';}).join('');
   }
 
   /* ---------- tarjetas ---------- */
@@ -8446,19 +8436,54 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
       var ph=c.querySelector('.proj-photo'), D=datos(c); if(!ph||!D)return;
       var m=ph.querySelector('.qvm'), img=ph.querySelector('img');
       if(!m){m=document.createElement('div');m.className='qvm';m.setAttribute('aria-hidden','true');ph.insertBefore(m,img?img.nextSibling:null);}
-      m.innerHTML=mini(D,true);
-      /* reinicia la foto para que vaya al compás de los textos */
-      if(img){img.style.animation='none';void img.offsetWidth;img.style.animation='';}
+      m.innerHTML=mini(D,false);
     });
+    /* si una estaba corriendo, vuelve a empezar con los textos nuevos */
+    var cur=actual();
+    if(cur){cur.classList.remove('qv-on');void cur.offsetWidth;cur.classList.add('qv-on');reloj();}
+  }
+  /* ---------- una a la vez ----------
+     Corre el recorrido de una sola tarjeta; al terminar pasa a la
+     siguiente, en orden, entre las que están a la vista. Las demás
+     quedan quietas. Si nada está a la vista, se detiene. */
+  var reduce=false;
+  try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
+  var timer=null, CICLO=TOUR_MS+500;
+  function actual(){return sec?sec.querySelector('.proj-card.qv-on'):null;}
+  function visibles(){return [].filter.call(tarjetas(),function(c){return c.classList.contains('qv-vis')&&c.offsetParent!==null;});}
+  function reloj(){clearTimeout(timer);timer=setTimeout(siguiente,CICLO);}
+  function siguiente(){
+    clearTimeout(timer); timer=null;
+    var cur=actual(), lista=visibles();
+    if(cur)cur.classList.remove('qv-on');
+    if(reduce||document.hidden||!lista.length)return;
+    var next=null;
+    if(cur){
+      for(var i=0;i<lista.length;i++){
+        if(cur.compareDocumentPosition(lista[i])&Node.DOCUMENT_POSITION_FOLLOWING){next=lista[i];break;}
+      }
+    }
+    next=next||lista[0];
+    void next.offsetWidth;
+    next.classList.add('qv-on');
+    reloj();
   }
   if(sec&&'IntersectionObserver' in window){
     var io=new IntersectionObserver(function(es){
-      es.forEach(function(e){e.target.classList.toggle('qv-live',e.isIntersecting);});
-    },{threshold:.2});
+      es.forEach(function(e){e.target.classList.toggle('qv-vis',e.isIntersecting);});
+      var cur=actual();
+      /* arranca al llegar a la sección; si la que corre sale de la vista, sigue con otra */
+      if(!cur||!cur.classList.contains('qv-vis'))siguiente();
+    },{threshold:.5});
     [].forEach.call(tarjetas(),function(c){io.observe(c);});
   }else{
-    [].forEach.call(tarjetas(),function(c){c.classList.add('qv-live');});
+    [].forEach.call(tarjetas(),function(c){c.classList.add('qv-vis');});
+    setTimeout(siguiente,600);
   }
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){clearTimeout(timer);var c=actual();if(c)c.classList.remove('qv-on');}
+    else siguiente();
+  });
 
   /* ---------- ficha ---------- */
   var tour=false;

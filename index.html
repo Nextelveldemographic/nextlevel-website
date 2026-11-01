@@ -3460,9 +3460,9 @@ body.qv-lock{overflow:hidden}
       </div>
       <div class="proj-filters proj-pfilters">
         <button type="button" class="proj-pfilter active" data-price-range="all" data-i18n="proj_pf_all">Todos los precios</button>
-        <button type="button" class="proj-pfilter" data-price-range="p0" data-i18n="proj_pf_0">Menos de $100K</button>
-        <button type="button" class="proj-pfilter" data-price-range="p1" data-i18n="proj_pf_1">$100K – $125K</button>
-        <button type="button" class="proj-pfilter" data-price-range="p2" data-i18n="proj_pf_2">Más de $125K</button>
+        <button type="button" class="proj-pfilter" data-price-range="p0">&lt; $125K</button>
+        <button type="button" class="proj-pfilter" data-price-range="p1">$125K – $200K</button>
+        <button type="button" class="proj-pfilter" data-price-range="p2">&gt; $200K</button>
       </div>
     </div>
     <div class="proj-layout" id="projLayout"><div class="proj-grid">
@@ -4034,7 +4034,7 @@ function _queryToCat(q){
   }
   return null;
 }
-function _priceBucket(c){var raw=(c.getAttribute('data-price')||'').replace(/[^0-9]/g,'');var v=parseInt(raw,10)||0;if(v<100000)return 'p0';if(v<=125000)return 'p1';return 'p2';}
+function _priceBucket(c){var raw=(c.getAttribute('data-price')||'').replace(/[^0-9]/g,'');var v=parseInt(raw,10)||0;/* Rangos recalibrados (nov 2026) al inventario real: Ámbar va de $162K a $298K. */if(v<125000)return 'p0';if(v<=200000)return 'p1';return 'p2';}
 // Pasa filtro de categoria + precio + busqueda (ignora _mapPick). Controla los marcadores del mapa.
 function _cardPassesCatSearch(c){
   var cats=(c.getAttribute('data-cat')||'').split(' ');

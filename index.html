@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<!-- NLD v48 · Proyectos: la ficha muestra solo el recorrido en bucle (sin fotos fijas, flechas ni indicadores)
+<!-- NLD v49 · La frase de las 20 familias ya no se fija al desplazar: el 20 y el 200 cuentan desde 0 y luego aparece la pregunta en azul.
+     v48 · Proyectos: la ficha muestra solo el recorrido en bucle (sin fotos fijas, flechas ni indicadores)
      y ya no tiene botón de vista rápida; la vista rápida queda solo en las tarjetas.
      v47 · Proyectos: el recorrido corre en una tarjeta a la vez (las visibles, en orden); sin barras de progreso.
      v46 · Proyectos: el recorrido animado (foto en movimiento + ubicación, datos, amenidades y precio)
@@ -2268,6 +2269,11 @@ body{overflow-x:hidden;overflow-x:clip}
 .story.scrub.nofit .story-run{display:none}
 .story.scrub.nofit .sl{opacity:1}
 @media (min-width:900px){.story.scrub .story-run{height:130vh}}
+
+/* v49 · Cifras que cuentan: la pregunta en azul aparece después de los números */
+.cnt-n{font-variant-numeric:tabular-nums}
+.story.cnt .life-close-sub{opacity:0;transition:opacity .8s ease}
+.story.cnt.story-in .life-close-sub{opacity:1;transition-delay:1.5s}
 
 /* ---------- 2. Selector de pasos: base ---------- */
 .scn-stage,.scn-prog{display:none}
@@ -6865,7 +6871,8 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   var mqStory=null; try{mqStory=window.matchMedia('(min-width:700px)');}catch(e){}
   if(story&&!reduce&&clip){
     pin=story.querySelector('.story-pin'); run=story.querySelector('.story-run');
-    canScrub=!!(pin&&run);
+    /* v49: la frase ya no se fija al desplazar (dejaba una pantalla casi vacía) */
+    canScrub=false;
   }
   function storyMode(){
     if(!story)return;
@@ -6875,11 +6882,35 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   }
   storyMode();
   if(story&&!reduce){
-    story.classList.add('tl');
+    story.classList.add('cnt');
     if('IntersectionObserver' in window){
-      var stio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){story.classList.add('story-in');stio.disconnect();}});},{threshold:.35});
+      var stio=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){story.classList.add('story-in');try{contar();}catch(err){}stio.disconnect();}});},{threshold:.35});
       stio.observe(story.querySelector('.story-t')||story);
     }else story.classList.add('story-in');
+  }
+  /* v49 · Cifras que cuentan: el 20 y el 200 suben desde 0 al entrar a la
+     vista; después aparece la pregunta en azul. Cada número reserva su
+     ancho final para que la línea no se mueva mientras cuenta. */
+  function contar(){
+    var q=story.querySelector('.life-close-q'); if(!q)return;
+    var w=document.createTreeWalker(q,NodeFilter.SHOW_TEXT), t, ts=[], spans=[];
+    while((t=w.nextNode()))if(/\d/.test(t.nodeValue))ts.push(t);
+    ts.forEach(function(tn){
+      var f=document.createDocumentFragment();
+      tn.nodeValue.split(/(\d[\d,.]*)/).forEach(function(part,i){
+        if(i%2){var s=document.createElement('span');s.className='cnt-n';s.textContent=part;s.setAttribute('data-n',part);f.appendChild(s);spans.push(s);}
+        else if(part)f.appendChild(document.createTextNode(part));
+      });
+      tn.parentNode.replaceChild(f,tn);
+    });
+    spans.forEach(function(s,j){
+      var fin=s.getAttribute('data-n'), to=parseInt(fin.replace(/\D/g,''),10), d=j?1500:1100, t0=0;
+      if(!to)return;
+      s.style.display='inline-block'; s.style.minWidth=s.offsetWidth+'px'; s.textContent='0';
+      function paso(now){if(!t0)t0=now;var p=Math.min(1,(now-t0)/d),e=1-Math.pow(1-p,3);
+        s.textContent=p<1?String(Math.round(to*e)):fin; if(p<1)requestAnimationFrame(paso);}
+      requestAnimationFrame(paso);
+    });
   }
   function sentences(html){
     var out=[];

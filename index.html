@@ -8684,5 +8684,381 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
 })();
 </script>
+<!-- ===== NLD Plus (nov 2026): herramientas del portafolio =====
+     Filtros extra, colecciones, etiquetas de inversion, favoritos, comparador,
+     busqueda guardada y calculadoras. Todo vive en el navegador del visitante:
+     sin servidor ni servicios de pago. Se engancha al filtro existente envolviendo
+     _cardPassesCatSearch, asi la lista, el mapa y el carrusel quedan sincronizados. -->
+<style>
+.np-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:-6px 0 18px}
+.np-chip{padding:8px 14px;background:var(--chalk);color:var(--dark);border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:500;cursor:pointer;border:none;font-family:inherit;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;transition:.25s var(--ease)}
+.np-chip:hover{background:var(--divider-2)}
+.np-chip.active{background:var(--dark);color:var(--w)}
+.np-chip.ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--divider)}
+.np-chip.ghost.active{background:var(--dark);color:var(--w);box-shadow:none}
+.np-chip svg{width:14px;height:14px;flex:none}
+.np-sep{width:1px;height:22px;background:var(--divider);margin:0 4px}
+.np-panel{display:none;gap:12px;flex-wrap:wrap;margin:-6px 0 18px;padding:14px;border-radius:var(--r-l);background:var(--chalk)}
+.np-panel.open{display:flex}
+.np-panel label{display:flex;flex-direction:column;gap:5px;font-size:var(--fs-12);color:var(--grey-2);font-weight:500;flex:1 1 150px}
+.np-panel select{font-family:inherit;font-size:var(--fs-16);padding:9px 10px;border-radius:var(--r-s);border:1px solid var(--divider);background:var(--w);color:var(--dark)}
+.np-panel .np-reset{align-self:flex-end}
+.np-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.np-tag{font-size:var(--fs-11);font-weight:600;color:var(--blue);background:var(--blue-soft);padding:4px 9px;border-radius:var(--r-pill);letter-spacing:-.005em}
+.np-acts{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:3}
+.np-ico{width:34px;height:34px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.92);color:var(--dark);box-shadow:var(--sh-2,0 2px 8px rgba(0,0,0,.15));transition:.2s var(--ease)}
+.np-ico svg{width:17px;height:17px}
+.np-ico.on{background:var(--blue);color:#fff}
+.np-ico.fav.on svg{fill:currentColor}
+.np-bar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:900;display:flex;gap:10px;align-items:center;padding:10px 10px 10px 18px;border-radius:var(--r-pill);background:var(--dark);color:var(--w);font-size:var(--fs-14);box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s var(--ease);max-width:calc(100% - 120px)}
+.np-bar.show{transform:translate(-50%,0)}
+.np-bar button{font-family:inherit;border:none;cursor:pointer;border-radius:var(--r-pill);padding:9px 16px;font-size:var(--fs-13);font-weight:600}
+.np-bar .go{background:var(--blue);color:#fff}
+.np-bar .clr{background:transparent;color:#A1A1A6;padding:9px 8px}
+.np-ov{position:fixed;inset:0;z-index:1000;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
+.np-ov.open{display:flex}
+.np-dlg{background:var(--w);color:var(--dark);width:100%;max-width:760px;max-height:88vh;overflow:auto;border-radius:var(--r-2xl) var(--r-2xl) 0 0;padding:24px 20px 28px;position:relative}
+@media(min-width:760px){.np-ov{align-items:center}.np-dlg{border-radius:var(--r-2xl);padding:30px 32px}}
+.np-dlg h3{font-size:var(--fs-22);font-weight:600;letter-spacing:-.02em;margin:0 40px 4px 0}
+.np-dlg .np-sub{font-size:var(--fs-14);color:var(--grey-2);margin-bottom:18px;line-height:1.45}
+.np-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:none;background:var(--chalk);color:var(--dark);font-size:20px;cursor:pointer;line-height:1}
+.np-tabs{display:flex;gap:6px;margin-bottom:18px;background:var(--chalk);padding:4px;border-radius:var(--r-pill);width:max-content;max-width:100%}
+.np-tabs button{font-family:inherit;border:none;background:transparent;color:var(--dark);padding:8px 14px;border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:600;cursor:pointer}
+.np-tabs button.active{background:var(--w);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.np-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.np-f{display:flex;flex-direction:column;gap:5px;font-size:var(--fs-12);color:var(--grey-2);font-weight:500}
+.np-f input{font-family:inherit;font-size:var(--fs-16);padding:10px 11px;border-radius:var(--r-s);border:1px solid var(--divider);background:var(--w);color:var(--dark);width:100%}
+.np-out{margin-top:18px;border-radius:var(--r-l);background:var(--chalk);padding:16px 18px}
+.np-ln{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--divider);font-size:var(--fs-15)}
+.np-ln:first-child{border-top:none}
+.np-ln span{color:var(--grey-2)}
+.np-ln b{font-weight:600;text-align:right}
+.np-ln.big b{font-size:var(--fs-22);color:var(--blue)}
+.np-note{margin-top:12px;font-size:var(--fs-12);color:var(--grey-2);line-height:1.5}
+.np-cmp{width:100%;border-collapse:collapse;font-size:var(--fs-14)}
+.np-cmp th,.np-cmp td{text-align:left;padding:10px 8px;border-top:1px solid var(--divider);vertical-align:top}
+.np-cmp th{color:var(--grey-2);font-weight:500;width:28%}
+.np-cmp thead td{border-top:none;font-weight:600;font-size:var(--fs-15)}
+.np-toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;z-index:1100;background:var(--dark);color:var(--w);padding:10px 18px;border-radius:var(--r-pill);font-size:var(--fs-14);transition:.3s var(--ease);pointer-events:none}
+.np-toast.show{opacity:1;transform:translate(-50%,0)}
+.pm-btn.np-calc{background:var(--chalk);color:var(--dark);cursor:pointer;border:none;font-family:inherit}
+[data-theme="dark"] .np-chip{background:#1D1D1F;color:#F5F5F7}
+[data-theme="dark"] .np-chip:hover{background:#2C2C2E}
+[data-theme="dark"] .np-chip.active{background:#F5F5F7;color:#000}
+[data-theme="dark"] .np-chip.ghost{background:transparent;box-shadow:inset 0 0 0 1px #3A3A3C}
+[data-theme="dark"] .np-chip.ghost.active{background:#F5F5F7;color:#000;box-shadow:none}
+[data-theme="dark"] .np-panel,[data-theme="dark"] .np-out,[data-theme="dark"] .np-tabs{background:#1D1D1F}
+[data-theme="dark"] .np-panel select,[data-theme="dark"] .np-f input{background:#000;color:#F5F5F7;border-color:#3A3A3C}
+[data-theme="dark"] .np-dlg{background:#111113;color:#F5F5F7}
+[data-theme="dark"] .np-tabs button{color:#F5F5F7}
+[data-theme="dark"] .np-tabs button.active{background:#2C2C2E}
+[data-theme="dark"] .np-x{background:#2C2C2E;color:#F5F5F7}
+[data-theme="dark"] .np-tag{background:rgba(41,151,255,.16);color:#2997FF}
+[data-theme="dark"] .np-ln,[data-theme="dark"] .np-cmp th,[data-theme="dark"] .np-cmp td{border-color:#2C2C2E}
+[data-theme="dark"] .np-bar{background:#F5F5F7;color:#000}
+[data-theme="dark"] .np-sep{background:#3A3A3C}
+[data-theme="dark"] .pm-btn.np-calc{background:#2C2C2E;color:#F5F5F7}
+#scene-projects .proj-badges{max-width:calc(100% - 92px)}
+.np-bar span{white-space:nowrap}
+@media(max-width:600px){.np-ico{width:30px;height:30px}.np-ico svg{width:15px;height:15px}.np-acts{top:8px;right:8px;gap:5px}#scene-projects .proj-badges{max-width:calc(100% - 78px)}}
+@media(max-width:600px){.np-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.np-row::-webkit-scrollbar{display:none}.np-bar{left:16px;right:16px;max-width:none;justify-content:space-between;transform:translateY(160%);bottom:84px}.np-bar.show{transform:translateY(0)}}
+</style>
+<script>
+(function(){
+'use strict';
+/* ---------- Configuracion editable ----------
+   Etiquetas de inversion por proyecto. Solo se marca lo que esta respaldado:
+   "airbnb" sale de la descripcion de cada proyecto. "permisos" y "prima" quedan
+   vacios hasta que la desarrolladora lo confirme por escrito. */
+var TAGS={
+  "Torre Ámbar 1":{airbnb:1},
+  "Villas Playa El Tunco":{airbnb:1},
+  "Residencial Vista Volcán":{airbnb:1},
+  "Marina Golfo de Fonseca":{airbnb:1},
+  "Hacienda Ruta de las Flores":{airbnb:1},
+  "Condominio Vista Izalco":{airbnb:1}
+};
+var LUJO_MIN=200000;           // desde este precio un proyecto entra en "Lujo"
+/* Valores de referencia de las calculadoras. Son supuestos editables, no datos
+   de un banco ni de un listado real: ajustalos cuando tengas cifras propias. */
+var REF={prima:10,tasa:9,plazo:25,ingresoPct:30,noche:70,ocupacion:55,plataforma:3,gestion:20,gastos:180};
+
+var T={
+ es:{col:'Colección',all:'Todas',vivir:'Para vivir',rentar:'Para rentar',lujo:'Lujo',more:'Más filtros',favs:'Favoritos',save:'Guardar búsqueda',saved:'Búsqueda guardada en este dispositivo',mine:'Mi búsqueda',calc:'Calculadoras',hab:'Habitaciones',area:'Área',ent:'Entrega',any:'Cualquiera',imm:'Inmediata',reset:'Limpiar',t_airbnb:'Apto Airbnb',t_perm:'Permisos aprobados',t_prima:'Prima en cuotas',t_imm:'Entrega inmediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Quitar',cmpH:'Comparativo de proyectos',cmpSub:'Hasta tres proyectos, lado a lado.',cmpMax:'Puedes comparar hasta tres proyectos',price:'Precio desde',type:'Tipo',quota:'Cuota estimada',loc:'Ubicación',tags:'Etiquetas',calcH:'Calculadoras',calcSub:'Valores de referencia editables. Es una estimación para orientarte, no una oferta de crédito ni una promesa de renta.',tabAir:'Renta Airbnb',tabBuy:'Compra y cuota',propPrice:'Precio de la propiedad',night:'Tarifa por noche',occ:'Ocupación %',plat:'Comisión plataforma %',mgmt:'Gestión NLD %',exp:'Gastos fijos al mes',gross:'Facturación mensual',lessPlat:'Comisión de plataforma',lessMgmt:'Gestión NLD',lessExp:'Gastos fijos',net:'Neto al mes',netY:'Neto al año',yld:'Rendimiento neto anual',down:'Prima %',rate:'Tasa anual %',term:'Plazo (años)',income:'Ingreso familiar al mes',incPct:'Máximo del ingreso para la cuota %',downAmt:'Prima',fin:'Monto a financiar',pay:'Cuota mensual',cap:'Precio máximo según tu ingreso',noteAir:'La gestión NLD se cobra sobre la facturación mensual. No incluye impuestos, mobiliario ni temporadas bajas.',noteBuy:'Cuota de capital e intereses. No incluye seguros ni gastos de escrituración. Cada banco define la aprobación final.',empty:'Elige un proyecto o escribe un precio',consult:'Consultar',month:'/ mes',bd:'hab'},
+ en:{col:'Collection',all:'All',vivir:'To live in',rentar:'To rent out',lujo:'Luxury',more:'More filters',favs:'Favorites',save:'Save search',saved:'Search saved on this device',mine:'My search',calc:'Calculators',hab:'Bedrooms',area:'Area',ent:'Delivery',any:'Any',imm:'Immediate',reset:'Clear',t_airbnb:'Airbnb-friendly',t_perm:'Permits approved',t_prima:'Down payment in installments',t_imm:'Move-in ready',t_pre:'Delivery',cmp:'Compare',cmpN:'to compare',clr:'Clear',cmpH:'Project comparison',cmpSub:'Up to three projects, side by side.',cmpMax:'You can compare up to three projects',price:'Starting at',type:'Type',quota:'Estimated payment',loc:'Location',tags:'Tags',calcH:'Calculators',calcSub:'Editable reference values. An estimate to guide you, not a loan offer or a rental guarantee.',tabAir:'Airbnb income',tabBuy:'Purchase & payment',propPrice:'Property price',night:'Nightly rate',occ:'Occupancy %',plat:'Platform fee %',mgmt:'NLD management %',exp:'Fixed costs per month',gross:'Monthly revenue',lessPlat:'Platform fee',lessMgmt:'NLD management',lessExp:'Fixed costs',net:'Net per month',netY:'Net per year',yld:'Net annual yield',down:'Down payment %',rate:'Annual rate %',term:'Term (years)',income:'Household income per month',incPct:'Max share of income for payment %',downAmt:'Down payment',fin:'Amount financed',pay:'Monthly payment',cap:'Max price for your income',noteAir:'NLD management is charged on monthly revenue. Excludes taxes, furniture and low seasons.',noteBuy:'Principal and interest only. Excludes insurance and closing costs. Each bank makes the final decision.',empty:'Pick a project or type a price',consult:'Ask us',month:'/ mo',bd:'bd'},
+ fr:{col:'Collection',all:'Toutes',vivir:'Pour y vivre',rentar:'Pour louer',lujo:'Luxe',more:'Plus de filtres',favs:'Favoris',save:'Enregistrer la recherche',saved:'Recherche enregistrée sur cet appareil',mine:'Ma recherche',calc:'Calculateurs',hab:'Chambres',area:'Surface',ent:'Livraison',any:'Toutes',imm:'Immédiate',reset:'Effacer',t_airbnb:'Compatible Airbnb',t_perm:'Permis approuvés',t_prima:'Apport échelonné',t_imm:'Livraison immédiate',t_pre:'Livraison',cmp:'Comparer',cmpN:'à comparer',clr:'Retirer',cmpH:'Comparatif de projets',cmpSub:'Jusqu’à trois projets côte à côte.',cmpMax:'Vous pouvez comparer jusqu’à trois projets',price:'À partir de',type:'Type',quota:'Mensualité estimée',loc:'Emplacement',tags:'Étiquettes',calcH:'Calculateurs',calcSub:'Valeurs de référence modifiables. Une estimation, pas une offre de crédit ni une promesse de revenu.',tabAir:'Revenu Airbnb',tabBuy:'Achat et mensualité',propPrice:'Prix du bien',night:'Prix par nuit',occ:'Occupation %',plat:'Commission plateforme %',mgmt:'Gestion NLD %',exp:'Frais fixes par mois',gross:'Chiffre d’affaires mensuel',lessPlat:'Commission plateforme',lessMgmt:'Gestion NLD',lessExp:'Frais fixes',net:'Net par mois',netY:'Net par an',yld:'Rendement net annuel',down:'Apport %',rate:'Taux annuel %',term:'Durée (ans)',income:'Revenu du foyer par mois',incPct:'Part max. du revenu %',downAmt:'Apport',fin:'Montant financé',pay:'Mensualité',cap:'Prix max. selon votre revenu',noteAir:'La gestion NLD s’applique au chiffre d’affaires mensuel. Hors impôts, mobilier et basse saison.',noteBuy:'Capital et intérêts uniquement. Hors assurances et frais d’acte. La banque décide.',empty:'Choisissez un projet ou saisissez un prix',consult:'Nous consulter',month:'/ mois',bd:'ch.'},
+ it:{col:'Collezione',all:'Tutte',vivir:'Per viverci',rentar:'Per affittare',lujo:'Lusso',more:'Altri filtri',favs:'Preferiti',save:'Salva ricerca',saved:'Ricerca salvata su questo dispositivo',mine:'La mia ricerca',calc:'Calcolatori',hab:'Camere',area:'Superficie',ent:'Consegna',any:'Qualsiasi',imm:'Immediata',reset:'Pulisci',t_airbnb:'Adatto ad Airbnb',t_perm:'Permessi approvati',t_prima:'Anticipo a rate',t_imm:'Consegna immediata',t_pre:'Consegna',cmp:'Confronta',cmpN:'da confrontare',clr:'Rimuovi',cmpH:'Confronto progetti',cmpSub:'Fino a tre progetti affiancati.',cmpMax:'Puoi confrontare fino a tre progetti',price:'A partire da',type:'Tipo',quota:'Rata stimata',loc:'Posizione',tags:'Etichette',calcH:'Calcolatori',calcSub:'Valori di riferimento modificabili. Una stima, non un’offerta di credito né una promessa di rendita.',tabAir:'Rendita Airbnb',tabBuy:'Acquisto e rata',propPrice:'Prezzo dell’immobile',night:'Tariffa per notte',occ:'Occupazione %',plat:'Commissione piattaforma %',mgmt:'Gestione NLD %',exp:'Spese fisse al mese',gross:'Fatturato mensile',lessPlat:'Commissione piattaforma',lessMgmt:'Gestione NLD',lessExp:'Spese fisse',net:'Netto al mese',netY:'Netto all’anno',yld:'Rendimento netto annuo',down:'Anticipo %',rate:'Tasso annuo %',term:'Durata (anni)',income:'Reddito familiare al mese',incPct:'Quota max. del reddito %',downAmt:'Anticipo',fin:'Importo finanziato',pay:'Rata mensile',cap:'Prezzo max. per il tuo reddito',noteAir:'La gestione NLD si applica al fatturato mensile. Esclusi tasse, arredi e bassa stagione.',noteBuy:'Solo capitale e interessi. Esclusi assicurazioni e spese notarili. Decide la banca.',empty:'Scegli un progetto o scrivi un prezzo',consult:'Chiedici',month:'/ mese',bd:'cam.'},
+ de:{col:'Kollektion',all:'Alle',vivir:'Zum Wohnen',rentar:'Zum Vermieten',lujo:'Luxus',more:'Weitere Filter',favs:'Favoriten',save:'Suche speichern',saved:'Suche auf diesem Gerät gespeichert',mine:'Meine Suche',calc:'Rechner',hab:'Schlafzimmer',area:'Fläche',ent:'Übergabe',any:'Alle',imm:'Sofort',reset:'Zurücksetzen',t_airbnb:'Airbnb-geeignet',t_perm:'Genehmigungen erteilt',t_prima:'Anzahlung in Raten',t_imm:'Sofort bezugsfertig',t_pre:'Übergabe',cmp:'Vergleichen',cmpN:'zum Vergleich',clr:'Entfernen',cmpH:'Projektvergleich',cmpSub:'Bis zu drei Projekte nebeneinander.',cmpMax:'Sie können bis zu drei Projekte vergleichen',price:'Ab',type:'Typ',quota:'Geschätzte Rate',loc:'Lage',tags:'Merkmale',calcH:'Rechner',calcSub:'Bearbeitbare Referenzwerte. Eine Schätzung, kein Kreditangebot und keine Mietgarantie.',tabAir:'Airbnb-Einnahmen',tabBuy:'Kauf und Rate',propPrice:'Immobilienpreis',night:'Preis pro Nacht',occ:'Auslastung %',plat:'Plattformgebühr %',mgmt:'NLD-Verwaltung %',exp:'Fixkosten pro Monat',gross:'Monatsumsatz',lessPlat:'Plattformgebühr',lessMgmt:'NLD-Verwaltung',lessExp:'Fixkosten',net:'Netto pro Monat',netY:'Netto pro Jahr',yld:'Jährliche Nettorendite',down:'Anzahlung %',rate:'Jahreszins %',term:'Laufzeit (Jahre)',income:'Haushaltseinkommen pro Monat',incPct:'Max. Anteil des Einkommens %',downAmt:'Anzahlung',fin:'Finanzierungsbetrag',pay:'Monatliche Rate',cap:'Max. Preis für Ihr Einkommen',noteAir:'Die NLD-Verwaltung gilt auf den Monatsumsatz. Ohne Steuern, Möbel und Nebensaison.',noteBuy:'Nur Tilgung und Zinsen. Ohne Versicherungen und Notarkosten. Die Bank entscheidet.',empty:'Projekt wählen oder Preis eingeben',consult:'Auf Anfrage',month:'/ Monat',bd:'SZ'},
+ pt:{col:'Coleção',all:'Todas',vivir:'Para morar',rentar:'Para alugar',lujo:'Luxo',more:'Mais filtros',favs:'Favoritos',save:'Salvar busca',saved:'Busca salva neste dispositivo',mine:'Minha busca',calc:'Calculadoras',hab:'Quartos',area:'Área',ent:'Entrega',any:'Qualquer',imm:'Imediata',reset:'Limpar',t_airbnb:'Apto para Airbnb',t_perm:'Licenças aprovadas',t_prima:'Entrada parcelada',t_imm:'Entrega imediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Remover',cmpH:'Comparativo de projetos',cmpSub:'Até três projetos lado a lado.',cmpMax:'Você pode comparar até três projetos',price:'A partir de',type:'Tipo',quota:'Parcela estimada',loc:'Localização',tags:'Etiquetas',calcH:'Calculadoras',calcSub:'Valores de referência editáveis. Uma estimativa, não uma oferta de crédito nem promessa de renda.',tabAir:'Renda Airbnb',tabBuy:'Compra e parcela',propPrice:'Preço do imóvel',night:'Diária',occ:'Ocupação %',plat:'Taxa da plataforma %',mgmt:'Gestão NLD %',exp:'Custos fixos por mês',gross:'Faturamento mensal',lessPlat:'Taxa da plataforma',lessMgmt:'Gestão NLD',lessExp:'Custos fixos',net:'Líquido por mês',netY:'Líquido por ano',yld:'Rendimento líquido anual',down:'Entrada %',rate:'Taxa anual %',term:'Prazo (anos)',income:'Renda familiar por mês',incPct:'Máximo da renda para a parcela %',downAmt:'Entrada',fin:'Valor financiado',pay:'Parcela mensal',cap:'Preço máximo para sua renda',noteAir:'A gestão NLD incide sobre o faturamento mensal. Não inclui impostos, mobília nem baixa temporada.',noteBuy:'Somente capital e juros. Não inclui seguros nem custos de escritura. O banco decide.',empty:'Escolha um projeto ou digite um preço',consult:'Consultar',month:'/ mês',bd:'qts'}
+};
+function L(){var l=(typeof curLang!=='undefined'&&T[curLang])?curLang:'es';return T[l];}
+function $(s,r){return (r||document).querySelector(s);}
+function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
+function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
+function money(n){return '$'+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function num(t){var v=parseFloat(String(t||'').replace(/[^0-9.]/g,''));return isNaN(v)?0:v;}
+var ICO={
+ heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
+ cmp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg>',
+ sliders:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="6" r="2" fill="currentColor"/><circle cx="15" cy="12" r="2" fill="currentColor"/><circle cx="7" cy="18" r="2" fill="currentColor"/></svg>',
+ bookmark:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M6 3h12v18l-6-4-6 4z"/></svg>',
+ calc:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="5" y="3" width="14" height="18" rx="2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="12" x2="8.01" y2="12"/><line x1="12" y1="12" x2="12.01" y2="12"/><line x1="16" y1="12" x2="16.01" y2="12"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="12" y1="16" x2="12.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg>'
+};
+
+/* ---------- Datos por tarjeta ---------- */
+function cards(){return (typeof _projCards==='function')?[].slice.call(_projCards()):[];}
+var INFO={};
+function info(c){
+  var n=c.getAttribute('data-pname');if(INFO[n])return INFO[n];
+  var d=(typeof PROJDATA!=='undefined'&&PROJDATA[n])||{};
+  var meta=c.querySelector('.proj-meta'),aTxt='';
+  if(meta)$$('span',meta).forEach(function(sp){var o=sp.getAttribute('data-area-m2')||sp.textContent;if(!aTxt&&o.indexOf('m²')>=0)aTxt=o;});
+  var a=(aTxt.match(/\d+(?:[.,]\d+)?/g)||[]).map(function(x){return parseFloat(x.replace(',','.'));});
+  var habTxt=d.hab||((meta&&meta.textContent.match(/(\d)\s*hab/))||[])[0]||'';
+  var h=(habTxt.match(/\d/g)||[]).map(Number);
+  var del=d.delivery||'',yr=(del.match(/20\d\d/)||[])[0];
+  var price=num(c.getAttribute('data-price'));
+  var badges=$$('.proj-badge',c).map(function(b){return b.getAttribute('data-i18n')||'';});
+  var cats=(c.getAttribute('data-cat')||'').split(' ');
+  var tg=TAGS[n]||{};
+  var o={name:n,price:price,aMin:a.length?Math.min.apply(0,a):0,aMax:a.length?Math.max.apply(0,a):0,
+    hMin:h.length?Math.min.apply(0,h):0,hMax:h.length?Math.max.apply(0,h):0,
+    imm:/inmediata/i.test(del),year:yr?+yr:0,delivery:del,quota:d.quota||'',tg:tg,
+    vivir:badges.indexOf('badge_live')>=0||badges.indexOf('badge_retire')>=0,
+    rentar:badges.indexOf('badge_rent')>=0||!!tg.airbnb,
+    lujo:price>=LUJO_MIN,
+    type:((c.querySelector('.proj-meta-type')||{}).textContent||'').trim(),
+    loc:((c.querySelector('.proj-loc')||{}).textContent||'').replace('📍','').trim()};
+  INFO[n]=o;return o;
+}
+
+/* ---------- Estado ---------- */
+var S={col:'all',hab:'any',area:'any',ent:'any',favOnly:false};
+var FAV=store('nld_favs')||[];
+var CMP=[];
+function passExtra(c){
+  var i=info(c);
+  if(S.col!=='all'&&!i[S.col])return false;
+  if(S.hab!=='any'){var hv=+S.hab;if(!i.hMax)return false;if(hv===3?i.hMax<3:(hv<i.hMin||hv>i.hMax))return false;}
+  if(S.area!=='any'){if(!i.aMax)return false;
+    if(S.area==='s'&&i.aMin>=70)return false;
+    if(S.area==='m'&&(i.aMax<70||i.aMin>120))return false;
+    if(S.area==='l'&&i.aMax<=120)return false;}
+  if(S.ent!=='any'){
+    if(S.ent==='imm'&&!i.imm)return false;
+    if(S.ent==='2027'&&(i.imm||!i.year||i.year>2027))return false;
+    if(S.ent==='2028'&&(i.imm||i.year<2028))return false;}
+  if(S.favOnly&&FAV.indexOf(i.name)<0)return false;
+  return true;
+}
+var base=window._cardPassesCatSearch;
+if(typeof base==='function'){
+  window._cardPassesCatSearch=function(c){return base(c)&&passExtra(c);};
+}
+function apply(){try{_mapPick=null;}catch(e){}try{_applyProjectFilters();}catch(e){}}
+
+/* ---------- Interfaz del portafolio ---------- */
+var sec=document.getElementById('scene-projects');
+var filtros=sec&&sec.querySelector('.proj-controls-filters');
+var row,panel;
+function buildUI(){
+  if(!filtros)return;
+  row=document.createElement('div');row.className='np-row';row.id='npRow';
+  panel=document.createElement('div');panel.className='np-panel';panel.id='npPanel';
+  filtros.parentNode.insertBefore(row,filtros.nextSibling);
+  row.parentNode.insertBefore(panel,row.nextSibling);
+  row.addEventListener('click',onRow);
+  panel.addEventListener('change',function(e){var s=e.target;if(s.name){S[s.name]=s.value;apply();paintRow();}});
+  panel.addEventListener('click',function(e){if(e.target.closest('.np-reset')){S.hab=S.area=S.ent='any';paintPanel();apply();paintRow();}});
+}
+function paintRow(){
+  if(!row)return;var t=L();
+  var extras=['hab','area','ent'].filter(function(k){return S[k]!=='any';}).length;
+  var h='';
+  ['all','vivir','rentar','lujo'].forEach(function(k){h+='<button type="button" class="np-chip'+(S.col===k?' active':'')+'" data-col="'+k+'">'+(k==='all'?t.col+': '+t.all:t[k])+'</button>';});
+  h+='<span class="np-sep" aria-hidden="true"></span>';
+  h+='<button type="button" class="np-chip ghost'+(panel&&panel.classList.contains('open')||extras?' active':'')+'" data-act="more" aria-expanded="'+(panel&&panel.classList.contains('open'))+'">'+ICO.sliders+t.more+(extras?' ('+extras+')':'')+'</button>';
+  h+='<button type="button" class="np-chip ghost'+(S.favOnly?' active':'')+'" data-act="favs">'+ICO.heart+t.favs+' ('+FAV.length+')</button>';
+  h+='<button type="button" class="np-chip ghost" data-act="save">'+ICO.bookmark+t.save+'</button>';
+  if(store('nld_saved_search'))h+='<button type="button" class="np-chip ghost" data-act="load">'+t.mine+'</button>';
+  h+='<button type="button" class="np-chip ghost" data-act="calc">'+ICO.calc+t.calc+'</button>';
+  row.innerHTML=h;
+}
+function opt(v,l,cur){return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+l+'</option>';}
+function paintPanel(){
+  if(!panel)return;var t=L(),imp=(typeof _usaImperial==='function'&&_usaImperial());
+  function ar(m){return imp?Math.round(m*10.7639).toLocaleString('en-US')+' sq ft':m+' m²';}
+  panel.innerHTML=
+   '<label>'+t.hab+'<select name="hab">'+opt('any',t.any,S.hab)+opt('1','1 '+t.bd,S.hab)+opt('2','2 '+t.bd,S.hab)+opt('3','3+ '+t.bd,S.hab)+'</select></label>'+
+   '<label>'+t.area+'<select name="area">'+opt('any',t.any,S.area)+opt('s','< '+ar(70),S.area)+opt('m',ar(70)+' – '+ar(120),S.area)+opt('l','> '+ar(120),S.area)+'</select></label>'+
+   '<label>'+t.ent+'<select name="ent">'+opt('any',t.any,S.ent)+opt('imm',t.imm,S.ent)+opt('2027','≤ 2027',S.ent)+opt('2028','2028+',S.ent)+'</select></label>'+
+   '<button type="button" class="np-chip np-reset">'+t.reset+'</button>';
+}
+function onRow(e){
+  var b=e.target.closest('button');if(!b)return;
+  if(b.dataset.col){S.col=b.dataset.col;apply();paintRow();return;}
+  var a=b.dataset.act;
+  if(a==='more'){panel.classList.toggle('open');paintRow();}
+  else if(a==='favs'){S.favOnly=!S.favOnly;apply();paintRow();}
+  else if(a==='save'){saveSearch();}
+  else if(a==='load'){loadSearch();}
+  else if(a==='calc'){openCalc(0);}
+}
+
+/* ---------- Busqueda guardada (solo en este dispositivo) ---------- */
+function saveSearch(){
+  var q=(document.getElementById('projSearch')||{}).value||'';
+  store('nld_saved_search',{cat:(typeof _projCat!=='undefined'?_projCat:'all'),price:(typeof _projPrice!=='undefined'?_projPrice:'all'),q:q,col:S.col,hab:S.hab,area:S.area,ent:S.ent,favOnly:S.favOnly});
+  toast(L().saved);paintRow();
+}
+function loadSearch(){
+  var v=store('nld_saved_search');if(!v)return;
+  S.col=v.col||'all';S.hab=v.hab||'any';S.area=v.area||'any';S.ent=v.ent||'any';S.favOnly=!!v.favOnly;
+  var inp=document.getElementById('projSearch');if(inp){inp.value=v.q||'';}
+  try{if(typeof searchProjects==='function')searchProjects();}catch(e){}
+  try{filterPriceRange(v.price||'all');}catch(e){}
+  try{filterProjects(v.cat||'all');}catch(e){}
+  paintPanel();paintRow();
+}
+
+/* ---------- Tarjetas: etiquetas, favorito, comparar ---------- */
+function tagHTML(i){
+  var t=L(),o=[];
+  if(i.tg.airbnb)o.push(t.t_airbnb);
+  if(i.tg.permisos)o.push(t.t_perm);
+  if(i.tg.prima)o.push(t.t_prima);
+  if(i.imm)o.push(t.t_imm);else if(i.year)o.push(t.t_pre+' '+i.year);
+  return o.map(function(x){return '<span class="np-tag">'+x+'</span>';}).join('');
+}
+function paintCards(){
+  var t=L();
+  cards().forEach(function(c){
+    var i=info(c),ph=c.querySelector('.proj-photo'),body=c.querySelector('.proj-body');
+    if(ph){
+      var box=ph.querySelector('.np-acts');
+      if(!box){box=document.createElement('div');box.className='np-acts';ph.appendChild(box);}
+      var f=FAV.indexOf(i.name)>=0,k=CMP.indexOf(i.name)>=0;
+      box.innerHTML='<button type="button" class="np-ico fav'+(f?' on':'')+'" data-np="fav" aria-pressed="'+f+'" aria-label="'+t.favs+'" title="'+t.favs+'">'+ICO.heart+'</button>'+
+        '<button type="button" class="np-ico'+(k?' on':'')+'" data-np="cmp" aria-pressed="'+k+'" aria-label="'+t.cmp+'" title="'+t.cmp+'">'+ICO.cmp+'</button>';
+    }
+    if(body){
+      var tg=body.querySelector('.np-tags');
+      if(!tg){tg=document.createElement('div');tg.className='np-tags';var m=body.querySelector('.proj-meta');if(m)m.parentNode.insertBefore(tg,m.nextSibling);else body.insertBefore(tg,body.firstChild);}
+      tg.innerHTML=tagHTML(i);tg.style.display=tg.innerHTML?'':'none';
+    }
+  });
+}
+document.addEventListener('click',function(e){
+  var b=e.target.closest('.np-ico[data-np]');if(!b)return;
+  e.preventDefault();e.stopPropagation();
+  var c=b.closest('.proj-card');if(!c)return;var n=c.getAttribute('data-pname');
+  if(b.dataset.np==='fav'){
+    var ix=FAV.indexOf(n);if(ix>=0)FAV.splice(ix,1);else FAV.push(n);
+    store('nld_favs',FAV);if(S.favOnly)apply();
+  }else{
+    var j=CMP.indexOf(n);
+    if(j>=0)CMP.splice(j,1);
+    else{if(CMP.length>=3){toast(L().cmpMax);return;}CMP.push(n);}
+    paintBar();
+  }
+  paintCards();paintRow();
+},true);
+
+/* ---------- Barra y comparativo ---------- */
+var bar=document.createElement('div');bar.className='np-bar';bar.setAttribute('role','region');
+document.body.appendChild(bar);
+bar.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.a==='go')openCmp();else{CMP=[];paintBar();paintCards();}});
+function paintBar(){
+  var t=L();
+  bar.innerHTML='<span>'+CMP.length+' '+t.cmpN+'</span><button type="button" class="clr" data-a="clr">'+t.clr+'</button><button type="button" class="go" data-a="go"'+(CMP.length<2?' disabled style="opacity:.5"':'')+'>'+t.cmp+'</button>';
+  bar.classList.toggle('show',CMP.length>0);
+  /* Si el aviso de almacenamiento sigue abierto, la barra se ubica encima de el. */
+  var ck=document.getElementById('ckBanner');
+  bar.style.bottom=(ck&&ck.classList.contains('show'))?(ck.offsetHeight+28)+'px':'';
+}
+var ov=document.createElement('div');ov.className='np-ov';ov.innerHTML='<div class="np-dlg" role="dialog" aria-modal="true"><button type="button" class="np-x" aria-label="×">×</button><div class="np-body"></div></div>';
+document.body.appendChild(ov);
+ov.addEventListener('click',function(e){if(e.target===ov||e.target.closest('.np-x'))closeOv();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))closeOv();});
+function openOv(html){$('.np-body',ov).innerHTML=html;ov.classList.add('open');document.body.style.overflow='hidden';var x=$('.np-x',ov);if(x)x.focus();}
+function closeOv(){ov.classList.remove('open');document.body.style.overflow='';}
+function openCmp(){
+  if(CMP.length<2)return;var t=L();
+  var cs=CMP.map(function(n){var c=document.querySelector('#scene-projects .proj-card[data-pname="'+CSS.escape(n)+'"]');return c?info(c):null;}).filter(Boolean);
+  var imp=(typeof _usaImperial==='function'&&_usaImperial());
+  function area(i){if(!i.aMax)return '—';var f=imp?function(v){return Math.round(v*10.7639).toLocaleString('en-US');}:function(v){return v;};return (i.aMin===i.aMax?f(i.aMax):f(i.aMin)+' – '+f(i.aMax))+(imp?' sq ft':' m²');}
+  function hab(i){return i.hMax?(i.hMin===i.hMax?i.hMax:i.hMin+'–'+i.hMax)+' '+t.bd:'—';}
+  function quota(i){return (!i.quota||/consultar|pendiente/i.test(i.quota))?t.consult:i.quota.replace('/ mes',t.month);}
+  function del(i){return i.imm?t.imm:(i.delivery||'—');}
+  var rows=[[t.price,function(i){return money(i.price);}],[t.type,function(i){return i.type||'—';}],[t.area,area],[t.hab,hab],[t.ent,del],[t.quota,quota],[t.loc,function(i){return i.loc;}],[t.tags,function(i){return tagHTML(i)||'—';}]];
+  var h='<h3>'+t.cmpH+'</h3><div class="np-sub">'+t.cmpSub+'</div><div style="overflow-x:auto"><table class="np-cmp"><thead><tr><th></th>'+cs.map(function(i){return '<td>'+i.name+'</td>';}).join('')+'</tr></thead><tbody>';
+  rows.forEach(function(r){h+='<tr><th>'+r[0]+'</th>'+cs.map(function(i){return '<td>'+r[1](i)+'</td>';}).join('')+'</tr>';});
+  openOv(h+'</tbody></table></div>');
+}
+
+/* ---------- Calculadoras ---------- */
+var CALC={tab:'air',price:0};
+function field(id,lbl,val,step){return '<label class="np-f">'+lbl+'<input type="number" inputmode="decimal" min="0" step="'+(step||'any')+'" data-c="'+id+'" value="'+val+'"></label>';}
+function openCalc(price){
+  if(price)CALC.price=price;
+  var t=L();
+  openOv('<h3>'+t.calcH+'</h3><div class="np-sub">'+t.calcSub+'</div><div class="np-tabs" role="tablist"><button type="button" data-tab="air">'+t.tabAir+'</button><button type="button" data-tab="buy">'+t.tabBuy+'</button></div><div class="np-calc"></div>');
+  paintCalc();
+}
+function paintCalc(){
+  var t=L(),box=$('.np-calc',ov);if(!box)return;
+  $$('.np-tabs button',ov).forEach(function(b){b.classList.toggle('active',b.dataset.tab===CALC.tab);});
+  var p=CALC.price||'';
+  if(CALC.tab==='air'){
+    box.innerHTML='<div class="np-grid">'+field('price',t.propPrice,p,1000)+field('noche',t.night,REF.noche,1)+field('ocupacion',t.occ,REF.ocupacion,1)+field('plataforma',t.plat,REF.plataforma,.5)+field('gestion',t.mgmt,REF.gestion,1)+field('gastos',t.exp,REF.gastos,10)+'</div><div class="np-out"></div><div class="np-note">'+t.noteAir+'</div>';
+  }else{
+    box.innerHTML='<div class="np-grid">'+field('price',t.propPrice,p,1000)+field('prima',t.down,REF.prima,1)+field('tasa',t.rate,REF.tasa,.1)+field('plazo',t.term,REF.plazo,1)+field('ingreso',t.income,'',50)+field('ingresoPct',t.incPct,REF.ingresoPct,1)+'</div><div class="np-out"></div><div class="np-note">'+t.noteBuy+'</div>';
+  }
+  calc();
+}
+function v(id){var el=$('[data-c="'+id+'"]',ov);return el?num(el.value):0;}
+function ln(k,val,big){return '<div class="np-ln'+(big?' big':'')+'"><span>'+k+'</span><b>'+val+'</b></div>';}
+function calc(){
+  var t=L(),out=$('.np-out',ov);if(!out)return;
+  var price=v('price');CALC.price=price;
+  if(CALC.tab==='air'){
+    var gross=v('noche')*30.4*(v('ocupacion')/100),plat=gross*v('plataforma')/100,mg=gross*v('gestion')/100,ex=v('gastos'),net=gross-plat-mg-ex;
+    out.innerHTML=ln(t.gross,money(gross))+ln('− '+t.lessPlat,money(plat))+ln('− '+t.lessMgmt,money(mg))+ln('− '+t.lessExp,money(ex))+ln(t.net,money(net),1)+ln(t.netY,money(net*12))+ln(t.yld,price?((net*12/price)*100).toFixed(1)+'%':t.empty);
+  }else{
+    var dp=price*v('prima')/100,fin=price-dp,r=v('tasa')/100/12,n=v('plazo')*12;
+    var pay=fin&&n?(r?fin*r/(1-Math.pow(1+r,-n)):fin/n):0;
+    var h=price?ln(t.downAmt,money(dp))+ln(t.fin,money(fin))+ln(t.pay,money(pay),1):ln(t.pay,t.empty,1);
+    var inc=v('ingreso');
+    if(inc&&n){var maxPay=inc*v('ingresoPct')/100,maxFin=r?maxPay*(1-Math.pow(1+r,-n))/r:maxPay*n,maxPrice=maxFin/(1-v('prima')/100||1);h+=ln(t.cap,money(maxPrice));}
+    out.innerHTML=h;
+  }
+}
+ov.addEventListener('input',function(e){if(e.target.matches('[data-c]'))calc();});
+ov.addEventListener('click',function(e){var b=e.target.closest('.np-tabs button');if(b){CALC.tab=b.dataset.tab;paintCalc();}});
+
+/* Boton "Calcular" dentro de la ficha del proyecto, con el precio ya cargado. */
+function hookModal(){
+  var btns=$('#pmOverlay .pm-cta-btns');if(!btns||$('.np-calc-btn',btns))return;
+  var b=document.createElement('button');b.type='button';b.className='pm-btn np-calc np-calc-btn';
+  b.addEventListener('click',function(){var c=window._pmCurCard;var p=c?num(c.getAttribute('data-price')):0;try{closeProjModal();}catch(e){}setTimeout(function(){openCalc(p);},430);});
+  btns.insertBefore(b,btns.firstChild);paintModalBtn();
+}
+function paintModalBtn(){var b=$('#pmOverlay .np-calc-btn');if(b)b.textContent=L().calc;}
+
+/* ---------- Aviso breve ---------- */
+var tst=document.createElement('div');tst.className='np-toast';tst.setAttribute('role','status');document.body.appendChild(tst);
+var tT;function toast(m){tst.textContent=m;tst.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){tst.classList.remove('show');},2200);}
+
+/* ---------- Idioma ---------- */
+function relang(){paintRow();paintPanel();paintCards();paintBar();paintModalBtn();if(ov.classList.contains('open')){if($('.np-calc',ov))openCalc(0);else if(CMP.length>1)openCmp();}}
+var baseLang=window.applyLang;
+if(typeof baseLang==='function')window.applyLang=function(l){baseLang.apply(this,arguments);try{relang();}catch(e){}};
+
+function init(){buildUI();paintRow();paintPanel();paintCards();paintBar();hookModal();apply();}
+if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+window.NLDPlus={openCalc:openCalc,state:S};
+})();
+</script>
+
 </body>
 </html>

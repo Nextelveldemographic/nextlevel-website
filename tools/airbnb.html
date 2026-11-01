@@ -1,0 +1,140 @@
+<!doctype html><html lang="es"><head><meta charset=utf-8><link rel="icon" href="/assets/logo.png"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Video Gestión Airbnb — NLD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Una sola columna, como reproductor de producto: el video manda, los controles son iconos, el guion va debajo. */
+:root{
+  --bg:#FFFFFF;--alt:#F5F5F7;--fg:#1D1D1F;--muted:#6E6E73;--line:#E5E5EA;
+  --accent:#0071E3;--accent-fg:#FFFFFF;--tint:#E8F1FE;--seg:#FFFFFF;--shadow:rgba(0,0,0,.08);
+  --sans:"Inter",-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#000000;--alt:#1C1C1E;--fg:#F5F5F7;--muted:#A1A1A6;--line:#2C2C2E;
+  --accent:#2997FF;--accent-fg:#000000;--tint:#0B2A4A;--seg:#3A3A3C;--shadow:rgba(0,0,0,.4);color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#000000;--alt:#1C1C1E;--fg:#F5F5F7;--muted:#A1A1A6;--line:#2C2C2E;
+  --accent:#2997FF;--accent-fg:#000000;--tint:#0B2A4A;--seg:#3A3A3C;--shadow:rgba(0,0,0,.4);color-scheme:dark}
+html{background:var(--bg)}
+body{background:var(--bg);color:var(--fg);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+.wrap{max-width:980px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:28px 56px;display:flex;flex-direction:column;gap:22px}
+.head{display:flex;flex-direction:column;gap:6px}
+.eb{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+h1{font-size:clamp(28px,6vw,44px);line-height:1.08;letter-spacing:-.025em;font-weight:700;text-wrap:balance;margin:0}
+.sub{color:var(--muted);font-size:16px;line-height:1.5;margin:4px 0 0;max-width:60ch}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--alt);border-radius:999px;padding:3px;gap:2px}
+.seg button{border:0;background:transparent;color:var(--fg);font:600 14px/1 var(--sans);border-radius:999px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.seg button[aria-pressed="true"]{background:var(--seg);box-shadow:0 1px 3px var(--shadow)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.seg.ic button{padding:8px 12px}
+.seg svg{width:20px;height:20px;display:block}
+.stagebox{display:flex;justify-content:center;background:var(--alt);border-radius:24px;padding:16px}
+video{display:block;width:100%;max-width:100%;border-radius:14px;background:#000}
+.v video{max-width:min(420px,100%);aspect-ratio:9/16}
+.h video{aspect-ratio:16/9}
+.meta{display:flex;gap:16px;flex-wrap:wrap;color:var(--muted);font-size:14px}
+.meta b{color:var(--fg);font-weight:600}
+.card{border:1px solid var(--line);border-radius:20px;padding:20px;display:flex;flex-direction:column;gap:14px}
+.card h2{font-size:20px;letter-spacing:-.01em;margin:0}
+.card p{margin:0;color:var(--muted);font-size:15px;line-height:1.55;max-width:65ch}
+.script{margin:0;background:var(--alt);border-radius:14px;padding:16px;font:15px/1.6 var(--sans);white-space:pre-wrap;color:var(--fg);max-height:340px;overflow:auto}
+.btn{align-self:flex-start;border:0;border-radius:999px;background:var(--accent);color:var(--accent-fg);font:600 15px/1 var(--sans);padding:12px 20px;cursor:pointer}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.ok{font-size:14px;color:var(--accent);font-weight:600;min-height:1em}
+.dl{display:inline-flex;align-items:center;gap:6px;color:var(--accent);font-weight:600;text-decoration:none}
+.dl svg{width:16px;height:16px}
+.dl:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+</style>
+
+<div class="wrap">
+  <header class="head">
+    <p class="eb">Gestión de Airbnb · NLD</p>
+    <h1>Una casa vacía cuesta. Gestionada, genera.</h1>
+    <p class="sub">Dos versiones de la misma historia para la diáspora: Don José en Texas y Doña María en California. Cada una en vertical para redes y en horizontal para web.</p>
+  </header>
+
+  <div class="bar">
+    <div class="seg" role="group" aria-label="Historia">
+      <button type="button" id="b-jose" data-story="jose" aria-pressed="true">Don José</button>
+      <button type="button" id="b-maria" data-story="maria" aria-pressed="false">Doña María</button>
+    </div>
+    <div class="seg ic" role="group" aria-label="Formato">
+      <button type="button" id="b-v" data-o="v" aria-pressed="true" aria-label="Vertical" title="Vertical"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="7" y="3" width="10" height="18" rx="2.5"/></svg></button>
+      <button type="button" id="b-h" data-o="h" aria-pressed="false" aria-label="Horizontal" title="Horizontal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="10" rx="2.5"/></svg></button>
+    </div>
+  </div>
+
+  <div class="stagebox v" id="box">
+    <video id="vid" controls playsinline preload="metadata" src="airbnb-jose-vertical.mp4"></video>
+  </div>
+  <p class="meta"><span><b id="m-name">Don José</b> · <span id="m-state">Texas</span></span><span>1:09 · narrado y con subtítulos</span><a class="dl" id="m-dl" href="airbnb-jose-vertical.mp4" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Descargar este formato</a></p>
+
+  <section class="card">
+    <h2>Guion para una voz más humana</h2>
+    <p>La voz del video es sintética y provisional. Este es el guion completo de la versión elegida, por si alguien del equipo la graba con su voz o la genera en otro servicio para reemplazarla.</p>
+    <pre class="script" id="script"></pre>
+    <button type="button" class="btn" id="copy">Copiar guion</button>
+    <p class="ok" id="ok" aria-live="polite"></p>
+  </section>
+</div>
+
+<script>
+(function(){
+  var S = {
+    jose:{N:'Don José',S:'Texas',Este:'Este'},
+    maria:{N:'Doña María',S:'California',Este:'Esta'}
+  };
+  var LINES = [
+    '{Este} es {N}. Se fue a {S} hace más de treinta años.',
+    'Hace unos años compró su casa aquí, en El Salvador, para volver algún día.',
+    'Pero hoy la casa está vacía. Y cada mes, le cuesta dinero.',
+    'Paga la alcaldía. La cuota de la colonia, y la seguridad.',
+    'El agua y la luz, aunque sea el mínimo, para que no se la corten.',
+    'Una casa vacía no ahorra. Gasta.',
+    'En Next Level, no vemos un gasto. Vemos una oportunidad.',
+    'Lo que hoy le cuesta, puede empezar a pagarle.',
+    'Nosotros la gestionamos en Airbnb, de principio a fin.',
+    'La posicionamos, para que los viajeros la escojan.',
+    'Y cada mes, {N} ve desde {S} sus reservas, y sus ingresos.',
+    'Nuestra parte es el veinte por ciento de lo que genere.',
+    'Y una casa así puede llegar a generar entre setecientos y mil dólares al mes.',
+    '¿Cuánto podría generar la suya?',
+    'Escríbanos, y le decimos cuánto podría generar.'
+  ];
+  var story = 'jose', o = 'v';
+  var vid = document.getElementById('vid'), box = document.getElementById('box');
+  function file(){ return 'airbnb-' + story + '-' + (o === 'v' ? 'vertical' : 'horizontal') + '.mp4'; }
+  function script(){
+    var st = S[story], voz = story === 'jose' ? 'Voz masculina' : 'Voz femenina';
+    return 'Lee como ' + (story === 'jose' ? 'un asesor salvadoreño' : 'una asesora salvadoreña') + '. ' + voz + ' cálida, cercana y segura, ritmo pausado, sonriendo un poco. Deja una pausa de un segundo entre cada línea.\n\n' +
+      LINES.map(function(l){ return l.replace(/\{N\}/g, st.N).replace(/\{S\}/g, st.S).replace(/\{Este\}/g, st.Este); }).join('\n\n');
+  }
+  function render(){
+    document.getElementById('b-jose').setAttribute('aria-pressed', story === 'jose');
+    document.getElementById('b-maria').setAttribute('aria-pressed', story === 'maria');
+    document.getElementById('b-v').setAttribute('aria-pressed', o === 'v');
+    document.getElementById('b-h').setAttribute('aria-pressed', o === 'h');
+    box.className = 'stagebox ' + o;
+    var f = file();
+    if (vid.getAttribute('src') !== f){ vid.setAttribute('src', f); vid.load(); }
+    document.getElementById('m-name').textContent = S[story].N;
+    document.getElementById('m-state').textContent = S[story].S;
+    var dl = document.getElementById('m-dl'); dl.setAttribute('href', f); dl.setAttribute('download', f);
+    document.getElementById('script').textContent = script();
+    document.getElementById('ok').textContent = '';
+  }
+  [].forEach.call(document.querySelectorAll('[data-story]'), function(b){ b.addEventListener('click', function(){ story = b.getAttribute('data-story'); render(); }); });
+  [].forEach.call(document.querySelectorAll('[data-o]'), function(b){ b.addEventListener('click', function(){ o = b.getAttribute('data-o'); render(); }); });
+  document.getElementById('copy').addEventListener('click', function(){
+    var ok = document.getElementById('ok'), txt = script();
+    function sel(){ var r = document.createRange(); r.selectNodeContents(document.getElementById('script')); var s = getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent = 'Texto seleccionado: cópialo desde el menú.'; }
+    try { navigator.clipboard.writeText(txt).then(function(){ ok.textContent = 'Guion copiado.'; }, sel); } catch(e){ sel(); }
+  });
+  render();
+})();
+</script>
+
+</body></html>

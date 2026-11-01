@@ -154,11 +154,11 @@ main{display:flex;flex-direction:column;gap:18px;padding-block:12px 28px}
 .rlink.on path{opacity:1}
 .rkeys{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 :root[data-view="movil"] .rkeys{grid-template-columns:1fr}
-.rk{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:start;background:var(--card);border-radius:12px;padding:12px 14px;animation:rv .7s var(--ease) both}
-.rk:nth-child(2){animation-delay:.08s}.rk:nth-child(3){animation-delay:.16s}
-.rk .sw{width:12px;height:12px;border-radius:4px;margin-top:4px}
-.rk .rv1{font-size:1.35em;font-weight:700;letter-spacing:-.02em;line-height:1.1}
-.rk .rv2{font-size:.8em;color:var(--muted);margin-top:3px}
+.rkey{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;align-items:start;background:var(--card);border-radius:12px;padding:12px 14px;animation:rv .7s var(--ease) both}
+.rkey:nth-child(2){animation-delay:.08s}.rkey:nth-child(3){animation-delay:.16s}
+.rkey .sw{width:12px;height:12px;border-radius:4px;margin-top:4px}
+.rkey .rv1{font-size:1.35em;font-weight:700;letter-spacing:-.02em;line-height:1.1}
+.rkey .rv2{font-size:.8em;color:var(--muted);margin-top:3px}
 .rnote{font-size:.8em;color:var(--muted);margin:0}
 .duo{display:flex;flex-direction:column;gap:18px}
 :root[data-view="ipad"] .duo,:root[data-view="web"] .duo{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:32px;align-items:start}
@@ -198,7 +198,7 @@ tbody tr:last-child td{border-bottom:0}
 
 footer{padding-block:6px calc(28px + env(safe-area-inset-bottom,0px));color:var(--faint);font-size:.76em;display:flex;flex-direction:column;gap:4px}
 footer p{margin:0;max-width:80ch}
-@media (prefers-reduced-motion:reduce){.bars .bar,.rk{animation:none}.rbar i,.rlink polygon{transition:none}}
+@media (prefers-reduced-motion:reduce){.bars .bar,.rkey{animation:none}.rbar i,.rlink polygon{transition:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -299,13 +299,13 @@ footer p{margin:0;max-width:80ch}
     <div class="ph"><div><h2 id="h-zip">Códigos postales</h2><p>Ordenados por población. Copia la lista para cargarla como segmentación de ubicación.</p></div></div>
     <div class="tbl-tools">
       <input class="search" id="q" type="search" placeholder="Buscar ZIP o ciudad" aria-label="Buscar ZIP o ciudad">
-      <select class="sel" id="copyN" aria-label="Cantidad de ZIP a copiar"><option value="50">Top 50</option><option value="100" selected>Top 100</option><option value="250">Top 250</option><option value="500">Top 500</option></select>
-      <button class="btn" id="copyBtn"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg>Copiar ZIP</button>
+      <select class="sel" id="copyN" aria-label="Cuántos códigos postales mostrar y copiar"><option value="25">Top 25</option><option value="50" selected>Top 50</option><option value="100">Top 100</option><option value="250">Top 250</option><option value="500">Top 500</option><option value="0">Todos</option></select>
+      <button class="btn" id="copyBtn"><svg viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg><span id="copyTxt">Copiar ZIP</span></button>
     </div>
     <span class="toast" id="toast" aria-live="polite"></span>
     <textarea class="copybox" id="copybox" readonly hidden aria-label="Lista de ZIP para copiar"></textarea>
     <div class="tscroll"><table><thead><tr><th class="r">#</th><th>ZIP</th><th>Ciudad</th><th>Estado</th><th class="r">Personas</th><th class="r">% del total</th></tr></thead><tbody id="zipBody"></tbody></table></div>
-    <button class="more" id="zipMore">Mostrar 30 más</button>
+    <p class="rnote" id="zipCount"></p>
   </section>
 </main>
 
@@ -336,7 +336,7 @@ const pct = (x,d=1) => (x*100).toFixed(d) + ' %';
 const $ = id => document.getElementById(id);
 const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} } };
 
-const S = { country:'El Salvador', st:'', q:'', mode:'2d', presenting:false, stAll:false, cityN:10, zipN:30 };
+const S = { country:'El Salvador', st:'', q:'', mode:'2d', presenting:false, stAll:false, cityN:10, zipN:50 };
 const cache = {};
 function rowsFor(c){
   if(cache[c]) return cache[c];
@@ -366,7 +366,7 @@ function buildCountries(){
   totals.forEach(([c]) => {
     const b = document.createElement('button'); b.className = 'chip'; b.textContent = cname(c);
     b.setAttribute('aria-pressed', String(c===S.country));
-    b.addEventListener('click', () => { S.country = c; S.st = ''; S.zipN = 30; S.cityN = 10; update(true); });
+    b.addEventListener('click', () => { S.country = c; S.st = ''; S.cityN = 10; update(true); });
     box.appendChild(b);
   });
 }
@@ -376,12 +376,12 @@ function buildStateSel(byState){
   byState.forEach(([s,v]) => { const op = document.createElement('option'); op.value = s; op.textContent = sname(s) + ' · ' + fmt(v); sel.appendChild(op); });
   sel.value = S.st;
 }
-$('stateSel').addEventListener('change', e => { S.st = e.target.value; S.zipN = 30; S.cityN = 10; update(true); });
+$('stateSel').addEventListener('change', e => { S.st = e.target.value; S.cityN = 10; update(true); });
 $('clearState').addEventListener('click', () => { S.st = ''; update(true); });
 $('stateMore').addEventListener('click', () => { S.stAll = !S.stAll; renderStates(); });
 $('cityMore').addEventListener('click', () => { S.cityN = S.cityN === 10 ? 25 : 10; renderCities(); });
-$('zipMore').addEventListener('click', () => { S.zipN += 30; renderZips(); });
-$('q').addEventListener('input', e => { S.q = e.target.value.trim().toLowerCase(); S.zipN = 30; renderZips(); });
+$('copyN').addEventListener('change', e => { S.zipN = +e.target.value || Infinity; renderZips(); });
+$('q').addEventListener('input', e => { S.q = e.target.value.trim().toLowerCase(); renderZips(); });
 
 /* ---------- aggregates ---------- */
 let AGG = null;
@@ -453,7 +453,7 @@ function renderConc(){
   const labA = ['La mitad de la audiencia', 'Hasta el 80 %', 'El 20 % restante'];
   keys.textContent = '';
   nZ.forEach((n,k) => {
-    const d = document.createElement('div'); d.className = 'rk';
+    const d = document.createElement('div'); d.className = 'rkey';
     d.innerHTML = '<span class="sw" style="background:' + cols[k] + '"></span><div><div class="rv1 num">' + fmt(n) + ' ZIP</div><div class="rv2">' + labA[k] + ' · ' + pct(pZ[k]) + ' de los códigos</div></div>';
     keys.appendChild(d);
   });
@@ -492,7 +492,7 @@ function barRow(name, v, share, maxShare, pressed, onClick){
 function renderStates(){
   const { byState, natTotal } = AGG, box = $('stateBars'); box.textContent = '';
   const list = S.stAll ? byState : byState.slice(0,10); const mx = byState.length ? byState[0][1]/natTotal : 1;
-  list.forEach(([s,v],i) => { const b = barRow(sname(s), v, v/natTotal, mx, s===S.st, () => { S.st = (S.st===s ? '' : s); S.zipN = 30; S.cityN = 10; update(true); if(root.getAttribute('data-view') === 'movil') window.scrollTo({top:0,behavior: reduceMotion ? 'auto' : 'smooth'}); }); b.style.animationDelay = Math.min(i,14)*35 + 'ms'; box.appendChild(b); });
+  list.forEach(([s,v],i) => { const b = barRow(sname(s), v, v/natTotal, mx, s===S.st, () => { S.st = (S.st===s ? '' : s); S.cityN = 10; update(true); if(root.getAttribute('data-view') === 'movil') window.scrollTo({top:0,behavior: reduceMotion ? 'auto' : 'smooth'}); }); b.style.animationDelay = Math.min(i,14)*35 + 'ms'; box.appendChild(b); });
   $('stateMore').hidden = byState.length <= 10;
   $('stateMore').textContent = S.stAll ? 'Ver solo top 10' : 'Ver todos los estados (' + byState.length + ')';
 }
@@ -518,10 +518,12 @@ function renderZips(){
     body.appendChild(tr);
   });
   if(!list.length){ const tr = document.createElement('tr'), td = document.createElement('td'); td.colSpan = 6; td.textContent = 'Ningún código postal coincide con "' + S.q + '".'; tr.appendChild(td); body.appendChild(tr); }
-  $('zipMore').hidden = list.length <= S.zipN;
+  const shown = Math.min(S.zipN, list.length);
+  $('copyTxt').textContent = 'Copiar ' + fmt(shown) + ' ZIP';
+  $('zipCount').textContent = 'Mostrando ' + fmt(shown) + ' de ' + fmt(list.length) + ' códigos postales' + (S.q ? ' que coinciden con la búsqueda' : '') + '. El botón copia exactamente esta lista.';
 }
 $('copyBtn').addEventListener('click', () => {
-  const n = +$('copyN').value; const zips = AGG.rows.slice(0, n).map(r => Z[r.i][0]); const text = zips.join('\n');
+  const zips = filteredZips().slice(0, S.zipN).map(([r]) => Z[r.i][0]); const text = zips.join('\n');
   const done = msg => { $('toast').textContent = msg; clearTimeout(done.t); done.t = setTimeout(() => $('toast').textContent = '', 3500); };
   const fallback = () => { const bx = $('copybox'); bx.hidden = false; bx.value = text; bx.focus(); bx.select(); done('Selecciona y copia la lista de abajo (' + zips.length + ' ZIP).'); };
   try { navigator.clipboard.writeText(text).then(() => { $('copybox').hidden = true; done(zips.length + ' ZIP copiados, uno por línea.'); }, fallback); } catch(e){ fallback(); }
@@ -786,7 +788,7 @@ function initMap(){
         else showInfo(d);
       } else {
         hideInfo(); const ab = Object.keys(ABBR).find(k => ABBR[k] === info.object.properties.n);
-        if(ab && AGG.byState.some(s => s[0]===ab)){ S.st = (S.st===ab ? '' : ab); S.zipN = 30; S.cityN = 10; update(true); }
+        if(ab && AGG.byState.some(s => s[0]===ab)){ S.st = (S.st===ab ? '' : ab); S.cityN = 10; update(true); }
       }
     });
     msg.hidden = true;

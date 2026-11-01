@@ -2538,7 +2538,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     build();d.classList.add('pres','pres-snap');paintBg();fit();go(i0,0);
     requestAnimationFrame(function(){requestAnimationFrame(function(){d.classList.remove('pres-snap');});});
     var touch=mq('(pointer: coarse)')||(navigator.maxTouchPoints>1);
-    wantFs=!standalone&&!touch&&!fsEl()&&req();
+    wantFs=!standalone&&!fsEl()&&req();
     paintBtn();
   }
   function exit(){

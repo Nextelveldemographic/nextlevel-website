@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mapa de la Diáspora</title>
 <meta name="claude:viewport-fit-sides" content="cover">
+<script>
+/* Tema y vista antes del primer pintado: evita que se vea oscuro mientras carga */
+(function(){var r=document.documentElement,t='light',v='web';try{t=localStorage.getItem('nld-dia-theme2')||'light';v=localStorage.getItem('nld-dia-view2')||'web';}catch(e){}if(t!=='auto')r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+</script>
 <style>
 /* Layout: una sola columna que llena la pantalla; la vista (móvil / iPad / navegador) cambia escala y densidad, nunca agrega marcos. */
 :root{

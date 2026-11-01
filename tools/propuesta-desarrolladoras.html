@@ -3824,7 +3824,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   },{passive:true});
   document.addEventListener('pointermove',function(){if(on)poke();},{passive:true});
   document.addEventListener('click',function(e){
-    if(!on)return;var a=e.target.closest&&e.target.closest('#idx a[href^="#"]');if(!a)return;
+    if(!on)return;var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
     var el=document.getElementById(a.getAttribute('href').slice(1));if(!el)return;
     var i=secs.indexOf(el.closest('section'));if(i<0)return;
     e.preventDefault();go(i,i>=k?1:-1);

@@ -227,6 +227,11 @@ function loginPage({ destino = '/tools', correo = '', error = '', status = 401 }
 <meta name="robots" content="noindex,nofollow">
 <title>NLD Tools · Acceso</title>
 <link rel="icon" href="/assets/logo.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NLD Tools">
+<link rel="apple-touch-icon" href="/assets/logo.png">
 <script>try{if(localStorage.getItem('nld_tools_tema')==='oscuro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
 <style>
 :root{color-scheme:light;--bg:#F5F5F7;--card:#FFFFFF;--line:#E5E5EA;--line-2:#D2D2D7;--fg:#1D1D1F;--muted:#6E6E73;--label:#86868B;

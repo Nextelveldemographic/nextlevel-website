@@ -4,16 +4,16 @@
 <style>
 /* Layout: reproductor de cine a pantalla completa. El escenario (9:16 o 16:9) se escala al espacio libre y los controles van debajo, con el mismo ancho. */
 :root{
-  --bg:#000000;
-  --surface:#1D1D1F;
-  --surface-2:#2C2C2E;
-  --line:#3A3A3C;
-  --fg:#F5F5F7;
-  --muted:#A1A1A6;
+  --bg:#FFFFFF;
+  --surface:#F5F5F7;
+  --surface-2:#FFFFFF;
+  --line:#D2D2D7;
+  --fg:#1D1D1F;
+  --muted:#6E6E73;
   --accent:#2997FF;
   --accent-strong:#0071E3;
   --font:Arial,"Helvetica Neue",Helvetica,"Liberation Sans",sans-serif;
-  color-scheme:dark;
+  color-scheme:light;
 }
 html{height:100%;box-sizing:border-box;background:var(--bg)}
 *,*::before,*::after{box-sizing:inherit}
@@ -24,7 +24,7 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .stage{position:relative;flex:none;border-radius:16px;overflow:hidden;background:var(--bg);box-shadow:0 0 0 1px var(--line);max-width:100%}
 .stage canvas{display:block;width:100%;height:100%}
 .poster{position:absolute;inset:0;display:flex;flex-direction:column;justify-content:flex-end;align-items:flex-start;gap:6px;padding:22px;margin:0;border:0;
-  background:linear-gradient(180deg,rgba(0,0,0,0) 42%,rgba(0,0,0,.78) 100%);color:var(--fg);font:inherit;text-align:left;cursor:pointer}
+  background:linear-gradient(180deg,rgba(0,0,0,0) 42%,rgba(0,0,0,.78) 100%);color:#F5F5F7;font:inherit;text-align:left;cursor:pointer}
 .poster:focus-visible{outline:3px solid var(--accent);outline-offset:-3px}
 .poster .play{position:absolute;left:50%;top:50%;width:84px;height:84px;margin:-42px 0 0 -42px;border-radius:50%;background:var(--accent-strong);
   display:grid;place-items:center;box-shadow:0 12px 32px rgba(0,113,227,.45);transition:transform .2s ease}
@@ -32,7 +32,7 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .poster .play svg{width:34px;height:34px;margin-left:4px}
 .poster .eyebrow{font-size:13px;font-weight:700;color:var(--accent)}
 .poster .title{font-size:30px;font-weight:700;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
-.poster .meta{font-size:14px;color:var(--muted)}
+.poster .meta{font-size:14px;color:rgba(245,245,247,.78)}
 .controls{flex:none;display:flex;flex-direction:column;gap:8px;max-width:100%}
 .bar{position:relative;height:24px;display:flex;align-items:center}
 .bar input{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;position:relative;z-index:1}
@@ -47,7 +47,7 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .tabs{display:flex;gap:2px;padding:2px;border-radius:12px;background:var(--surface)}
 .tab{flex:1;height:34px;border:0;border-radius:10px;background:transparent;color:var(--muted);font:700 13px/1 var(--font);cursor:pointer}
 .tab:hover{color:var(--fg)}
-.tab[aria-selected="true"]{background:var(--surface-2);color:var(--fg)}
+.tab[aria-selected="true"]{background:var(--surface-2);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.1)}
 .tab:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .stories{display:flex;gap:6px}
 .chip{flex:1;height:34px;border:0;border-radius:10px;background:var(--surface);color:var(--muted);font:700 13px/1 var(--font);letter-spacing:.08em;cursor:pointer}
@@ -64,7 +64,7 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .chap{flex:1;min-width:0;font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .seg{flex:none;display:flex;gap:2px;padding:2px;border-radius:12px;background:var(--surface)}
 .seg .btn{width:36px;height:36px;border-radius:10px;color:var(--muted)}
-.seg .btn[aria-pressed="true"]{background:var(--surface-2);color:var(--fg)}
+.seg .btn[aria-pressed="true"]{background:var(--surface-2);color:var(--fg);box-shadow:0 1px 3px rgba(0,0,0,.1)}
 @media (prefers-reduced-motion:reduce){.poster .play{transition:none}}
 
 .social{position:absolute;inset:0;pointer-events:none;color:#FFFFFF;font-family:var(--font);--u:3.6px;overflow:hidden}
@@ -84,7 +84,9 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .cineX:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .cineX svg{width:20px;height:20px}
 .poster[hidden],.cineX[hidden],.social[hidden]{display:none!important}
-body.cine{padding-left:0;padding-right:0}
+body.cine{padding-left:0;padding-right:0;background:#000}
+html:has(body.cine){background:#000}
+body.cine .app{background:#000}
 body.cine .app{padding-block:0;gap:0}
 body.cine .controls{display:none}
 body.cine .stage{border-radius:0;box-shadow:none}

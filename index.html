@@ -3234,7 +3234,7 @@ body.qv-lock{overflow:hidden}
 </style>
 </head>
 <body>
-<a href="#scene-hero" class="skip-link" data-i18n="skip_main">Saltar al contenido</a>
+<a href="#scene-lifestyle" class="skip-link" data-i18n="skip_main">Saltar al contenido</a>
 <nav id="nav"><div class="nav-inner">
   <div class="nav-left"><a href="#top" class="logo-w"><div class="logo-sq"><span class="logo-fb">NL</span><img decoding="async" src="assets/logo.png" alt="" onload="this.parentNode.classList.add('has-img')" onerror="this.remove()" width="64" height="64"></div><span class="logo-tx">Next Level Demographic</span></a></div>
   <ul class="nav-c">
@@ -3279,19 +3279,7 @@ body.qv-lock{overflow:hidden}
 </div>
 <div id="top"></div>
 
-<section id="scene-hero" data-scene>
-  <div class="wrap">
-    <div class="hero-eb anim" data-i18n="hero_badge">Para la diáspora salvadoreña</div>
-    <h1 class="hero-h anim d1" data-i18n="hero_h1">Volvé. <br>El país <em>ya está listo.</em> <br>¿Y vos?</h1>
-    <p class="hero-sub anim d2" data-i18n="hero_sub">Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.</p>
-    <div class="intent-toggle anim d3" role="tablist" aria-label="Objetivo">
-      <button type="button" class="intent-btn active" data-intent="retiro" onclick="setIntent('retiro')" role="tab" aria-selected="true">🌴️ <span data-i18n="intent_retiro">Retiro</span></button>
-      <button type="button" class="intent-btn" data-intent="inversion" onclick="setIntent('inversion')" role="tab" aria-selected="false">📈️ <span data-i18n="intent_inversion">Inversión</span></button>
-      <button type="button" class="intent-btn" data-intent="segunda" onclick="setIntent('segunda')" role="tab" aria-selected="false">🏡️ <span data-i18n="intent_segunda">Segunda casa</span></button>
-    </div>
-    <div class="hero-btns anim d4"><a href="#contacto" class="btn-blue" data-i18n="hero_btn1">Ver cómo se ve tu retiro</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
-  </div>
-</section>
+<!-- Portada retirada (nov 2026): el sitio abre directo en la comparativa de retiro. -->
 
 <section id="scene-lifestyle" class="sec-chalk" data-scene>
   <div class="wrap">
@@ -8688,7 +8676,10 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
      Filtros extra, colecciones, etiquetas de inversion, favoritos, comparador,
      busqueda guardada y calculadoras. Todo vive en el navegador del visitante:
      sin servidor ni servicios de pago. Se engancha al filtro existente envolviendo
-     _cardPassesCatSearch, asi la lista, el mapa y el carrusel quedan sincronizados. -->
+     _cardPassesCatSearch, asi la lista, el mapa y el carrusel quedan sincronizados.
+     v2: montos con $ y comas, "Compra y cuota" por defecto, calculadora visible
+     dentro de cada ficha, comparar desde la ficha y la barra, y una historia
+     animada de Airbnb para el inversionista con los numeros de la calculadora. -->
 <style>
 .np-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:-6px 0 18px}
 .np-chip{padding:8px 14px;background:var(--chalk);color:var(--dark);border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:500;cursor:pointer;border:none;font-family:inherit;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;transition:.25s var(--ease)}
@@ -8697,7 +8688,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
 .np-chip.ghost{background:transparent;box-shadow:inset 0 0 0 1px var(--divider)}
 .np-chip.ghost.active{background:var(--dark);color:var(--w);box-shadow:none}
 .np-chip svg{width:14px;height:14px;flex:none}
-.np-sep{width:1px;height:22px;background:var(--divider);margin:0 4px}
+.np-sep{width:1px;height:22px;background:var(--divider);margin:0 4px;flex:none}
 .np-panel{display:none;gap:12px;flex-wrap:wrap;margin:-6px 0 18px;padding:14px;border-radius:var(--r-l);background:var(--chalk)}
 .np-panel.open{display:flex}
 .np-panel label{display:flex;flex-direction:column;gap:5px;font-size:var(--fs-12);color:var(--grey-2);font-weight:500;flex:1 1 150px}
@@ -8710,44 +8701,102 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
 .np-ico svg{width:17px;height:17px}
 .np-ico.on{background:var(--blue);color:#fff}
 .np-ico.fav.on svg{fill:currentColor}
+#scene-projects .proj-badges{max-width:calc(100% - 92px)}
 .np-bar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:900;display:flex;gap:10px;align-items:center;padding:10px 10px 10px 18px;border-radius:var(--r-pill);background:var(--dark);color:var(--w);font-size:var(--fs-14);box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s var(--ease);max-width:calc(100% - 120px)}
 .np-bar.show{transform:translate(-50%,0)}
+.np-bar span{white-space:nowrap}
 .np-bar button{font-family:inherit;border:none;cursor:pointer;border-radius:var(--r-pill);padding:9px 16px;font-size:var(--fs-13);font-weight:600}
 .np-bar .go{background:var(--blue);color:#fff}
+.np-bar .go[disabled]{opacity:.5;cursor:default}
 .np-bar .clr{background:transparent;color:#A1A1A6;padding:9px 8px}
 .np-ov{position:fixed;inset:0;z-index:1000;display:none;align-items:flex-end;justify-content:center;background:rgba(0,0,0,.45)}
 .np-ov.open{display:flex}
-.np-dlg{background:var(--w);color:var(--dark);width:100%;max-width:760px;max-height:88vh;overflow:auto;border-radius:var(--r-2xl) var(--r-2xl) 0 0;padding:24px 20px 28px;position:relative}
+.np-dlg{background:var(--w);color:var(--dark);width:100%;max-width:820px;max-height:90vh;overflow:auto;border-radius:var(--r-2xl) var(--r-2xl) 0 0;padding:24px 20px 28px;position:relative}
 @media(min-width:760px){.np-ov{align-items:center}.np-dlg{border-radius:var(--r-2xl);padding:30px 32px}}
 .np-dlg h3{font-size:var(--fs-22);font-weight:600;letter-spacing:-.02em;margin:0 40px 4px 0}
-.np-dlg .np-sub{font-size:var(--fs-14);color:var(--grey-2);margin-bottom:18px;line-height:1.45}
+.np-sub{font-size:var(--fs-14);color:var(--grey-2);margin-bottom:18px;line-height:1.45}
 .np-x{position:absolute;top:16px;right:16px;width:34px;height:34px;border-radius:50%;border:none;background:var(--chalk);color:var(--dark);font-size:20px;cursor:pointer;line-height:1}
 .np-tabs{display:flex;gap:6px;margin-bottom:18px;background:var(--chalk);padding:4px;border-radius:var(--r-pill);width:max-content;max-width:100%}
-.np-tabs button{font-family:inherit;border:none;background:transparent;color:var(--dark);padding:8px 14px;border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:600;cursor:pointer}
+.np-tabs button{font-family:inherit;border:none;background:transparent;color:var(--dark);padding:8px 14px;border-radius:var(--r-pill);font-size:var(--fs-13);font-weight:600;cursor:pointer;white-space:nowrap}
 .np-tabs button.active{background:var(--w);box-shadow:0 1px 3px rgba(0,0,0,.12)}
-.np-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.np-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
 .np-f{display:flex;flex-direction:column;gap:5px;font-size:var(--fs-12);color:var(--grey-2);font-weight:500}
-.np-f input{font-family:inherit;font-size:var(--fs-16);padding:10px 11px;border-radius:var(--r-s);border:1px solid var(--divider);background:var(--w);color:var(--dark);width:100%}
+.np-f input{font-family:inherit;font-size:var(--fs-16);padding:10px 11px;border-radius:var(--r-s);border:1px solid var(--divider);background:var(--w);color:var(--dark);width:100%;font-variant-numeric:tabular-nums}
 .np-out{margin-top:18px;border-radius:var(--r-l);background:var(--chalk);padding:16px 18px}
 .np-ln{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-top:1px solid var(--divider);font-size:var(--fs-15)}
 .np-ln:first-child{border-top:none}
 .np-ln span{color:var(--grey-2)}
-.np-ln b{font-weight:600;text-align:right}
+.np-ln b{font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
 .np-ln.big b{font-size:var(--fs-22);color:var(--blue)}
 .np-note{margin-top:12px;font-size:var(--fs-12);color:var(--grey-2);line-height:1.5}
 .np-cmp{width:100%;border-collapse:collapse;font-size:var(--fs-14)}
 .np-cmp th,.np-cmp td{text-align:left;padding:10px 8px;border-top:1px solid var(--divider);vertical-align:top}
-.np-cmp th{color:var(--grey-2);font-weight:500;width:28%}
+.np-cmp th{color:var(--grey-2);font-weight:500;width:26%}
 .np-cmp thead td{border-top:none;font-weight:600;font-size:var(--fs-15)}
-.np-toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;z-index:1100;background:var(--dark);color:var(--w);padding:10px 18px;border-radius:var(--r-pill);font-size:var(--fs-14);transition:.3s var(--ease);pointer-events:none}
+.np-toast{position:fixed;left:50%;top:84px;transform:translate(-50%,-20px);opacity:0;z-index:10060;background:var(--dark);color:var(--w);padding:10px 18px;border-radius:var(--r-pill);font-size:var(--fs-14);transition:.3s var(--ease);pointer-events:none;max-width:calc(100% - 32px);text-align:center}
 .np-toast.show{opacity:1;transform:translate(-50%,0)}
+/* Ficha: acciones y modulo de calculadora */
+.np-pmacts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.np-pmacts .np-chip svg{width:15px;height:15px}
+.np-pmacts .np-chip.on{background:var(--blue);color:#fff;box-shadow:none}
+.np-pmacts .np-chip.fav.on svg{fill:currentColor}
+.np-pmcalc .np-tabs{margin-bottom:14px}
+/* Historia animada Airbnb */
+.np-story{margin-top:18px;border-radius:var(--r-l);background:var(--chalk);padding:8px}
+.np-st{position:relative;background:#fff;border-radius:calc(var(--r-l) - 4px);overflow:hidden;height:clamp(340px,34vw,400px);color:#1D1D1F}
+@media(max-width:560px){.np-st{height:360px}}
+@media(min-width:760px){.nps-it{font-size:16px;padding:11px 16px}.nps-list{max-width:380px}.nps-tower{width:130px}.nps-phone{width:150px}}
+/* Sin portada: la comparativa abre el sitio y necesita aire bajo la barra fija. */
+#scene-lifestyle{padding-top:96px}
+@media(max-width:600px){#scene-lifestyle{padding-top:76px}}
+.np-st-top{position:absolute;top:14px;left:16px;right:16px;display:flex;align-items:center;justify-content:space-between;z-index:2}
+.np-st-step{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:600}
+.np-st-step i{font-style:normal;width:22px;height:22px;border-radius:50%;background:#0071E3;color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center}
+.np-st-logo{width:30px;height:30px;border-radius:50%;object-fit:cover}
+.np-sc{position:absolute;inset:48px 16px 64px;display:flex;align-items:center;justify-content:center;gap:22px;opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s;pointer-events:none}
+.np-sc.on{opacity:1;transform:none}
+.np-cap{position:absolute;left:16px;right:16px;bottom:18px;text-align:center;font-size:clamp(15px,2.2vw,19px);font-weight:600;letter-spacing:-.01em;line-height:1.3}
+.np-prog{position:absolute;left:0;bottom:0;height:3px;background:#0071E3;width:0}
+.np-st-ctl{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 6px 4px}
+.np-dots{display:flex;gap:6px}
+.np-dots button{width:8px;height:8px;border-radius:50%;border:none;padding:0;background:var(--divider);cursor:pointer}
+.np-dots button.on{background:var(--blue)}
+.np-pp{font-family:inherit;font-size:var(--fs-12);font-weight:600;border:none;background:transparent;color:var(--blue);cursor:pointer;padding:4px 6px}
+.np-st-note{font-size:var(--fs-11);color:var(--grey-2);padding:2px 6px 4px;line-height:1.45}
+/* piezas de las escenas */
+.nps-tower{width:110px;flex:none}
+.nps-big{font-size:clamp(26px,5vw,44px);font-weight:700;letter-spacing:-.03em;line-height:1}
+.nps-lbl{font-size:13px;color:#6E6E73;margin-bottom:6px}
+.nps-sm{font-size:12px;color:#6E6E73;margin-top:6px}
+.nps-list{display:flex;flex-direction:column;gap:8px;min-width:0;flex:1;max-width:330px}
+.nps-it{display:flex;align-items:center;gap:10px;background:#F5F5F7;border-radius:12px;padding:9px 12px;font-size:14px;font-weight:600;opacity:0;transform:translateX(8px);transition:.4s}
+.np-sc.on .nps-it{opacity:1;transform:none}
+.np-sc.on .nps-it:nth-child(2){transition-delay:.35s}.np-sc.on .nps-it:nth-child(3){transition-delay:.7s}.np-sc.on .nps-it:nth-child(4){transition-delay:1.05s}
+.nps-ok{width:20px;height:20px;border-radius:50%;background:#0071E3;color:#fff;font-size:11px;display:flex;align-items:center;justify-content:center;flex:none}
+.nps-phone{width:128px;flex:none;border:5px solid #1D1D1F;border-radius:22px;padding:10px 8px;background:#fff}
+.nps-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:6px}
+.nps-cal b{aspect-ratio:1;border-radius:3px;background:#E5E5EA;transition:background .25s}
+.nps-cal b.r{background:#0071E3}
+.nps-cal b.k{background:#1D1D1F}
+.nps-pt{font-size:9px;font-weight:700}
+.nps-ps{font-size:8px;color:#6E6E73}
+.nps-num{display:flex;flex-direction:column;gap:6px;min-width:0}
+.nps-row{display:flex;justify-content:space-between;gap:14px;font-size:14px;color:#6E6E73;border-bottom:1px solid #E5E5EA;padding-bottom:5px;min-width:210px}
+.nps-row b{color:#1D1D1F;font-variant-numeric:tabular-nums}
+.nps-net{font-size:clamp(30px,6vw,48px);font-weight:700;color:#0071E3;letter-spacing:-.03em;line-height:1;margin-top:6px}
+.nps-cta{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center}
+.nps-cta img{width:54px;height:54px;border-radius:50%}
+.nps-cta .t{font-size:clamp(20px,3.6vw,28px);font-weight:700;letter-spacing:-.02em}
+.nps-wa{background:#0071E3;color:#fff;border-radius:980px;padding:9px 18px;font-weight:600;font-size:15px}
+@media(max-width:560px){.np-sc{flex-direction:column;gap:12px;inset:46px 14px 70px}.nps-tower{width:78px}.nps-phone{width:112px}.nps-list{max-width:none;width:100%}.nps-it{padding:7px 10px;font-size:13px}}
+@media(prefers-reduced-motion:reduce){.np-sc,.nps-it{transition:none}}
 .pm-btn.np-calc{background:var(--chalk);color:var(--dark);cursor:pointer;border:none;font-family:inherit}
 [data-theme="dark"] .np-chip{background:#1D1D1F;color:#F5F5F7}
 [data-theme="dark"] .np-chip:hover{background:#2C2C2E}
-[data-theme="dark"] .np-chip.active{background:#F5F5F7;color:#000}
+[data-theme="dark"] .np-chip.active,[data-theme="dark"] .np-chip.ghost.active{background:#F5F5F7;color:#000;box-shadow:none}
 [data-theme="dark"] .np-chip.ghost{background:transparent;box-shadow:inset 0 0 0 1px #3A3A3C}
-[data-theme="dark"] .np-chip.ghost.active{background:#F5F5F7;color:#000;box-shadow:none}
-[data-theme="dark"] .np-panel,[data-theme="dark"] .np-out,[data-theme="dark"] .np-tabs{background:#1D1D1F}
+[data-theme="dark"] .np-pmacts .np-chip.on{background:#2997FF;color:#fff}
+[data-theme="dark"] .np-panel,[data-theme="dark"] .np-out,[data-theme="dark"] .np-tabs,[data-theme="dark"] .np-story{background:#1D1D1F}
 [data-theme="dark"] .np-panel select,[data-theme="dark"] .np-f input{background:#000;color:#F5F5F7;border-color:#3A3A3C}
 [data-theme="dark"] .np-dlg{background:#111113;color:#F5F5F7}
 [data-theme="dark"] .np-tabs button{color:#F5F5F7}
@@ -8757,11 +8806,16 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
 [data-theme="dark"] .np-ln,[data-theme="dark"] .np-cmp th,[data-theme="dark"] .np-cmp td{border-color:#2C2C2E}
 [data-theme="dark"] .np-bar{background:#F5F5F7;color:#000}
 [data-theme="dark"] .np-sep{background:#3A3A3C}
+[data-theme="dark"] .np-dots button{background:#3A3A3C}
 [data-theme="dark"] .pm-btn.np-calc{background:#2C2C2E;color:#F5F5F7}
-#scene-projects .proj-badges{max-width:calc(100% - 92px)}
-.np-bar span{white-space:nowrap}
-@media(max-width:600px){.np-ico{width:30px;height:30px}.np-ico svg{width:15px;height:15px}.np-acts{top:8px;right:8px;gap:5px}#scene-projects .proj-badges{max-width:calc(100% - 78px)}}
-@media(max-width:600px){.np-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.np-row::-webkit-scrollbar{display:none}.np-bar{left:16px;right:16px;max-width:none;justify-content:space-between;transform:translateY(160%);bottom:84px}.np-bar.show{transform:translateY(0)}}
+@media(max-width:600px){
+ .np-row{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}.np-row::-webkit-scrollbar{display:none}
+ .np-bar{left:16px;right:16px;max-width:none;justify-content:space-between;transform:translateY(160%);bottom:84px}.np-bar.show{transform:translateY(0)}
+ .np-ico{width:30px;height:30px}.np-ico svg{width:15px;height:15px}.np-acts{top:8px;right:8px;gap:5px}
+ #scene-projects .proj-badges{max-width:calc(100% - 78px)}
+}
+.nld-marker .np-cnt{display:inline-flex;align-items:center;justify-content:center;min-width:18px;height:18px;margin-left:6px;padding:0 5px;border-radius:9px;background:#0071E3;color:#fff;font-size:11px;font-weight:700}
+.nld-marker .np-from{font-weight:500;opacity:.75;margin-right:4px}
 </style>
 <script>
 (function(){
@@ -8782,21 +8836,48 @@ var LUJO_MIN=200000;           // desde este precio un proyecto entra en "Lujo"
 /* Valores de referencia de las calculadoras. Son supuestos editables, no datos
    de un banco ni de un listado real: ajustalos cuando tengas cifras propias. */
 var REF={prima:10,tasa:9,plazo:25,ingresoPct:30,noche:70,ocupacion:55,plataforma:3,gestion:20,gastos:180};
+var WA_NUM='+503 6207-3860';
 
 var T={
- es:{col:'Colección',all:'Todas',vivir:'Para vivir',rentar:'Para rentar',lujo:'Lujo',more:'Más filtros',favs:'Favoritos',save:'Guardar búsqueda',saved:'Búsqueda guardada en este dispositivo',mine:'Mi búsqueda',calc:'Calculadoras',hab:'Habitaciones',area:'Área',ent:'Entrega',any:'Cualquiera',imm:'Inmediata',reset:'Limpiar',t_airbnb:'Apto Airbnb',t_perm:'Permisos aprobados',t_prima:'Prima en cuotas',t_imm:'Entrega inmediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Quitar',cmpH:'Comparativo de proyectos',cmpSub:'Hasta tres proyectos, lado a lado.',cmpMax:'Puedes comparar hasta tres proyectos',price:'Precio desde',type:'Tipo',quota:'Cuota estimada',loc:'Ubicación',tags:'Etiquetas',calcH:'Calculadoras',calcSub:'Valores de referencia editables. Es una estimación para orientarte, no una oferta de crédito ni una promesa de renta.',tabAir:'Renta Airbnb',tabBuy:'Compra y cuota',propPrice:'Precio de la propiedad',night:'Tarifa por noche',occ:'Ocupación %',plat:'Comisión plataforma %',mgmt:'Gestión NLD %',exp:'Gastos fijos al mes',gross:'Facturación mensual',lessPlat:'Comisión de plataforma',lessMgmt:'Gestión NLD',lessExp:'Gastos fijos',net:'Neto al mes',netY:'Neto al año',yld:'Rendimiento neto anual',down:'Prima %',rate:'Tasa anual %',term:'Plazo (años)',income:'Ingreso familiar al mes',incPct:'Máximo del ingreso para la cuota %',downAmt:'Prima',fin:'Monto a financiar',pay:'Cuota mensual',cap:'Precio máximo según tu ingreso',noteAir:'La gestión NLD se cobra sobre la facturación mensual. No incluye impuestos, mobiliario ni temporadas bajas.',noteBuy:'Cuota de capital e intereses. No incluye seguros ni gastos de escrituración. Cada banco define la aprobación final.',empty:'Elige un proyecto o escribe un precio',consult:'Consultar',month:'/ mes',bd:'hab'},
- en:{col:'Collection',all:'All',vivir:'To live in',rentar:'To rent out',lujo:'Luxury',more:'More filters',favs:'Favorites',save:'Save search',saved:'Search saved on this device',mine:'My search',calc:'Calculators',hab:'Bedrooms',area:'Area',ent:'Delivery',any:'Any',imm:'Immediate',reset:'Clear',t_airbnb:'Airbnb-friendly',t_perm:'Permits approved',t_prima:'Down payment in installments',t_imm:'Move-in ready',t_pre:'Delivery',cmp:'Compare',cmpN:'to compare',clr:'Clear',cmpH:'Project comparison',cmpSub:'Up to three projects, side by side.',cmpMax:'You can compare up to three projects',price:'Starting at',type:'Type',quota:'Estimated payment',loc:'Location',tags:'Tags',calcH:'Calculators',calcSub:'Editable reference values. An estimate to guide you, not a loan offer or a rental guarantee.',tabAir:'Airbnb income',tabBuy:'Purchase & payment',propPrice:'Property price',night:'Nightly rate',occ:'Occupancy %',plat:'Platform fee %',mgmt:'NLD management %',exp:'Fixed costs per month',gross:'Monthly revenue',lessPlat:'Platform fee',lessMgmt:'NLD management',lessExp:'Fixed costs',net:'Net per month',netY:'Net per year',yld:'Net annual yield',down:'Down payment %',rate:'Annual rate %',term:'Term (years)',income:'Household income per month',incPct:'Max share of income for payment %',downAmt:'Down payment',fin:'Amount financed',pay:'Monthly payment',cap:'Max price for your income',noteAir:'NLD management is charged on monthly revenue. Excludes taxes, furniture and low seasons.',noteBuy:'Principal and interest only. Excludes insurance and closing costs. Each bank makes the final decision.',empty:'Pick a project or type a price',consult:'Ask us',month:'/ mo',bd:'bd'},
- fr:{col:'Collection',all:'Toutes',vivir:'Pour y vivre',rentar:'Pour louer',lujo:'Luxe',more:'Plus de filtres',favs:'Favoris',save:'Enregistrer la recherche',saved:'Recherche enregistrée sur cet appareil',mine:'Ma recherche',calc:'Calculateurs',hab:'Chambres',area:'Surface',ent:'Livraison',any:'Toutes',imm:'Immédiate',reset:'Effacer',t_airbnb:'Compatible Airbnb',t_perm:'Permis approuvés',t_prima:'Apport échelonné',t_imm:'Livraison immédiate',t_pre:'Livraison',cmp:'Comparer',cmpN:'à comparer',clr:'Retirer',cmpH:'Comparatif de projets',cmpSub:'Jusqu’à trois projets côte à côte.',cmpMax:'Vous pouvez comparer jusqu’à trois projets',price:'À partir de',type:'Type',quota:'Mensualité estimée',loc:'Emplacement',tags:'Étiquettes',calcH:'Calculateurs',calcSub:'Valeurs de référence modifiables. Une estimation, pas une offre de crédit ni une promesse de revenu.',tabAir:'Revenu Airbnb',tabBuy:'Achat et mensualité',propPrice:'Prix du bien',night:'Prix par nuit',occ:'Occupation %',plat:'Commission plateforme %',mgmt:'Gestion NLD %',exp:'Frais fixes par mois',gross:'Chiffre d’affaires mensuel',lessPlat:'Commission plateforme',lessMgmt:'Gestion NLD',lessExp:'Frais fixes',net:'Net par mois',netY:'Net par an',yld:'Rendement net annuel',down:'Apport %',rate:'Taux annuel %',term:'Durée (ans)',income:'Revenu du foyer par mois',incPct:'Part max. du revenu %',downAmt:'Apport',fin:'Montant financé',pay:'Mensualité',cap:'Prix max. selon votre revenu',noteAir:'La gestion NLD s’applique au chiffre d’affaires mensuel. Hors impôts, mobilier et basse saison.',noteBuy:'Capital et intérêts uniquement. Hors assurances et frais d’acte. La banque décide.',empty:'Choisissez un projet ou saisissez un prix',consult:'Nous consulter',month:'/ mois',bd:'ch.'},
- it:{col:'Collezione',all:'Tutte',vivir:'Per viverci',rentar:'Per affittare',lujo:'Lusso',more:'Altri filtri',favs:'Preferiti',save:'Salva ricerca',saved:'Ricerca salvata su questo dispositivo',mine:'La mia ricerca',calc:'Calcolatori',hab:'Camere',area:'Superficie',ent:'Consegna',any:'Qualsiasi',imm:'Immediata',reset:'Pulisci',t_airbnb:'Adatto ad Airbnb',t_perm:'Permessi approvati',t_prima:'Anticipo a rate',t_imm:'Consegna immediata',t_pre:'Consegna',cmp:'Confronta',cmpN:'da confrontare',clr:'Rimuovi',cmpH:'Confronto progetti',cmpSub:'Fino a tre progetti affiancati.',cmpMax:'Puoi confrontare fino a tre progetti',price:'A partire da',type:'Tipo',quota:'Rata stimata',loc:'Posizione',tags:'Etichette',calcH:'Calcolatori',calcSub:'Valori di riferimento modificabili. Una stima, non un’offerta di credito né una promessa di rendita.',tabAir:'Rendita Airbnb',tabBuy:'Acquisto e rata',propPrice:'Prezzo dell’immobile',night:'Tariffa per notte',occ:'Occupazione %',plat:'Commissione piattaforma %',mgmt:'Gestione NLD %',exp:'Spese fisse al mese',gross:'Fatturato mensile',lessPlat:'Commissione piattaforma',lessMgmt:'Gestione NLD',lessExp:'Spese fisse',net:'Netto al mese',netY:'Netto all’anno',yld:'Rendimento netto annuo',down:'Anticipo %',rate:'Tasso annuo %',term:'Durata (anni)',income:'Reddito familiare al mese',incPct:'Quota max. del reddito %',downAmt:'Anticipo',fin:'Importo finanziato',pay:'Rata mensile',cap:'Prezzo max. per il tuo reddito',noteAir:'La gestione NLD si applica al fatturato mensile. Esclusi tasse, arredi e bassa stagione.',noteBuy:'Solo capitale e interessi. Esclusi assicurazioni e spese notarili. Decide la banca.',empty:'Scegli un progetto o scrivi un prezzo',consult:'Chiedici',month:'/ mese',bd:'cam.'},
- de:{col:'Kollektion',all:'Alle',vivir:'Zum Wohnen',rentar:'Zum Vermieten',lujo:'Luxus',more:'Weitere Filter',favs:'Favoriten',save:'Suche speichern',saved:'Suche auf diesem Gerät gespeichert',mine:'Meine Suche',calc:'Rechner',hab:'Schlafzimmer',area:'Fläche',ent:'Übergabe',any:'Alle',imm:'Sofort',reset:'Zurücksetzen',t_airbnb:'Airbnb-geeignet',t_perm:'Genehmigungen erteilt',t_prima:'Anzahlung in Raten',t_imm:'Sofort bezugsfertig',t_pre:'Übergabe',cmp:'Vergleichen',cmpN:'zum Vergleich',clr:'Entfernen',cmpH:'Projektvergleich',cmpSub:'Bis zu drei Projekte nebeneinander.',cmpMax:'Sie können bis zu drei Projekte vergleichen',price:'Ab',type:'Typ',quota:'Geschätzte Rate',loc:'Lage',tags:'Merkmale',calcH:'Rechner',calcSub:'Bearbeitbare Referenzwerte. Eine Schätzung, kein Kreditangebot und keine Mietgarantie.',tabAir:'Airbnb-Einnahmen',tabBuy:'Kauf und Rate',propPrice:'Immobilienpreis',night:'Preis pro Nacht',occ:'Auslastung %',plat:'Plattformgebühr %',mgmt:'NLD-Verwaltung %',exp:'Fixkosten pro Monat',gross:'Monatsumsatz',lessPlat:'Plattformgebühr',lessMgmt:'NLD-Verwaltung',lessExp:'Fixkosten',net:'Netto pro Monat',netY:'Netto pro Jahr',yld:'Jährliche Nettorendite',down:'Anzahlung %',rate:'Jahreszins %',term:'Laufzeit (Jahre)',income:'Haushaltseinkommen pro Monat',incPct:'Max. Anteil des Einkommens %',downAmt:'Anzahlung',fin:'Finanzierungsbetrag',pay:'Monatliche Rate',cap:'Max. Preis für Ihr Einkommen',noteAir:'Die NLD-Verwaltung gilt auf den Monatsumsatz. Ohne Steuern, Möbel und Nebensaison.',noteBuy:'Nur Tilgung und Zinsen. Ohne Versicherungen und Notarkosten. Die Bank entscheidet.',empty:'Projekt wählen oder Preis eingeben',consult:'Auf Anfrage',month:'/ Monat',bd:'SZ'},
- pt:{col:'Coleção',all:'Todas',vivir:'Para morar',rentar:'Para alugar',lujo:'Luxo',more:'Mais filtros',favs:'Favoritos',save:'Salvar busca',saved:'Busca salva neste dispositivo',mine:'Minha busca',calc:'Calculadoras',hab:'Quartos',area:'Área',ent:'Entrega',any:'Qualquer',imm:'Imediata',reset:'Limpar',t_airbnb:'Apto para Airbnb',t_perm:'Licenças aprovadas',t_prima:'Entrada parcelada',t_imm:'Entrega imediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Remover',cmpH:'Comparativo de projetos',cmpSub:'Até três projetos lado a lado.',cmpMax:'Você pode comparar até três projetos',price:'A partir de',type:'Tipo',quota:'Parcela estimada',loc:'Localização',tags:'Etiquetas',calcH:'Calculadoras',calcSub:'Valores de referência editáveis. Uma estimativa, não uma oferta de crédito nem promessa de renda.',tabAir:'Renda Airbnb',tabBuy:'Compra e parcela',propPrice:'Preço do imóvel',night:'Diária',occ:'Ocupação %',plat:'Taxa da plataforma %',mgmt:'Gestão NLD %',exp:'Custos fixos por mês',gross:'Faturamento mensal',lessPlat:'Taxa da plataforma',lessMgmt:'Gestão NLD',lessExp:'Custos fixos',net:'Líquido por mês',netY:'Líquido por ano',yld:'Rendimento líquido anual',down:'Entrada %',rate:'Taxa anual %',term:'Prazo (anos)',income:'Renda familiar por mês',incPct:'Máximo da renda para a parcela %',downAmt:'Entrada',fin:'Valor financiado',pay:'Parcela mensal',cap:'Preço máximo para sua renda',noteAir:'A gestão NLD incide sobre o faturamento mensal. Não inclui impostos, mobília nem baixa temporada.',noteBuy:'Somente capital e juros. Não inclui seguros nem custos de escritura. O banco decide.',empty:'Escolha um projeto ou digite um preço',consult:'Consultar',month:'/ mês',bd:'qts'}
+ es:{col:'Colección',all:'Todas',vivir:'Para vivir',rentar:'Para rentar',lujo:'Lujo',more:'Más filtros',favs:'Favoritos',fav1:'Guardar',save:'Guardar búsqueda',saved:'Búsqueda guardada en este dispositivo',mine:'Mi búsqueda',calc:'Calculadoras',hab:'Habitaciones',area:'Área',ent:'Entrega',any:'Cualquiera',imm:'Inmediata',reset:'Limpiar',t_airbnb:'Apto Airbnb',t_perm:'Permisos aprobados',t_prima:'Prima en cuotas',t_imm:'Entrega inmediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Quitar',cmpH:'Comparativo de proyectos',cmpSub:'Hasta tres proyectos, lado a lado.',cmpMax:'Puedes comparar hasta tres proyectos',cmpAdd:'Agregado al comparativo. Elige otro proyecto.',cmpHint:'Toca el ícono de comparar en dos o tres proyectos.',price:'Precio desde',type:'Tipo',quota:'Cuota estimada',loc:'Ubicación',tags:'Etiquetas',calcH:'Calculadoras',calcPm:'Calcula tu inversión',calcSub:'Valores de referencia editables. Es una estimación para orientarte, no una oferta de crédito ni una promesa de renta.',tabAir:'Renta Airbnb',tabBuy:'Compra y cuota',propPrice:'Precio de la propiedad',night:'Tarifa por noche',occ:'Ocupación %',plat:'Comisión plataforma %',mgmt:'Gestión NLD %',exp:'Gastos fijos al mes',gross:'Facturación mensual',lessPlat:'Comisión de plataforma',lessMgmt:'Gestión NLD',lessExp:'Gastos fijos',net:'Neto al mes',netY:'Neto al año',yld:'Rendimiento neto anual',down:'Prima %',rate:'Tasa anual %',term:'Plazo (años)',income:'Ingreso familiar al mes',incPct:'Máximo del ingreso para la cuota %',downAmt:'Prima',fin:'Monto a financiar',pay:'Cuota mensual',cap:'Precio máximo según tu ingreso',noteAir:'La gestión NLD se cobra sobre la facturación mensual. No incluye impuestos, mobiliario ni temporadas bajas.',noteBuy:'Cuota de capital e intereses. No incluye seguros ni gastos de escrituración. Cada banco define la aprobación final.',empty:'Escribe un precio',consult:'Consultar',month:'/ mes',bd:'hab',
+  play:'Pausar',resume:'Reproducir',stNote:'Animación ilustrativa con los valores de tu calculadora. Es una estimación, no una garantía de renta.',
+  s1:'Tu inversión',s2:'La preparamos',s3:'Llegan las reservas',s4:'Operamos todo',s5:'Tus números',s6:'Siempre es tuya',
+  c1:'Compras en preventa y tu propiedad empieza a trabajar desde la entrega.',c2:'En 30 días la dejamos lista para recibir huéspedes.',c3:'Con {occ}% de ocupación, son unas {n} noches reservadas al mes.',c4:'Check-in, limpieza y mantenimiento. Tú no te encargas de nada.',c5:'Cada mes recibes el reporte y la transferencia neta.',c6:'¿Vienes en diciembre? Bloqueas tus fechas y la usas tú.',
+  from:'Desde',i1:'Fotos y video profesional',i2:'Publicación en Airbnb y Booking',i3:'Precio dinámico por temporada',o1:'Recepción de huéspedes',o2:'Limpieza entre estadías',o3:'Mantenimiento',o4:'Atención 24/7 en español e inglés',ph1:'Tu apartamento',ph2:'Reservas del mes',nights:'noches',ourPart:'Nuestra parte: {g}% de lo que genere',netMo:'netos al mes',wa:'Escríbenos por WhatsApp',bk:'Tus fechas',rv:'Reservas'},
+ en:{col:'Collection',all:'All',vivir:'To live in',rentar:'To rent out',lujo:'Luxury',more:'More filters',favs:'Favorites',fav1:'Save',save:'Save search',saved:'Search saved on this device',mine:'My search',calc:'Calculators',hab:'Bedrooms',area:'Area',ent:'Delivery',any:'Any',imm:'Immediate',reset:'Clear',t_airbnb:'Airbnb-friendly',t_perm:'Permits approved',t_prima:'Down payment in installments',t_imm:'Move-in ready',t_pre:'Delivery',cmp:'Compare',cmpN:'to compare',clr:'Clear',cmpH:'Project comparison',cmpSub:'Up to three projects, side by side.',cmpMax:'You can compare up to three projects',cmpAdd:'Added to comparison. Pick another project.',cmpHint:'Tap the compare icon on two or three projects.',price:'Starting at',type:'Type',quota:'Estimated payment',loc:'Location',tags:'Tags',calcH:'Calculators',calcPm:'Run the numbers',calcSub:'Editable reference values. An estimate to guide you, not a loan offer or a rental guarantee.',tabAir:'Airbnb income',tabBuy:'Purchase & payment',propPrice:'Property price',night:'Nightly rate',occ:'Occupancy %',plat:'Platform fee %',mgmt:'NLD management %',exp:'Fixed costs per month',gross:'Monthly revenue',lessPlat:'Platform fee',lessMgmt:'NLD management',lessExp:'Fixed costs',net:'Net per month',netY:'Net per year',yld:'Net annual yield',down:'Down payment %',rate:'Annual rate %',term:'Term (years)',income:'Household income per month',incPct:'Max share of income for payment %',downAmt:'Down payment',fin:'Amount financed',pay:'Monthly payment',cap:'Max price for your income',noteAir:'NLD management is charged on monthly revenue. Excludes taxes, furniture and low seasons.',noteBuy:'Principal and interest only. Excludes insurance and closing costs. Each bank makes the final decision.',empty:'Type a price',consult:'Ask us',month:'/ mo',bd:'bd',
+  play:'Pause',resume:'Play',stNote:'Illustrative animation using your calculator values. An estimate, not a rental guarantee.',
+  s1:'Your investment',s2:'We set it up',s3:'Bookings come in',s4:'We run everything',s5:'Your numbers',s6:'Always yours',
+  c1:'You buy pre-construction and your property starts working at handover.',c2:'In 30 days we get it ready to host guests.',c3:'At {occ}% occupancy, that is about {n} booked nights a month.',c4:'Check-in, cleaning and maintenance. You handle nothing.',c5:'Every month you get the report and the net transfer.',c6:'Coming in December? Block your dates and enjoy it.',
+  from:'From',i1:'Professional photos and video',i2:'Listed on Airbnb and Booking',i3:'Seasonal dynamic pricing',o1:'Guest check-in',o2:'Cleaning between stays',o3:'Maintenance',o4:'24/7 support in English and Spanish',ph1:'Your apartment',ph2:'Bookings this month',nights:'nights',ourPart:'Our share: {g}% of revenue',netMo:'net per month',wa:'Message us on WhatsApp',bk:'Your dates',rv:'Bookings'},
+ fr:{col:'Collection',all:'Toutes',vivir:'Pour y vivre',rentar:'Pour louer',lujo:'Luxe',more:'Plus de filtres',favs:'Favoris',fav1:'Enregistrer',save:'Enregistrer la recherche',saved:'Recherche enregistrée sur cet appareil',mine:'Ma recherche',calc:'Calculateurs',hab:'Chambres',area:'Surface',ent:'Livraison',any:'Toutes',imm:'Immédiate',reset:'Effacer',t_airbnb:'Compatible Airbnb',t_perm:'Permis approuvés',t_prima:'Apport échelonné',t_imm:'Livraison immédiate',t_pre:'Livraison',cmp:'Comparer',cmpN:'à comparer',clr:'Retirer',cmpH:'Comparatif de projets',cmpSub:'Jusqu’à trois projets côte à côte.',cmpMax:'Vous pouvez comparer jusqu’à trois projets',cmpAdd:'Ajouté au comparatif. Choisissez un autre projet.',cmpHint:'Touchez l’icône comparer sur deux ou trois projets.',price:'À partir de',type:'Type',quota:'Mensualité estimée',loc:'Emplacement',tags:'Étiquettes',calcH:'Calculateurs',calcPm:'Calculez votre investissement',calcSub:'Valeurs de référence modifiables. Une estimation, pas une offre de crédit ni une promesse de revenu.',tabAir:'Revenu Airbnb',tabBuy:'Achat et mensualité',propPrice:'Prix du bien',night:'Prix par nuit',occ:'Occupation %',plat:'Commission plateforme %',mgmt:'Gestion NLD %',exp:'Frais fixes par mois',gross:'Chiffre d’affaires mensuel',lessPlat:'Commission plateforme',lessMgmt:'Gestion NLD',lessExp:'Frais fixes',net:'Net par mois',netY:'Net par an',yld:'Rendement net annuel',down:'Apport %',rate:'Taux annuel %',term:'Durée (ans)',income:'Revenu du foyer par mois',incPct:'Part max. du revenu %',downAmt:'Apport',fin:'Montant financé',pay:'Mensualité',cap:'Prix max. selon votre revenu',noteAir:'La gestion NLD s’applique au chiffre d’affaires mensuel. Hors impôts, mobilier et basse saison.',noteBuy:'Capital et intérêts uniquement. Hors assurances et frais d’acte. La banque décide.',empty:'Saisissez un prix',consult:'Nous consulter',month:'/ mois',bd:'ch.',
+  play:'Pause',resume:'Lire',stNote:'Animation illustrative avec les valeurs de votre calcul. Une estimation, pas une garantie de revenu.',
+  s1:'Votre investissement',s2:'Nous le préparons',s3:'Les réservations arrivent',s4:'Nous gérons tout',s5:'Vos chiffres',s6:'Toujours à vous',
+  c1:'Vous achetez sur plan et le bien commence à travailler dès la livraison.',c2:'En 30 jours, il est prêt à accueillir des voyageurs.',c3:'Avec {occ}% d’occupation, environ {n} nuits réservées par mois.',c4:'Accueil, ménage et entretien. Vous ne vous occupez de rien.',c5:'Chaque mois, le rapport et le virement net.',c6:'Vous venez en décembre ? Bloquez vos dates et profitez-en.',
+  from:'Dès',i1:'Photos et vidéo professionnelles',i2:'Publication sur Airbnb et Booking',i3:'Prix dynamique selon la saison',o1:'Accueil des voyageurs',o2:'Ménage entre séjours',o3:'Entretien',o4:'Assistance 24/7 en espagnol et anglais',ph1:'Votre appartement',ph2:'Réservations du mois',nights:'nuits',ourPart:'Notre part : {g}% des revenus',netMo:'net par mois',wa:'Écrivez-nous sur WhatsApp',bk:'Vos dates',rv:'Réservations'},
+ it:{col:'Collezione',all:'Tutte',vivir:'Per viverci',rentar:'Per affittare',lujo:'Lusso',more:'Altri filtri',favs:'Preferiti',fav1:'Salva',save:'Salva ricerca',saved:'Ricerca salvata su questo dispositivo',mine:'La mia ricerca',calc:'Calcolatori',hab:'Camere',area:'Superficie',ent:'Consegna',any:'Qualsiasi',imm:'Immediata',reset:'Pulisci',t_airbnb:'Adatto ad Airbnb',t_perm:'Permessi approvati',t_prima:'Anticipo a rate',t_imm:'Consegna immediata',t_pre:'Consegna',cmp:'Confronta',cmpN:'da confrontare',clr:'Rimuovi',cmpH:'Confronto progetti',cmpSub:'Fino a tre progetti affiancati.',cmpMax:'Puoi confrontare fino a tre progetti',cmpAdd:'Aggiunto al confronto. Scegli un altro progetto.',cmpHint:'Tocca l’icona confronta su due o tre progetti.',price:'A partire da',type:'Tipo',quota:'Rata stimata',loc:'Posizione',tags:'Etichette',calcH:'Calcolatori',calcPm:'Calcola il tuo investimento',calcSub:'Valori di riferimento modificabili. Una stima, non un’offerta di credito né una promessa di rendita.',tabAir:'Rendita Airbnb',tabBuy:'Acquisto e rata',propPrice:'Prezzo dell’immobile',night:'Tariffa per notte',occ:'Occupazione %',plat:'Commissione piattaforma %',mgmt:'Gestione NLD %',exp:'Spese fisse al mese',gross:'Fatturato mensile',lessPlat:'Commissione piattaforma',lessMgmt:'Gestione NLD',lessExp:'Spese fisse',net:'Netto al mese',netY:'Netto all’anno',yld:'Rendimento netto annuo',down:'Anticipo %',rate:'Tasso annuo %',term:'Durata (anni)',income:'Reddito familiare al mese',incPct:'Quota max. del reddito %',downAmt:'Anticipo',fin:'Importo finanziato',pay:'Rata mensile',cap:'Prezzo max. per il tuo reddito',noteAir:'La gestione NLD si applica al fatturato mensile. Esclusi tasse, arredi e bassa stagione.',noteBuy:'Solo capitale e interessi. Esclusi assicurazioni e spese notarili. Decide la banca.',empty:'Scrivi un prezzo',consult:'Chiedici',month:'/ mese',bd:'cam.',
+  play:'Pausa',resume:'Riproduci',stNote:'Animazione illustrativa con i valori del tuo calcolo. Una stima, non una garanzia di rendita.',
+  s1:'Il tuo investimento',s2:'Lo prepariamo',s3:'Arrivano le prenotazioni',s4:'Gestiamo tutto',s5:'I tuoi numeri',s6:'Sempre tuo',
+  c1:'Compri in prevendita e l’immobile inizia a lavorare dalla consegna.',c2:'In 30 giorni è pronto per gli ospiti.',c3:'Con il {occ}% di occupazione, circa {n} notti prenotate al mese.',c4:'Check-in, pulizie e manutenzione. Tu non devi fare nulla.',c5:'Ogni mese ricevi il report e il bonifico netto.',c6:'Vieni a dicembre? Blocchi le date e lo usi tu.',
+  from:'Da',i1:'Foto e video professionali',i2:'Pubblicazione su Airbnb e Booking',i3:'Prezzo dinamico per stagione',o1:'Accoglienza ospiti',o2:'Pulizie tra i soggiorni',o3:'Manutenzione',o4:'Assistenza 24/7 in spagnolo e inglese',ph1:'Il tuo appartamento',ph2:'Prenotazioni del mese',nights:'notti',ourPart:'La nostra parte: {g}% di quanto genera',netMo:'netti al mese',wa:'Scrivici su WhatsApp',bk:'Le tue date',rv:'Prenotazioni'},
+ de:{col:'Kollektion',all:'Alle',vivir:'Zum Wohnen',rentar:'Zum Vermieten',lujo:'Luxus',more:'Weitere Filter',favs:'Favoriten',fav1:'Merken',save:'Suche speichern',saved:'Suche auf diesem Gerät gespeichert',mine:'Meine Suche',calc:'Rechner',hab:'Schlafzimmer',area:'Fläche',ent:'Übergabe',any:'Alle',imm:'Sofort',reset:'Zurücksetzen',t_airbnb:'Airbnb-geeignet',t_perm:'Genehmigungen erteilt',t_prima:'Anzahlung in Raten',t_imm:'Sofort bezugsfertig',t_pre:'Übergabe',cmp:'Vergleichen',cmpN:'zum Vergleich',clr:'Entfernen',cmpH:'Projektvergleich',cmpSub:'Bis zu drei Projekte nebeneinander.',cmpMax:'Sie können bis zu drei Projekte vergleichen',cmpAdd:'Zum Vergleich hinzugefügt. Wählen Sie ein weiteres Projekt.',cmpHint:'Tippen Sie bei zwei oder drei Projekten auf das Vergleichssymbol.',price:'Ab',type:'Typ',quota:'Geschätzte Rate',loc:'Lage',tags:'Merkmale',calcH:'Rechner',calcPm:'Rechnen Sie Ihre Investition',calcSub:'Bearbeitbare Referenzwerte. Eine Schätzung, kein Kreditangebot und keine Mietgarantie.',tabAir:'Airbnb-Einnahmen',tabBuy:'Kauf und Rate',propPrice:'Immobilienpreis',night:'Preis pro Nacht',occ:'Auslastung %',plat:'Plattformgebühr %',mgmt:'NLD-Verwaltung %',exp:'Fixkosten pro Monat',gross:'Monatsumsatz',lessPlat:'Plattformgebühr',lessMgmt:'NLD-Verwaltung',lessExp:'Fixkosten',net:'Netto pro Monat',netY:'Netto pro Jahr',yld:'Jährliche Nettorendite',down:'Anzahlung %',rate:'Jahreszins %',term:'Laufzeit (Jahre)',income:'Haushaltseinkommen pro Monat',incPct:'Max. Anteil des Einkommens %',downAmt:'Anzahlung',fin:'Finanzierungsbetrag',pay:'Monatliche Rate',cap:'Max. Preis für Ihr Einkommen',noteAir:'Die NLD-Verwaltung gilt auf den Monatsumsatz. Ohne Steuern, Möbel und Nebensaison.',noteBuy:'Nur Tilgung und Zinsen. Ohne Versicherungen und Notarkosten. Die Bank entscheidet.',empty:'Preis eingeben',consult:'Auf Anfrage',month:'/ Monat',bd:'SZ',
+  play:'Pause',resume:'Abspielen',stNote:'Illustrative Animation mit Ihren Rechnerwerten. Eine Schätzung, keine Mietgarantie.',
+  s1:'Ihre Investition',s2:'Wir richten sie ein',s3:'Buchungen kommen',s4:'Wir übernehmen alles',s5:'Ihre Zahlen',s6:'Immer Ihre',
+  c1:'Sie kaufen im Vorverkauf und die Immobilie arbeitet ab der Übergabe.',c2:'In 30 Tagen ist sie bereit für Gäste.',c3:'Bei {occ}% Auslastung sind das etwa {n} gebuchte Nächte im Monat.',c4:'Check-in, Reinigung und Wartung. Sie kümmern sich um nichts.',c5:'Jeden Monat erhalten Sie den Bericht und die Nettoüberweisung.',c6:'Sie kommen im Dezember? Daten blockieren und selbst genießen.',
+  from:'Ab',i1:'Professionelle Fotos und Videos',i2:'Auf Airbnb und Booking gelistet',i3:'Saisonale dynamische Preise',o1:'Gästeempfang',o2:'Reinigung zwischen Aufenthalten',o3:'Wartung',o4:'24/7-Betreuung auf Spanisch und Englisch',ph1:'Ihre Wohnung',ph2:'Buchungen im Monat',nights:'Nächte',ourPart:'Unser Anteil: {g}% des Umsatzes',netMo:'netto pro Monat',wa:'Schreiben Sie uns auf WhatsApp',bk:'Ihre Daten',rv:'Buchungen'},
+ pt:{col:'Coleção',all:'Todas',vivir:'Para morar',rentar:'Para alugar',lujo:'Luxo',more:'Mais filtros',favs:'Favoritos',fav1:'Salvar',save:'Salvar busca',saved:'Busca salva neste dispositivo',mine:'Minha busca',calc:'Calculadoras',hab:'Quartos',area:'Área',ent:'Entrega',any:'Qualquer',imm:'Imediata',reset:'Limpar',t_airbnb:'Apto para Airbnb',t_perm:'Licenças aprovadas',t_prima:'Entrada parcelada',t_imm:'Entrega imediata',t_pre:'Entrega',cmp:'Comparar',cmpN:'para comparar',clr:'Remover',cmpH:'Comparativo de projetos',cmpSub:'Até três projetos lado a lado.',cmpMax:'Você pode comparar até três projetos',cmpAdd:'Adicionado ao comparativo. Escolha outro projeto.',cmpHint:'Toque no ícone comparar em dois ou três projetos.',price:'A partir de',type:'Tipo',quota:'Parcela estimada',loc:'Localização',tags:'Etiquetas',calcH:'Calculadoras',calcPm:'Calcule seu investimento',calcSub:'Valores de referência editáveis. Uma estimativa, não uma oferta de crédito nem promessa de renda.',tabAir:'Renda Airbnb',tabBuy:'Compra e parcela',propPrice:'Preço do imóvel',night:'Diária',occ:'Ocupação %',plat:'Taxa da plataforma %',mgmt:'Gestão NLD %',exp:'Custos fixos por mês',gross:'Faturamento mensal',lessPlat:'Taxa da plataforma',lessMgmt:'Gestão NLD',lessExp:'Custos fixos',net:'Líquido por mês',netY:'Líquido por ano',yld:'Rendimento líquido anual',down:'Entrada %',rate:'Taxa anual %',term:'Prazo (anos)',income:'Renda familiar por mês',incPct:'Máximo da renda para a parcela %',downAmt:'Entrada',fin:'Valor financiado',pay:'Parcela mensal',cap:'Preço máximo para sua renda',noteAir:'A gestão NLD incide sobre o faturamento mensal. Não inclui impostos, mobília nem baixa temporada.',noteBuy:'Somente capital e juros. Não inclui seguros nem custos de escritura. O banco decide.',empty:'Digite um preço',consult:'Consultar',month:'/ mês',bd:'qts',
+  play:'Pausar',resume:'Reproduzir',stNote:'Animação ilustrativa com os valores da sua calculadora. Uma estimativa, não garantia de renda.',
+  s1:'Seu investimento',s2:'Nós preparamos',s3:'Chegam as reservas',s4:'Operamos tudo',s5:'Seus números',s6:'Sempre sua',
+  c1:'Você compra na planta e o imóvel começa a trabalhar na entrega.',c2:'Em 30 dias deixamos tudo pronto para hóspedes.',c3:'Com {occ}% de ocupação, são cerca de {n} noites reservadas por mês.',c4:'Check-in, limpeza e manutenção. Você não cuida de nada.',c5:'Todo mês você recebe o relatório e a transferência líquida.',c6:'Vem em dezembro? Bloqueia suas datas e aproveita.',
+  from:'A partir de',i1:'Fotos e vídeo profissionais',i2:'Publicação no Airbnb e Booking',i3:'Preço dinâmico por temporada',o1:'Recepção de hóspedes',o2:'Limpeza entre estadias',o3:'Manutenção',o4:'Atendimento 24/7 em espanhol e inglês',ph1:'Seu apartamento',ph2:'Reservas do mês',nights:'noites',ourPart:'Nossa parte: {g}% do que gerar',netMo:'líquidos por mês',wa:'Fale conosco no WhatsApp',bk:'Suas datas',rv:'Reservas'}
 };
 function L(){var l=(typeof curLang!=='undefined'&&T[curLang])?curLang:'es';return T[l];}
 function $(s,r){return (r||document).querySelector(s);}
 function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
 function store(k,v){try{if(v===undefined)return JSON.parse(localStorage.getItem(k)||'null');localStorage.setItem(k,JSON.stringify(v));}catch(e){return null;}}
-function money(n){return '$'+Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
-function num(t){var v=parseFloat(String(t||'').replace(/[^0-9.]/g,''));return isNaN(v)?0:v;}
+function commas(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function money(n){return (n<0?'−$':'$')+commas(Math.abs(n));}
+function num(t){var v=parseFloat(String(t==null?'':t).replace(/[^0-9.]/g,''));return isNaN(v)?0:v;}
+function fill(s,o){return s.replace(/\{(\w+)\}/g,function(_,k){return o[k]!=null?o[k]:'';});}
 var ICO={
  heart:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21l7.8-7.5 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg>',
  cmp:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="7" height="16" rx="1.5"/><rect x="14" y="4" width="7" height="16" rx="1.5"/></svg>',
@@ -8819,7 +8900,6 @@ function info(c){
   var del=d.delivery||'',yr=(del.match(/20\d\d/)||[])[0];
   var price=num(c.getAttribute('data-price'));
   var badges=$$('.proj-badge',c).map(function(b){return b.getAttribute('data-i18n')||'';});
-  var cats=(c.getAttribute('data-cat')||'').split(' ');
   var tg=TAGS[n]||{};
   var o={name:n,price:price,aMin:a.length?Math.min.apply(0,a):0,aMax:a.length?Math.max.apply(0,a):0,
     hMin:h.length?Math.min.apply(0,h):0,hMax:h.length?Math.max.apply(0,h):0,
@@ -8874,20 +8954,22 @@ function buildUI(){
 function paintRow(){
   if(!row)return;var t=L();
   var extras=['hab','area','ent'].filter(function(k){return S[k]!=='any';}).length;
+  var open=panel&&panel.classList.contains('open');
   var h='';
   ['all','vivir','rentar','lujo'].forEach(function(k){h+='<button type="button" class="np-chip'+(S.col===k?' active':'')+'" data-col="'+k+'">'+(k==='all'?t.col+': '+t.all:t[k])+'</button>';});
   h+='<span class="np-sep" aria-hidden="true"></span>';
-  h+='<button type="button" class="np-chip ghost'+(panel&&panel.classList.contains('open')||extras?' active':'')+'" data-act="more" aria-expanded="'+(panel&&panel.classList.contains('open'))+'">'+ICO.sliders+t.more+(extras?' ('+extras+')':'')+'</button>';
+  h+='<button type="button" class="np-chip ghost'+(open||extras?' active':'')+'" data-act="more" aria-expanded="'+open+'">'+ICO.sliders+t.more+(extras?' ('+extras+')':'')+'</button>';
   h+='<button type="button" class="np-chip ghost'+(S.favOnly?' active':'')+'" data-act="favs">'+ICO.heart+t.favs+' ('+FAV.length+')</button>';
+  h+='<button type="button" class="np-chip ghost'+(CMP.length?' active':'')+'" data-act="cmp">'+ICO.cmp+t.cmp+' ('+CMP.length+')</button>';
+  h+='<button type="button" class="np-chip ghost" data-act="calc">'+ICO.calc+t.calc+'</button>';
   h+='<button type="button" class="np-chip ghost" data-act="save">'+ICO.bookmark+t.save+'</button>';
   if(store('nld_saved_search'))h+='<button type="button" class="np-chip ghost" data-act="load">'+t.mine+'</button>';
-  h+='<button type="button" class="np-chip ghost" data-act="calc">'+ICO.calc+t.calc+'</button>';
   row.innerHTML=h;
 }
 function opt(v,l,cur){return '<option value="'+v+'"'+(cur===v?' selected':'')+'>'+l+'</option>';}
 function paintPanel(){
   if(!panel)return;var t=L(),imp=(typeof _usaImperial==='function'&&_usaImperial());
-  function ar(m){return imp?Math.round(m*10.7639).toLocaleString('en-US')+' sq ft':m+' m²';}
+  function ar(m){return imp?commas(m*10.7639)+' sq ft':m+' m²';}
   panel.innerHTML=
    '<label>'+t.hab+'<select name="hab">'+opt('any',t.any,S.hab)+opt('1','1 '+t.bd,S.hab)+opt('2','2 '+t.bd,S.hab)+opt('3','3+ '+t.bd,S.hab)+'</select></label>'+
    '<label>'+t.area+'<select name="area">'+opt('any',t.any,S.area)+opt('s','< '+ar(70),S.area)+opt('m',ar(70)+' – '+ar(120),S.area)+opt('l','> '+ar(120),S.area)+'</select></label>'+
@@ -8900,6 +8982,7 @@ function onRow(e){
   var a=b.dataset.act;
   if(a==='more'){panel.classList.toggle('open');paintRow();}
   else if(a==='favs'){S.favOnly=!S.favOnly;apply();paintRow();}
+  else if(a==='cmp'){if(CMP.length<2)toast(L().cmpHint);else openCmp();}
   else if(a==='save'){saveSearch();}
   else if(a==='load'){loadSearch();}
   else if(a==='calc'){openCalc(0);}
@@ -8921,7 +9004,17 @@ function loadSearch(){
   paintPanel();paintRow();
 }
 
-/* ---------- Tarjetas: etiquetas, favorito, comparar ---------- */
+/* ---------- Favoritos y comparativo (compartido por tarjetas y ficha) ---------- */
+function toggleFav(n){var ix=FAV.indexOf(n);if(ix>=0)FAV.splice(ix,1);else FAV.push(n);store('nld_favs',FAV);if(S.favOnly)apply();refreshAll();}
+function toggleCmp(n){
+  var j=CMP.indexOf(n);
+  if(j>=0)CMP.splice(j,1);
+  else{if(CMP.length>=3){toast(L().cmpMax);return;}CMP.push(n);if(CMP.length===1)toast(L().cmpAdd);}
+  refreshAll();
+}
+function refreshAll(){paintCards();paintRow();paintBar();paintPmActs();}
+
+/* ---------- Tarjetas ---------- */
 function tagHTML(i){
   var t=L(),o=[];
   if(i.tg.airbnb)o.push(t.t_airbnb);
@@ -8952,25 +9045,16 @@ document.addEventListener('click',function(e){
   var b=e.target.closest('.np-ico[data-np]');if(!b)return;
   e.preventDefault();e.stopPropagation();
   var c=b.closest('.proj-card');if(!c)return;var n=c.getAttribute('data-pname');
-  if(b.dataset.np==='fav'){
-    var ix=FAV.indexOf(n);if(ix>=0)FAV.splice(ix,1);else FAV.push(n);
-    store('nld_favs',FAV);if(S.favOnly)apply();
-  }else{
-    var j=CMP.indexOf(n);
-    if(j>=0)CMP.splice(j,1);
-    else{if(CMP.length>=3){toast(L().cmpMax);return;}CMP.push(n);}
-    paintBar();
-  }
-  paintCards();paintRow();
+  if(b.dataset.np==='fav')toggleFav(n);else toggleCmp(n);
 },true);
 
 /* ---------- Barra y comparativo ---------- */
 var bar=document.createElement('div');bar.className='np-bar';bar.setAttribute('role','region');
 document.body.appendChild(bar);
-bar.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.a==='go')openCmp();else{CMP=[];paintBar();paintCards();}});
+bar.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(b.dataset.a==='go')openCmp();else{CMP=[];refreshAll();}});
 function paintBar(){
   var t=L();
-  bar.innerHTML='<span>'+CMP.length+' '+t.cmpN+'</span><button type="button" class="clr" data-a="clr">'+t.clr+'</button><button type="button" class="go" data-a="go"'+(CMP.length<2?' disabled style="opacity:.5"':'')+'>'+t.cmp+'</button>';
+  bar.innerHTML='<span>'+CMP.length+' '+t.cmpN+'</span><button type="button" class="clr" data-a="clr">'+t.clr+'</button><button type="button" class="go" data-a="go"'+(CMP.length<2?' disabled':'')+'>'+t.cmp+'</button>';
   bar.classList.toggle('show',CMP.length>0);
   /* Si el aviso de almacenamiento sigue abierto, la barra se ubica encima de el. */
   var ck=document.getElementById('ckBanner');
@@ -8980,83 +9064,259 @@ var ov=document.createElement('div');ov.className='np-ov';ov.innerHTML='<div cla
 document.body.appendChild(ov);
 ov.addEventListener('click',function(e){if(e.target===ov||e.target.closest('.np-x'))closeOv();});
 document.addEventListener('keydown',function(e){if(e.key==='Escape'&&ov.classList.contains('open'))closeOv();});
-function openOv(html){$('.np-body',ov).innerHTML=html;ov.classList.add('open');document.body.style.overflow='hidden';var x=$('.np-x',ov);if(x)x.focus();}
-function closeOv(){ov.classList.remove('open');document.body.style.overflow='';}
+var ovKind='';
+function openOv(html,kind){ovKind=kind;$('.np-body',ov).innerHTML=html;ov.classList.add('open');document.body.style.overflow='hidden';var x=$('.np-x',ov);if(x)x.focus();}
+function closeOv(){if(CALC_OV)CALC_OV.stop();CALC_OV=null;ov.classList.remove('open');document.body.style.overflow='';ovKind='';}
+function cardByName(n){return document.querySelector('#scene-projects .proj-card[data-pname="'+CSS.escape(n)+'"]');}
 function openCmp(){
   if(CMP.length<2)return;var t=L();
-  var cs=CMP.map(function(n){var c=document.querySelector('#scene-projects .proj-card[data-pname="'+CSS.escape(n)+'"]');return c?info(c):null;}).filter(Boolean);
+  try{closeProjModal();}catch(e){}
+  var cs=CMP.map(function(n){var c=cardByName(n);return c?info(c):null;}).filter(Boolean);
   var imp=(typeof _usaImperial==='function'&&_usaImperial());
-  function area(i){if(!i.aMax)return '—';var f=imp?function(v){return Math.round(v*10.7639).toLocaleString('en-US');}:function(v){return v;};return (i.aMin===i.aMax?f(i.aMax):f(i.aMin)+' – '+f(i.aMax))+(imp?' sq ft':' m²');}
+  function area(i){if(!i.aMax)return '—';var f=imp?function(v){return commas(v*10.7639);}:function(v){return v;};return (i.aMin===i.aMax?f(i.aMax):f(i.aMin)+' – '+f(i.aMax))+(imp?' sq ft':' m²');}
   function hab(i){return i.hMax?(i.hMin===i.hMax?i.hMax:i.hMin+'–'+i.hMax)+' '+t.bd:'—';}
   function quota(i){return (!i.quota||/consultar|pendiente/i.test(i.quota))?t.consult:i.quota.replace('/ mes',t.month);}
   function del(i){return i.imm?t.imm:(i.delivery||'—');}
   var rows=[[t.price,function(i){return money(i.price);}],[t.type,function(i){return i.type||'—';}],[t.area,area],[t.hab,hab],[t.ent,del],[t.quota,quota],[t.loc,function(i){return i.loc;}],[t.tags,function(i){return tagHTML(i)||'—';}]];
   var h='<h3>'+t.cmpH+'</h3><div class="np-sub">'+t.cmpSub+'</div><div style="overflow-x:auto"><table class="np-cmp"><thead><tr><th></th>'+cs.map(function(i){return '<td>'+i.name+'</td>';}).join('')+'</tr></thead><tbody>';
   rows.forEach(function(r){h+='<tr><th>'+r[0]+'</th>'+cs.map(function(i){return '<td>'+r[1](i)+'</td>';}).join('')+'</tr>';});
-  openOv(h+'</tbody></table></div>');
+  openOv(h+'</tbody></table></div>','cmp');
 }
 
-/* ---------- Calculadoras ---------- */
-var CALC={tab:'air',price:0};
-function field(id,lbl,val,step){return '<label class="np-f">'+lbl+'<input type="number" inputmode="decimal" min="0" step="'+(step||'any')+'" data-c="'+id+'" value="'+val+'"></label>';}
-function openCalc(price){
-  if(price)CALC.price=price;
-  var t=L();
-  openOv('<h3>'+t.calcH+'</h3><div class="np-sub">'+t.calcSub+'</div><div class="np-tabs" role="tablist"><button type="button" data-tab="air">'+t.tabAir+'</button><button type="button" data-tab="buy">'+t.tabBuy+'</button></div><div class="np-calc"></div>');
-  paintCalc();
+/* ---------- Calculadora (componente reutilizable) ----------
+   Se monta igual en el panel de "Calculadoras" y dentro de cada ficha.
+   Los campos de dinero se muestran con $ y separador de miles. */
+var MONEY={price:1,noche:1,gastos:1,ingreso:1};
+function Calc(root,price){
+  this.root=root;this.tab='buy';this.vals={price:price||0,prima:REF.prima,tasa:REF.tasa,plazo:REF.plazo,ingreso:0,ingresoPct:REF.ingresoPct,noche:REF.noche,ocupacion:REF.ocupacion,plataforma:REF.plataforma,gestion:REF.gestion,gastos:REF.gastos};
+  this.story=null;var self=this;
+  root.addEventListener('input',function(e){var el=e.target;if(!el.matches('[data-c]'))return;
+    if(MONEY[el.dataset.c]){var d=el.value.replace(/[^0-9]/g,'');el.value=d?'$'+commas(+d):'';try{el.setSelectionRange(el.value.length,el.value.length);}catch(x){}}
+    self.vals[el.dataset.c]=num(el.value);self.calc();});
+  root.addEventListener('click',function(e){var b=e.target.closest('.np-tabs button');if(b){self.tab=b.dataset.tab;self.render();}});
+  this.render();
 }
-function paintCalc(){
-  var t=L(),box=$('.np-calc',ov);if(!box)return;
-  $$('.np-tabs button',ov).forEach(function(b){b.classList.toggle('active',b.dataset.tab===CALC.tab);});
-  var p=CALC.price||'';
-  if(CALC.tab==='air'){
-    box.innerHTML='<div class="np-grid">'+field('price',t.propPrice,p,1000)+field('noche',t.night,REF.noche,1)+field('ocupacion',t.occ,REF.ocupacion,1)+field('plataforma',t.plat,REF.plataforma,.5)+field('gestion',t.mgmt,REF.gestion,1)+field('gastos',t.exp,REF.gastos,10)+'</div><div class="np-out"></div><div class="np-note">'+t.noteAir+'</div>';
+Calc.prototype.field=function(id,lbl,step){
+  var v=this.vals[id],m=!!MONEY[id];
+  var shown=m?(v?'$'+commas(v):''):v;
+  return '<label class="np-f">'+lbl+'<input type="'+(m?'text':'number')+'" inputmode="'+(m?'numeric':'decimal')+'"'+(m?'':' min="0" step="'+(step||'any')+'"')+' data-c="'+id+'" value="'+shown+'"'+(m?' placeholder="$0"':'')+'></label>';
+};
+Calc.prototype.render=function(){
+  var t=L(),f=this.field.bind(this);
+  if(this.story){this.story.stop();this.story=null;}
+  var h='<div class="np-tabs" role="tablist"><button type="button" data-tab="buy" class="'+(this.tab==='buy'?'active':'')+'" aria-selected="'+(this.tab==='buy')+'">'+t.tabBuy+'</button><button type="button" data-tab="air" class="'+(this.tab==='air'?'active':'')+'" aria-selected="'+(this.tab==='air')+'">'+t.tabAir+'</button></div>';
+  if(this.tab==='air'){
+    h+='<div class="np-grid">'+f('price',t.propPrice,1000)+f('noche',t.night)+f('ocupacion',t.occ,1)+f('plataforma',t.plat,.5)+f('gestion',t.mgmt,1)+f('gastos',t.exp)+'</div><div class="np-out"></div><div class="np-note">'+t.noteAir+'</div><div class="np-story"></div>';
   }else{
-    box.innerHTML='<div class="np-grid">'+field('price',t.propPrice,p,1000)+field('prima',t.down,REF.prima,1)+field('tasa',t.rate,REF.tasa,.1)+field('plazo',t.term,REF.plazo,1)+field('ingreso',t.income,'',50)+field('ingresoPct',t.incPct,REF.ingresoPct,1)+'</div><div class="np-out"></div><div class="np-note">'+t.noteBuy+'</div>';
+    h+='<div class="np-grid">'+f('price',t.propPrice,1000)+f('prima',t.down,1)+f('tasa',t.rate,.1)+f('plazo',t.term,1)+f('ingreso',t.income)+f('ingresoPct',t.incPct,1)+'</div><div class="np-out"></div><div class="np-note">'+t.noteBuy+'</div>';
   }
-  calc();
-}
-function v(id){var el=$('[data-c="'+id+'"]',ov);return el?num(el.value):0;}
-function ln(k,val,big){return '<div class="np-ln'+(big?' big':'')+'"><span>'+k+'</span><b>'+val+'</b></div>';}
-function calc(){
-  var t=L(),out=$('.np-out',ov);if(!out)return;
-  var price=v('price');CALC.price=price;
-  if(CALC.tab==='air'){
-    var gross=v('noche')*30.4*(v('ocupacion')/100),plat=gross*v('plataforma')/100,mg=gross*v('gestion')/100,ex=v('gastos'),net=gross-plat-mg-ex;
-    out.innerHTML=ln(t.gross,money(gross))+ln('− '+t.lessPlat,money(plat))+ln('− '+t.lessMgmt,money(mg))+ln('− '+t.lessExp,money(ex))+ln(t.net,money(net),1)+ln(t.netY,money(net*12))+ln(t.yld,price?((net*12/price)*100).toFixed(1)+'%':t.empty);
+  this.root.innerHTML=h;
+  if(this.tab==='air')this.story=new Story($('.np-story',this.root),this);
+  this.calc();
+};
+Calc.prototype.air=function(){
+  var v=this.vals,gross=v.noche*30.4*(v.ocupacion/100),plat=gross*v.plataforma/100,mg=gross*v.gestion/100,net=gross-plat-mg-v.gastos;
+  return {gross:gross,plat:plat,mg:mg,ex:v.gastos,net:net,price:v.price,occ:v.ocupacion,g:v.gestion,nights:Math.round(30.4*v.ocupacion/100)};
+};
+Calc.prototype.calc=function(){
+  var t=L(),out=$('.np-out',this.root),v=this.vals;if(!out)return;
+  function ln(k,val,big){return '<div class="np-ln'+(big?' big':'')+'"><span>'+k+'</span><b>'+val+'</b></div>';}
+  if(this.tab==='air'){
+    var a=this.air();
+    out.innerHTML=ln(t.gross,money(a.gross))+ln('− '+t.lessPlat,money(a.plat))+ln('− '+t.lessMgmt,money(a.mg))+ln('− '+t.lessExp,money(a.ex))+ln(t.net,money(a.net),1)+ln(t.netY,money(a.net*12))+ln(t.yld,v.price?((a.net*12/v.price)*100).toFixed(1)+'%':t.empty);
+    if(this.story)this.story.update();
   }else{
-    var dp=price*v('prima')/100,fin=price-dp,r=v('tasa')/100/12,n=v('plazo')*12;
+    var price=v.price,dp=price*v.prima/100,fin=price-dp,r=v.tasa/100/12,n=v.plazo*12;
     var pay=fin&&n?(r?fin*r/(1-Math.pow(1+r,-n)):fin/n):0;
     var h=price?ln(t.downAmt,money(dp))+ln(t.fin,money(fin))+ln(t.pay,money(pay),1):ln(t.pay,t.empty,1);
-    var inc=v('ingreso');
-    if(inc&&n){var maxPay=inc*v('ingresoPct')/100,maxFin=r?maxPay*(1-Math.pow(1+r,-n))/r:maxPay*n,maxPrice=maxFin/(1-v('prima')/100||1);h+=ln(t.cap,money(maxPrice));}
+    if(v.ingreso&&n){var maxPay=v.ingreso*v.ingresoPct/100,maxFin=r?maxPay*(1-Math.pow(1+r,-n))/r:maxPay*n,maxPrice=maxFin/(1-v.prima/100||1);h+=ln(t.cap,money(maxPrice));}
     out.innerHTML=h;
   }
-}
-ov.addEventListener('input',function(e){if(e.target.matches('[data-c]'))calc();});
-ov.addEventListener('click',function(e){var b=e.target.closest('.np-tabs button');if(b){CALC.tab=b.dataset.tab;paintCalc();}});
+};
+Calc.prototype.stop=function(){if(this.story){this.story.stop();}};
 
-/* Boton "Calcular" dentro de la ficha del proyecto, con el precio ya cargado. */
-function hookModal(){
-  var btns=$('#pmOverlay .pm-cta-btns');if(!btns||$('.np-calc-btn',btns))return;
-  var b=document.createElement('button');b.type='button';b.className='pm-btn np-calc np-calc-btn';
-  b.addEventListener('click',function(){var c=window._pmCurCard;var p=c?num(c.getAttribute('data-price')):0;try{closeProjModal();}catch(e){}setTimeout(function(){openCalc(p);},430);});
-  btns.insertBefore(b,btns.firstChild);paintModalBtn();
+/* ---------- Historia animada de Airbnb para el inversionista ----------
+   Mismo lenguaje visual que el video "Gestion Airbnb" (paso numerado, dibujo
+   de linea, frase abajo, barra de progreso), pero contada para quien compra
+   para invertir y con los numeros que la persona puso en la calculadora. */
+var LOGO='assets/logo.png';
+var TOWER='<svg class="nps-tower" viewBox="0 0 120 150" fill="none" stroke="#1D1D1F" stroke-width="3"><rect x="22" y="14" width="76" height="128" rx="2" fill="#F5F5F7"/><line x1="10" y1="142" x2="110" y2="142"/>'+
+ [0,1,2,3,4].map(function(r){return [0,1,2].map(function(c){return '<rect x="'+(32+c*21)+'" y="'+(24+r*22)+'" width="14" height="12" fill="'+(r===2&&c===1?'#0071E3':'#E5E5EA')+'" stroke="none"/>';}).join('');}).join('')+
+ '<rect x="52" y="122" width="16" height="20" fill="#fff"/></svg>';
+function Story(box,calc){
+  this.box=box;this.calc=calc;this.i=0;this.playing=!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches);
+  this.dur=5200;this.t0=0;this.el=0;this.raf=0;this.cal=0;var self=this;
+  box.innerHTML='<div class="np-st"><div class="np-st-top"><div class="np-st-step"><i>1</i><span></span></div><img class="np-st-logo" src="'+LOGO+'" alt="" onerror="this.remove()"></div><div class="np-scs"></div><div class="np-cap"></div><div class="np-prog"></div></div><div class="np-st-ctl"><div class="np-dots"></div><button type="button" class="np-pp"></button></div><div class="np-st-note"></div>';
+  box.addEventListener('click',function(e){
+    var d=e.target.closest('.np-dots button');if(d){self.go(+d.dataset.i);return;}
+    if(e.target.closest('.np-pp')){self.playing=!self.playing;self.paintCtl();if(self.playing){self.t0=performance.now()-self.el;self.loop();}}
+  });
+  this.build();this.go(0);
+  if('IntersectionObserver' in window){this.io=new IntersectionObserver(function(es){self.visible=es[0].isIntersecting;});this.io.observe(box);}else this.visible=true;
 }
-function paintModalBtn(){var b=$('#pmOverlay .np-calc-btn');if(b)b.textContent=L().calc;}
+Story.prototype.build=function(){
+  var t=L(),a=this.calc.air();
+  var S6=[
+    {s:t.s1,c:t.c1,h:TOWER+'<div><div class="nps-lbl">'+t.from+'</div><div class="nps-big" data-k="price">'+money(a.price||0)+'</div><div class="nps-sm">'+t.ph1+'</div></div>'},
+    {s:t.s2,c:t.c2,h:'<div class="nps-list">'+[t.i1,t.i2,t.i3].map(function(x){return '<div class="nps-it"><span class="nps-ok">✓</span>'+x+'</div>';}).join('')+'</div>'},
+    {s:t.s3,c:'',h:'<div class="nps-phone"><div class="nps-pt">'+t.ph1+'</div><div class="nps-ps">'+t.ph2+'</div><div class="nps-cal">'+new Array(31).join('<b></b>')+'</div></div><div><div class="nps-big" data-k="nights">0</div><div class="nps-sm">'+t.nights+' · '+t.rv+'</div></div>'},
+    {s:t.s4,c:t.c4,h:'<div class="nps-list">'+[t.o1,t.o2,t.o3,t.o4].map(function(x){return '<div class="nps-it"><span class="nps-ok">✓</span>'+x+'</div>';}).join('')+'</div>'},
+    {s:t.s5,c:t.c5,h:'<div class="nps-num"><div class="nps-row"><span>'+t.gross+'</span><b data-k="gross"></b></div><div class="nps-row"><span>− '+t.lessMgmt+'</span><b data-k="mg"></b></div><div class="nps-row"><span>− '+t.lessPlat+' · '+t.lessExp+'</span><b data-k="other"></b></div><div class="nps-net" data-k="net"></div><div class="nps-sm"><span data-k="netmo">'+t.netMo+'</span> · <span data-k="part"></span></div></div>'},
+    {s:t.s6,c:t.c6,h:'<div class="nps-phone"><div class="nps-pt">'+t.ph1+'</div><div class="nps-ps">'+t.bk+'</div><div class="nps-cal nps-cal6">'+new Array(31).join('<b></b>')+'</div></div><div class="nps-cta"><img src="'+LOGO+'" alt="" onerror="this.remove()"><div class="t">Next Level Demographic</div><div class="nps-wa">'+WA_NUM+'</div><div class="nps-sm">'+t.wa+'</div></div>'}
+  ];
+  this.S=S6;
+  $('.np-scs',this.box).innerHTML=S6.map(function(x,k){return '<div class="np-sc" data-i="'+k+'">'+x.h+'</div>';}).join('');
+  $('.np-dots',this.box).innerHTML=S6.map(function(x,k){return '<button type="button" data-i="'+k+'" aria-label="'+(k+1)+'"></button>';}).join('');
+  $('.np-st-note',this.box).textContent=t.stNote;
+  this.update();this.paintCtl();
+};
+Story.prototype.update=function(){
+  var t=L(),a=this.calc.air(),b=this.box;
+  function set(k,v){var e=$('[data-k="'+k+'"]',b);if(e)e.textContent=v;}
+  set('price',money(a.price||0));set('gross',money(a.gross));set('mg',money(a.mg));set('other',money(a.plat+a.ex));set('net',money(a.net));set('part',fill(t.ourPart,{g:a.g}));
+  if(this.S){this.S[2].c=fill(t.c3,{occ:a.occ,n:a.nights});if(this.i===2)$('.np-cap',b).textContent=this.S[2].c;}
+  set('nights',a.nights);
+};
+Story.prototype.paintCtl=function(){var t=L(),pp=$('.np-pp',this.box);if(pp)pp.textContent=this.playing?t.play:t.resume;};
+Story.prototype.go=function(i){
+  var b=this.box,x=this.S[i];this.i=i;this.el=0;this.t0=performance.now();
+  $$('.np-sc',b).forEach(function(s){s.classList.toggle('on',+s.dataset.i===i);});
+  $$('.np-dots button',b).forEach(function(d){d.classList.toggle('on',+d.dataset.i===i);});
+  $('.np-st-step i',b).textContent=i+1;$('.np-st-step span',b).textContent=x.s;$('.np-cap',b).textContent=x.c;
+  this.anim(i);
+  if(this.playing){cancelAnimationFrame(this.raf);this.loop();}else{$('.np-prog',b).style.width='0';}
+};
+Story.prototype.anim=function(i){
+  var b=this.box,a=this.calc.air();clearInterval(this.cal);
+  if(i===2){
+    var cells=$$('.np-sc[data-i="2"] .nps-cal b',b),n=Math.min(cells.length,a.nights),k=0,order=cells.map(function(_,j){return j;}).sort(function(x,y){return ((x*37)%30)-((y*37)%30);});
+    cells.forEach(function(c){c.className='';});var nn=$('[data-k="nights"]',b);if(nn)nn.textContent='0';
+    this.cal=setInterval(function(){if(k>=n){clearInterval(this);return;}cells[order[k]].className='r';k++;if(nn)nn.textContent=k;},Math.max(60,2600/Math.max(n,1)));
+  }
+  if(i===5){
+    var c6=$$('.np-sc[data-i="5"] .nps-cal b',b),rs=Math.min(c6.length,a.nights);
+    c6.forEach(function(c,j){c.className=(j>=20&&j<27)?'k':'';});
+    var free=c6.map(function(_,j){return j;}).filter(function(j){return j<20||j>=27;});
+    free.slice(0,Math.max(0,rs-7)).forEach(function(j){c6[(j*7)%free.length<free.length?free[(j*7)%free.length]:j].className='r';});
+  }
+};
+Story.prototype.loop=function(){
+  var self=this;cancelAnimationFrame(this.raf);
+  function f(now){
+    if(!self.playing)return;
+    if(self.visible===false||document.hidden){self.t0=now-self.el;self.raf=requestAnimationFrame(f);return;}
+    self.el=now-self.t0;var p=Math.min(1,self.el/self.dur);
+    var pr=$('.np-prog',self.box);if(pr)pr.style.width=(((self.i+p)/self.S.length)*100)+'%';
+    if(p>=1){self.go((self.i+1)%self.S.length);return;}
+    self.raf=requestAnimationFrame(f);
+  }
+  this.raf=requestAnimationFrame(f);
+};
+Story.prototype.stop=function(){this.playing=false;cancelAnimationFrame(this.raf);clearInterval(this.cal);if(this.io)this.io.disconnect();};
+
+/* ---------- Calculadoras en panel (desde la barra del portafolio) ---------- */
+var CALC_OV=null;
+function openCalc(price){
+  var t=L();
+  openOv('<h3>'+t.calcH+'</h3><div class="np-sub">'+t.calcSub+'</div><div class="np-calcbox"></div>','calc');
+  CALC_OV=new Calc($('.np-calcbox',ov),price||0);
+}
+
+/* ---------- Ficha del proyecto: acciones + calculadora visible ---------- */
+var PM_CALC=null;
+function pmName(){var c=window._pmCurCard||(typeof _pmCurCard!=='undefined'?_pmCurCard:null);return c?c.getAttribute('data-pname'):'';}
+function pmCard(){return (typeof _pmCurCard!=='undefined'&&_pmCurCard)||null;}
+function paintPmActs(){
+  var head=$('#pmOverlay .pm-head');if(!head)return;var t=L(),n=pmName();
+  var box=$('.np-pmacts',head);if(!box){box=document.createElement('div');box.className='np-pmacts';head.appendChild(box);
+    box.addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;var nm=pmName();if(!nm)return;
+      if(b.dataset.a==='fav')toggleFav(nm);else{toggleCmp(nm);if(CMP.length>=2&&CMP.indexOf(nm)>=0)toast(CMP.length+' '+t.cmpN);}});}
+  var f=FAV.indexOf(n)>=0,k=CMP.indexOf(n)>=0;
+  box.innerHTML='<button type="button" class="np-chip ghost fav'+(f?' on':'')+'" data-a="fav" aria-pressed="'+f+'">'+ICO.heart+t.fav1+'</button>'+
+    '<button type="button" class="np-chip ghost'+(k?' on':'')+'" data-a="cmp" aria-pressed="'+k+'">'+ICO.cmp+t.cmp+(CMP.length?' ('+CMP.length+')':'')+'</button>'+
+    (CMP.length>=2?'<button type="button" class="np-chip" data-a="go" onclick="event.stopPropagation();NLDPlus.compare()">'+t.cmpH+' →</button>':'');
+}
+function mountPmCalc(){
+  var scroll=$('#pmScroll');if(!scroll)return;var t=L(),card=pmCard();
+  var sec=$('.np-pmsec',scroll);
+  if(!sec){
+    sec=document.createElement('div');sec.className='pm-sec np-pmsec';
+    var banks=document.getElementById('pmBanks'),anchor=banks?banks.closest('.pm-sec'):null;
+    if(anchor)scroll.insertBefore(sec,anchor);else scroll.appendChild(sec);
+  }
+  if(PM_CALC)PM_CALC.stop();
+  var keepTab=PM_CALC&&PM_CALC.card===card?PM_CALC.tab:'buy';
+  sec.innerHTML='<h4>'+t.calcPm+'</h4><div class="np-sub" style="margin-bottom:14px">'+t.calcSub+'</div><div class="np-pmcalc"></div>';
+  PM_CALC=new Calc($('.np-pmcalc',sec),card?num(card.getAttribute('data-price')):0);
+  PM_CALC.card=card;if(keepTab!=='buy'){PM_CALC.tab=keepTab;PM_CALC.render();}
+}
+var baseOpen=window.openProjModal;
+if(typeof baseOpen==='function')window.openProjModal=function(card){
+  var r=baseOpen.apply(this,arguments);
+  try{PM_CALC=null;paintPmActs();mountPmCalc();}catch(e){}
+  return r;
+};
+var baseClose=window.closeProjModal;
+if(typeof baseClose==='function')window.closeProjModal=function(){try{if(PM_CALC)PM_CALC.stop();}catch(e){}return baseClose.apply(this,arguments);};
+
+
+/* ---------- Mapa: agrupar proyectos que se enciman ----------
+   Si dos o mas marcadores del mismo complejo (menos de 600 m, como las tres
+   torres de Ambar) quedan a menos de ~70 px, a ese zoom se muestra uno solo con el precio MAS BAJO del grupo,
+   "Desde" y el numero de opciones. Al acercarse se separan solos; tocar el
+   grupo acerca el mapa hasta ver cada uno. */
+var GROUPS=[],GAP=70,SITE_M=600; /* solo se agrupan proyectos del mismo complejo (menos de 600 m) */
+function mkEl(m){var e=m.getElement&&m.getElement();return e?e.querySelector('.nld-marker'):null;}
+function priceOf(n){var c=cardByName(n);return c?num(c.getAttribute('data-price')):Infinity;}
+function regroup(){
+  var map;try{map=_projMap;}catch(e){return;}if(!map)return;
+  var mk;try{mk=_projMarkers;}catch(e){return;}
+  var t=L(),names=Object.keys(mk).filter(function(n){return map.hasLayer(mk[n]);});
+  names.forEach(function(n){var el=mkEl(mk[n]);if(!el)return;var w=mk[n].getElement();w.style.display='';
+    if(el.dataset.orig==null)el.dataset.orig=el.innerHTML;el.innerHTML=el.dataset.orig;mk[n]._npGroup=null;mk[n].setZIndexOffset(0);});
+  names.sort(function(a,b){return priceOf(a)-priceOf(b);});
+  var used={};GROUPS=[];
+  names.forEach(function(n){
+    if(used[n])return;used[n]=1;
+    var p=map.latLngToLayerPoint(mk[n].getLatLng()),g=[n];
+    var ll=mk[n].getLatLng();names.forEach(function(o){if(used[o])return;var lo=mk[o].getLatLng(),q=map.latLngToLayerPoint(lo);if(ll.distanceTo(lo)<SITE_M&&p.distanceTo(q)<GAP){g.push(o);used[o]=1;}});
+    if(g.length>1)GROUPS.push(g);
+  });
+  GROUPS.forEach(function(g){
+    var lead=mk[g[0]],el=mkEl(lead);if(!el)return;
+    lead._npGroup=g;lead.setZIndexOffset(500);
+    el.innerHTML='<span class="np-from">'+t.from+'</span>'+money(priceOf(g[0]))+'<span class="np-cnt">'+g.length+'</span>';
+    g.slice(1).forEach(function(o){var w=mk[o].getElement();if(w)w.style.display='none';try{mk[o].closePopup();}catch(e){}});
+  });
+}
+var mapHooked=false;
+function hookMap(){
+  var map;try{map=_projMap;}catch(e){return;}if(!map||mapHooked)return;mapHooked=true;
+  map.on('zoomend',function(){setTimeout(regroup,0);});
+  try{Object.keys(_projMarkers).forEach(function(n){var m=_projMarkers[n];
+    m.on('click',function(){if(!m._npGroup)return;var b=window.L.latLngBounds(m._npGroup.map(function(x){return _projMarkers[x].getLatLng();}));
+      var z=Math.min(19,map.getBoundsZoom(b,false,window.L.point(60,60)));setTimeout(function(){m.closePopup();},0);map.flyTo(b.getCenter(),z,{duration:.6});});});}catch(e){}
+}
+var baseSync=window._syncMapMarkers;
+if(typeof baseSync==='function')window._syncMapMarkers=function(){var r=baseSync.apply(this,arguments);try{hookMap();setTimeout(regroup,0);setTimeout(regroup,450);}catch(e){}return r;};
 
 /* ---------- Aviso breve ---------- */
 var tst=document.createElement('div');tst.className='np-toast';tst.setAttribute('role','status');document.body.appendChild(tst);
-var tT;function toast(m){tst.textContent=m;tst.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){tst.classList.remove('show');},2200);}
+var tT;function toast(m){tst.textContent=m;tst.classList.add('show');clearTimeout(tT);tT=setTimeout(function(){tst.classList.remove('show');},2600);}
 
 /* ---------- Idioma ---------- */
-function relang(){paintRow();paintPanel();paintCards();paintBar();paintModalBtn();if(ov.classList.contains('open')){if($('.np-calc',ov))openCalc(0);else if(CMP.length>1)openCmp();}}
+function relang(){
+  try{regroup();}catch(e){}
+  paintRow();paintPanel();paintCards();paintBar();
+  var pmOpen=$('#pmOverlay.open');if(pmOpen){paintPmActs();mountPmCalc();}
+  if(ov.classList.contains('open')){if(ovKind==='calc'){var p=CALC_OV?CALC_OV.vals.price:0,tb=CALC_OV?CALC_OV.tab:'buy';if(CALC_OV)CALC_OV.stop();openCalc(p);CALC_OV.tab=tb;CALC_OV.render();}else if(ovKind==='cmp'&&CMP.length>1)openCmp();}
+}
 var baseLang=window.applyLang;
 if(typeof baseLang==='function')window.applyLang=function(l){baseLang.apply(this,arguments);try{relang();}catch(e){}};
 
-function init(){buildUI();paintRow();paintPanel();paintCards();paintBar();hookModal();apply();}
+function init(){buildUI();paintRow();paintPanel();paintCards();paintBar();apply();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
-window.NLDPlus={openCalc:openCalc,state:S};
+window.NLDPlus={openCalc:openCalc,compare:openCmp,state:S};
 })();
 </script>
 

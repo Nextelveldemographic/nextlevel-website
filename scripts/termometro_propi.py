@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Termómetro Propi — actualiza los datos de tools/benchmark-propi.html.
+"""Termómetro Propi — actualiza los datos de olympus/benchmark-propi.html.
 
 Lo usa la tarea programada de los lunes y viernes. Lee cuatro CSV (separados por ';')
 con lo que se leyó de Propi, separa las unidades listas de las tarjetas de proyectos
@@ -8,8 +8,8 @@ cambios y escribe los datos y la fecha de actualización en la página y en el h
 
 Uso:
   python3 scripts/termometro_propi.py --entrada DIR [--fecha 2026-11-03T06:44:00-06:00]
-                                      [--html tools/benchmark-propi.html]
-                                      [--indice tools/index.html] [--solo-validar]
+                                      [--html olympus/benchmark-propi.html]
+                                      [--indice olympus/index.html] [--solo-validar]
 
 DIR contiene:
   apartamentos.csv, casas.csv, terrenos.csv   n;nombre;zona;precio_usd;m2;habitaciones;banos;desde
@@ -173,8 +173,8 @@ def fecha_corta(iso):
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--entrada', required=True)
-    ap.add_argument('--html', default='tools/benchmark-propi.html')
-    ap.add_argument('--indice', default='tools/index.html')
+    ap.add_argument('--html', default='olympus/benchmark-propi.html')
+    ap.add_argument('--indice', default='olympus/index.html')
     ap.add_argument('--fecha', default=None, help='ISO 8601; por defecto, ahora en El Salvador')
     ap.add_argument('--solo-validar', action='store_true')
     a = ap.parse_args()
@@ -226,7 +226,7 @@ def main():
     idx = pathlib.Path(a.indice)
     if idx.exists():
         t = idx.read_text(encoding='utf-8')
-        t2, n = re.subn(r"(url: '/tools/benchmark-propi',[\s\S]*?meta: ')[^']*(')",
+        t2, n = re.subn(r"(url: '/olympus/benchmark-propi',[\s\S]*?meta: ')[^']*(')",
                         lambda mm: mm.group(1) + 'Actualizado: ' + fecha_corta(fecha) + mm.group(2), t, count=1)
         if n:
             idx.write_text(t2, encoding='utf-8')

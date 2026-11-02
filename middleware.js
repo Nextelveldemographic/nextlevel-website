@@ -1,6 +1,6 @@
-// Olympus — candado de acceso para /tools
+// Olympus — candado de acceso para /olympus
 // ------------------------------------------------------------
-// Solo corre en /tools y sus subrutas (ver `config.matcher`).
+// Solo corre en /olympus y sus subrutas (ver `config.matcher`).
 // El resto de nextleveldemographic.com no pasa por aquí.
 //
 // Accesos: variable de entorno TOOLS_USERS en Vercel
@@ -12,12 +12,12 @@
 //
 // Las contraseñas no pueden llevar comas. Cambiar o quitar un
 // acceso cierra la sesión de todos (vuelven a entrar con su clave).
-// Si TOOLS_USERS no existe, /tools queda cerrado para todos.
+// Si TOOLS_USERS no existe, /olympus queda cerrado para todos.
 
 import { next } from '@vercel/functions';
 
 export const config = {
-  matcher: ['/tools', '/tools/:path*'],
+  matcher: ['/olympus', '/olympus/:path*'],
 };
 
 const SESSION_COOKIE = 'nld_tools_sesion';
@@ -30,11 +30,11 @@ export default async function middleware(request) {
   const path = url.pathname.replace(/\/+$/, '') || '/';
   const users = parseUsers(process.env.TOOLS_USERS);
 
-  if (path === '/tools/salir') {
+  if (path === '/olympus/salir') {
     return new Response(null, {
       status: 303,
       headers: [
-        ['Location', '/tools'],
+        ['Location', '/olympus'],
         ['Set-Cookie', clearCookie(SESSION_COOKIE)],
         ['Set-Cookie', clearCookie(USER_COOKIE)],
         ['Cache-Control', 'no-store'],
@@ -42,8 +42,8 @@ export default async function middleware(request) {
     });
   }
 
-  if (path === '/tools/entrar') {
-    if (request.method !== 'POST') return redirect('/tools');
+  if (path === '/olympus/entrar') {
+    if (request.method !== 'POST') return redirect('/olympus');
     return handleLogin(request, users);
   }
 
@@ -68,12 +68,12 @@ export default async function middleware(request) {
 async function handleLogin(request, users) {
   let email = '';
   let password = '';
-  let destino = '/tools';
+  let destino = '/olympus';
   try {
     const form = await request.formData();
     email = String(form.get('correo') || '').trim().toLowerCase();
     password = String(form.get('clave') || '');
-    destino = safeNext(String(form.get('destino') || '/tools'));
+    destino = safeNext(String(form.get('destino') || '/olympus'));
   } catch (e) {
     /* formulario vacío o mal formado */
   }
@@ -166,10 +166,10 @@ async function sameSecret(a, b) {
 // ---------- utilidades ----------
 
 function safeNext(value) {
-  if (typeof value !== 'string') return '/tools';
-  if (!value.startsWith('/tools')) return '/tools';
-  if (value.includes('//') || value.includes('\\')) return '/tools';
-  if (/^\/tools\/(entrar|salir)\b/.test(value)) return '/tools';
+  if (typeof value !== 'string') return '/olympus';
+  if (!value.startsWith('/olympus')) return '/olympus';
+  if (value.includes('//') || value.includes('\\')) return '/olympus';
+  if (/^\/olympus\/(entrar|salir)\b/.test(value)) return '/olympus';
   return value;
 }
 
@@ -184,11 +184,11 @@ function readCookie(request, name) {
 }
 
 function cookie(name, value, { httpOnly }) {
-  return `${name}=${value}; Path=/tools; Max-Age=${MAX_AGE}; Secure; SameSite=Lax${httpOnly ? '; HttpOnly' : ''}`;
+  return `${name}=${value}; Path=/olympus; Max-Age=${MAX_AGE}; Secure; SameSite=Lax${httpOnly ? '; HttpOnly' : ''}`;
 }
 
 function clearCookie(name) {
-  return `${name}=; Path=/tools; Max-Age=0; Secure; SameSite=Lax`;
+  return `${name}=; Path=/olympus; Max-Age=0; Secure; SameSite=Lax`;
 }
 
 function redirect(location) {
@@ -218,7 +218,7 @@ function esc(s) {
 
 // ---------- pantalla de acceso ----------
 
-function loginPage({ destino = '/tools', correo = '', error = '', status = 401 }) {
+function loginPage({ destino = '/olympus', correo = '', error = '', status = 401 }) {
   const html = `<!doctype html>
 <html lang="es">
 <head>
@@ -271,7 +271,7 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
   <h1>Acceso del equipo</h1>
   <p class="sub">Herramientas internas de NLD. Entra con tu correo y tu contraseña.</p>
   ${error ? `<p class="err" role="alert">${esc(error)}</p>` : ''}
-  <form method="post" action="/tools/entrar" autocomplete="on">
+  <form method="post" action="/olympus/entrar" autocomplete="on">
     <input type="hidden" name="destino" value="${esc(destino)}">
     <label for="correo">Correo</label>
     <input id="correo" name="correo" type="email" inputmode="email" autocomplete="username" autocapitalize="none" spellcheck="false" required value="${esc(correo)}"${correo ? '' : ' autofocus'}>

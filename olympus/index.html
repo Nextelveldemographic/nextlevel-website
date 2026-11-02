@@ -117,13 +117,13 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 
 <header class="bar">
   <div class="wrap bar-in">
-    <a class="brand" href="/tools" aria-label="Olympus, inicio"><span class="logo" aria-hidden="true"></span><b>NLD <span>Olympus</span></b></a>
+    <a class="brand" href="/olympus" aria-label="Olympus, inicio"><span class="logo" aria-hidden="true"></span><b>NLD <span>Olympus</span></b></a>
     <div class="acts">
       <button class="ic" type="button" id="tema" aria-label="Cambiar tema" title="Cambiar tema">
         <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
         <svg class="sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M4.6 4.6l1.6 1.6M17.8 17.8l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.6 19.4l1.6-1.6M17.8 6.2l1.6-1.6"/></svg>
       </button>
-      <a class="ic" href="/tools/salir" aria-label="Cerrar sesión" title="Cerrar sesión">
+      <a class="ic" href="/olympus/salir" aria-label="Cerrar sesión" title="Cerrar sesión">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4h3.5A2.5 2.5 0 0 1 20 6.5v11a2.5 2.5 0 0 1-2.5 2.5H14"/><path d="M10 16.5 5.5 12 10 7.5M5.5 12H15"/></svg>
       </a>
     </div>
@@ -148,13 +148,13 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 /* ============================================================
    LISTA DE HERRAMIENTAS
    Para agregar una nueva:
-   1. Sube su archivo HTML a la carpeta /tools del repo
-      (ejemplo: tools/mi-herramienta.html).
+   1. Sube su archivo HTML a la carpeta /olympus del repo
+      (ejemplo: olympus/mi-herramienta.html).
    2. Agrega aquí un bloque con su ruta, sin ".html"
-      (ejemplo: url: '/tools/mi-herramienta').
+      (ejemplo: url: '/olympus/mi-herramienta').
    3. Ponle su área (area: 'marketing', 'ventas', ...). Las áreas
       están en la lista AREAS; un área sin herramientas no se muestra.
-   El candado de acceso la protege sola por estar dentro de /tools.
+   El candado de acceso la protege sola por estar dentro de /olympus.
    ============================================================ */
 var AREAS = [
   { id: 'marketing',   nombre: 'Marketing',   titulo: 'Contenido y campañas.',           texto: 'Videos para redes y la web, y la segmentación por código postal para pautar donde vive la diáspora.' },
@@ -165,7 +165,7 @@ var AREAS = [
 ];
 var HERRAMIENTAS = [
   {
-    url: '/tools/mapa-diaspora',
+    url: '/olympus/mapa-diaspora',
     area: 'marketing',
     etiqueta: 'Tablero · Censo EE. UU. 2023',
     titulo: 'Mapa de la Diáspora',
@@ -173,7 +173,7 @@ var HERRAMIENTAS = [
     meta: '19 países · 20,784 códigos postales'
   },
   {
-    url: '/tools/propuesta-desarrolladoras',
+    url: '/olympus/propuesta-desarrolladoras',
     area: 'ventas',
     etiqueta: 'Presentación · Desarrolladoras',
     titulo: 'Propuesta para desarrolladoras',
@@ -181,7 +181,7 @@ var HERRAMIENTAS = [
     meta: 'Actualizada: 31 oct 2026'
   },
   {
-    url: '/tools/propuesta-casa-munoz',
+    url: '/olympus/propuesta-casa-munoz',
     area: 'ventas',
     nombre: 'Propuesta Casa Muñoz',
     etiqueta: 'Presentación · Expansión internacional',
@@ -190,7 +190,7 @@ var HERRAMIENTAS = [
     meta: 'Actualizada: 1 nov 2026'
   },
   {
-    url: '/tools/propuesta-ikatu',
+    url: '/olympus/propuesta-ikatu',
     area: 'ventas',
     nombre: 'Propuesta Ikatú',
     etiqueta: 'Presentación · Expansión internacional',
@@ -199,7 +199,7 @@ var HERRAMIENTAS = [
     meta: 'Actualizada: 1 nov 2026'
   },
   {
-    url: '/tools/bcr-remesas',
+    url: '/olympus/bcr-remesas',
     area: 'estrategia',
     etiqueta: 'Tablero · Datos del BCR',
     titulo: 'Remesas por destino geográfico',
@@ -207,7 +207,7 @@ var HERRAMIENTAS = [
     meta: 'Datos hasta: marzo 2026'
   },
   {
-    url: '/tools/benchmark-propi',
+    url: '/olympus/benchmark-propi',
     area: 'estrategia',
     nombre: 'Termómetro Propi',
     etiqueta: 'Termómetro · Mercado',
@@ -216,7 +216,7 @@ var HERRAMIENTAS = [
     meta: 'Actualizado: 1 nov 2026'
   },
   {
-    url: '/tools/airbnb',
+    url: '/olympus/airbnb',
     area: 'marketing',
     nombre: 'Video de gestión de Airbnb',
     etiqueta: 'Video · Gestión de Airbnb',
@@ -225,7 +225,7 @@ var HERRAMIENTAS = [
     meta: '2 versiones · 1:09'
   },
   {
-    url: '/tools/jubilacion',
+    url: '/olympus/jubilacion',
     area: 'marketing',
     nombre: 'Video Jubilarse en El Salvador',
     etiqueta: 'Video · Jubilación',
@@ -234,7 +234,7 @@ var HERRAMIENTAS = [
     meta: '4 historias · 8 episodios'
   },
   {
-    url: '/tools/carisma',
+    url: '/olympus/carisma',
     area: 'formacion',
     etiqueta: 'Entrenamiento · Comunicación',
     titulo: 'Carisma',

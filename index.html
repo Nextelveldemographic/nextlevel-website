@@ -3195,8 +3195,8 @@ body.qv-lock{overflow:hidden}
 @keyframes qvmS3{0%,75%{opacity:0;translate:0 8px}78%,97%{opacity:1;translate:0 0}100%{opacity:0;translate:0 -4px}}
 /* v47: una tarjeta a la vez. Quieta, la foto queda en el mismo encuadre
    con que empieza y termina el recorrido, así no salta al cambiar. */
-#scene-projects .proj-photo img{scale:1.08;translate:-3% 1%}
-#scene-projects .proj-card.qv-on .proj-photo img{animation:nldTour 12s ease-in-out 1 both}
+#scene-projects .proj-photo img,#scene-particulares .proj-photo img{scale:1.08;translate:-3% 1%}
+#scene-projects .proj-card.qv-on .proj-photo img,#scene-particulares .proj-card.qv-on .proj-photo img{animation:nldTour 12s ease-in-out 1 both}
 .qvm{position:absolute;inset:0;z-index:2;pointer-events:none;color:#fff;font-family:var(--sf)}
 .qvm::before{content:"";position:absolute;inset:0;opacity:0;transition:opacity .6s ease;
   background:linear-gradient(180deg,rgba(0,0,0,.22) 0,rgba(0,0,0,0) 22%,rgba(0,0,0,0) 44%,rgba(0,0,0,.64) 100%)}
@@ -8510,7 +8510,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
    Tarjetas: recorrido de 12 s en bucle, como GIF, solo mientras se ven.
    Ficha: abre con el recorrido desde el inicio; al terminar pasa a las
    fotos y vuelve a empezar. Tocar el recorrido abre la vista rápida a
-   pantalla completa. Particulares no cambia. */
+   pantalla completa. Desde nov 2026 las tarjetas de Particulares también corren el recorrido. */
 (function(){
   'use strict';
   var TOUR_MS=12000;
@@ -8536,8 +8536,12 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   }
 
   /* ---------- tarjetas ---------- */
+  /* nov 2026: el mismo recorrido corre tambien en las tarjetas de Particulares.
+     Como solo una de las dos secciones esta visible a la vez, un solo turno
+     alcanza: las tarjetas ocultas no cuentan como visibles. */
   var sec=document.getElementById('scene-projects');
-  function tarjetas(){return sec?sec.querySelectorAll('.proj-card'):[];}
+  var SECS=['scene-projects','scene-particulares'].map(function(id){return document.getElementById(id);}).filter(Boolean);
+  function tarjetas(){var a=[];SECS.forEach(function(x){a=a.concat([].slice.call(x.querySelectorAll('.proj-card')));});return a;}
   function pintarTarjetas(){
     [].forEach.call(tarjetas(),function(c){
       var ph=c.querySelector('.proj-photo'), D=datos(c); if(!ph||!D)return;
@@ -8556,7 +8560,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   var reduce=false;
   try{reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;}catch(e){}
   var timer=null, CICLO=TOUR_MS+500;
-  function actual(){return sec?sec.querySelector('.proj-card.qv-on'):null;}
+  function actual(){return document.querySelector('#scene-projects .proj-card.qv-on,#scene-particulares .proj-card.qv-on');}
   function visibles(){return [].filter.call(tarjetas(),function(c){return c.classList.contains('qv-vis')&&c.offsetParent!==null;});}
   function reloj(){clearTimeout(timer);timer=setTimeout(siguiente,CICLO);}
   function siguiente(){

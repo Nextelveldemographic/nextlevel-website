@@ -3282,7 +3282,7 @@ body.qv-lock{overflow:hidden}
 <section id="scene-hero" data-scene>
   <div class="wrap">
     <div class="hero-eb anim" data-i18n="hero_badge">Para la diáspora salvadoreña</div>
-    <h1 class="hero-h anim d1" data-i18n="hero_h1">Tu tierra. Tu dinero. <br><em>Tu próximo nivel.</em></h1>
+    <h1 class="hero-h anim d1 np-slogan" data-i18n="hero_h1" aria-label="Subí de nivel.">Subí de nivel.</h1>
     <p class="hero-sub anim d2" data-i18n="hero_sub">¿Pensás retirarte o invertir en El Salvador? Next Level Demographic te acompaña de principio a fin, sin costo para vos.</p>
     <!-- Selector Retiro/Inversion/Segunda casa retirado (nov 2026): la portada es una sola frase. -->
     <div class="hero-btns anim d4"><a href="#scene-projects" class="btn-blue" data-i18n="hero_btn1">Ver proyectos</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
@@ -8682,18 +8682,53 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
 })();
 </script>
+<style>
+/* ===== Portada (nov 2026): slogan con entrada animada =====
+   Cada letra cae, se aplasta al tocar y rebota (squash & stretch);
+   el punto final es una bola azul que llega rebotando de ultima. */
+#scene-hero h1.hero-h.np-slogan{font-size:clamp(58px,12vw,136px);letter-spacing:-.045em;line-height:1.02;margin-bottom:22px}
+.np-slogan .hw{display:inline-block;white-space:nowrap}
+.np-slogan .hc{display:inline-block;transform-origin:50% 100%;opacity:0}
+.np-slogan .hc.go{animation:npDrop .9s cubic-bezier(.3,.7,.4,1) both}
+.np-slogan .hl{color:var(--blue)}
+.np-slogan .hdot{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:var(--blue);margin-left:.04em;vertical-align:baseline;opacity:0;transform-origin:50% 100%}
+.np-slogan .hdot.go{animation:npBall 1.3s linear both}
+@keyframes npDrop{0%{opacity:0;transform:translateY(-1.1em) scale(.9,1.25)}45%{opacity:1;transform:translateY(0) scale(1.22,.74)}62%{transform:translateY(-.18em) scale(.94,1.08)}78%{transform:translateY(0) scale(1.06,.94)}90%{transform:translateY(-.03em) scale(.99,1.01)}100%{opacity:1;transform:none}}
+@keyframes npBall{0%{opacity:0;transform:translate(-2.2em,-2.6em)}8%{opacity:1}30%{transform:translate(-1.3em,0) scale(1.35,.65)}46%{transform:translate(-.8em,-1.1em) scale(.9,1.1)}62%{transform:translate(-.35em,0) scale(1.25,.75)}74%{transform:translate(-.15em,-.4em)}86%{transform:translate(0,0) scale(1.12,.88)}93%{transform:translate(0,-.08em)}100%{opacity:1;transform:none}}
+@media(max-width:480px){#scene-hero h1.hero-h.np-slogan{font-size:clamp(50px,15vw,72px)}}
+@media(prefers-reduced-motion:reduce){.np-slogan .hc,.np-slogan .hdot{opacity:1;animation:none!important}}
+</style>
 <script>
-/* ===== Portada (nov 2026): una sola frase en los seis idiomas ===== */
+/* ===== Portada (nov 2026): slogan corto en los seis idiomas ===== */
 (function(){
+ /* w: palabras normales, b: palabra en azul. El punto lo pone la bola. */
+ var SL={es:{w:'Subí de',b:'nivel'},en:{w:'Level',b:'up'},fr:{w:'Passe au',b:'niveau'},it:{w:'Sali di',b:'livello'},de:{w:'Level',b:'up'},pt:{w:'Suba de',b:'nível'}};
  var H={
-  es:{hero_h1:'Tu tierra. Tu dinero. <br><em>Tu próximo nivel.</em>',hero_sub:'¿Pensás retirarte o invertir en El Salvador? Next Level Demographic te acompaña de principio a fin, sin costo para vos.',hero_btn1:'Ver proyectos'},
-  en:{hero_h1:'Your homeland. Your money. <br><em>Your next level.</em>',hero_sub:'Thinking about retiring or investing in El Salvador? Next Level Demographic guides you from start to finish, at no cost to you.',hero_btn1:'See projects',hero_badge:'For the Salvadoran diaspora'},
-  fr:{hero_h1:'Votre terre. Votre argent. <br><em>Votre prochain niveau.</em>',hero_sub:'Vous pensez prendre votre retraite ou investir au Salvador ? Next Level Demographic vous accompagne du début à la fin, sans frais pour vous.',hero_btn1:'Voir les projets',hero_badge:'Pour la diaspora salvadorienne'},
-  it:{hero_h1:'La tua terra. I tuoi soldi. <br><em>Il tuo prossimo livello.</em>',hero_sub:'Pensi di andare in pensione o investire in El Salvador? Next Level Demographic ti accompagna dall’inizio alla fine, senza costi per te.',hero_btn1:'Vedi i progetti',hero_badge:'Per la diaspora salvadoregna'},
-  de:{hero_h1:'Ihre Heimat. Ihr Geld. <br><em>Ihr nächstes Level.</em>',hero_sub:'Sie denken an Ruhestand oder eine Investition in El Salvador? Next Level Demographic begleitet Sie von Anfang bis Ende, ohne Kosten für Sie.',hero_btn1:'Projekte ansehen',hero_badge:'Für die salvadorianische Diaspora'},
-  pt:{hero_h1:'Sua terra. Seu dinheiro. <br><em>Seu próximo nível.</em>',hero_sub:'Pensando em se aposentar ou investir em El Salvador? A Next Level Demographic acompanha você do início ao fim, sem custo para você.',hero_btn1:'Ver projetos',hero_badge:'Para a diáspora salvadorenha'}
+  es:{hero_btn2:'Hablemos por WhatsApp',hero_sub:'¿Pensás retirarte o invertir en El Salvador? Next Level Demographic te acompaña de principio a fin, sin costo para vos.',hero_btn1:'Ver proyectos'},
+  en:{hero_btn2:'Message us on WhatsApp',hero_sub:'Thinking about retiring or investing in El Salvador? Next Level Demographic guides you from start to finish, at no cost to you.',hero_btn1:'See projects',hero_badge:'For the Salvadoran diaspora'},
+  fr:{hero_btn2:'Écrivez-nous sur WhatsApp',hero_sub:'Vous pensez prendre votre retraite ou investir au Salvador ? Next Level Demographic vous accompagne du début à la fin, sans frais pour vous.',hero_btn1:'Voir les projets',hero_badge:'Pour la diaspora salvadorienne'},
+  it:{hero_btn2:'Scrivici su WhatsApp',hero_sub:'Pensi di andare in pensione o investire in El Salvador? Next Level Demographic ti accompagna dall’inizio alla fine, senza costi per te.',hero_btn1:'Vedi i progetti',hero_badge:'Per la diaspora salvadoregna'},
+  de:{hero_btn2:'Schreiben Sie uns auf WhatsApp',hero_sub:'Sie denken an Ruhestand oder eine Investition in El Salvador? Next Level Demographic begleitet Sie von Anfang bis Ende, ohne Kosten für Sie.',hero_btn1:'Projekte ansehen',hero_badge:'Für die salvadorianische Diaspora'},
+  pt:{hero_btn2:'Fale conosco no WhatsApp',hero_sub:'Pensando em se aposentar ou investir em El Salvador? A Next Level Demographic acompanha você do início ao fim, sem custo para você.',hero_btn1:'Ver projetos',hero_badge:'Para a diáspora salvadorenha'}
  };
- try{Object.keys(H).forEach(function(l){if(I18N[l])Object.assign(I18N[l],H[l]);});}catch(e){}
+ function html(l){
+   var x=SL[l]||SL.es,k=0,out=[];
+   function chars(word,cls){return '<span class="hw'+(cls?' '+cls:'')+'">'+word.split('').map(function(ch){return '<span class="hc" aria-hidden="true" style="animation-delay:'+(k++*70)+'ms">'+ch+'</span>';}).join('')+'</span>';}
+   x.w.split(' ').forEach(function(w){out.push(chars(w));});
+   var last=chars(x.b,'hl');
+   var dot='<span class="hdot" aria-hidden="true" style="animation-delay:'+(k*70+250)+'ms"></span>';
+   return {h:out.join(' ')+' '+last.replace(/<\/span>$/,dot+'</span>'),label:x.w+' '+x.b+'.'};
+ }
+ try{Object.keys(H).forEach(function(l){if(I18N[l]){Object.assign(I18N[l],H[l]);I18N[l].hero_h1=html(l).h;}});}catch(e){}
+ function play(){
+   var h=document.querySelector('#scene-hero h1.hero-h');if(!h)return;
+   var l=(typeof curLang!=='undefined'&&SL[curLang])?curLang:'es';
+   h.classList.add('np-slogan');h.setAttribute('aria-label',html(l).label);
+   [].forEach.call(h.querySelectorAll('.hc,.hdot'),function(e){e.classList.remove('go');void e.offsetWidth;e.classList.add('go');});
+ }
+ var base=window.applyLang;
+ if(typeof base==='function')window.applyLang=function(){var r=base.apply(this,arguments);try{setTimeout(play,350);}catch(e){}return r;};
+ window.NLDHero={play:play};
 })();
 </script>
 <!-- ===== NLD Plus (nov 2026): herramientas del portafolio =====

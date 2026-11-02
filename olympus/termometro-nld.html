@@ -1,4 +1,15 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
 <title>Termómetro NLD</title>
+<link rel="icon" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<script>
+/* Tema y vista antes del primer pintado: claro por defecto; móvil en el celular, escritorio en lo demás */
+(function(){var r=document.documentElement,t="light",v=null;try{t=localStorage.getItem("tnld-theme")||"light";v=localStorage.getItem("tnld-view2");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
@@ -12,11 +23,6 @@
   --display:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
   --mono:"Courier Prime","Courier New",ui-monospace,monospace;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
-  --accent:#4C92FF; --accent-soft:#12264A;
-  --ok:#3CC48C; --warn:#E3A73A; --crit:#F06A6A;
-  --ok-soft:#0F2A20; --warn-soft:#2E2410; --crit-soft:#341616; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
   --accent:#4C92FF; --accent-soft:#12264A;
@@ -113,13 +119,39 @@ h2{font-size:20px}
 .tag.crit{background:var(--crit-soft);color:var(--crit)}.tag.warn{background:var(--warn-soft);color:var(--warn)}.tag.ok{background:var(--ok-soft);color:var(--ok)}.tag.mut{background:var(--sunk);color:var(--muted)}
 .foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
 @media (max-width:820px){.row2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:520px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.verdict{align-items:center}.parts{text-align:left;width:100%}.gauge{width:160px;height:160px}}
-:root[data-view="mobile"] .row2{grid-template-columns:1fr}
-:root[data-view="mobile"] .kpis{grid-template-columns:repeat(2,1fr)}
-:root[data-view="mobile"] .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
+.finds{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
+.people{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
+:root[data-view="tablet"] .people{grid-template-columns:repeat(2,1fr)}
+:root[data-view="tablet"] .finds{grid-template-columns:repeat(2,1fr)}
+/* Vista móvil: todo en una columna, pensado para el pulgar */
+:root[data-view="mobile"] body{font-size:15px;padding-block:8px 32px}
+:root[data-view="mobile"] .wrap{gap:12px}
+:root[data-view="mobile"] .top{flex-direction:column;gap:10px}
+:root[data-view="mobile"] h1{font-size:34px}
+:root[data-view="mobile"] h2{font-size:18px}
+:root[data-view="mobile"] .panel{padding:14px;border-radius:14px}
+:root[data-view="mobile"] .hero{grid-template-columns:1fr;justify-items:center;text-align:center;gap:14px}
+:root[data-view="mobile"] .gauge{width:150px;height:150px}
+:root[data-view="mobile"] .gauge .score{font-size:46px}
 :root[data-view="mobile"] .verdict{align-items:center}
-:root[data-view="mobile"] .parts{text-align:left;width:100%}
+:root[data-view="mobile"] .verdict p{font-size:16px}
+:root[data-view="mobile"] .parts{text-align:left;width:100%;gap:8px}
+:root[data-view="mobile"] .part span{font-size:11.5px}
+:root[data-view="mobile"] .row2{grid-template-columns:1fr;gap:12px}
+:root[data-view="mobile"] .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+:root[data-view="mobile"] .kpi{padding:12px}
+:root[data-view="mobile"] .kpi .v{font-size:30px}
+:root[data-view="mobile"] .kpi .s{font-size:12px}
 :root[data-view="mobile"] .people,:root[data-view="mobile"] .finds{grid-template-columns:1fr}
+:root[data-view="mobile"] .find h3{font-size:15px}
+:root[data-view="mobile"] .find p{font-size:13.5px}
+:root[data-view="mobile"] .filters{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding-inline:14px;scrollbar-width:none}
+:root[data-view="mobile"] .filters::-webkit-scrollbar{display:none}
+:root[data-view="mobile"] .chip{flex:none}
+:root[data-view="mobile"] .task{grid-template-columns:4px minmax(0,1fr);row-gap:6px}
+:root[data-view="mobile"] .task .sev{grid-row:span 2}
+:root[data-view="mobile"] .task .tag{grid-column:2;justify-self:start}
+:root[data-view="mobile"] .panel-h{margin-bottom:10px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
@@ -295,18 +327,21 @@ const kp=[["Abiertas",open,`${META.totals.done} cerradas de ${META.totals.all}`,
 $("#kpis").innerHTML=kp.map(([l,v,s,c])=>`<div class="kpi ${c}"><span class="label">${l}</span><span class="v num" data-n="${v}">0</span><span class="s">${s}</span></div>`).join("");
 
 /* Flujo */
-(function(){
-  const W=560,H=230,L=34,B=196,T=14,mx=Math.max(...META.months.flatMap(m=>[m.created,m.resolved]));
+function drawFlow(){
+  const mob=root.dataset.view==="mobile", W=mob?340:560, H=230, L=30, B=196, T=14, fs=mob?13:11;
+  $("#flow").setAttribute("viewBox",`0 0 ${W} ${H}`);
+  const mx=Math.max(...META.months.flatMap(m=>[m.created,m.resolved]));
   const top=Math.ceil(mx/10)*10, y=v=>B-(v/top)*(B-T), cw=(W-L-8)/META.months.length, bw=Math.min(26,cw/3.2);
   let s="";
-  for(let v=0;v<=top;v+=top/4){s+=`<line x1="${L}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Courier Prime,monospace">${v}</text>`}
+  for(let v=0;v<=top;v+=top/4){s+=`<line x1="${L}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="${fs}" fill="var(--muted)" font-family="Courier Prime,monospace">${v}</text>`}
   META.months.forEach((m,i)=>{const cx=L+cw*i+cw/2;
-    s+=`<rect class="fb" x="${cx-bw-2}" y="${B}" width="${bw}" height="0" rx="3" fill="var(--line)" data-y="${y(m.created)}" data-h="${B-y(m.created)}"/>`;
-    s+=`<rect class="fb" x="${cx+2}" y="${B}" width="${bw}" height="0" rx="3" fill="var(--accent)" data-y="${y(m.resolved)}" data-h="${B-y(m.resolved)}"/>`;
-    s+=`<text x="${cx+bw/2+2}" y="${y(m.resolved)-6}" text-anchor="middle" font-size="11" fill="var(--fg)" font-family="Courier Prime,monospace">${m.resolved}</text>`;
-    s+=`<text x="${cx}" y="${B+20}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="Courier Prime,monospace">${m.m.toUpperCase()}</text>`;});
+    s+=`<rect class="fb" x="${cx-bw-2}" y="${drawn?y(m.created):B}" width="${bw}" height="${drawn?B-y(m.created):0}" rx="3" fill="var(--line)" data-y="${y(m.created)}" data-h="${B-y(m.created)}"/>`;
+    s+=`<rect class="fb" x="${cx+2}" y="${drawn?y(m.resolved):B}" width="${bw}" height="${drawn?B-y(m.resolved):0}" rx="3" fill="var(--accent)" data-y="${y(m.resolved)}" data-h="${B-y(m.resolved)}"/>`;
+    s+=`<text x="${cx+bw/2+2}" y="${y(m.resolved)-6}" text-anchor="middle" font-size="${fs}" fill="var(--fg)" font-family="Courier Prime,monospace">${m.resolved}</text>`;
+    s+=`<text x="${cx}" y="${B+20}" text-anchor="middle" font-size="${fs+1}" fill="var(--muted)" font-family="Courier Prime,monospace">${m.m.toUpperCase()}</text>`;});
   $("#flow").innerHTML=s;
-})();
+}
+let drawn=false;
 
 /* Estados */
 const byS={};tasks.forEach(t=>(byS[t.st]=byS[t.st]||[]).push(t));
@@ -372,13 +407,12 @@ $("#stamp").textContent=`Corte: ${fmt.format(new Date(META.generated))} · próx
 $("#foot").innerHTML=`Fuente: Jira, proyecto NLD · ${META.totals.all} tareas en total, ${META.totals.discarded} descartadas.<br>Termómetro = frescura (40) + puntualidad (35) + ritmo de cierre (25). Se actualiza lunes, miércoles y viernes.`;
 
 /* Vista y tema (iconos) */
-function setView(v){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));try{localStorage.setItem("tnld-view",v)}catch(e){}}
-function curTheme(){return root.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function setView(v,save){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save){try{localStorage.setItem("tnld-view2",v)}catch(e){}drawFlow()}}
 function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("tnld-theme",t)}catch(e){}}
-let sv=null,st=null;try{sv=localStorage.getItem("tnld-view");st=localStorage.getItem("tnld-theme")}catch(e){}
-setView(sv||(innerWidth<600?"mobile":innerWidth<1000?"tablet":"desktop"));
-if(st)setTheme(st);else document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===curTheme()));
-document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v));
+setView(root.dataset.view||(innerWidth<700?"mobile":"desktop"));
+setTheme(root.dataset.theme||"light");
+drawFlow();
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v,true));
 document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>setTheme(b.dataset.t,true));
 
 /* Animación de entrada sobria */
@@ -389,11 +423,11 @@ function finish(){
   if(still)document.querySelectorAll(".fb").forEach(r=>{r.setAttribute("y",r.dataset.y);r.setAttribute("height",r.dataset.h)});
 }
 function count(el,to){if(still){el.textContent=to;return}const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1000);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
-if(still){finish();$("#score").textContent=score;document.querySelectorAll("[data-n]").forEach(e=>e.textContent=e.dataset.n)}
+if(still){drawn=true;drawFlow();finish();$("#score").textContent=score;document.querySelectorAll("[data-n]").forEach(e=>e.textContent=e.dataset.n)}
 else{
   requestAnimationFrame(()=>requestAnimationFrame(finish));
   count($("#score"),score);document.querySelectorAll("[data-n]").forEach(e=>count(e,+e.dataset.n));
   const bars=[...document.querySelectorAll(".fb")],t0=performance.now();
-  (function grow(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);bars.forEach(r=>{const h=r.dataset.h*e;r.setAttribute("height",h);r.setAttribute("y",196-h)});if(p<1)requestAnimationFrame(grow)})(t0);
+  (function grow(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);bars.forEach(r=>{const h=r.dataset.h*e;r.setAttribute("height",h);r.setAttribute("y",196-h)});if(p<1)requestAnimationFrame(grow);else drawn=true})(t0);
 }
 </script>

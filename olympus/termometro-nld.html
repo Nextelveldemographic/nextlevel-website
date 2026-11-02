@@ -1,0 +1,399 @@
+<title>Termómetro NLD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: una columna en móvil; en iPad/escritorio bloques a todo el ancho, de lo macro (termómetro) a lo micro (cada tarea) */
+:root{
+  --bg:#F3F6FA; --surface:#FFFFFF; --sunk:#E9EEF5; --fg:#0D1626; --muted:#5A6A80; --line:#D8E0EA;
+  --accent:#1F6FEB; --accent-soft:#DCE8FD;
+  --ok:#17905F; --warn:#B7790A; --crit:#CF3B3B;
+  --ok-soft:#DDF3EA; --warn-soft:#FBEFD6; --crit-soft:#FBE3E3;
+  --display:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
+  --mono:"Courier Prime","Courier New",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
+  --accent:#4C92FF; --accent-soft:#12264A;
+  --ok:#3CC48C; --warn:#E3A73A; --crit:#F06A6A;
+  --ok-soft:#0F2A20; --warn-soft:#2E2410; --crit-soft:#341616; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
+  --accent:#4C92FF; --accent-soft:#12264A;
+  --ok:#3CC48C; --warn:#E3A73A; --crit:#F06A6A;
+  --ok-soft:#0F2A20; --warn-soft:#2E2410; --crit-soft:#341616; color-scheme:dark}
+html,body{background:var(--bg)}
+body{color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 48px}
+.wrap{margin:0 auto;display:flex;flex-direction:column;gap:18px;max-width:1500px}
+:root[data-view="mobile"] .wrap{max-width:480px}
+:root[data-view="tablet"] .wrap{max-width:980px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1,h2{font-weight:700;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.01em;line-height:1}
+h2{font-size:20px}
+.num{font-variant-numeric:tabular-nums}
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;padding-top:8px}
+.top .meta{display:flex;flex-direction:column;gap:6px}
+.top .stamp{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.controls{display:flex;gap:6px}
+.seg{display:flex;background:var(--sunk);border-radius:10px;padding:3px;gap:2px}
+.seg button{all:unset;cursor:pointer;width:32px;height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg button:focus-visible{outline:2px solid var(--accent)}
+.seg svg{width:16px;height:16px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.panel-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+/* Hero termómetro */
+.hero{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center}
+.gauge{width:180px;height:180px;position:relative}
+.gauge svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge .track{stroke:var(--sunk)}
+.gauge .val{stroke-linecap:round;transition:stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)}
+.gauge .center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge .score{font-size:54px;font-weight:700;line-height:1}
+.gauge .of{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.verdict{display:flex;flex-direction:column;gap:10px;min-width:0}
+.pill{display:inline-flex;align-items:center;gap:6px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:99px;width:max-content}
+.pill.crit{background:var(--crit-soft);color:var(--crit)}.pill.warn{background:var(--warn-soft);color:var(--warn)}.pill.ok{background:var(--ok-soft);color:var(--ok)}
+.pill i{width:7px;height:7px;border-radius:50%;background:currentColor}
+.verdict p{margin:0;font-size:19px;max-width:62ch}
+.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.part{display:flex;flex-direction:column;gap:4px}
+.part .bar{height:5px;background:var(--sunk);border-radius:3px;overflow:hidden}
+.part .bar b{display:block;height:100%;width:0;background:var(--accent);border-radius:3px;transition:width 1s ease .3s}
+.part span{font-size:13px;color:var(--muted)}
+/* KPIs */
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.kpi .v{font-size:38px;font-weight:700;line-height:1.05}
+.kpi .s{font-size:13px;color:var(--muted)}
+.kpi.crit .v{color:var(--crit)}.kpi.warn .v{color:var(--warn)}
+.row2{display:grid;grid-template-columns:1.4fr 1fr;gap:18px}
+/* Flujo */
+#flow{width:100%;height:auto;display:block}
+.legend{display:flex;gap:14px;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+/* Estados */
+.stack{display:flex;height:16px;border-radius:8px;overflow:hidden;background:var(--sunk);margin-bottom:14px}
+.stack b{height:100%;width:0;transition:width 1s ease}
+.slist{display:flex;flex-direction:column;gap:8px}
+.srow{display:grid;grid-template-columns:12px 1fr auto;gap:10px;align-items:center;font-size:15px}
+.srow i{width:10px;height:10px;border-radius:3px}
+.srow small{color:var(--muted);font-size:12px;display:block}
+/* Personas */
+.people{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+.person{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
+.person .nm{display:flex;align-items:center;gap:10px}
+.av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
+.person .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:left}
+.person .nums b{display:block;font-size:22px;line-height:1.1}
+.person .nums span{font-size:11px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
+.minibar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--sunk)}
+.minibar b{height:100%}
+/* Hallazgos */
+.finds{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.find{display:grid;grid-template-columns:4px 1fr;gap:12px;padding:12px 14px 12px 0;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
+.find .stripe{border-radius:0 3px 3px 0}
+.find h3{margin:0 0 3px;font-size:16px}
+.find p{margin:0;font-size:14px;color:var(--muted)}
+.find a{color:var(--accent)}
+/* Lista */
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+.chip{all:unset;cursor:pointer;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tasks{display:flex;flex-direction:column}
+.task{display:grid;grid-template-columns:4px minmax(0,1fr) auto;gap:12px;align-items:center;padding:11px 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}
+.task:hover .tt{color:var(--accent)}
+.task .sev{align-self:stretch;border-radius:2px}
+.task .tt{font-size:15px;line-height:1.3}
+.task .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.task .tag{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.tag.crit{background:var(--crit-soft);color:var(--crit)}.tag.warn{background:var(--warn-soft);color:var(--warn)}.tag.ok{background:var(--ok-soft);color:var(--ok)}.tag.mut{background:var(--sunk);color:var(--muted)}
+.foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
+@media (max-width:820px){.row2{grid-template-columns:1fr}.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:520px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.verdict{align-items:center}.parts{text-align:left;width:100%}.gauge{width:160px;height:160px}}
+:root[data-view="mobile"] .row2{grid-template-columns:1fr}
+:root[data-view="mobile"] .kpis{grid-template-columns:repeat(2,1fr)}
+:root[data-view="mobile"] .hero{grid-template-columns:1fr;justify-items:center;text-align:center}
+:root[data-view="mobile"] .verdict{align-items:center}
+:root[data-view="mobile"] .parts{text-align:left;width:100%}
+:root[data-view="mobile"] .people,:root[data-view="mobile"] .finds{grid-template-columns:1fr}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="meta">
+      <span class="label">Next Level Demographic · Jira · espacio NLD</span>
+      <h1>Termómetro NLD</h1>
+      <span class="stamp" id="stamp"></span>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Vista">
+        <button data-v="mobile" aria-label="Vista móvil" title="Móvil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+        <button data-v="tablet" aria-label="Vista iPad" title="iPad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+        <button data-v="desktop" aria-label="Vista navegador" title="Navegador"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+      </div>
+      <div class="seg" role="group" aria-label="Tema">
+        <button data-t="light" aria-label="Tema claro" title="Claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button data-t="dark" aria-label="Tema oscuro" title="Oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="panel hero" aria-label="Termómetro general">
+    <div class="gauge">
+      <svg viewBox="0 0 120 120"><circle class="track" cx="60" cy="60" r="52" fill="none" stroke-width="10"/><circle id="gval" class="val" cx="60" cy="60" r="52" fill="none" stroke-width="10"/></svg>
+      <div class="center"><div><div class="score num" id="score">0</div><div class="of">DE 100</div></div></div>
+    </div>
+    <div class="verdict">
+      <span class="pill" id="pill"><i></i><span id="pilltxt"></span></span>
+      <p id="verdict"></p>
+      <div class="parts" id="parts"></div>
+    </div>
+  </section>
+
+  <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+
+  <div class="row2">
+    <section class="panel">
+      <div class="panel-h"><h2>Flujo mensual</h2><div class="legend"><span><i style="background:var(--line)"></i>Creadas</span><span><i style="background:var(--accent)"></i>Cerradas</span></div></div>
+      <svg id="flow" viewBox="0 0 560 230" role="img" aria-label="Tareas creadas y cerradas por mes"></svg>
+    </section>
+    <section class="panel">
+      <div class="panel-h"><h2>Dónde están las abiertas</h2><span class="label num" id="opencount"></span></div>
+      <div class="stack" id="stack"></div>
+      <div class="slist" id="slist"></div>
+    </section>
+  </div>
+
+  <section class="panel">
+    <div class="panel-h"><h2>Carga por persona</h2><span class="label">abiertas · vencidas · sin mover &gt;30 d</span></div>
+    <div class="people" id="people"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h"><h2>Hallazgos de la auditoría</h2><span class="label" id="findcount"></span></div>
+    <div class="finds" id="finds"></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-h"><h2>Cada tarea abierta</h2><span class="label">ordenadas por riesgo</span></div>
+    <div class="filters" id="filters"></div>
+    <div class="tasks" id="tasks"></div>
+  </section>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+/* ===== DATOS — la tarea programada reemplaza solo este bloque ===== */
+const META = {
+  cutoff: "2026-11-01",
+  generated: "2026-11-01T19:30:00-06:00",
+  next: "lunes 2 nov · 6:46 a. m.",
+  site: "https://nextleveldemographic-team.atlassian.net/browse/",
+  totals: { all: 238, done: 198, discarded: 10, resolved30: 4, created30: 4 },
+  months: [
+    { m: "jun", created: 37, resolved: 10 },
+    { m: "jul", created: 9,  resolved: 18 },
+    { m: "ago", created: 49, resolved: 49 },
+    { m: "sep", created: 2,  resolved: 6 },
+    { m: "oct", created: 4,  resolved: 4 }
+  ],
+  aliases: { "jose_antodiaz": "José Antonio Díaz Reyes" },
+  notes: [
+    { sev: "warn", t: "Anthony no aparece en ninguna tarea abierta", d: "Lleva contenido, edición y redes, pero su trabajo no se ve en Jira. El termómetro no puede medir lo que no está registrado." }
+  ]
+};
+// [clave, resumen, responsable, prioridad, estado, creada, actualizada, vence, padre]
+const ISSUES = [
+ ["NLD-167","Sesión de marca personal - Rutina","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-03-28","2026-05-11","2026-06-03",null],
+ ["NLD-225","Proyecto Cazador - Desarrolladoras Inmobiliarias","Aniano Mabunda","Highest","En curso","2026-06-27","2026-06-27","2026-07-28",null],
+ ["NLD-232","Contenido - Tomas dron - Ciudades BCR","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-06-27",null,"NLD-231"],
+ ["NLD-233","Contenido de 2 emprendimientos de Comasagua y 1 lotificación","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-06-27",null,"NLD-231"],
+ ["NLD-234","Contenido en Cedart (museo), Centro Histórico","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-06-27",null,"NLD-231"],
+ ["NLD-236","Desarrollo de contenido - Teatro Nacional","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-06-27",null,"NLD-231"],
+ ["NLD-240","Test 1 - Contenido de emprendedores","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-06-27",null,"NLD-231"],
+ ["NLD-205","Adquisición de Microsoft Business Team","Luis Gonzalez","Medium","Pendiente de Iniciar","2026-04-27","2026-06-27","2026-12-31",null],
+ ["NLD-198","Crear un bot para contestar las redes sociales","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-04-18","2026-06-27","2026-07-31",null],
+ ["NLD-177","Update de Plataforma Next Level Demographic","Luis Gonzalez","Highest","Long Time","2026-03-30","2026-07-05","2026-12-31",null],
+ ["NLD-112","Iniciativa Activos Extraordinarios","Luis Gonzalez","Highest","EN EL RADAR","2025-11-27","2026-07-05","2026-12-28",null],
+ ["NLD-193","Claude como asesor de campañas de marketing en redes","Luis Gonzalez","Medium","En curso","2026-04-14","2026-07-05","2026-07-31",null],
+ ["NLD-226","Creación de canal secundario","José Antonio Díaz Reyes","Medium","EN EL RADAR","2026-06-27","2026-07-05","2026-09-30",null],
+ ["NLD-163","Acuerdo de Participación Accionaria","Luis Gonzalez","Highest","EN EL RADAR","2026-03-25","2026-07-05","2026-05-31",null],
+ ["NLD-227","Invest Directorio - Inmobiliarias","Ivette Alvarado","Highest","EN EL RADAR","2026-06-27","2026-07-05","2026-11-30",null],
+ ["NLD-231","Creación de Contenido","José Antonio Díaz Reyes","Medium","Long Time","2026-06-27","2026-07-05",null,null],
+ ["NLD-249","Equifax - Oportunidad de negocio","Luis Gonzalez","Medium","EN EL RADAR","2026-06-29","2026-07-06","2026-08-31",null],
+ ["NLD-179","Contenido sobre la red hospitalaria del país","José Antonio Díaz Reyes","Medium","En curso","2026-03-31","2026-07-11",null,null],
+ ["NLD-228","Formulario Invest para la categoría Bienes Raíces","Ivette Alvarado","Highest","EN EL RADAR","2026-06-27","2026-07-11","2026-11-30","NLD-227"],
+ ["NLD-252","Whatchimp Review","Luis Gonzalez","Medium","Pendiente de Iniciar","2026-07-11","2026-07-19",null,null],
+ ["NLD-266","Rutas realizadas","Ivette Alvarado","Medium","Long Time","2026-08-14","2026-08-24",null,null],
+ ["NLD-4","Revisión de contrato de prestación de servicios","Luis Gonzalez","Highest","EN EL RADAR","2025-09-07","2026-08-25","2026-08-31",null],
+ ["NLD-258","Adquisición de luces para el set ($200)","Luis Gonzalez","Medium","En curso","2026-07-31","2026-08-27","2026-08-14",null],
+ ["NLD-254","Estrategia de contenido: sinergia con Turs.Latam","José Antonio Díaz Reyes","Highest","Pendiente de Iniciar","2026-07-26","2026-08-27","2026-08-08",null],
+ ["NLD-220","Verificación de META","Ivette Alvarado","Medium","En curso","2026-06-27","2026-08-27",null,null],
+ ["NLD-155","Tarjetas de presentación para el equipo","Aniano Mabunda","High","En curso","2026-03-25","2026-08-27","2026-05-16",null],
+ ["NLD-238","Ruta de lugares turísticos en 24 horas (2 de 3)","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-08-27",null,"NLD-231"],
+ ["NLD-242","Restaurantes carretera a Comasagua","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-08-27",null,"NLD-231"],
+ ["NLD-244","Contenido sobre vehículos Off Road","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-08-27",null,"NLD-231"],
+ ["NLD-245","Contenido sobre la red hospitalaria del país","José Antonio Díaz Reyes","Medium","Pendiente de Iniciar","2026-06-27","2026-08-27",null,"NLD-231"],
+ ["NLD-239","Ruta de parques (Plaza Principito, Paseo El Carmen)","José Antonio Díaz Reyes","Medium","En curso","2026-06-27","2026-08-28",null,"NLD-231"],
+ ["NLD-259","Cuentas de Spotify y Apple Music para el podcast","jose_antodiaz","High","En curso","2026-08-01","2026-08-28","2026-08-07",null],
+ ["NLD-274","Visita de espacios para grabar el podcast","Ivette Alvarado","Medium","En curso","2026-08-19","2026-08-30",null,null],
+ ["NLD-230","Aliado en EE. UU. que refiera clientes que venden su casa allá","kevinpp-213","Highest","En curso","2026-06-27","2026-09-01","2026-09-30",null],
+ ["NLD-309","Renovación de matrícula de empresa","Luis Gonzalez","Highest","En curso","2026-09-07","2026-09-07","2026-11-02",null],
+ ["NLD-22","Registro de marca en El Salvador","Ivette Alvarado","Highest","En curso","2025-09-07","2026-09-30","2026-11-30",null],
+ ["NLD-310","Benchmark de Propi - Compra inmediata","Ivette Alvarado","Medium","Pendiente de Iniciar","2026-10-26","2026-10-26",null,null],
+ ["NLD-311","Benchmark de Propi - Proyectos en planos","Ivette Alvarado","Medium","Pendiente de Iniciar","2026-10-26","2026-10-26",null,null],
+ ["NLD-312","Propuestas publicitarias - Tomas de dron y videos con IA","Ivette Alvarado","Medium","Pendiente de Iniciar","2026-10-26","2026-10-26",null,null],
+ ["NLD-313","Campaña de captación de leads - Apartamentos por zona","Ivette Alvarado","Medium","Pendiente de Iniciar","2026-10-26","2026-10-26",null,null]
+];
+/* ===== FIN DE DATOS ===== */
+
+const $=s=>document.querySelector(s), root=document.documentElement;
+const day=s=>new Date(s+"T12:00:00-06:00");
+const TODAY=day(META.cutoff), DMS=864e5;
+const diff=(a,b)=>Math.round((b-a)/DMS);
+const STATUS={"Pendiente de Iniciar":{c:"var(--muted)",g:"Por hacer"},"EN EL RADAR":{c:"#8B7CF6",g:"Por hacer"},"En curso":{c:"var(--accent)",g:"En curso"},"Long Time":{c:"var(--warn)",g:"En curso"}};
+const PW={Highest:3,High:2,Medium:1,Low:.5,Lowest:.3};
+const PES={Highest:"Máxima",High:"Alta",Medium:"Media",Low:"Baja",Lowest:"Mínima"};
+
+const tasks=ISSUES.map(([key,sum,who,pri,st,cr,up,due,parent])=>{
+  const person=META.aliases[who]||who;
+  const stale=diff(day(up),TODAY);
+  const dueIn=due?diff(TODAY,day(due)):null;
+  const overdue=dueIn!==null&&dueIn<0?-dueIn:0;
+  const risk=PW[pri]*(1+overdue/20)+stale/30+(dueIn!==null&&dueIn>=0&&dueIn<=7?6:0);
+  return {key,sum,who,person,pri,st,cr,up,due,parent,stale,dueIn,overdue,risk};
+});
+const open=tasks.length, withDue=tasks.filter(t=>t.due), overdue=tasks.filter(t=>t.overdue);
+const stale30=tasks.filter(t=>t.stale>30), fresh=open-stale30.length;
+const soon=tasks.filter(t=>t.dueIn!==null&&t.dueIn>=0&&t.dueIn<=7);
+
+/* Termómetro: frescura 40 + puntualidad 35 + ritmo de cierre 25 */
+const pFresh=fresh/open, pTime=withDue.length?1-overdue.length/withDue.length:1;
+const pPace=Math.min(1,META.totals.resolved30/Math.max(1,open*.25));
+const score=Math.round(40*pFresh+35*pTime+25*pPace);
+const lvl=score<40?"crit":score<70?"warn":"ok";
+$("#pill").className="pill "+lvl;
+$("#pilltxt").textContent={crit:"Crítico",warn:"Atención",ok:"Saludable"}[lvl];
+$("#verdict").textContent=
+  `${stale30.length} de ${open} tareas abiertas llevan más de 30 días sin moverse y ${overdue.length} de ${withDue.length} con fecha ya vencieron. En los últimos 30 días se cerraron ${META.totals.resolved30}.`;
+$("#parts").innerHTML=[["Frescura",pFresh,"movidas en 30 d"],["Puntualidad",pTime,"con fecha al día"],["Ritmo",pPace,"cierre vs. meta"]]
+ .map(([n,v,s])=>`<div class="part"><div style="display:flex;justify-content:space-between"><strong>${n}</strong><span class="num">${Math.round(v*100)}%</span></div><div class="bar"><b data-w="${v*100}"></b></div><span>${s}</span></div>`).join("");
+const g=$("#gval"), C=2*Math.PI*52;
+g.style.stroke=`var(--${lvl})`; g.style.strokeDasharray=C; g.style.strokeDashoffset=C;
+
+/* KPIs */
+const kp=[["Abiertas",open,`${META.totals.done} cerradas de ${META.totals.all}`,""],
+ ["Vencidas",overdue.length,`de ${withDue.length} con fecha límite`,"crit"],
+ ["Sin mover +30 d",stale30.length,`${Math.round(stale30.length/open*100)}% de lo abierto`,"warn"],
+ ["Cerradas 30 d",META.totals.resolved30,`${META.totals.created30} creadas en el mismo periodo`,""]];
+$("#kpis").innerHTML=kp.map(([l,v,s,c])=>`<div class="kpi ${c}"><span class="label">${l}</span><span class="v num" data-n="${v}">0</span><span class="s">${s}</span></div>`).join("");
+
+/* Flujo */
+(function(){
+  const W=560,H=230,L=34,B=196,T=14,mx=Math.max(...META.months.flatMap(m=>[m.created,m.resolved]));
+  const top=Math.ceil(mx/10)*10, y=v=>B-(v/top)*(B-T), cw=(W-L-8)/META.months.length, bw=Math.min(26,cw/3.2);
+  let s="";
+  for(let v=0;v<=top;v+=top/4){s+=`<line x1="${L}" x2="${W-8}" y1="${y(v)}" y2="${y(v)}" stroke="var(--line)" stroke-width="1"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end" font-size="11" fill="var(--muted)" font-family="Courier Prime,monospace">${v}</text>`}
+  META.months.forEach((m,i)=>{const cx=L+cw*i+cw/2;
+    s+=`<rect class="fb" x="${cx-bw-2}" y="${B}" width="${bw}" height="0" rx="3" fill="var(--line)" data-y="${y(m.created)}" data-h="${B-y(m.created)}"/>`;
+    s+=`<rect class="fb" x="${cx+2}" y="${B}" width="${bw}" height="0" rx="3" fill="var(--accent)" data-y="${y(m.resolved)}" data-h="${B-y(m.resolved)}"/>`;
+    s+=`<text x="${cx+bw/2+2}" y="${y(m.resolved)-6}" text-anchor="middle" font-size="11" fill="var(--fg)" font-family="Courier Prime,monospace">${m.resolved}</text>`;
+    s+=`<text x="${cx}" y="${B+20}" text-anchor="middle" font-size="12" fill="var(--muted)" font-family="Courier Prime,monospace">${m.m.toUpperCase()}</text>`;});
+  $("#flow").innerHTML=s;
+})();
+
+/* Estados */
+const byS={};tasks.forEach(t=>(byS[t.st]=byS[t.st]||[]).push(t));
+const order=["En curso","Long Time","EN EL RADAR","Pendiente de Iniciar"].filter(s=>byS[s]);
+$("#opencount").textContent=open+" abiertas";
+$("#stack").innerHTML=order.map(s=>`<b style="background:${STATUS[s].c}" data-w="${byS[s].length/open*100}" title="${s}"></b>`).join("");
+$("#slist").innerHTML=order.map(s=>{const a=byS[s], st=a.filter(t=>t.stale>30).length;
+  return `<div class="srow"><i style="background:${STATUS[s].c}"></i><div>${s}<small>${STATUS[s].g} · ${st} sin mover +30 d</small></div><strong class="num">${a.length}</strong></div>`}).join("");
+
+/* Personas */
+const byP={};tasks.forEach(t=>(byP[t.person]=byP[t.person]||[]).push(t));
+const people=Object.entries(byP).sort((a,b)=>b[1].length-a[1].length);
+$("#people").innerHTML=people.map(([p,a])=>{
+  const ov=a.filter(t=>t.overdue).length, st=a.filter(t=>t.stale>30).length, last=Math.min(...a.map(t=>t.stale));
+  const ini=p.replace(/[^A-Za-zÁÉÍÓÚáéíóúñÑ ]/g," ").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
+  const seg=order.map(s=>{const n=a.filter(t=>t.st===s).length;return n?`<b style="width:${n/a.length*100}%;background:${STATUS[s].c}"></b>`:""}).join("");
+  return `<div class="person"><div class="nm"><span class="av">${ini}</span><div><strong>${p}</strong><div class="label" style="letter-spacing:.04em;text-transform:none">último movimiento hace ${last} d</div></div></div>
+  <div class="nums num"><div><b>${a.length}</b><span>Abiertas</span></div><div><b style="color:${ov?"var(--crit)":"inherit"}">${ov}</b><span>Vencidas</span></div><div><b style="color:${st?"var(--warn)":"inherit"}">${st}</b><span>+30 d</span></div></div>
+  <div class="minibar">${seg}</div></div>`}).join("");
+
+/* Hallazgos */
+const link=k=>`<a href="${META.site}${k}" target="_blank" rel="noopener">${k}</a>`;
+const F=[];
+soon.forEach(t=>F.push({sev:"crit",t:`${t.key} vence ${t.dueIn===0?"hoy":t.dueIn===1?"mañana":"en "+t.dueIn+" días"}`,d:`${t.sum}. Prioridad ${PES[t.pri].toLowerCase()} y sin movimiento hace ${t.stale} días. ${link(t.key)}`}));
+const hiOv=overdue.filter(t=>t.pri==="Highest");
+if(hiOv.length)F.push({sev:"crit",t:`${hiOv.length} tareas de prioridad máxima vencidas`,d:hiOv.map(t=>`${link(t.key)} ${t.sum} (${t.overdue} d)`).join(" · ")});
+const radar=tasks.filter(t=>t.st==="EN EL RADAR"&&t.pri==="Highest");
+if(radar.length)F.push({sev:"warn",t:`${radar.length} tareas "máxima" siguen en el radar`,d:"Si es máxima prioridad debería estar en curso; si está en el radar, la prioridad está inflada. "+radar.map(t=>link(t.key)).join(", ")});
+const subs=tasks.filter(t=>t.parent);const parents={};subs.forEach(t=>(parents[t.parent]=parents[t.parent]||[]).push(t));
+Object.entries(parents).filter(([,a])=>a.length>=5).forEach(([p,a])=>F.push({sev:"warn",t:`${p} acumula ${a.length} subtareas abiertas`,d:`${a.filter(t=>!t.due).length} sin fecha límite y ${a.filter(t=>t.stale>30).length} sin moverse en más de 30 días. Es un backlog de ideas de contenido, no un plan. ${link(p)}`}));
+const norm=s=>s.toLowerCase().normalize("NFD").replace(/[^a-z ]/g,"").replace(/\s+/g," ").trim();
+const seen={};tasks.forEach(t=>{const n=norm(t.sum);(seen[n]=seen[n]||[]).push(t.key)});
+Object.values(seen).filter(a=>a.length>1).forEach(a=>F.push({sev:"warn",t:"Tarea duplicada",d:`${a.map(link).join(" y ")} tienen el mismo título. Cerrar una o enlazarlas.`}));
+const nodue=tasks.filter(t=>!t.due);
+F.push({sev:"warn",t:`${nodue.length} tareas abiertas sin fecha límite`,d:`${Math.round(nodue.length/open*100)}% de lo abierto no puede vencer, así que nunca aparece como atrasado.`});
+Object.entries(META.aliases).forEach(([a,b])=>{if(tasks.some(t=>t.who===a))F.push({sev:"warn",t:"Una persona, dos cuentas",d:`"${a}" y "${b}" parecen la misma persona. Unificar para que la carga por persona sea real.`})});
+const unknown=tasks.filter(t=>/^[a-z0-9_-]+$/.test(t.who)&&!META.aliases[t.who]);
+unknown.forEach(t=>F.push({sev:"warn",t:`Responsable sin nombre: ${t.who}`,d:`${link(t.key)} ${t.sum}. Confirmar quién es y si sigue activo.`}));
+META.notes.forEach(n=>F.push(n));
+const rank={crit:0,warn:1,ok:2};F.sort((a,b)=>rank[a.sev]-rank[b.sev]);
+$("#findcount").textContent=F.length+" hallazgos";
+$("#finds").innerHTML=F.map(f=>`<div class="find"><span class="stripe" style="background:var(--${f.sev})"></span><div><h3>${f.t}</h3><p>${f.d}</p></div></div>`).join("");
+
+/* Lista */
+let filt="Todas";
+const opts=["Todas","Vencidas","+30 días",...people.map(p=>p[0])];
+function drawFilters(){$("#filters").innerHTML=opts.map(o=>`<button class="chip" aria-pressed="${o===filt}" data-f="${o}">${o.split(" ")[0]}</button>`).join("")}
+function drawTasks(){
+  let a=[...tasks].sort((x,y)=>y.risk-x.risk);
+  if(filt==="Vencidas")a=a.filter(t=>t.overdue);else if(filt==="+30 días")a=a.filter(t=>t.stale>30);else if(filt!=="Todas")a=a.filter(t=>t.person===filt);
+  $("#tasks").innerHTML=a.map(t=>{
+    const sev=t.overdue||(t.dueIn!==null&&t.dueIn<=7&&t.dueIn>=0)?"crit":t.stale>60?"warn":t.stale>30?"warn":"ok";
+    const tag=t.overdue?`<span class="tag crit">Vencida ${t.overdue} d</span>`:t.dueIn!==null&&t.dueIn<=7?`<span class="tag crit">Vence en ${t.dueIn} d</span>`:t.due?`<span class="tag mut">${t.due.slice(5).split("-").reverse().join("/")}</span>`:`<span class="tag mut">Sin fecha</span>`;
+    return `<a class="task" href="${META.site}${t.key}" target="_blank" rel="noopener"><span class="sev" style="background:var(--${sev})"></span>
+    <div style="min-width:0"><div class="tt">${t.sum}</div><div class="sub"><span>${t.key}</span><span>${t.person.split(" ")[0]}</span><span>${t.st}</span><span>${PES[t.pri]}</span><span>sin mover ${t.stale} d</span></div></div>${tag}</a>`}).join("")||`<p style="color:var(--muted)">Nada en este filtro.</p>`;
+}
+$("#filters").addEventListener("click",e=>{const b=e.target.closest("[data-f]");if(!b)return;filt=b.dataset.f;drawFilters();drawTasks()});
+drawFilters();drawTasks();
+
+/* Encabezado y pie */
+const fmt=new Intl.DateTimeFormat("es-SV",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit"});
+$("#stamp").textContent=`Corte: ${fmt.format(new Date(META.generated))} · próxima: ${META.next}`;
+$("#foot").innerHTML=`Fuente: Jira, proyecto NLD · ${META.totals.all} tareas en total, ${META.totals.discarded} descartadas.<br>Termómetro = frescura (40) + puntualidad (35) + ritmo de cierre (25). Se actualiza lunes, miércoles y viernes.`;
+
+/* Vista y tema (iconos) */
+function setView(v){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));try{localStorage.setItem("tnld-view",v)}catch(e){}}
+function curTheme(){return root.dataset.theme||(matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light")}
+function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("tnld-theme",t)}catch(e){}}
+let sv=null,st=null;try{sv=localStorage.getItem("tnld-view");st=localStorage.getItem("tnld-theme")}catch(e){}
+setView(sv||(innerWidth<600?"mobile":innerWidth<1000?"tablet":"desktop"));
+if(st)setTheme(st);else document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===curTheme()));
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v));
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>setTheme(b.dataset.t,true));
+
+/* Animación de entrada sobria */
+const still=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function finish(){
+  g.style.strokeDashoffset=C*(1-score/100);
+  document.querySelectorAll("[data-w]").forEach(b=>b.style.width=b.dataset.w+"%");
+  if(still)document.querySelectorAll(".fb").forEach(r=>{r.setAttribute("y",r.dataset.y);r.setAttribute("height",r.dataset.h)});
+}
+function count(el,to){if(still){el.textContent=to;return}const t0=performance.now();(function f(n){const p=Math.min(1,(n-t0)/1000);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(t0)}
+if(still){finish();$("#score").textContent=score;document.querySelectorAll("[data-n]").forEach(e=>e.textContent=e.dataset.n)}
+else{
+  requestAnimationFrame(()=>requestAnimationFrame(finish));
+  count($("#score"),score);document.querySelectorAll("[data-n]").forEach(e=>count(e,+e.dataset.n));
+  const bars=[...document.querySelectorAll(".fb")],t0=performance.now();
+  (function grow(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);bars.forEach(r=>{const h=r.dataset.h*e;r.setAttribute("height",h);r.setAttribute("y",196-h)});if(p<1)requestAnimationFrame(grow)})(t0);
+}
+</script>

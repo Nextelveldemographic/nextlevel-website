@@ -1,3 +1,15 @@
 {
-  "cleanUrls": true
+  "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/olympus",
+      "destination": "/tools",
+      "permanent": false
+    },
+    {
+      "source": "/olympus/:path*",
+      "destination": "/tools/:path*",
+      "permanent": false
+    }
+  ]
 }

@@ -3282,14 +3282,10 @@ body.qv-lock{overflow:hidden}
 <section id="scene-hero" data-scene>
   <div class="wrap">
     <div class="hero-eb anim" data-i18n="hero_badge">Para la diáspora salvadoreña</div>
-    <h1 class="hero-h anim d1" data-i18n="hero_h1">Volvé. <br>El país <em>ya está listo.</em> <br>¿Y vos?</h1>
-    <p class="hero-sub anim d2" data-i18n="hero_sub">Retirate donde nacieron tus recuerdos. Nosotros nos encargamos de todo lo demás — sin costo para vos.</p>
-    <div class="intent-toggle anim d3" role="tablist" aria-label="Objetivo">
-      <button type="button" class="intent-btn active" data-intent="retiro" onclick="setIntent('retiro')" role="tab" aria-selected="true">🌴️ <span data-i18n="intent_retiro">Retiro</span></button>
-      <button type="button" class="intent-btn" data-intent="inversion" onclick="setIntent('inversion')" role="tab" aria-selected="false">📈️ <span data-i18n="intent_inversion">Inversión</span></button>
-      <button type="button" class="intent-btn" data-intent="segunda" onclick="setIntent('segunda')" role="tab" aria-selected="false">🏡️ <span data-i18n="intent_segunda">Segunda casa</span></button>
-    </div>
-    <div class="hero-btns anim d4"><a href="#contacto" class="btn-blue" data-i18n="hero_btn1">Ver cómo se ve tu retiro</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
+    <h1 class="hero-h anim d1" data-i18n="hero_h1">Tu tierra. Tu dinero. <br><em>Tu próximo nivel.</em></h1>
+    <p class="hero-sub anim d2" data-i18n="hero_sub">¿Pensás retirarte o invertir en El Salvador? Next Level Demographic te acompaña de principio a fin, sin costo para vos.</p>
+    <!-- Selector Retiro/Inversion/Segunda casa retirado (nov 2026): la portada es una sola frase. -->
+    <div class="hero-btns anim d4"><a href="#scene-projects" class="btn-blue" data-i18n="hero_btn1">Ver proyectos</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
   </div>
 </section>
 
@@ -4622,6 +4618,8 @@ document.addEventListener('click',ev=>{
 
 function setIntent(i){
   curIntent=i;
+  /* Sin selector en la portada (nov 2026) el titular queda fijo: no se reescribe por intencion. */
+  if(!document.querySelector('#scene-hero .intent-toggle'))return;
   document.querySelectorAll(".intent-btn").forEach(b=>{
     const on=b.getAttribute("data-intent")===i;
     b.classList.toggle("active",on);
@@ -5746,7 +5744,7 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
   }
 
   function start(){
-    if(stopped||reduce())return;
+    if(stopped||reduce()||!document.querySelector('#scene-hero .intent-toggle'))return;
     stop();
     timer=setInterval(next,5500);
   }
@@ -8684,6 +8682,20 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',pintarTarjetas); else pintarTarjetas();
 })();
 </script>
+<script>
+/* ===== Portada (nov 2026): una sola frase en los seis idiomas ===== */
+(function(){
+ var H={
+  es:{hero_h1:'Tu tierra. Tu dinero. <br><em>Tu próximo nivel.</em>',hero_sub:'¿Pensás retirarte o invertir en El Salvador? Next Level Demographic te acompaña de principio a fin, sin costo para vos.',hero_btn1:'Ver proyectos'},
+  en:{hero_h1:'Your homeland. Your money. <br><em>Your next level.</em>',hero_sub:'Thinking about retiring or investing in El Salvador? Next Level Demographic guides you from start to finish, at no cost to you.',hero_btn1:'See projects',hero_badge:'For the Salvadoran diaspora'},
+  fr:{hero_h1:'Votre terre. Votre argent. <br><em>Votre prochain niveau.</em>',hero_sub:'Vous pensez prendre votre retraite ou investir au Salvador ? Next Level Demographic vous accompagne du début à la fin, sans frais pour vous.',hero_btn1:'Voir les projets',hero_badge:'Pour la diaspora salvadorienne'},
+  it:{hero_h1:'La tua terra. I tuoi soldi. <br><em>Il tuo prossimo livello.</em>',hero_sub:'Pensi di andare in pensione o investire in El Salvador? Next Level Demographic ti accompagna dall’inizio alla fine, senza costi per te.',hero_btn1:'Vedi i progetti',hero_badge:'Per la diaspora salvadoregna'},
+  de:{hero_h1:'Ihre Heimat. Ihr Geld. <br><em>Ihr nächstes Level.</em>',hero_sub:'Sie denken an Ruhestand oder eine Investition in El Salvador? Next Level Demographic begleitet Sie von Anfang bis Ende, ohne Kosten für Sie.',hero_btn1:'Projekte ansehen',hero_badge:'Für die salvadorianische Diaspora'},
+  pt:{hero_h1:'Sua terra. Seu dinheiro. <br><em>Seu próximo nível.</em>',hero_sub:'Pensando em se aposentar ou investir em El Salvador? A Next Level Demographic acompanha você do início ao fim, sem custo para você.',hero_btn1:'Ver projetos',hero_badge:'Para a diáspora salvadorenha'}
+ };
+ try{Object.keys(H).forEach(function(l){if(I18N[l])Object.assign(I18N[l],H[l]);});}catch(e){}
+})();
+</script>
 <!-- ===== NLD Plus (nov 2026): herramientas del portafolio =====
      Filtros extra, colecciones, etiquetas de inversion, favoritos, comparador,
      busqueda guardada y calculadoras. Todo vive en el navegador del visitante:
@@ -8716,6 +8728,7 @@ document.addEventListener('DOMContentLoaded',function(){setInv(location.hash==='
 #scene-projects .proj-badges{max-width:calc(100% - 92px)}
 .np-bar{position:fixed;left:50%;bottom:18px;transform:translate(-50%,140%);z-index:900;display:flex;gap:10px;align-items:center;padding:10px 10px 10px 18px;border-radius:var(--r-pill);background:var(--dark);color:var(--w);font-size:var(--fs-14);box-shadow:0 10px 30px rgba(0,0,0,.25);transition:transform .35s var(--ease);max-width:calc(100% - 120px)}
 .np-bar.show{transform:translate(-50%,0)}
+.np-bar:not(.show){visibility:hidden;opacity:0;pointer-events:none}
 .np-bar span{white-space:nowrap}
 .np-bar button{font-family:inherit;border:none;cursor:pointer;border-radius:var(--r-pill);padding:9px 16px;font-size:var(--fs-13);font-weight:600}
 .np-bar .go{background:var(--blue);color:#fff}

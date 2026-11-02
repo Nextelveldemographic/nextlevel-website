@@ -1,4 +1,4 @@
-// NLD Tools — candado de acceso para /tools
+// Olympus — candado de acceso para /tools
 // ------------------------------------------------------------
 // Solo corre en /tools y sus subrutas (ver `config.matcher`).
 // El resto de nextleveldemographic.com no pasa por aquí.
@@ -225,12 +225,12 @@ function loginPage({ destino = '/tools', correo = '', error = '', status = 401 }
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<title>NLD Tools · Acceso</title>
+<title>Olympus · Acceso</title>
 <link rel="icon" href="/assets/logo.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NLD Tools">
+<meta name="apple-mobile-web-app-title" content="Olympus">
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>try{if(localStorage.getItem('nld_tools_tema')==='oscuro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
 <style>
@@ -267,7 +267,7 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
 <body>
 <main class="card">
   <div class="brand"><span class="logo" aria-hidden="true"></span><b>Next Level Demographic</b></div>
-  <p class="eyebrow">NLD Tools</p>
+  <p class="eyebrow">Olympus</p>
   <h1>Acceso del equipo</h1>
   <p class="sub">Herramientas internas de NLD. Entra con tu correo y tu contraseña.</p>
   ${error ? `<p class="err" role="alert">${esc(error)}</p>` : ''}

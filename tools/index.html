@@ -8,13 +8,13 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="NLD Tools">
-<title>NLD Tools</title>
+<meta name="apple-mobile-web-app-title" content="Olympus">
+<title>Olympus</title>
 <link rel="icon" href="/assets/logo.png">
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>try{if(localStorage.getItem('nld_tools_tema')==='oscuro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
 <style>
-/* NLD Tools — portada privada del equipo.
+/* Olympus — portada privada del equipo.
    Sistema visual NLD (versión clara por defecto, oscuro opcional con data-tema).
    El único motivo visual es el círculo numerado azul. */
 :root{
@@ -86,7 +86,7 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 .back[hidden]{display:none}
 .back svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 @media (min-width:900px){:root{--max:var(--max-wide)}.list{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:18px}.lead{max-width:44em}}
-/* ancho estándar NLD Tools: la fila se llena sola con auto-fit */
+/* ancho estándar Olympus: la fila se llena sola con auto-fit */
 .tool{position:relative;display:grid;grid-template-columns:auto 1fr;gap:16px;align-items:start;
   background:var(--card);border:1px solid var(--line);border-radius:22px;padding:22px 20px 20px;
   transition:transform .35s var(--ease),box-shadow .35s var(--ease),border-color .35s var(--ease)}
@@ -117,7 +117,7 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 
 <header class="bar">
   <div class="wrap bar-in">
-    <a class="brand" href="/tools" aria-label="NLD Tools, inicio"><span class="logo" aria-hidden="true"></span><b>NLD <span>Tools</span></b></a>
+    <a class="brand" href="/tools" aria-label="Olympus, inicio"><span class="logo" aria-hidden="true"></span><b>NLD <span>Olympus</span></b></a>
     <div class="acts">
       <button class="ic" type="button" id="tema" aria-label="Cambiar tema" title="Cambiar tema">
         <svg class="moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14.2A8.5 8.5 0 0 1 9.8 3.5a8.5 8.5 0 1 0 10.7 10.7z"/></svg>
@@ -264,7 +264,7 @@ var HERRAMIENTAS = [
     if (a && deArea(a.id).length) {
       back.hidden = false; eb.textContent = a.nombre; h1.textContent = a.titulo; lead.textContent = a.texto;
       lista.innerHTML = deArea(a.id).map(tarjetaTool).join('');
-      document.title = a.nombre + ' · NLD Tools';
+      document.title = a.nombre + ' · Olympus';
     } else {
       back.hidden = true; eb.textContent = 'Herramientas internas'; h1.textContent = 'Lo que usamos en NLD, en un solo lugar.';
       lead.textContent = 'Elige un área para ver sus herramientas. Todo lo que está aquí es privado del equipo.';
@@ -276,7 +276,7 @@ var HERRAMIENTAS = [
           '<ul class="tl">'+ts.map(function(h){ return '<li>'+esc(h.nombre||h.titulo)+'</li>'; }).join('')+'</ul>'+
           '<div class="foot"><span class="meta">'+n+(n===1?' herramienta':' herramientas')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';
       }).join('');
-      document.title = 'NLD Tools';
+      document.title = 'Olympus';
     }
     reanima();
   }

@@ -253,6 +253,8 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -347,8 +349,8 @@ dialog#fdev{border:0;padding:0;border-radius:1.2rem;width:min(30rem,calc(100vw -
 dialog#fdev::backdrop{background:rgba(0,0,0,.55)}
 dialog#fdev .vd-card{border:0;padding:1.2rem 1.2rem 1.3rem}
 dialog#fdev .fdev-x{position:sticky;float:right;top:.6rem;margin:.6rem .6rem 0 0;background:var(--surface);color:var(--ink);z-index:2}
-.dev-fab{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--accent);color:var(--on-accent);font-size:.8rem;font-weight:700;padding:.6rem 1rem;border-radius:999px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.2)}
-.dev-fab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.dev-fab-x{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--accent);color:var(--on-accent);font-size:.8rem;font-weight:700;padding:.6rem 1rem;border-radius:999px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.dev-fab-x:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
 
 /* borrador de alianza */
@@ -367,6 +369,29 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
 .ox .fi-acts button.g{background:var(--surface);color:var(--ink);border:1px solid var(--line-soft)}
 .ox .fi-acts button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 .ox .note{margin-top:.5rem}
+
+/* pestañas */
+.tabs{position:sticky;top:0;z-index:35;display:grid;grid-template-columns:1fr 1fr;gap:.4rem;padding:.4rem;margin-inline:-.4rem;background:var(--bg);border-radius:1.1rem;box-shadow:0 1px 0 var(--line-soft)}
+.tabs button{all:unset;box-sizing:border-box;cursor:pointer;padding:.7rem 1rem;border-radius:.8rem;font-weight:700;font-size:1rem;color:var(--muted);background:var(--surface);display:flex;flex-direction:column;gap:.1rem}
+.tabs button span{font-size:.72rem;font-weight:500;color:var(--faint)}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent)}
+.tabs button[aria-selected="true"] span{color:var(--on-accent);opacity:.85}
+.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.tabpanel{display:flex;flex-direction:column;gap:2.6rem}
+.tabpanel[hidden],.wrap>[hidden]{display:none!important}
+/* ventanas más anchas en iPad y navegador */
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev{width:min(84rem,calc(100vw - 48px))}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev .vd-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);column-gap:2.2rem;align-items:start;padding:1.6rem 1.8rem 1.8rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev .vd-card>*{grid-column:1}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev .vd-card>.ox{grid-column:2;grid-row:1 / span 12;border-top:0;padding-top:0;border-left:1px solid var(--line-soft);padding-left:2.2rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev .vd-card>.vd-list{margin-top:.3rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#fdev h3{font-size:1.5rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) .ox textarea.ox-b{min-height:24rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha{width:min(84rem,calc(100vw - 48px))}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha[open]{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha .fi-img{position:sticky;top:0;aspect-ratio:auto;height:calc(100dvh - 32px);max-height:52rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha .fi-b{padding:1.6rem 1.8rem 1.8rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha h3{font-size:1.6rem}
 
 <!-- FICHAS:FIN -->
 </style>
@@ -396,9 +421,14 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
     <div class="stamp" id="stamp"></div>
   </header>
 <!-- FICHAS:INI -->
+  <nav class="full tabs" role="tablist" aria-label="Vistas del termómetro">
+    <button type="button" role="tab" id="tb-mercado" data-tab="mercado" aria-selected="true" aria-controls="tab-mercado">Mercado<span>Overview de Propi</span></button>
+    <button type="button" role="tab" id="tb-dev" data-tab="dev" aria-selected="false" aria-controls="tab-dev">Desarrolladoras<span>38 empresas · contacto y alianza</span></button>
+  </nav>
+  <div class="full tabpanel" id="tab-dev" role="tabpanel" aria-labelledby="tb-dev" hidden>
   <!-- acceso rápido · desarrolladoras -->
   <section class="full devq" id="dev-rapido" aria-labelledby="sq">
-    <div class="sh"><span class="dot">D</span><div><span class="eyebrow">Acceso rápido · contacto directo, sin pasar por Propi</span><h2 id="sq">Desarrolladoras de los proyectos en planos</h2></div></div>
+    <div class="sh"><span class="dot">01</span><div><span class="eyebrow">Acceso rápido · contacto directo, sin pasar por Propi</span><h2 id="sq">Desarrolladoras de los proyectos en planos</h2></div></div>
     <div class="dq-w">
       <input type="search" id="dq" placeholder="Busca una desarrolladora, un proyecto o una zona" aria-label="Buscar desarrolladora, proyecto o zona" autocomplete="off">
       <div class="dq-r" id="dq-r" hidden></div>
@@ -413,6 +443,28 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
     <div class="dq-links"><button type="button" class="vd-more" id="vd-more"></button><a href="#desarrolladoras">Tabla proyecto por proyecto</a><a href="#vista-dev">Tarjetas de las 38</a></div>
     <p class="note">Toca una desarrolladora para ver su tarjeta: contacto, rango de precios, entrega, zonas y proyectos. Cada proyecto abre su ficha con foto y descripción.</p>
   </section>
+  <!-- 08 · desarrolladoras -->
+  <section aria-labelledby="s8" class="full" id="desarrolladoras">
+    <div class="sh"><span class="dot">02</span><div><span class="eyebrow">Proyecto por proyecto · hover para contacto, clic para la ficha</span><h2 id="s8">Los 72 proyectos en planos y quién los desarrolla</h2></div></div>
+    <p class="note" id="dev-lead"></p>
+    <div class="devchips" id="dev-chips" role="group" aria-label="Filtrar por desarrolladora"></div>
+    <div class="devbar">
+      <div class="seg" id="dev-f" role="group" aria-label="Tipo de proyecto">
+        <button data-f="" aria-pressed="true">Todos</button><button data-f="a" aria-pressed="false">Apartamentos</button><button data-f="c" aria-pressed="false">Casas</button><button data-f="l" aria-pressed="false">Lotes</button>
+      </div>
+      <input type="search" id="dev-q" placeholder="Buscar proyecto, zona o desarrolladora" aria-label="Buscar proyecto, zona o desarrolladora">
+    </div>
+    <div class="tblw"><table class="tbl dtbl" id="dev-t"></table></div>
+    <p class="note">Pasa el cursor sobre un proyecto para ver quién lo desarrolla y cómo contactarlo; haz clic (o toca, en el teléfono) para abrir la ficha. Los contactos se buscaron en los sitios y perfiles propios de cada desarrolladora o proyecto, nunca en Propi. <span class="tag t-seg">Seguro</span> = visto en un canal oficial; <span class="tag t-pro">Probable</span> = sitio del proyecto, directorio o prensa; <span class="tag t-sup">Suposición</span> = sin canal propio encontrado. Conviene confirmar el teléfono antes de la primera llamada. Las fotos y descripciones son las que Propi publica de cada proyecto.</p>
+  </section>
+  <!-- 09 · vista por desarrolladora -->
+  <section aria-labelledby="s9" class="full" id="vista-dev">
+    <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
+    <p class="note">Tarjetas de las 38 desarrolladoras, en el orden que elijas en el módulo de arriba. <a href="#dev-rapido">Volver arriba</a></p>
+    <div class="vd-grid" id="vd-grid"></div>
+    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de arriba tiene los mismos datos proyecto por proyecto.</p>
+  </section>
+  </div>
 <!-- FICHAS:FIN -->
 
   <!-- 01 · qué cambió -->
@@ -484,31 +536,9 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
   </section>
 
 <!-- FICHAS:INI -->
-  <!-- 08 · desarrolladoras -->
-  <section aria-labelledby="s8" class="full" id="desarrolladoras">
-    <div class="sh"><span class="dot">08</span><div><span class="eyebrow">Quién está detrás · contacto directo, sin pasar por Propi</span><h2 id="s8">Desarrolladoras de los proyectos en planos</h2></div></div>
-    <p class="note" id="dev-lead"></p>
-    <div class="devchips" id="dev-chips" role="group" aria-label="Filtrar por desarrolladora"></div>
-    <div class="devbar">
-      <div class="seg" id="dev-f" role="group" aria-label="Tipo de proyecto">
-        <button data-f="" aria-pressed="true">Todos</button><button data-f="a" aria-pressed="false">Apartamentos</button><button data-f="c" aria-pressed="false">Casas</button><button data-f="l" aria-pressed="false">Lotes</button>
-      </div>
-      <input type="search" id="dev-q" placeholder="Buscar proyecto, zona o desarrolladora" aria-label="Buscar proyecto, zona o desarrolladora">
-    </div>
-    <div class="tblw"><table class="tbl dtbl" id="dev-t"></table></div>
-    <p class="note">Pasa el cursor sobre un proyecto para ver quién lo desarrolla y cómo contactarlo; haz clic (o toca, en el teléfono) para abrir la ficha. Los contactos se buscaron en los sitios y perfiles propios de cada desarrolladora o proyecto, nunca en Propi. <span class="tag t-seg">Seguro</span> = visto en un canal oficial; <span class="tag t-pro">Probable</span> = sitio del proyecto, directorio o prensa; <span class="tag t-sup">Suposición</span> = sin canal propio encontrado. Conviene confirmar el teléfono antes de la primera llamada. Las fotos y descripciones son las que Propi publica de cada proyecto.</p>
-  </section>
 <div id="dtip" role="tooltip" aria-hidden="true"></div>
 <dialog id="ficha" aria-labelledby="fi-h"></dialog>
 <dialog id="fdev" aria-label="Desarrolladora"></dialog>
-<a class="dev-fab" href="#dev-rapido">Desarrolladoras</a>
-  <!-- 09 · vista por desarrolladora -->
-  <section aria-labelledby="s9" class="full" id="vista-dev">
-    <div class="sh"><span class="dot">09</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
-    <p class="note">Tarjetas de las 38 desarrolladoras, en el orden que elijas en el módulo de arriba. <a href="#dev-rapido">Volver al acceso rápido</a></p>
-    <div class="vd-grid" id="vd-grid"></div>
-    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de la sección 08 tiene los mismos datos proyecto por proyecto.</p>
-  </section>
 
 <!-- FICHAS:FIN -->
   <details class="arch">
@@ -962,7 +992,7 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
       return '<article class="vd-card"'+(dlg?'':' id="vd-'+g.k+'"')+'><div><span class="micro">'+g.n+' proyecto'+(g.n>1?'s':'')+' en planos · '+esc(mix)+'</span><h3>'+esc(d.n)+tag(d.c||'p')+'</h3></div>'
         +'<div class="fi-meta"><div><span class="micro">Desde</span><b class="num">'+(g.pmin?usd(g.pmin)+(g.pmax!==g.pmin?'<br><span class="note">hasta '+usd(g.pmax)+'</span>':''):'—')+'</b></div><div><span class="micro">$/m² entrada</span><b class="num">'+usd(g.m2)+'</b></div><div><span class="micro">Próxima entrega</span><b>'+esc((g.ent||'—').replace(/\s*\(.*\)/,''))+'</b></div></div>'
         +(g.zonas.length?'<div class="vd-zonas">'+g.zonas.map(function(z){return '<span class="pill g">'+esc(z)+'</span>';}).join('')+'</div>':'')
-        +(a.length?'<div class="fi-acts">'+a.join('')+'</div>':'<p class="note" style="color:#B25000">Sin contacto propio encontrado.</p>')+outreachHTML(g.k,null)
+        +(a.length?'<div class="fi-acts">'+a.join('')+'</div>':'<p class="note" style="color:#B25000">Sin contacto propio encontrado.</p>')+outreachHTML(g.k,null,dlg)
         +'<ul class="vd-list">'+g.L.slice().sort(function(x,y){return (x.p||9e9)-(y.p||9e9);}).map(function(p){return '<li data-k="'+esc(norm(p.n))+'" tabindex="0" role="button" aria-label="Abrir ficha de '+esc(p.n)+'"><i class="'+VKC[p.t]+'"></i><span>'+esc(p.n)+'<em>'+esc((p.zc||p.mu||'')+(p._f.ent?' · '+p._f.ent.replace(/\s*\(.*\)/,''):''))+'</em></span><span class="r num">'+usd(p.p)+'</span></li>';}).join('')+'</ul></article>';
   }
   vdPintar();
@@ -985,8 +1015,19 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
       +ps.map(function(p){return '<button type="button" data-k="'+esc(norm(p.n))+'"><b>'+esc(p.n)+'</b><em>'+esc((p._d?p._d.n:'Sin desarrolladora')+' · '+(p.zc||p.mu||'')+' · desde '+usd(p.p))+'</em></button>';}).join('')
       ||'<p class="note">Sin resultados.</p>';
     dr.hidden=false;});
-  var fab=document.querySelector('.dev-fab'), top=$('dev-rapido');
-  if(fab&&top&&'IntersectionObserver' in window){new IntersectionObserver(function(es){fab.hidden=es[0].isIntersecting;}).observe(top);}
+  /* ----- pestañas: Mercado (overview) / Desarrolladoras ----- */
+  var nav=document.querySelector('.tabs'), pdev=$('tab-dev');
+  var mercado=[];(function(){var el=pdev.nextElementSibling;while(el){if(el.tagName==='FOOTER')break;if(!/^(SCRIPT|DIALOG)$/.test(el.tagName)&&el.id!=='dtip')mercado.push(el);el=el.nextElementSibling;}})();
+  function tab(t,push){var dv=t==='dev';pdev.hidden=!dv;mercado.forEach(function(el){el.hidden=dv;});
+    nav.querySelectorAll('[role=tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===t);});
+    try{localStorage.setItem('nld-tab-propi',t);}catch(e){}
+    if(push)history.replaceState(null,'','#'+(dv?'dev':'mercado'));
+    window.dispatchEvent(new Event('scroll'));}
+  nav.addEventListener('click',function(e){var b=e.target.closest('[data-tab]');if(!b)return;tab(b.dataset.tab,true);var y=nav.getBoundingClientRect().top+scrollY-8;if(scrollY>y)scrollTo({top:y});});
+  nav.addEventListener('keydown',function(e){if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;var bs=[].slice.call(nav.querySelectorAll('[role=tab]')),i=bs.indexOf(document.activeElement);if(i<0)return;var n=bs[(i+(e.key==='ArrowRight'?1:bs.length-1))%bs.length];n.focus();tab(n.dataset.tab,true);});
+  var t0=location.hash==='#dev'?'dev':location.hash==='#mercado'?'mercado':(function(){try{return localStorage.getItem('nld-tab-propi');}catch(e){return null;}})()||'mercado';
+  tab(t0,false);
+  window.addEventListener('hashchange',function(){if(location.hash==='#dev'||location.hash==='#mercado')tab(location.hash.slice(1),false);});
 
   /* ----- borrador de alianza (correo / WhatsApp) ----- */
   function nldFirma(){return {nombre:'Luis Gonzalez',cargo:'Chief Strategy Officer',empresa:'Next Level Demographic',tel:'+503 6207-3860',mail:'lagonzalez@nextleveldemographic.com',web:'nextleveldemographic.com'};}
@@ -1010,10 +1051,10 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
     var wa='Buen día, equipo de '+quien+'. Soy '+NLD.nombre+', de '+NLD.empresa+'. Ayudamos a vender proyectos como '+(L[0]||'los suyos')+' a salvadoreños en Estados Unidos: la campaña allá la pagamos nosotros, ustedes solo pagan si se vende (2.5 % + IVA al cierre) y acompañamos al comprador hasta la escritura. Les comparto por aquí la propuesta en PDF. ¿Con quién de la gerencia comercial puedo coordinar 30 minutos?';
     return {subj:subj,body:body,wa:wa};}
   function estado(k){try{var v=JSON.parse(localStorage.getItem('nld-alianza-'+k)||'null');return v?'Contactada el '+v.f+' por '+v.via:'';}catch(e){return '';}}
-  function outreachHTML(k,pn){var d=DV[k];if(!d)return '';var b=borrador(k,pn), st=estado(k);
+  function outreachHTML(k,pn,abierto){var d=DV[k];if(!d)return '';var b=borrador(k,pn), st=estado(k);
     var mail=d.email?'<button type="button" data-ox="mail">Abrir borrador de correo</button>':'';
     var wa=d.wa?'<button type="button" data-ox="wa"'+(d.email?' class="g"':'')+'>Abrir WhatsApp</button>':'';
-    return '<details class="ox" data-dev="'+k+'"><summary><span>Proponer alianza'+(st?' <i class="ox-st">'+esc(st)+'</i>':'')+'</span><b>'+(d.email&&d.wa?'Correo o WhatsApp':d.email?'Correo':d.wa?'WhatsApp':'Copiar mensaje')+'</b></summary>'
+    return '<details class="ox" data-dev="'+k+'"'+(abierto?' open':'')+'><summary><span>Proponer alianza'+(st?' <i class="ox-st">'+esc(st)+'</i>':'')+'</span><b>'+(d.email&&d.wa?'Correo o WhatsApp':d.email?'Correo':d.wa?'WhatsApp':'Copiar mensaje')+'</b></summary>'
       +(/briko/i.test(d.n)?'<p class="fi-warn">Ojo: Torre Ámbar ya figura en este termómetro como proyecto que vende NLD. Si ya hay relación con Briko, no mandes este mensaje en frío: ajústalo a la relación que ya existe.</p>':'')+(d.email||!d.wa?'<label class="micro">Asunto</label><input class="ox-s" value="'+esc(b.subj)+'"><label class="micro">Correo'+(d.email?' para '+esc(d.email):' (sin correo propio: cópialo)')+'</label><textarea class="ox-b" rows="12">'+esc(b.body)+'</textarea>':'')
       +(d.wa?'<label class="micro">WhatsApp a '+esc(d.wa)+'</label><textarea class="ox-w" rows="5">'+esc(b.wa)+'</textarea>':'')
       +'<div class="fi-acts">'+mail+wa+'<button type="button" class="g" data-ox="copy">Copiar texto</button></div>'

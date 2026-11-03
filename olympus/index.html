@@ -108,6 +108,10 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 .note p{border-top:1px solid var(--line);padding-top:18px;margin-top:-18px}
 
 .num.ico{width:26px;height:26px;margin-top:3px}
+.tool.area{grid-template-columns:1fr}
+.tool.area .num{position:absolute;top:20px;right:20px;margin:0}
+.tool.area .tag{padding-right:38px}
+@media (min-width:600px){.tool.area .num{top:24px;right:24px}}
 .num.ico svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 /* entrada sobria */
 .rv{opacity:0;transform:translateY(12px);animation:rv .8s var(--ease) forwards}
@@ -299,7 +303,7 @@ var HERRAMIENTAS = [
       lead.textContent = 'Elige un área para ver sus herramientas. Todo lo que está aquí es privado del equipo.';
       lista.innerHTML = conTools.map(function(a,i){
         var ts = deArea(a.id), n = ts.length;
-        return '<a class="tool rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="#'+a.id+'">'+
+        return '<a class="tool area rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="#'+a.id+'">'+
           '<span class="num ico" aria-hidden="true">'+(ICONOS[a.id]||dos(i+1))+'</span>'+
           '<div><p class="tag">'+esc(a.nombre)+'</p><h2>'+esc(a.titulo)+'</h2><p class="txt">'+esc(a.texto)+'</p>'+
           '<div class="foot"><span class="meta">'+n+(n===1?' herramienta':' herramientas')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';

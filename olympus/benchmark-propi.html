@@ -255,6 +255,9 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
+
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -392,6 +395,29 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
 :root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha .fi-img{position:sticky;top:0;aspect-ratio:auto;height:calc(100dvh - 32px);max-height:52rem}
 :root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha .fi-b{padding:1.6rem 1.8rem 1.8rem}
 :root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha h3{font-size:1.6rem}
+
+/* detalle de unidad lista y rangos de ticket */
+dialog#ficha.u[open]{display:block}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha.u{width:min(46rem,calc(100vw - 48px))}
+dialog#ficha.u .fi-b{position:relative;padding-top:1.4rem}
+dialog#ficha.u .fi-x{background:var(--surface);color:var(--ink)}
+#bands .band3{cursor:pointer;border-radius:.6rem;transition:background .15s}
+#bands .band3:hover,#bands .band3:focus-visible{background:var(--bg)}
+#bands .band3:focus-visible{outline:2px solid var(--accent)}
+#bands .band3 .lb .b-ver{display:block;font-style:normal;font-size:.72rem;font-weight:700;color:var(--accent);margin-top:.15rem}
+[data-u]{cursor:pointer}
+dialog#fband{border:0;padding:0;border-radius:1.2rem;width:min(84rem,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;background:var(--bg);color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+dialog#fband::backdrop{background:rgba(0,0,0,.55)}
+.fb{position:relative;padding:1.4rem 1.4rem 1.6rem;display:flex;flex-direction:column;gap:1rem}
+.fb h3{margin:0;font-size:1.4rem;padding-right:2.5rem}
+.fb .fi-x{background:var(--surface);color:var(--ink)}
+.fb-grid{display:grid;grid-template-columns:1fr;gap:1.2rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) .fb-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1.6rem}
+.fb-col{display:flex;flex-direction:column;gap:.4rem;min-width:0}
+.fb-col .micro{display:flex;align-items:center;gap:.4rem}
+.fb-col .micro i{width:.75rem;height:.75rem;border-radius:.2rem;display:block}
+.fb .vd-list li{grid-template-columns:1fr auto}
+:root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha.u[open]{display:block}
 
 <!-- FICHAS:FIN -->
 </style>
@@ -539,6 +565,7 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
 <div id="dtip" role="tooltip" aria-hidden="true"></div>
 <dialog id="ficha" aria-labelledby="fi-h"></dialog>
 <dialog id="fdev" aria-label="Desarrolladora"></dialog>
+<dialog id="fband" aria-label="Opciones por rango de precio"></dialog>
 
 <!-- FICHAS:FIN -->
   <details class="arch">
@@ -1070,6 +1097,47 @@ dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
       var ok=function(){var o=b.textContent;b.textContent='Copiado';setTimeout(function(){b.textContent=o;},1600);};
       if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(txt).then(ok,function(){});else{var ta=document.createElement('textarea');ta.value=txt;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');ok();}catch(x){}ta.remove();}}
   },true);
+
+  /* ----- unidades listas: detalle al hacer clic ----- */
+  var U=(D.inmediata||[]).filter(function(u){return u.p;});
+  var URLT={a:'https://www.propilatam.com/sv/bienes-raices/comprar/apartamentos',c:'https://www.propilatam.com/sv/bienes-raices/comprar/casas',t:'https://www.propilatam.com/en/sv/bienes-raices/comprar/terrenos'};
+  var TU={a:'Apartamento listo',c:'Casa lista',t:'Terreno'};
+  function pm(u){return u.m&&u.m>=25&&u.m<=600?u.p/u.m:null;}
+  function abrirUnidad(i){var u=U[i];if(!u)return;tip.classList.remove('on');cur=null;
+    var mz=med(U.filter(function(x){return x.t===u.t&&x.zc===u.zc;}).map(pm)), mt=med(U.filter(function(x){return x.t===u.t;}).map(pm)), v=pm(u), nz=U.filter(function(x){return x.t===u.t&&x.zc===u.zc;}).length;
+    var cmp=v&&mz&&nz>=3?'Pide <b>'+Math.abs(Math.round((v/mz-1)*100))+'% '+(v>=mz?'más':'menos')+'</b> por m² que la mediana de '+esc(u.zc)+' ('+usd(mz)+', '+nz+' anuncios).':(v&&mt?'En '+esc(u.zc||'su zona')+' hay pocos anuncios para comparar; contra la mediana del país ('+usd(mt)+'/m²) pide '+Math.abs(Math.round((v/mt-1)*100))+'% '+(v>=mt?'más':'menos')+'.':'');
+    dlg.classList.add('u');
+    dlg.innerHTML='<div class="fi-b"><button class="fi-x" type="button" aria-label="Cerrar">×</button><div><span class="micro">'+esc(TU[u.t]||'Unidad')+' · compra inmediata · '+esc(u.zc||'')+'</span><h3 id="fi-h">'+esc(u.n)+'</h3><p class="note">'+esc(u.z||'')+'</p></div>'
+      +'<div class="fi-meta"><div><span class="micro">Precio</span><b class="num">'+usd(u.p)+'</b></div><div><span class="micro">m²</span><b class="num">'+(u.m||'—')+'</b></div><div><span class="micro">$/m²</span><b class="num">'+usd(v)+'</b></div>'+(u.t!=='t'?'<div><span class="micro">Hab. · baños</span><b>'+(u.h||'—')+' · '+(u.b||'—')+'</b></div>':'')+'</div>'
+      +(cmp?'<p>'+cmp+tag('s')+'</p>':'')
+      +'<div class="fi-warn">Es una unidad lista (reventa o inventario terminado). Propi no muestra quién la vende: el contacto pasa por Propi o por el agente del anuncio.'+tag('s')+'</div>'
+      +'<div class="fi-foot"><span>Fuente: Propi, lectura del '+esc(String(D.actualizado||'').slice(0,10))+'.</span><a href="'+URLT[u.t]+'" target="_blank" rel="noopener">Ver la lista en Propi</a></div></div>';
+    if(dlg.showModal)dlg.showModal();else dlg.setAttribute('open','');
+    dlg.querySelector('.fi-x').addEventListener('click',function(){cerrar();});}
+  dlg.addEventListener('close',function(){dlg.classList.remove('u');});
+  /* filas "Listo" de la tabla de playa */
+  (function(){var t=$('playa-t');if(!t)return;t.querySelectorAll('tbody tr:not([data-k])').forEach(function(tr){var n=tr.cells[0]&&tr.cells[0].childNodes[0]&&tr.cells[0].childNodes[0].nodeValue, pr=tr.cells[2]&&+tr.cells[2].textContent.replace(/[^\d]/g,'');
+    var i=U.findIndex(function(u){return u.n===n&&u.p===pr;});if(i>=0){tr.setAttribute('data-u',i);tr.setAttribute('tabindex','0');tr.setAttribute('role','button');tr.cells[0].classList.add('fk');}});})();
+
+  /* ----- ticket de entrada: clic en un rango abre sus opciones, de menor a mayor precio ----- */
+  var BANDS=[[0,100e3],[100e3,125e3],[125e3,150e3],[150e3,175e3],[175e3,200e3],[200e3,225e3],[225e3,250e3],[250e3,275e3],[275e3,300e3],[300e3,400e3],[400e3,1e12]];
+  var fband=$('fband');
+  function abrirBanda(bi){var r=BANDS[bi], lb=document.querySelectorAll('#bands .band3 .lb')[bi];if(!r)return;tip.classList.remove('on');cur=null;
+    var en=function(x){return x.p!=null&&x.p>=r[0]&&x.p<r[1];}, asc=function(a,b){return a.p-b.p;};
+    var A=U.filter(function(u){return u.t==='a'&&en(u);}).sort(asc), C=U.filter(function(u){return u.t==='c'&&en(u);}).sort(asc), PL=P.filter(function(p){return p.t==='a'&&en(p);}).sort(asc);
+    var col=function(tit,cls,L,pl){return '<div class="fb-col"><span class="micro"><i class="'+cls+'"></i>'+tit+' · '+L.length+'</span>'+(L.length?'<ul class="vd-list">'+L.map(function(x){
+      var m=pl?(x.m1||'—')+(x.m2&&x.m2!==x.m1?'–'+x.m2:''):(x.m||'—'), sub=pl?((x._d?x._d.n:'')+(x._f&&x._f.ent?' · '+x._f.ent.replace(/\s*\(.*\)/,''):'')):((x.zc||'')+(x.h?' · '+x.h+' hab':''));
+      return '<li '+(pl?'data-k="'+esc(norm(x.n))+'"':'data-u="'+U.indexOf(x)+'"')+' tabindex="0" role="button"><span>'+esc(x.n)+'<em>'+esc(sub)+' · '+m+' m²</em></span><span class="r num">'+(pl?'desde ':'')+usd(x.p)+'</span></li>';}).join('')+'</ul>':'<p class="note">Ninguno en este rango.</p>')+'</div>';};
+    fband.innerHTML='<div class="fb"><button class="fi-x" type="button" aria-label="Cerrar">×</button><div><span class="micro">Ticket de entrada · de menor a mayor precio</span><h3>'+esc(lb&&lb.firstChild?lb.firstChild.nodeValue:'')+': '+(A.length+C.length+PL.length)+' opciones</h3></div><div class="fb-grid">'
+      +col('Apartamentos listos','k1',A,false)+col('Casas listas','k2',C,false)+col('Apartamentos en planos (desde)','k3',PL,true)+'</div><p class="note">Toca cualquiera para ver su detalle. Los proyectos en planos abren su ficha con desarrolladora y contacto.</p></div>';
+    if(fband.showModal)fband.showModal();else fband.setAttribute('open','');
+    fband.querySelector('.fi-x').addEventListener('click',function(){fband.close();});}
+  fband.addEventListener('click',function(e){if(e.target===fband)fband.close();});
+  (function(){var rows=document.querySelectorAll('#bands .band3');rows.forEach(function(r,i){r.setAttribute('data-band',i);r.setAttribute('tabindex','0');r.setAttribute('role','button');
+    var n=r.querySelectorAll('.n'),tot=0;n.forEach(function(x){tot+=+x.textContent||0;});r.setAttribute('aria-label',((r.querySelector('.lb')||{}).textContent||'')+': ver las '+tot+' opciones');
+    var lb=r.querySelector('.lb');if(lb&&tot)lb.insertAdjacentHTML('beforeend','<em class="b-ver">Ver '+tot+' ›</em>');});})();
+  document.addEventListener('click',function(e){if(dlg.contains(e.target))return;var u=e.target.closest('[data-u]');if(u){abrirUnidad(+u.dataset.u);return;}var b=e.target.closest('[data-band]');if(b)abrirBanda(+b.dataset.band);});
+  document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var t=e.target;if(!t.matches)return;if(t.matches('[data-u]')){e.preventDefault();abrirUnidad(+t.dataset.u);}else if(t.matches('[data-band]')){e.preventDefault();abrirBanda(+t.dataset.band);}});
 })();
 
 </script>

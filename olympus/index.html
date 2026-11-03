@@ -16,7 +16,7 @@
 <style>
 /* Olympus — portada privada del equipo.
    Sistema visual NLD (versión clara por defecto, oscuro opcional con data-tema).
-   El único motivo visual es el círculo numerado azul. */
+   El único motivo visual es el círculo azul (con número en herramientas, con ícono en áreas). */
 :root{
   color-scheme:light;
   --bg:#F5F5F7;--card:#FFFFFF;--line:#E5E5EA;--line-2:#D2D2D7;
@@ -107,6 +107,9 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 .note{font-size:12px;color:var(--label);padding-top:18px;padding-bottom:max(22px,env(safe-area-inset-bottom,0px))}
 .note p{border-top:1px solid var(--line);padding-top:18px;margin-top:-18px}
 
+.num.ico{width:46px;height:46px;margin-top:0}
+.num.ico svg{width:23px;height:23px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media (min-width:600px){.num.ico{width:52px;height:52px}.num.ico svg{width:26px;height:26px}}
 /* entrada sobria */
 .rv{opacity:0;transform:translateY(12px);animation:rv .8s var(--ease) forwards}
 @keyframes rv{to{opacity:1;transform:none}}
@@ -264,6 +267,15 @@ var HERRAMIENTAS = [
 (function(){
   var lista = document.getElementById('lista');
   var flecha = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h13M13 6l6 6-6 6"/></svg>';
+  /* ícono de cada área (trazo, mismo estilo que la barra) */
+  function ic(d){ return '<svg viewBox="0 0 24 24">'+d+'</svg>'; }
+  var ICONOS = {
+    marketing:   ic('<path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 8.5a5 5 0 0 1 0 7M18.8 6a8.5 8.5 0 0 1 0 12"/>'),
+    ventas:      ic('<rect x="3" y="7" width="18" height="13" rx="2.5"/><path d="M9 7V5.5A1.5 1.5 0 0 1 10.5 4h3A1.5 1.5 0 0 1 15 5.5V7M3 12.5h18M11 12.5v2h2v-2"/>'),
+    estrategia:  ic('<path d="M4 20h16"/><rect x="5.5" y="12" width="3" height="5.5" rx="1"/><rect x="10.5" y="8" width="3" height="9.5" rx="1"/><rect x="15.5" y="4.5" width="3" height="13" rx="1"/>'),
+    operaciones: ic('<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 9l1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/>'),
+    formacion:   ic('<path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5V16c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.5M21.5 9.5V15"/>')
+  };
   function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
   function dos(i){ return (i<10?'0':'')+i; }
   function tarjetaTool(h,i){
@@ -289,9 +301,8 @@ var HERRAMIENTAS = [
       lista.innerHTML = conTools.map(function(a,i){
         var ts = deArea(a.id), n = ts.length;
         return '<a class="tool rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="#'+a.id+'">'+
-          '<span class="num" aria-hidden="true">'+dos(i+1)+'</span>'+
+          '<span class="num ico" aria-hidden="true">'+(ICONOS[a.id]||dos(i+1))+'</span>'+
           '<div><p class="tag">'+esc(a.nombre)+'</p><h2>'+esc(a.titulo)+'</h2><p class="txt">'+esc(a.texto)+'</p>'+
-          '<ul class="tl">'+ts.map(function(h){ return '<li>'+esc(h.nombre||h.titulo)+'</li>'; }).join('')+'</ul>'+
           '<div class="foot"><span class="meta">'+n+(n===1?' herramienta':' herramientas')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';
       }).join('');
       document.title = 'Olympus';

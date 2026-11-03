@@ -184,21 +184,26 @@ footer{font-size:.7rem;color:var(--faint);line-height:1.6;border-top:1px solid v
 .cx li s{color:var(--contrast-muted)}
 .kpi .d b{color:var(--ink)}
 /* ticket de entrada: tres segmentos por rango */
-.legend{display:flex;flex-wrap:wrap;gap:.9rem;font-size:.72rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:1rem;font-size:.85rem;color:var(--muted)}
 .legend span{display:inline-flex;align-items:center;gap:.35rem}
-.legend i{width:.7rem;height:.7rem;border-radius:.2rem;display:block}
+.legend i{width:.85rem;height:.85rem;border-radius:.2rem;display:block}
 .k1{background:var(--accent)}.k2{background:var(--faint)}.k3{background:var(--accent-soft);box-shadow:inset 0 0 0 1.5px var(--accent)}
-.band3{display:grid;grid-template-columns:6.3rem 1fr;gap:.6rem;align-items:center;font-size:.8rem}
-.band3 .bars{display:flex;flex-direction:column;gap:.22rem}
-.band3 .br{display:grid;grid-template-columns:1fr 2.2rem;gap:.5rem;align-items:center}
-.band3 .track{height:.55rem}
+.band3{display:grid;grid-template-columns:8rem 1fr;gap:.9rem;align-items:center;font-size:.95rem;font-weight:600;padding:.35rem 0;border-top:1px solid var(--line-soft)}
+.band3:first-of-type{border-top:0}
+.band3 .bars{display:flex;flex-direction:column;gap:.3rem}
+.band3 .br{display:grid;grid-template-columns:1fr 2.8rem;gap:.6rem;align-items:center}
+.band3 .track{height:.9rem}
 .band3 .fill.k2{background:var(--faint);opacity:.75}
 .band3 .fill.k3{background:var(--accent-soft);box-shadow:inset 0 0 0 1.5px var(--accent)}
-.band3 .n{font-size:.72rem;font-weight:700;text-align:right;color:var(--muted)}
+.band3 .n{font-size:.9rem;font-weight:700;text-align:right;color:var(--ink)}
 /* zonas */
-.zr{display:grid;grid-template-columns:8.5rem 1fr auto;gap:.6rem;align-items:center;font-size:.8rem}
-.zr .lb em{display:block;font-style:normal;color:var(--faint);font-size:.68rem}
+.zr{display:grid;grid-template-columns:11rem 1fr auto;gap:.9rem;align-items:center;font-size:.95rem}
+.zr .lb em{display:block;font-style:normal;color:var(--faint);font-size:.8rem}
 .zr .vl{font-weight:700;text-align:right;min-width:4rem}
+.zr .track{height:.9rem}
+.zr .vl{font-size:1rem}
+:root[data-view="mobile"] .band3{grid-template-columns:6.5rem 1fr;font-size:.85rem}
+:root[data-view="mobile"] .zr{grid-template-columns:8.5rem 1fr auto;font-size:.85rem;gap:.6rem}
 .zr .vl em{display:block;font-style:normal;font-weight:400;color:var(--faint);font-size:.68rem}
 /* tablas cortas */
 .tbl{width:100%;border-collapse:collapse;font-size:.8rem}
@@ -363,7 +368,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   </section>
 
   <!-- 03 · ticket de entrada -->
-  <section aria-labelledby="s3">
+  <section aria-labelledby="s3" class="full">
     <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Ticket de entrada · lo que encuentra la diáspora según su presupuesto</span><h2 id="s3"></h2></div></div>
     <div class="chart">
       <div class="legend"><span><i class="k1"></i>Apartamentos listos</span><span><i class="k2"></i>Casas listas</span><span><i class="k3"></i>Apartamentos en planos (desde)</span></div>
@@ -373,7 +378,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   </section>
 
   <!-- 04 · dónde está la oferta -->
-  <section aria-labelledby="s4">
+  <section aria-labelledby="s4" class="full">
     <div class="sh"><span class="dot">04</span><div><span class="eyebrow">Dónde está la oferta · apartamentos por zona</span><h2 id="s4"></h2></div></div>
     <div class="chart" id="zones"></div>
     <p class="note">La barra es la mediana de $/m² de los apartamentos listos; las barras grises tienen menos de 5 anuncios y sirven para orientarse, no para fijar precio. El m² va como <span class="tag t-pro">Probable</span>: Propi no aclara si es área construida o útil.</p>
@@ -616,7 +621,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   $('pulso-note').innerHTML='El “desde” de un proyecto en planos es su unidad más barata, casi siempre la más chica: compara el precio de entrada, no el de una unidad igual. Por eso la diferencia contra lo listo va como <b>Probable</b>: una preventa “barata” en ticket puede ser cara por m². Mediana del apartamento en planos: <b>'+kusd(pp)+'</b>.';
 
   /* ---------- 03 ticket de entrada ---------- */
-  var B=[['Menos de $150 mil',0,150e3],['$150–199 mil',150e3,200e3],['$200–249 mil',200e3,250e3],['$250–299 mil',250e3,300e3],['$300–399 mil',300e3,400e3],['$400 mil o más',400e3,1e12]];
+  var B=[['Menos de $100 mil',0,100e3],['$100–125 mil',100e3,125e3],['$125–150 mil',125e3,150e3],['$150–175 mil',150e3,175e3],['$175–200 mil',175e3,200e3],['$200–225 mil',200e3,225e3],['$225–250 mil',225e3,250e3],['$250–275 mil',250e3,275e3],['$275–300 mil',275e3,300e3],['$300–400 mil',300e3,400e3],['$400 mil o más',400e3,1e12]];
   function cnt(L,a,b){return L.filter(function(x){return x.p!=null&&x.p>=a&&x.p<b;}).length;}
   var rows=B.map(function(b){return [b[0],cnt(AP,b[1],b[2]),cnt(CA,b[1],b[2]),cnt(PA,b[1],b[2])];});
   var mx=Math.max.apply(null,rows.map(function(r){return Math.max(r[1],r[2],r[3]);}))||1;

@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <script>
 /* Tema y vista antes del primer pintado: evita que se vea oscuro mientras carga */
-(function(){var r=document.documentElement,t='light',v='web';try{t=localStorage.getItem('nld-dia-theme2')||'light';v=localStorage.getItem('nld-dia-view2')||'web';}catch(e){}if(t!=='auto')r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+(function(){var r=document.documentElement,t='light',v='web';try{t=localStorage.getItem('nld-dia-theme2')||'light';v=localStorage.getItem('nld-dia-view2')||(window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web');}catch(e){}if(t!=='auto')r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
 </script>
 <style>
 /* Layout: una sola columna que llena la pantalla; la vista (móvil / iPad / navegador) cambia escala y densidad, nunca agrega marcos. */
@@ -856,7 +856,7 @@ function tooltip(info){
 function update(refit){
   aggregate(); buildStateSel(AGG.byState); renderKpis(); renderConc(); renderStates(); renderCities(); renderZips(); mapDataChanged(refit);
 }
-setView(store.get('nld-dia-view2') || 'web');
+setView(store.get('nld-dia-view2') || (window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web'));
 setTheme(store.get('nld-dia-theme2') || 'light');
 buildCountries(); update(false); initMap();
 window.addEventListener('resize', () => { if(S.presenting) fitInitial(false); });

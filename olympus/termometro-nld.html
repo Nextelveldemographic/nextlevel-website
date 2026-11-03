@@ -428,6 +428,6 @@ else{
   requestAnimationFrame(()=>requestAnimationFrame(finish));
   count($("#score"),score);document.querySelectorAll("[data-n]").forEach(e=>count(e,+e.dataset.n));
   const bars=[...document.querySelectorAll(".fb")],t0=performance.now();
-  (function grow(n){const p=Math.min(1,(n-t0)/900),e=1-Math.pow(1-p,3);bars.forEach(r=>{const h=r.dataset.h*e;r.setAttribute("height",h);r.setAttribute("y",196-h)});if(p<1)requestAnimationFrame(grow);else drawn=true})(t0);
+  (function grow(n){const p=Math.max(0,Math.min(1,(n-t0)/900)),e=1-Math.pow(1-p,3);bars.forEach(r=>{const h=r.dataset.h*e;r.setAttribute("height",h);r.setAttribute("y",196-h)});if(p<1)requestAnimationFrame(grow);else drawn=true})(t0);
 }
 </script>

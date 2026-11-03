@@ -2202,7 +2202,7 @@ section[hidden]{display:none!important}
 .section-sub{font-size:clamp(17px,1.35vw,21px)}
 
 /* ===== Nueva estructura: garantías y separador de empresas ===== */
-#scene-garantias{padding:28px 0 64px}
+#scene-garantias{padding-top:28px;padding-bottom:64px}
 .gar-in{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .gar-i{background:var(--chalk);border-radius:20px;padding:22px;display:flex;gap:14px;align-items:flex-start;opacity:0;transform:translateY(14px);transition:opacity .7s cubic-bezier(.28,.16,.22,1),transform .7s cubic-bezier(.28,.16,.22,1)}
 #scene-garantias.active .gar-i{opacity:1;transform:none}
@@ -2212,11 +2212,19 @@ section[hidden]{display:none!important}
 .gar-i svg{width:26px;height:26px;flex:none;fill:none;stroke:var(--blue);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 .gar-i b{display:block;font-size:17px;color:var(--dark)}
 .gar-i span{display:block;margin-top:4px;font-size:14px;color:var(--grey-2)}
-#scene-empresas{padding:72px 0 8px;border-top:1px solid var(--divider-2)}
+#scene-empresas{padding-top:72px;padding-bottom:8px;border-top:1px solid var(--divider-2)}
 .biz-in{text-align:left}
 .biz-k{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--grey-2)}
 .biz-t{margin:10px 0 0;font-size:clamp(26px,3.4vw,40px);line-height:1.1;letter-spacing:-.02em;color:var(--dark)}
 @media (prefers-reduced-motion:reduce){.gar-i{opacity:1;transform:none;transition:none}}
+
+/* ===== Ritmo de fondos: bloques oscuros intercalados =====
+   Oscuro = capítulos clave: cómo funciona, Airbnb, historias reales y empresas.
+   .sec-night redefine la paleta dentro del bloque para que sus piezas
+   (tarjetas, textos, bordes) se lean sobre fondo oscuro. */
+.sec-night{--w:#2C2C2E;--chalk:#2C2C2E;--chalk-2:#232325;--dark:#F5F5F7;--dark-2:#E5E5EA;--grey:#86868B;--grey-2:#A1A1A6;--grey-3:#8E8E93;
+  --divider:#3A3A3C;--divider-2:#3A3A3C;--blue:#2997FF;--blue-h:#5AB0FF;--blue-soft:rgba(41,151,255,.14);color:#F5F5F7}
+#scene-empresas.sec-night{border-top:none;padding-bottom:0}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -3780,7 +3788,7 @@ body.qv-lock{overflow:hidden}
   </div>
 </section>
 
-<section id="scene-cases" class="sec-chalk" data-scene>
+<section id="scene-cases" class="sec-dark sec-night" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="cases_eb">Casos verificados</div>
     <h2 class="section-h anim d1" data-i18n="cases_h">Historias reales <br><span class="grey">de quienes ya volvieron.</span></h2>
@@ -3890,11 +3898,11 @@ body.qv-lock{overflow:hidden}
   </div>
 </section>
 
-<section id="scene-empresas" class="sec-white" data-scene aria-label="Para empresas">
+<section id="scene-empresas" class="sec-dark sec-night" data-scene aria-label="Para empresas">
   <div class="wrap biz-in"><span class="biz-k" data-i18n="biz_k">Para empresas</span><h2 class="biz-t" data-i18n="biz_t">¿Sos desarrolladora, marca o aliado comercial?</h2></div>
 </section>
 
-<section id="scene-b2b" class="sec-chalk" data-scene>
+<section id="scene-b2b" class="sec-dark sec-night" data-scene>
   <div class="wrap">
     <div class="eyebrow anim grey" data-i18n="dev_eb">B2B · Para desarrolladoras</div>
     <h2 class="section-h anim d1" data-i18n="dev_h">¿Eres desarrolladora? <br><span class="grey">Conectemos tus proyectos con la diáspora.</span></h2>

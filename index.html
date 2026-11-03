@@ -5866,10 +5866,26 @@ function ckAccept(){try{localStorage.setItem('nld_cookie','1')}catch(e){}var b=d
     if(started)return; started=true;
     var els=window.__heroPieces||[];
     if(!els.length)return;
-    els.forEach(function(el,i){
+    /* La foto de la portada entra junto con el título, no al final */
+    var copy=els.filter(function(el){return !el.classList.contains('hero-media');});
+    var hIdx=Math.max(0,copy.findIndex(function(el){return el.classList.contains('hero-h');}));
+    copy.forEach(function(el,i){
       setTimeout(function(){ el.classList.add('in'); }, 140 + i*130);
     });
+    els.forEach(function(el){
+      if(el.classList.contains('hero-media'))setTimeout(function(){ el.classList.add('in'); }, 140 + hIdx*130);
+    });
   }
+  /* Antes de arrancar se espera también a la foto (con tope), para que
+     no entre el texto y la imagen llegue después. */
+  var heroImg=document.querySelector('#scene-hero .hero-media img');
+  var imgReady=new Promise(function(res){
+    if(!heroImg||(heroImg.complete&&heroImg.naturalWidth>0))return res();
+    heroImg.addEventListener('load',res,{once:true});
+    heroImg.addEventListener('error',res,{once:true});
+    setTimeout(res,1500);
+  });
+  var _run=run; run=function(){imgReady.then(function(){ (heroImg&&heroImg.decode?heroImg.decode().catch(function(){}):Promise.resolve()).then(_run); });};
   /* Si el motor de revelado fallara, __heroPieces quedaría vacío y el
      héroe nunca se mostraría. Esta red lo revela igual. */
   function fallback(){

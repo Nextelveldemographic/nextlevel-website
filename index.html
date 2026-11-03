@@ -2304,8 +2304,9 @@ body{overflow-x:hidden;overflow-x:clip}
 
 /* v49 · Cifras que cuentan: la pregunta en azul aparece después de los números */
 .cnt-n{font-variant-numeric:tabular-nums}
-.story.cnt .life-close-sub{opacity:0;transition:opacity .8s ease}
-.story.cnt.story-in .life-close-sub{opacity:1;transition-delay:1.5s}
+.story.cnt .life-close-sub{opacity:0;transform:translateY(24px);transition:opacity var(--rv-o-sm) var(--ease-rv),transform var(--rv-t-sm) var(--ease-rv)}
+.story.cnt.story-in .life-close-sub{opacity:1;transform:none;transition-delay:1.5s}
+@media (prefers-reduced-motion:reduce){.story.cnt .life-close-sub{opacity:1;transform:none;transition:none}}
 
 /* ---------- 2. Selector de pasos: base ---------- */
 .scn-stage,.scn-prog{display:none}

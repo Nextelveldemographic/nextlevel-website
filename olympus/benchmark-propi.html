@@ -260,6 +260,7 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -1132,7 +1133,7 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
     var mail=d.email?'<button type="button" data-ox="mail">Abrir borrador de correo</button>':'';
     var wa=d.wa?'<button type="button" data-ox="wa"'+(d.email?' class="g"':'')+'>Abrir WhatsApp</button>':'';
     return '<details class="ox" data-dev="'+k+'"'+(abierto?' open':'')+'><summary><span>Proponer alianza'+(st?' <i class="ox-st">'+esc(st)+'</i>':'')+'</span><b>'+(d.email&&d.wa?'Correo o WhatsApp':d.email?'Correo':d.wa?'WhatsApp':'Copiar mensaje')+'</b></summary>'
-      +(/briko/i.test(d.n)?'<p class="fi-warn">Ojo: Torre Ámbar ya figura en este termómetro como proyecto que vende NLD. Si ya hay relación con Briko, no mandes este mensaje en frío: ajústalo a la relación que ya existe.</p>':'')+(d.email||!d.wa?'<label class="micro">Asunto</label><input class="ox-s" value="'+esc(b.subj)+'"><label class="micro">Correo'+(d.email?' para '+esc(d.email):' (sin correo propio: cópialo)')+'</label><textarea class="ox-b" rows="12">'+esc(b.body)+'</textarea>':'')
+      +(/briko/i.test(d.n)?'<p class="fi-warn">Ojo: para Briko ya existe una propuesta hecha a la medida, <a href="/olympus/propuesta-ambar">Propuesta Torres Ámbar</a>. Adjunta esa en lugar de la propuesta general y ajusta el texto si ya hubo conversación.</p>':'')+(d.email||!d.wa?'<label class="micro">Asunto</label><input class="ox-s" value="'+esc(b.subj)+'"><label class="micro">Correo'+(d.email?' para '+esc(d.email):' (sin correo propio: cópialo)')+'</label><textarea class="ox-b" rows="12">'+esc(b.body)+'</textarea>':'')
       +(d.wa?'<label class="micro">WhatsApp a '+esc(d.wa)+'</label><textarea class="ox-w" rows="5">'+esc(b.wa)+'</textarea>':'')
       +'<div class="fi-acts">'+mail+wa+'<button type="button" class="g" data-ox="copy">Copiar texto</button></div>'
       +'<p class="note">Puedes editar el texto antes de abrirlo. El correo se abre como borrador en tu app de correo: solo adjunta la propuesta en PDF y envía. WhatsApp no deja adjuntar desde un enlace: manda el mensaje y luego el PDF en el mismo chat.</p></details>';}

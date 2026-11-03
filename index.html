@@ -2234,6 +2234,30 @@ section[hidden]{display:none!important}
 .proj-trust{background:rgba(52,199,89,.10);color:#1B8B3A}
 [data-theme="dark"] .proj-trust{background:rgba(52,199,89,.16);color:#4ADE80}
 .proj-trust .pt-dot{background:#34C759}
+
+/* ===== Portada · foto con profundidad 3D =====
+   La tarjeta flota sola con un balanceo lento; con mouse o trackpad se
+   inclina hacia el puntero con un reflejo de luz; al cambiar Retiro /
+   Inversión / Segunda casa gira sobre su eje y muestra la otra foto. */
+#scene-hero .hero-media{perspective:1400px;perspective-origin:50% 45%}
+.hm-card{position:relative;border-radius:28px;transform-style:preserve-3d;will-change:transform;
+  transform:rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateZ(0);
+  box-shadow:0 30px 60px -24px rgba(0,0,0,.35),0 12px 24px -12px rgba(0,0,0,.18);
+  animation:hmFloat 9s ease-in-out infinite}
+.hm-card img{border-radius:28px;backface-visibility:hidden}
+.hm-glare{position:absolute;inset:0;border-radius:28px;pointer-events:none;mix-blend-mode:soft-light;opacity:.0;
+  background:radial-gradient(circle at var(--gx,30%) var(--gy,20%),rgba(255,255,255,.75),rgba(255,255,255,0) 55%);transition:opacity .4s ease}
+.hm-card.live{animation:none;transition:transform .18s ease-out}
+.hm-card.live .hm-glare{opacity:.9}
+.hm-card.out{animation:none;transition:transform .5s cubic-bezier(.32,.94,.6,1)}
+@keyframes hmFloat{
+  0%,100%{transform:rotateX(0) rotateY(0) translateY(0)}
+  25%{transform:rotateX(3deg) rotateY(-6deg) translateY(-4px)}
+  75%{transform:rotateX(-2deg) rotateY(6deg) translateY(-8px)}}
+.hm-card.turn1{animation:none;transition:transform .22s cubic-bezier(.55,0,1,.45);transform:rotateY(90deg) scale(.96)}
+.hm-card.turn2{animation:none;transition:none;transform:rotateY(-90deg) scale(.96)}
+.hm-card.turn3{animation:none;transition:transform .42s cubic-bezier(.2,.9,.3,1.15);transform:rotateY(0) scale(1)}
+@media (prefers-reduced-motion:reduce){.hm-card{animation:none!important;transform:none!important;transition:none!important}.hm-glare{display:none}}
 </style>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
 <script defer src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
@@ -3349,7 +3373,7 @@ body.qv-lock{overflow:hidden}
     </div>
     <div class="hero-btns anim d4"><a href="#scene-particulares" class="btn-blue" data-i18n="hero_btn1">Ver proyectos</a><a href="https://wa.me/50362073860" target="_blank" rel="noopener noreferrer" class="btn-link" data-i18n="hero_btn2">Hablemos por WhatsApp</a></div>
   </div>
-  <figure class="hero-media anim d1"><img src="projects/proyecto8.jpg" alt="Terraza con vista al volcán en El Salvador" width="1250" height="777" decoding="async" fetchpriority="high"></figure>
+  <figure class="hero-media anim d1"><div class="hm-card"><img src="projects/proyecto8.jpg" alt="Terraza con vista al volcán en El Salvador" width="1250" height="777" decoding="async" fetchpriority="high"><span class="hm-glare" aria-hidden="true"></span></div></figure>
   </div>
 </section>
 
@@ -4711,7 +4735,7 @@ function setIntent(i){
   if(s&&d.sub)s.textContent=d.sub;
   if(b&&d.btn1)b.textContent=d.btn1;
   var _hm=document.querySelector(".hero-media img"),_hi={retiro:"projects/proyecto8.jpg",inversion:"projects/proyecto2.jpg",segunda:"projects/proyecto1.jpg"};
-  if(_hm&&_hi[i]&&_hm.getAttribute("src")!==_hi[i])_hm.src=_hi[i];
+  if(_hm&&_hi[i]&&_hm.getAttribute("src")!==_hi[i]){if(window.__hmSwap)window.__hmSwap(_hi[i]);else _hm.src=_hi[i];}
   try{localStorage.setItem("nld_intent",i)}catch(e){}
 }
 
@@ -9596,6 +9620,46 @@ window.NLDPlus={openCalc:openCalc,compare:openCmp,state:SS.proj,states:SS};
   if('ResizeObserver' in window){var lw=0;new ResizeObserver(function(){var c=h.parentElement.clientWidth;if(c!==lw){lw=c;fit();}}).observe(h.parentElement);}
   else window.addEventListener('resize',fit);
   if('MutationObserver' in window)new MutationObserver(function(){fit();}).observe(h,{childList:true,characterData:true,subtree:true});
+})();
+
+/* Portada · foto 3D: inclinación con el puntero y giro al cambiar de foto */
+(function(){
+  var card=document.querySelector('#scene-hero .hm-card'); if(!card)return;
+  var img=card.querySelector('img'), reduce=false;
+  try{reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;}catch(e){}
+  var fine=false; try{fine=matchMedia('(hover:hover) and (pointer:fine)').matches;}catch(e){}
+  if(fine&&!reduce){
+    var fig=card.parentNode, raf=0;
+    fig.addEventListener('pointermove',function(e){
+      if(card.className.indexOf('turn')>=0)return;
+      var r=card.getBoundingClientRect(), x=(e.clientX-r.left)/r.width, y=(e.clientY-r.top)/r.height;
+      cancelAnimationFrame(raf);
+      raf=requestAnimationFrame(function(){
+        card.classList.remove('out'); card.classList.add('live');
+        card.style.setProperty('--ry',((x-.5)*16).toFixed(2)+'deg');
+        card.style.setProperty('--rx',((.5-y)*12).toFixed(2)+'deg');
+        card.style.setProperty('--gx',(x*100).toFixed(1)+'%');
+        card.style.setProperty('--gy',(y*100).toFixed(1)+'%');
+      });
+    });
+    fig.addEventListener('pointerleave',function(){
+      cancelAnimationFrame(raf);
+      card.classList.remove('live'); card.classList.add('out');
+      card.style.setProperty('--rx','0deg'); card.style.setProperty('--ry','0deg');
+      setTimeout(function(){card.classList.remove('out');},520);
+    });
+  }
+  window.__hmSwap=function(src){
+    if(reduce||!img){if(img)img.src=src;return;}
+    card.classList.remove('live','out','turn2','turn3'); card.classList.add('turn1');
+    setTimeout(function(){
+      img.src=src;
+      card.classList.remove('turn1'); card.classList.add('turn2');
+      void card.offsetWidth;
+      card.classList.remove('turn2'); card.classList.add('turn3');
+      setTimeout(function(){card.classList.remove('turn3');},460);
+    },220);
+  };
 })();
 </script>
 

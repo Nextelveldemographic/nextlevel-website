@@ -2229,6 +2229,12 @@ section[hidden]{display:none!important}
 .sec-night .case-card{--w:#F5F5F7;--chalk:#F5F5F7;--chalk-2:#FAFAFA;--dark:#1D1D1F;--dark-2:#2C2C2E;--grey:#767679;--grey-2:#6E6E73;--grey-3:#8E8E93;
   --divider:#D2D2D7;--divider-2:#E5E5EA;--blue:#0071E3;--blue-h:#0077ED;--blue-soft:#E8F1FE;color:#1D1D1F}
 [data-theme="dark"] .sec-night .case-card{--w:#2C2C2E;--chalk:#2C2C2E;--dark:#F5F5F7;--grey-2:#A1A1A6;--divider:#3A3A3C;--divider-2:#3A3A3C;--blue:#2997FF;color:#F5F5F7}
+/* Celular: las tarjetas deslizables de Empresas/B2B también claras, como en Proceso y Airbnb */
+@media (max-width:699px){
+  html:not([data-theme="dark"]) .sec-night .scn-step{--w:#F5F5F7;--chalk:#F5F5F7;--chalk-2:#FAFAFA;--dark:#1D1D1F;--dark-2:#2C2C2E;--grey:#767679;--grey-2:#6E6E73;--grey-3:#8E8E93;
+    --divider:#D2D2D7;--divider-2:#E5E5EA;--blue:#0071E3;--blue-h:#0077ED;--blue-soft:#E8F1FE;color:#1D1D1F;
+    --scn-ink:#1D1D1F;--scn-muted:#6E6E73;--scn-dim:rgba(29,29,31,.45);--scn-line:rgba(0,0,0,.08);--scn-acc:#0071E3}
+}
 
 /* Estandarizado: el contador del portafolio usa el mismo verde "disponible" que Particulares */
 .proj-trust{background:rgba(52,199,89,.10);color:#1B8B3A}

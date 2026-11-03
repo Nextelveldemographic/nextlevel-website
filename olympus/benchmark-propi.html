@@ -245,6 +245,10 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
+
+
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -324,6 +328,25 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
 .vd-list li em{display:block;font-style:normal;color:var(--faint);font-size:.68rem}
 .vd-list li .r{text-align:right;white-space:nowrap}
 
+/* acceso rápido arriba */
+.dq-w{position:relative}
+.dq-w input{width:100%;font:inherit;font-size:.95rem;padding:.7rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.dq-w input:focus{outline:2px solid var(--accent);outline-offset:1px}
+.dq-r{position:absolute;left:0;right:0;top:calc(100% + .35rem);z-index:40;background:var(--bg);border:1px solid var(--line);border-radius:1rem;box-shadow:0 12px 32px rgba(0,0,0,.15);padding:.35rem;display:flex;flex-direction:column;max-height:22rem;overflow:auto}
+.dq-r button{all:unset;cursor:pointer;padding:.5rem .7rem;border-radius:.6rem;font-size:.88rem}
+.dq-r button:hover,.dq-r button:focus-visible{background:var(--accent-soft)}
+.dq-r button em{display:block;font-style:normal;color:var(--faint);font-size:.74rem}
+.dq-r .note{padding:.5rem .7rem}
+.dq-links{display:flex;flex-wrap:wrap;gap:1.2rem;align-items:center;font-size:.8rem}
+.dq-links a{color:var(--accent);font-weight:600;text-decoration:none}
+dialog#fdev{border:0;padding:0;border-radius:1.2rem;width:min(30rem,calc(100vw - 32px));max-height:calc(100dvh - 32px);overflow:auto;background:var(--bg);color:var(--ink);box-shadow:0 24px 60px rgba(0,0,0,.35)}
+dialog#fdev::backdrop{background:rgba(0,0,0,.55)}
+dialog#fdev .vd-card{border:0;padding:1.2rem 1.2rem 1.3rem}
+dialog#fdev .fdev-x{position:sticky;float:right;top:.6rem;margin:.6rem .6rem 0 0;background:var(--surface);color:var(--ink);z-index:2}
+.dev-fab{position:fixed;right:16px;bottom:16px;z-index:30;background:var(--accent);color:var(--on-accent);font-size:.8rem;font-weight:700;padding:.6rem 1rem;border-radius:999px;text-decoration:none;box-shadow:0 6px 18px rgba(0,0,0,.2)}
+.dev-fab:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+dialog#fdev .vd-card>div:first-child{padding-right:2.4rem}
+
 <!-- FICHAS:FIN -->
 </style>
 </head>
@@ -351,6 +374,25 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
     <p id="hero-p">Propi es el portal con más inventario nuevo del país. Lo leemos dos veces por semana para saber qué hay, a qué precio y dónde, antes de cada conversación con una desarrolladora o un comprador.</p>
     <div class="stamp" id="stamp"></div>
   </header>
+<!-- FICHAS:INI -->
+  <!-- acceso rápido · desarrolladoras -->
+  <section class="full devq" id="dev-rapido" aria-labelledby="sq">
+    <div class="sh"><span class="dot">D</span><div><span class="eyebrow">Acceso rápido · contacto directo, sin pasar por Propi</span><h2 id="sq">Desarrolladoras de los proyectos en planos</h2></div></div>
+    <div class="dq-w">
+      <input type="search" id="dq" placeholder="Busca una desarrolladora, un proyecto o una zona" aria-label="Buscar desarrolladora, proyecto o zona" autocomplete="off">
+      <div class="dq-r" id="dq-r" hidden></div>
+    </div>
+    <div class="devbar">
+      <div class="seg" id="vd-sort" role="group" aria-label="Ordenar desarrolladoras">
+        <button data-s="n" aria-pressed="true">Más proyectos</button><button data-s="p" aria-pressed="false">Entrada más barata</button><button data-s="e" aria-pressed="false">Entrega más próxima</button>
+      </div>
+      <div class="legend"><span><i class="vk-a"></i>Apartamentos</span><span><i class="vk-c"></i>Casas</span><span><i class="vk-l"></i>Lotes</span></div>
+    </div>
+    <div class="vd-chart" id="vd-chart" role="list" aria-label="Proyectos en planos por desarrolladora y tipo"></div>
+    <div class="dq-links"><button type="button" class="vd-more" id="vd-more"></button><a href="#desarrolladoras">Tabla proyecto por proyecto</a><a href="#vista-dev">Tarjetas de las 38</a></div>
+    <p class="note">Toca una desarrolladora para ver su tarjeta: contacto, rango de precios, entrega, zonas y proyectos. Cada proyecto abre su ficha con foto y descripción.</p>
+  </section>
+<!-- FICHAS:FIN -->
 
   <!-- 01 · qué cambió -->
   <section class="contrast full" aria-labelledby="s1" id="cambios">
@@ -437,19 +479,14 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   </section>
 <div id="dtip" role="tooltip" aria-hidden="true"></div>
 <dialog id="ficha" aria-labelledby="fi-h"></dialog>
+<dialog id="fdev" aria-label="Desarrolladora"></dialog>
+<a class="dev-fab" href="#dev-rapido">Desarrolladoras</a>
   <!-- 09 · vista por desarrolladora -->
   <section aria-labelledby="s9" class="full" id="vista-dev">
     <div class="sh"><span class="dot">09</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
-    <div class="devbar">
-      <div class="seg" id="vd-sort" role="group" aria-label="Ordenar desarrolladoras">
-        <button data-s="n" aria-pressed="true">Más proyectos</button><button data-s="p" aria-pressed="false">Entrada más barata</button><button data-s="e" aria-pressed="false">Entrega más próxima</button>
-      </div>
-      <div class="legend"><span><i class="vk-a"></i>Apartamentos</span><span><i class="vk-c"></i>Casas</span><span><i class="vk-l"></i>Lotes</span></div>
-    </div>
-    <div class="vd-chart" id="vd-chart" role="list" aria-label="Proyectos en planos por desarrolladora y tipo"></div>
-    <button type="button" class="vd-more" id="vd-more"></button>
+    <p class="note">Tarjetas de las 38 desarrolladoras, en el orden que elijas en el módulo de arriba. <a href="#dev-rapido">Volver al acceso rápido</a></p>
     <div class="vd-grid" id="vd-grid"></div>
-    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca una barra para ir a su tarjeta y un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de la sección 08 tiene los mismos datos proyecto por proyecto.</p>
+    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de la sección 08 tiene los mismos datos proyecto por proyecto.</p>
   </section>
 
 <!-- FICHAS:FIN -->
@@ -839,7 +876,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
     return '<b>'+esc(d.n)+'</b><span>'+l.map(esc).join('<br>')+'</span><em>Clic para ver la ficha de '+esc(p.n)+'</em>';}
   function mover(e){var x=e.clientX+14,y=e.clientY+16,w=tip.offsetWidth,h=tip.offsetHeight;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-12;tip.style.left=Math.max(8,x)+'px';tip.style.top=Math.max(8,y)+'px';}
   if(fino){
-    document.addEventListener('mouseover',function(e){var r=e.target.closest('[data-tip],[data-k]');if(r===cur)return;cur=r;if(!r){tip.classList.remove('on');return;}if(r.dataset.tip){var t=r.dataset.tip.split('|');tip.innerHTML='<b>'+esc(t[0])+'</b>'+(t[1]?'<span>'+esc(t[1])+'</span>':'');}else tip.innerHTML=tipHTML(r.dataset.k);tip.classList.add('on');});
+    document.addEventListener('mouseover',function(e){var r=document.querySelector('dialog[open]')?null:e.target.closest('[data-tip],[data-k]');if(r===cur)return;cur=r;if(!r){tip.classList.remove('on');return;}if(r.dataset.tip){var t=r.dataset.tip.split('|');tip.innerHTML='<b>'+esc(t[0])+'</b>'+(t[1]?'<span>'+esc(t[1])+'</span>':'');}else tip.innerHTML=tipHTML(r.dataset.k);tip.classList.add('on');});
     document.addEventListener('mousemove',function(e){if(cur)mover(e);});
   }
 
@@ -893,22 +930,42 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
       return '<button type="button" class="vd-row" role="listitem" data-go="'+g.k+'" aria-label="'+esc(g.d.n+': '+g.n+' proyectos ('+g.t.a+' apartamentos, '+g.t.c+' casas, '+g.t.l+' lotes). Ir a su tarjeta')+'"><span class="lb" title="'+esc(g.d.n)+'">'+esc(g.d.n)+'</span><span class="vd-bar"><span class="vd-segs" style="width:'+(g.n/nmax*78).toFixed(2)+'%">'+segs+'</span><b class="num">'+g.n+'</b><span class="note" style="font-size:.68rem;white-space:nowrap">'+esc(extra.replace(/^ · /,''))+'</span></span></button>';}).join('');
     $('vd-more').textContent=vdAll?'Mostrar solo las '+TOP+' primeras':'Mostrar las '+G.length+' desarrolladoras';
     $('vd-more').hidden=G.length<=TOP;
-    $('vd-grid').innerHTML=S.map(function(g){var d=g.d, a=[];
+    $('vd-grid').innerHTML=S.map(function(g){return cardHTML(g,false);}).join('');
+  }
+  function cardHTML(g,dlg){var d=g.d, a=[];
       if(d.wa)a.push('<a href="https://wa.me/'+digits(d.wa)+'" target="_blank" rel="noopener">WhatsApp</a>');
       if(d.tel)a.push('<a class="g" href="tel:+'+digits(d.tel)+'">'+esc(d.tel)+'</a>');
       if(d.email)a.push('<a class="g" href="mailto:'+esc(d.email)+'">Correo</a>');
       if(d.web)a.push('<a class="g" href="'+esc(d.web)+'" target="_blank" rel="noopener">Sitio</a>');
       var mix=['a','c','l'].filter(function(t){return g.t[t];}).map(function(t){return g.t[t]+' '+sing(TIPO[t],g.t[t]).toLowerCase();}).join(' · ');
-      return '<article class="vd-card" id="vd-'+g.k+'"><div><span class="micro">'+g.n+' proyecto'+(g.n>1?'s':'')+' en planos · '+esc(mix)+'</span><h3>'+esc(d.n)+tag(d.c||'p')+'</h3></div>'
+      return '<article class="vd-card"'+(dlg?'':' id="vd-'+g.k+'"')+'><div><span class="micro">'+g.n+' proyecto'+(g.n>1?'s':'')+' en planos · '+esc(mix)+'</span><h3>'+esc(d.n)+tag(d.c||'p')+'</h3></div>'
         +'<div class="fi-meta"><div><span class="micro">Desde</span><b class="num">'+(g.pmin?usd(g.pmin)+(g.pmax!==g.pmin?'<br><span class="note">hasta '+usd(g.pmax)+'</span>':''):'—')+'</b></div><div><span class="micro">$/m² entrada</span><b class="num">'+usd(g.m2)+'</b></div><div><span class="micro">Próxima entrega</span><b>'+esc((g.ent||'—').replace(/\s*\(.*\)/,''))+'</b></div></div>'
         +(g.zonas.length?'<div class="vd-zonas">'+g.zonas.map(function(z){return '<span class="pill g">'+esc(z)+'</span>';}).join('')+'</div>':'')
         +(a.length?'<div class="fi-acts">'+a.join('')+'</div>':'<p class="note" style="color:#B25000">Sin contacto propio encontrado.</p>')
-        +'<ul class="vd-list">'+g.L.slice().sort(function(x,y){return (x.p||9e9)-(y.p||9e9);}).map(function(p){return '<li data-k="'+esc(norm(p.n))+'" tabindex="0" role="button" aria-label="Abrir ficha de '+esc(p.n)+'"><i class="'+VKC[p.t]+'"></i><span>'+esc(p.n)+'<em>'+esc((p.zc||p.mu||'')+(p._f.ent?' · '+p._f.ent.replace(/\s*\(.*\)/,''):''))+'</em></span><span class="r num">'+usd(p.p)+'</span></li>';}).join('')+'</ul></article>';}).join('');
+        +'<ul class="vd-list">'+g.L.slice().sort(function(x,y){return (x.p||9e9)-(y.p||9e9);}).map(function(p){return '<li data-k="'+esc(norm(p.n))+'" tabindex="0" role="button" aria-label="Abrir ficha de '+esc(p.n)+'"><i class="'+VKC[p.t]+'"></i><span>'+esc(p.n)+'<em>'+esc((p.zc||p.mu||'')+(p._f.ent?' · '+p._f.ent.replace(/\s*\(.*\)/,''):''))+'</em></span><span class="r num">'+usd(p.p)+'</span></li>';}).join('')+'</ul></article>';
   }
   vdPintar();
   $('vd-sort').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;vdSort=b.dataset.s;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});vdPintar();});
   $('vd-more').addEventListener('click',function(){vdAll=!vdAll;vdPintar();});
-  $('vd-chart').addEventListener('click',function(e){var r=e.target.closest('[data-go]');if(!r)return;var c=$('vd-'+r.dataset.go);if(!c)return;document.querySelectorAll('.vd-card.hl').forEach(function(x){x.classList.remove('hl');});c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'start'});});
+  var GK={};G.forEach(function(g){GK[g.k]=g;});
+  var fdev=$('fdev');
+  function abrirDev(k){var g=GK[k];if(!g)return;tip.classList.remove('on');cur=null;
+    fdev.innerHTML='<button class="fi-x fdev-x" type="button" aria-label="Cerrar">×</button>'+cardHTML(g,true);
+    if(fdev.showModal)fdev.showModal();else fdev.setAttribute('open','');
+    fdev.querySelector('.fdev-x').addEventListener('click',function(){fdev.close?fdev.close():fdev.removeAttribute('open');});}
+  fdev.addEventListener('click',function(e){if(e.target===fdev)fdev.close();});
+  document.addEventListener('click',function(e){var r=e.target.closest('[data-go]');if(r&&!dlg.contains(r))abrirDev(r.dataset.go);});
+  /* buscador rápido */
+  var dq=$('dq'), dr=$('dq-r');
+  dq.addEventListener('input',function(){var q=norm(this.value);if(!q){dr.innerHTML='';dr.hidden=true;return;}
+    var ds=G.filter(function(g){return norm(g.d.n).indexOf(q)>=0;}).slice(0,5);
+    var ps=P.filter(function(p){return norm(p.n+' '+(p.zc||'')+' '+(p.mu||'')+' '+(p.z||'')).indexOf(q)>=0;}).slice(0,8);
+    dr.innerHTML=ds.map(function(g){return '<button type="button" data-go="'+g.k+'"><b>'+esc(g.d.n)+'</b><em>Desarrolladora · '+g.n+' proyecto'+(g.n>1?'s':'')+'</em></button>';}).join('')
+      +ps.map(function(p){return '<button type="button" data-k="'+esc(norm(p.n))+'"><b>'+esc(p.n)+'</b><em>'+esc((p._d?p._d.n:'Sin desarrolladora')+' · '+(p.zc||p.mu||'')+' · desde '+usd(p.p))+'</em></button>';}).join('')
+      ||'<p class="note">Sin resultados.</p>';
+    dr.hidden=false;});
+  var fab=document.querySelector('.dev-fab'), top=$('dev-rapido');
+  if(fab&&top&&'IntersectionObserver' in window){new IntersectionObserver(function(es){fab.hidden=es[0].isIntersecting;}).observe(top);}
 })();
 
 </script>

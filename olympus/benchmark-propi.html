@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Termómetro Propi</title>
+<title>Competitor Benchmark - Inmuebles</title>
 <link rel="icon" href="/assets/logo.png">
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>
@@ -258,6 +258,8 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -419,6 +421,20 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
 .fb .vd-list li{grid-template-columns:1fr auto}
 :root:is([data-view="tablet"],[data-view="desktop"]) dialog#ficha.u[open]{display:block}
 
+/* pestaña proyectos nuevos */
+.tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+:root[data-view="mobile"] .tabs button{padding:.6rem .6rem;font-size:.85rem}
+:root[data-view="mobile"] .tabs button span{display:none}
+[data-nl]{cursor:pointer;border-radius:.6rem;transition:background .15s}
+[data-nl]:hover,[data-nl]:focus-visible{background:var(--bg)}
+[data-nl]:focus-visible{outline:2px solid var(--accent)}
+.band3 .lb .b-ver{display:block;font-style:normal;font-size:.72rem;font-weight:700;color:var(--accent);margin-top:.15rem}
+.nzonas{display:flex;flex-direction:column;gap:.35rem}
+.nzonas .zr{padding:.35rem .3rem}
+.nzonas .vd-segs{gap:2px;display:flex}
+#n-t tbody tr{cursor:pointer}
+#n-t tbody tr:hover td{background:var(--accent-soft)}
+
 <!-- FICHAS:FIN -->
 </style>
 </head>
@@ -441,16 +457,47 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
 
 
   <header class="hero">
-    <span class="eyebrow">Termómetro de mercado · Propi El Salvador</span>
+    <span class="eyebrow">Competitor Benchmark - Inmuebles</span>
     <h1>Cómo se mueve el mercado que le vendemos a la diáspora</h1>
     <p id="hero-p">Propi es el portal con más inventario nuevo del país. Lo leemos dos veces por semana para saber qué hay, a qué precio y dónde, antes de cada conversación con una desarrolladora o un comprador.</p>
     <div class="stamp" id="stamp"></div>
   </header>
 <!-- FICHAS:INI -->
-  <nav class="full tabs" role="tablist" aria-label="Vistas del termómetro">
-    <button type="button" role="tab" id="tb-mercado" data-tab="mercado" aria-selected="true" aria-controls="tab-mercado">Mercado<span>Overview de Propi</span></button>
+  <nav class="full tabs" role="tablist" aria-label="Vistas del benchmark">
+    <button type="button" role="tab" id="tb-nuevos" data-tab="nuevos" aria-selected="true" aria-controls="tab-nuevos">Proyectos nuevos<span>En planos · overview</span></button>
+    <button type="button" role="tab" id="tb-listos" data-tab="listos" aria-selected="false">Listos y reventa<span>Compra inmediata</span></button>
     <button type="button" role="tab" id="tb-dev" data-tab="dev" aria-selected="false" aria-controls="tab-dev">Desarrolladoras<span>38 empresas · contacto y alianza</span></button>
   </nav>
+  <div class="full tabpanel" id="tab-nuevos" role="tabpanel" aria-labelledby="tb-nuevos">
+  <section class="full" aria-labelledby="n1">
+    <div class="sh"><span class="dot">01</span><div><span class="eyebrow">El pulso · solo proyectos nuevos en planos</span><h2 id="n1"></h2></div></div>
+    <div class="kpis" id="n-kpis"></div>
+    <p class="note" id="n-cambios"></p>
+  </section>
+  <section class="full" aria-labelledby="n2">
+    <div class="sh"><span class="dot">02</span><div><span class="eyebrow">Ticket de entrada · precio “desde” de cada proyecto</span><h2 id="n2">Cuánto cuesta entrar a un proyecto nuevo</h2></div></div>
+    <div class="chart">
+      <div class="legend"><span><i class="vk-a"></i>Apartamentos</span><span><i class="vk-c"></i>Casas</span><span><i class="vk-l"></i>Lotes</span></div>
+      <div id="n-bands" class="strip nbands"></div>
+    </div>
+    <p class="note" id="n-bands-note"></p>
+  </section>
+  <section class="full" aria-labelledby="n3">
+    <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Dónde se construye · proyectos por zona</span><h2 id="n3">Zonas con proyectos nuevos y su $/m² de entrada</h2></div></div>
+    <div class="chart nzonas" id="n-zonas"></div>
+    <p class="note">La barra es la mediana del $/m² de entrada de los proyectos de apartamentos; en gris, zonas con menos de 3 proyectos de apartamentos. Toca una zona para ver sus proyectos.</p>
+  </section>
+  <section class="full" aria-labelledby="n4">
+    <div class="sh"><span class="dot">04</span><div><span class="eyebrow">Cuándo se entrega · fecha que declara cada proyecto</span><h2 id="n4">El calendario de entregas</h2></div></div>
+    <div class="chart nzonas" id="n-ent"></div>
+    <p class="note">Las fechas son las que el proyecto publica en Propi; las preventas suelen correrse. <span class="tag t-pro">Probable</span> Toca un año para ver sus proyectos.</p>
+  </section>
+  <section class="full" aria-labelledby="n5">
+    <div class="sh"><span class="dot">05</span><div><span class="eyebrow">Todos los proyectos nuevos · de menor a mayor precio</span><h2 id="n5">La lista completa</h2></div></div>
+    <div class="seg" id="n-f" role="group" aria-label="Tipo de proyecto" style="align-self:flex-start"><button data-f="" aria-pressed="true">Todos</button><button data-f="a" aria-pressed="false">Apartamentos</button><button data-f="c" aria-pressed="false">Casas</button><button data-f="l" aria-pressed="false">Lotes</button></div>
+    <div class="tblw"><table class="tbl dtbl" id="n-t"></table></div>
+  </section>
+  </div>
   <div class="full tabpanel" id="tab-dev" role="tabpanel" aria-labelledby="tb-dev" hidden>
   <!-- acceso rápido · desarrolladoras -->
   <section class="full devq" id="dev-rapido" aria-labelledby="sq">
@@ -1042,19 +1089,22 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
       +ps.map(function(p){return '<button type="button" data-k="'+esc(norm(p.n))+'"><b>'+esc(p.n)+'</b><em>'+esc((p._d?p._d.n:'Sin desarrolladora')+' · '+(p.zc||p.mu||'')+' · desde '+usd(p.p))+'</em></button>';}).join('')
       ||'<p class="note">Sin resultados.</p>';
     dr.hidden=false;});
-  /* ----- pestañas: Mercado (overview) / Desarrolladoras ----- */
-  var nav=document.querySelector('.tabs'), pdev=$('tab-dev');
-  var mercado=[];(function(){var el=pdev.nextElementSibling;while(el){if(el.tagName==='FOOTER')break;if(!/^(SCRIPT|DIALOG)$/.test(el.tagName)&&el.id!=='dtip')mercado.push(el);el=el.nextElementSibling;}})();
-  function tab(t,push){var dv=t==='dev';pdev.hidden=!dv;mercado.forEach(function(el){el.hidden=dv;});
-    nav.querySelectorAll('[role=tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===t);});
+  /* ----- pestañas: Proyectos nuevos (overview) / Listos y reventa / Desarrolladoras ----- */
+  var nav=document.querySelector('.tabs'), pdev=$('tab-dev'), pnue=$('tab-nuevos');
+  var listos=[];(function(){var el=pdev.nextElementSibling;while(el){if(el.tagName==='FOOTER')break;if(!/^(SCRIPT|DIALOG)$/.test(el.tagName)&&el.id!=='dtip')listos.push(el);el=el.nextElementSibling;}})();
+  var TABS={nuevos:1,listos:1,dev:1};
+  function tab(t,push){if(!TABS[t])t='nuevos';pdev.hidden=t!=='dev';pnue.hidden=t!=='nuevos';listos.forEach(function(el){el.hidden=t!=='listos';});
+    nav.querySelectorAll('[role=tab]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tab===t);b.tabIndex=b.dataset.tab===t?0:-1;});
     try{localStorage.setItem('nld-tab-propi',t);}catch(e){}
-    if(push)history.replaceState(null,'','#'+(dv?'dev':'mercado'));
+    if(push)history.replaceState(null,'','#'+t);
     window.dispatchEvent(new Event('scroll'));}
   nav.addEventListener('click',function(e){var b=e.target.closest('[data-tab]');if(!b)return;tab(b.dataset.tab,true);var y=nav.getBoundingClientRect().top+scrollY-8;if(scrollY>y)scrollTo({top:y});});
   nav.addEventListener('keydown',function(e){if(e.key!=='ArrowLeft'&&e.key!=='ArrowRight')return;var bs=[].slice.call(nav.querySelectorAll('[role=tab]')),i=bs.indexOf(document.activeElement);if(i<0)return;var n=bs[(i+(e.key==='ArrowRight'?1:bs.length-1))%bs.length];n.focus();tab(n.dataset.tab,true);});
-  var t0=location.hash==='#dev'?'dev':location.hash==='#mercado'?'mercado':(function(){try{return localStorage.getItem('nld-tab-propi');}catch(e){return null;}})()||'mercado';
+  function hashTab(){var h=location.hash.slice(1);return h==='mercado'?'listos':TABS[h]?h:null;}
+  var t0=hashTab()||(function(){try{var v=localStorage.getItem('nld-tab-propi');return v==='mercado'?'nuevos':v;}catch(e){return null;}})()||'nuevos';
   tab(t0,false);
-  window.addEventListener('hashchange',function(){if(location.hash==='#dev'||location.hash==='#mercado')tab(location.hash.slice(1),false);});
+  window.addEventListener('hashchange',function(){var h=hashTab();if(h)tab(h,false);});
+  (function(){var tn=$('tb-nuevos'),tl=$('tb-listos');if(tn)tn.querySelector('span').textContent=P.length+' proyectos en planos · overview';if(tl)tl.querySelector('span').textContent=(D.inmediata||[]).length+' unidades de compra inmediata';})();
 
   /* ----- borrador de alianza (correo / WhatsApp) ----- */
   function nldFirma(){return {nombre:'Luis Gonzalez',cargo:'Chief Strategy Officer',empresa:'Next Level Demographic',tel:'+503 6207-3860',mail:'lagonzalez@nextleveldemographic.com',web:'nextleveldemographic.com'};}
@@ -1138,6 +1188,73 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
     var lb=r.querySelector('.lb');if(lb&&tot)lb.insertAdjacentHTML('beforeend','<em class="b-ver">Ver '+tot+' ›</em>');});})();
   document.addEventListener('click',function(e){if(dlg.contains(e.target))return;var u=e.target.closest('[data-u]');if(u){abrirUnidad(+u.dataset.u);return;}var b=e.target.closest('[data-band]');if(b)abrirBanda(+b.dataset.band);});
   document.addEventListener('keydown',function(e){if(e.key!=='Enter'&&e.key!==' ')return;var t=e.target;if(!t.matches)return;if(t.matches('[data-u]')){e.preventDefault();abrirUnidad(+t.dataset.u);}else if(t.matches('[data-band]')){e.preventDefault();abrirBanda(+t.dataset.band);}});
+
+  /* ===== Pestaña "Proyectos nuevos": solo proyectos en planos ===== */
+  var LISTS=[], TT={a:'Apartamentos',c:'Casas',l:'Lotes'}, TC={a:'var(--vk-a)',c:'var(--vk-c)',l:'var(--vk-l)'};
+  function pmE(p){return p.p&&p.m1?p.p/p.m1:null;}
+  function regLista(micro,title,L){LISTS.push({micro:micro,title:title,L:L});return LISTS.length-1;}
+  function filaP(x){var m=(x.m1||'—')+(x.m2&&x.m2!==x.m1?'–'+x.m2:'');
+    return '<li data-k="'+esc(norm(x.n))+'" tabindex="0" role="button"><i class="'+VKC[x.t]+'"></i><span>'+esc(x.n)+'<em>'+esc((x._d?x._d.n:'Sin identificar')+' · '+(x.zc||x.mu||'')+(x._f&&x._f.ent?' · '+x._f.ent.replace(/\s*\(.*\)/,''):''))+' · '+m+' m²</em></span><span class="r num">'+(x.p?'desde '+usd(x.p):'Precio no publicado')+'</span></li>';}
+  function abrirLista(i){var o=LISTS[i];if(!o)return;tip.classList.remove('on');cur=null;
+    var L=o.L.slice().sort(function(a,b){return (a.p||9e9)-(b.p||9e9);});
+    var cols=['a','c','l'].map(function(t){var X=L.filter(function(x){return x.t===t;});return X.length?'<div class="fb-col"><span class="micro"><i style="background:'+TC[t]+'"></i>'+TT[t]+' · '+X.length+'</span><ul class="vd-list">'+X.map(filaP).join('')+'</ul></div>':'';}).join('');
+    fband.innerHTML='<div class="fb"><button class="fi-x" type="button" aria-label="Cerrar">×</button><div><span class="micro">'+esc(o.micro)+' · de menor a mayor precio</span><h3>'+esc(o.title)+': '+L.length+' proyecto'+(L.length===1?'':'s')+'</h3></div><div class="fb-grid">'+cols+'</div><p class="note">Toca un proyecto para abrir su ficha con desarrolladora, contacto y borrador de alianza.</p></div>';
+    if(fband.showModal)fband.showModal();else fband.setAttribute('open','');
+    fband.querySelector('.fi-x').addEventListener('click',function(){fband.close();});}
+  document.addEventListener('click',function(e){if(dlg.contains(e.target))return;var r=e.target.closest('[data-nl]');if(r)abrirLista(+r.dataset.nl);});
+  document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-nl]')){e.preventDefault();abrirLista(+e.target.dataset.nl);}});
+  (function(){if(!pnue)return;
+    var PP=P.filter(function(p){return p.p;}), PA=P.filter(function(p){return p.t==='a';});
+    var hoy=new Date(), hoyN=hoy.getFullYear()+Math.floor(hoy.getMonth()/3)/4;
+    var prox=P.filter(function(p){var e=p._f&&entN(p._f.ent);return e!=null&&e<=hoyN+1;});
+    /* qué cambió en planos */
+    var A0=(D.anterior&&D.anterior.planos)||[], a0={};A0.forEach(function(p){a0[norm(p.n)]=p;});
+    var nuevos=P.filter(function(p){return !a0[norm(p.n)];}), salen=A0.filter(function(p){return !byName[norm(p.n)];}), bajan=P.filter(function(p){var o=a0[norm(p.n)];return o&&o.p&&p.p&&p.p<o.p;}), suben=P.filter(function(p){var o=a0[norm(p.n)];return o&&o.p&&p.p&&p.p>o.p;});
+    $('n1').textContent=P.length+' proyectos nuevos en planos, de '+orden.length+' desarrolladoras';
+    var kp=[['Proyectos en planos',fmtN(P.length),PA.length+' de apartamentos · '+P.filter(function(p){return p.t==='c';}).length+' de casas · '+P.filter(function(p){return p.t==='l';}).length+' de lotes','s'],
+      ['Ticket de entrada mediano',usd(med(PP.map(function(p){return p.p;}))),'mediana del “desde” de todos los proyectos','s'],
+      ['Apartamento, $/m² de entrada',usd(med(PA.map(pmE))),'mediana del “desde” entre el m² mínimo','p'],
+      ['Se entregan en 12 meses',fmtN(prox.length),'proyectos con entrega hasta '+['Q1','Q2','Q3','Q4'][hoy.getMonth()/3|0]+' '+(hoy.getFullYear()+1),'p']];
+    $('n-kpis').innerHTML=kp.map(function(x){return '<div class="kpi"><span class="micro">'+x[0]+'</span><span class="v num">'+x[1]+'</span><span class="d">'+x[2]+'</span><span>'+tag(x[3])+'</span></div>';}).join('');
+    var ch=[];
+    if(A0.length){ch.push('<b>'+nuevos.length+'</b> nuevo'+(nuevos.length===1?'':'s')+(nuevos.length?' ('+nuevos.slice(0,3).map(function(p){return esc(p.n);}).join(', ')+')':''));
+      ch.push('<b>'+salen.length+'</b> salieron'+(salen.length?' ('+salen.slice(0,3).map(function(p){return esc(p.n);}).join(', ')+')':''));
+      ch.push('<b>'+bajan.length+'</b> bajaron de precio'+(bajan.length?' ('+bajan.slice(0,3).map(function(p){return esc(p.n)+': '+usd(a0[norm(p.n)].p)+' → '+usd(p.p);}).join('; ')+')':''));
+      ch.push('<b>'+suben.length+'</b> subieron');
+      $('n-cambios').innerHTML='Desde la lectura anterior: '+ch.join(' · ')+'.'+tag('s');}
+    else $('n-cambios').textContent='Los cambios aparecen desde la próxima lectura.';
+    /* ticket de entrada en planos */
+    var LB=['Menos de $100 mil','$100–125 mil','$125–150 mil','$150–175 mil','$175–200 mil','$200–225 mil','$225–250 mil','$250–275 mil','$275–300 mil','$300–400 mil','$400 mil o más'];
+    var rows=BANDS.map(function(r,i){var L=PP.filter(function(p){return p.p>=r[0]&&p.p<r[1];});return {lb:LB[i],L:L,c:{a:L.filter(function(p){return p.t==='a';}).length,c:L.filter(function(p){return p.t==='c';}).length,l:L.filter(function(p){return p.t==='l';}).length}};});
+    var mx=Math.max.apply(null,rows.map(function(r){return Math.max(r.c.a,r.c.c,r.c.l);}))||1;
+    $('n-bands').innerHTML=rows.map(function(r){var i=regLista('Ticket de entrada',r.lb,r.L);
+      var br=function(t){return '<div class="br"><div class="track"><div class="fill" style="width:'+(r.c[t]/mx*100).toFixed(1)+'%;background:'+TC[t]+'"></div></div><span class="n num">'+r.c[t]+'</span></div>';};
+      return '<div class="band3" data-nl="'+i+'" tabindex="0" role="button" aria-label="'+esc(r.lb+': ver '+r.L.length+' proyectos')+'"><span class="lb">'+r.lb+(r.L.length?'<em class="b-ver">Ver '+r.L.length+' ›</em>':'')+'</span><div class="bars">'+br('a')+br('c')+br('l')+'</div></div>';}).join('');
+    var b200=PP.filter(function(p){return p.p<200e3;});
+    $('n-bands-note').innerHTML='Bajo $200 mil hay <b>'+b200.length+'</b> proyectos en planos: '+b200.filter(function(p){return p.t==='a';}).length+' de apartamentos, '+b200.filter(function(p){return p.t==='c';}).length+' de casas y '+b200.filter(function(p){return p.t==='l';}).length+' de lotes.'+tag('s')+' El “desde” es la unidad más barata de cada proyecto, casi siempre la más chica.';
+    /* zonas */
+    var Z={};P.forEach(function(p){var z=p.zc||'';if(!z||/[,#]/.test(z)||z.length>26)z=p.mu&&p.mu.length<=26?p.mu:'Otras zonas';(Z[z]=Z[z]||[]).push(p);});
+    var zs=Object.keys(Z).map(function(z){var L=Z[z];return {z:z,L:L,m:med(L.filter(function(p){return p.t==='a';}).map(pmE)),na:L.filter(function(p){return p.t==='a';}).length};}).sort(function(a,b){return b.L.length-a.L.length||(b.m||0)-(a.m||0);});
+    var zmax=Math.max.apply(null,zs.map(function(x){return x.m||0;}))||1;
+    $('n-zonas').innerHTML=zs.map(function(x){var i=regLista('Zona',x.z,x.L);
+      return '<div class="zr" data-nl="'+i+'" tabindex="0" role="button"><span class="lb">'+esc(x.z)+'<em>'+x.L.length+' proyecto'+(x.L.length===1?'':'s')+' · '+x.na+' de apartamentos</em></span><div class="track"><div class="fill'+(x.na<3?' soft':'')+'" style="width:'+(x.m?(x.m/zmax*100).toFixed(1):0)+'%"></div></div><span class="vl num">'+(x.m?usd(x.m):'—')+'<em>'+(x.m?'$/m² entrada':'sin aptos.')+'</em></span></div>';}).join('');
+    /* entregas */
+    var EB=[['Ya vencida o 2026',0,2027],['2027',2027,2028],['2028',2028,2029],['2029 o después',2029,9999]];
+    var sinF=P.filter(function(p){return !(p._f&&entN(p._f.ent));});
+    var er=EB.map(function(e){var L=P.filter(function(p){var v=p._f&&entN(p._f.ent);return v!=null&&v>=e[1]&&v<e[2];});return {lb:e[0],L:L};});
+    if(sinF.length)er.push({lb:'Sin fecha',L:sinF});
+    var em=Math.max.apply(null,er.map(function(r){return r.L.length;}))||1;
+    $('n-ent').innerHTML=er.map(function(r){var i=regLista('Entrega',r.lb,r.L);var c={a:0,c:0,l:0};r.L.forEach(function(p){c[p.t]++;});
+      return '<div class="zr" data-nl="'+i+'" tabindex="0" role="button"><span class="lb">'+esc(r.lb)+'<em>'+c.a+' aptos. · '+c.c+' casas · '+c.l+' lotes</em></span><div class="vd-segs" style="width:'+(r.L.length/em*100).toFixed(1)+'%;height:.9rem">'+['a','c','l'].filter(function(t){return c[t];}).map(function(t){return '<span style="flex:'+c[t]+' 1 0;background:'+TC[t]+'"></span>';}).join('')+'</div><span class="vl num">'+r.L.length+'<em>proyectos</em></span></div>';}).join('');
+    /* tabla completa de menor a mayor */
+    var nf='';
+    function pintaN(){var L=P.filter(function(p){return !nf||p.t===nf;}).sort(function(a,b){return (a.p||9e9)-(b.p||9e9);});
+      $('n-t').innerHTML='<thead><tr><th>Proyecto</th><th>Tipo · entrega</th><th class="r">Desde</th><th class="r">m²</th><th class="r">$/m² entrada</th><th>Desarrolladora</th></tr></thead><tbody>'+L.map(function(p){
+        return '<tr data-k="'+esc(norm(p.n))+'" tabindex="0" role="button"><td>'+esc(p.n)+'<em>'+esc(p.zc||p.mu||'')+'</em></td><td>'+esc(sing(TT[p.t]||'',1))+'<em>'+esc(p._f&&p._f.ent?p._f.ent.replace(/\s*\(.*\)/,''):'—')+'</em></td><td class="r num">'+usd(p.p)+'</td><td class="r num">'+(p.m1||'—')+(p.m2&&p.m2!==p.m1?'–'+p.m2:'')+'</td><td class="r num">'+usd(pmE(p))+'</td><td class="dv">'+esc(p._d?p._d.n:'Por identificar')+'</td></tr>';}).join('')+'</tbody>';}
+    pintaN();
+    $('n-f').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;nf=b.dataset.f;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});pintaN();});
+  })();
+  function fmtN(n){return Math.round(n).toLocaleString('en-US');}
 })();
 
 </script>

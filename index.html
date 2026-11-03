@@ -3255,13 +3255,15 @@ body.qv-lock{overflow:hidden}
 .hero-media img{display:block;width:100%;max-width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;border-radius:28px}
 #scene-hero .hero-eb{color:var(--blue);font-weight:700}
 #scene-hero .hero-h{font-weight:800;letter-spacing:-.04em;color:var(--dark)}
+/* cada renglón del título va en una sola fila; fitHero() achica la letra si no cabe */
+#scene-hero .hero-h{white-space:nowrap;max-width:none}
 #scene-hero .hero-btns .btn-link{border:1.5px solid var(--divider);border-radius:var(--r-pill);padding:11px 22px;color:var(--dark);font-weight:600;justify-content:center;text-decoration:none}
 #scene-hero .hero-btns .btn-link::after{content:none}
 #scene-hero .hero-btns .btn-link:hover{border-color:var(--dark)}
 #scene-hero .hero-btns .btn-blue{font-weight:600}
 @media (min-width:900px){
   #scene-hero{text-align:left;padding-top:64px;padding-bottom:40px}
-  #scene-hero .hero-grid{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:center}
+  #scene-hero .hero-grid{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:48px;align-items:center}
   #scene-hero .hero-copy{min-width:0}
   #scene-hero .hero-h{font-size:clamp(48px,5.6vw,84px)}
   #scene-hero .hero-sub{margin:0 0 26px;max-width:34em}
@@ -9508,6 +9510,24 @@ if(typeof baseLang==='function')window.applyLang=function(l){baseLang.apply(this
 function init(){buildUI();paintRow();paintPanel();paintCards();paintBar();apply();}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 window.NLDPlus={openCalc:openCalc,compare:openCmp,state:S};
+})();
+
+/* Título de portada: cada renglón en una sola fila. Si un renglón no cabe
+   en la columna (idioma o intención más largos), se achica la letra. */
+(function(){
+  var h=document.querySelector('#scene-hero .hero-h'); if(!h)return;
+  function fit(){
+    h.style.fontSize='';
+    var w=h.clientWidth, sw=h.scrollWidth;
+    if(w>0&&sw>w+1){var fs=parseFloat(getComputedStyle(h).fontSize);h.style.fontSize=Math.floor(fs*w/sw*0.98)+'px';}
+  }
+  window.fitHero=fit;
+  fit();
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);
+  window.addEventListener('load',fit);
+  if('ResizeObserver' in window){var lw=0;new ResizeObserver(function(){var c=h.parentElement.clientWidth;if(c!==lw){lw=c;fit();}}).observe(h.parentElement);}
+  else window.addEventListener('resize',fit);
+  if('MutationObserver' in window)new MutationObserver(function(){fit();}).observe(h,{childList:true,characterData:true,subtree:true});
 })();
 </script>
 

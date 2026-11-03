@@ -238,6 +238,8 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 
 
 
+
+
 <!-- FICHAS:INI -->
 /* 08 · desarrolladoras: hover con contacto, clic abre la ficha */
 .devchips{display:flex;flex-wrap:wrap;gap:.35rem}
@@ -283,6 +285,39 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
 .fi-warn{font-size:.78rem;color:var(--muted);background:var(--surface);border-radius:.7rem;padding:.5rem .65rem}
 .fi-foot{display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;font-size:.72rem;color:var(--faint)}
 .fi-foot a{color:var(--muted)}
+/* 09 · vista por desarrolladora (paleta categórica validada: luz sobre #F5F5F7, oscuro sobre #1C1C1E) */
+:root{--vk-a:#2a78d6;--vk-c:#eb6834;--vk-l:#1baf7a}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--vk-a:#3987e5;--vk-c:#d95926;--vk-l:#199e70}}
+:root[data-theme="dark"]{--vk-a:#3987e5;--vk-c:#d95926;--vk-l:#199e70}
+.vk-a{background:var(--vk-a)}.vk-c{background:var(--vk-c)}.vk-l{background:var(--vk-l)}
+.vd-chart{background:var(--surface);border-radius:1rem;padding:.7rem .8rem;display:flex;flex-direction:column;gap:.15rem}
+.vd-row{all:unset;box-sizing:border-box;cursor:pointer;display:grid;grid-template-columns:minmax(6rem,11rem) 1fr;gap:.6rem;align-items:center;padding:.22rem .3rem;border-radius:.5rem}
+.vd-row:hover,.vd-row:focus-visible{background:var(--bg)}
+.vd-row:focus-visible{outline:2px solid var(--accent)}
+.vd-row .lb{font-size:.74rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.vd-bar{display:flex;align-items:center;gap:.4rem;min-width:0}
+.vd-segs{display:flex;gap:2px;height:.75rem}
+.vd-segs span{display:block;height:100%;min-width:3px}
+.vd-segs span:first-child{border-top-left-radius:2px;border-bottom-left-radius:2px}
+.vd-segs span:last-child{border-top-right-radius:4px;border-bottom-right-radius:4px}
+.vd-bar b{font-size:.74rem;color:var(--ink)}
+.vd-more{all:unset;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--accent);align-self:flex-start}
+.vd-more:focus-visible{outline:2px solid var(--accent)}
+.vd-grid{display:grid;grid-template-columns:1fr;gap:.8rem}
+:root:is([data-view="tablet"],[data-view="desktop"]) .vd-grid{grid-template-columns:repeat(auto-fill,minmax(22rem,1fr))}
+.vd-card{border:1px solid var(--line);border-radius:1.1rem;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.6rem;scroll-margin-top:5rem;background:var(--bg)}
+.vd-card.hl{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
+.vd-card h3{font-size:1.02rem;margin:0;line-height:1.25}
+.vd-card .fi-meta b{font-size:.86rem}
+.vd-card .fi-acts a{font-size:.72rem;padding:.3rem .6rem}
+.vd-zonas{display:flex;flex-wrap:wrap}
+.vd-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.vd-list li{display:grid;grid-template-columns:.55rem 1fr auto;gap:.5rem;align-items:baseline;padding:.4rem .2rem;border-top:1px solid var(--line-soft);font-size:.8rem;cursor:pointer;border-radius:.4rem}
+.vd-list li:hover,.vd-list li:focus-visible{background:var(--accent-soft)}
+.vd-list li:focus-visible{outline:2px solid var(--accent)}
+.vd-list li i{width:.55rem;height:.55rem;border-radius:2px;display:block;align-self:center}
+.vd-list li em{display:block;font-style:normal;color:var(--faint);font-size:.68rem}
+.vd-list li .r{text-align:right;white-space:nowrap}
 
 <!-- FICHAS:FIN -->
 </style>
@@ -397,6 +432,20 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   </section>
 <div id="dtip" role="tooltip" aria-hidden="true"></div>
 <dialog id="ficha" aria-labelledby="fi-h"></dialog>
+  <!-- 09 · vista por desarrolladora -->
+  <section aria-labelledby="s9" class="full" id="vista-dev">
+    <div class="sh"><span class="dot">09</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
+    <div class="devbar">
+      <div class="seg" id="vd-sort" role="group" aria-label="Ordenar desarrolladoras">
+        <button data-s="n" aria-pressed="true">Más proyectos</button><button data-s="p" aria-pressed="false">Entrada más barata</button><button data-s="e" aria-pressed="false">Entrega más próxima</button>
+      </div>
+      <div class="legend"><span><i class="vk-a"></i>Apartamentos</span><span><i class="vk-c"></i>Casas</span><span><i class="vk-l"></i>Lotes</span></div>
+    </div>
+    <div class="vd-chart" id="vd-chart" role="list" aria-label="Proyectos en planos por desarrolladora y tipo"></div>
+    <button type="button" class="vd-more" id="vd-more"></button>
+    <div class="vd-grid" id="vd-grid"></div>
+    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca una barra para ir a su tarjeta y un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de la sección 08 tiene los mismos datos proyecto por proyecto.</p>
+  </section>
 
 <!-- FICHAS:FIN -->
   <details class="arch">
@@ -785,7 +834,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
     return '<b>'+esc(d.n)+'</b><span>'+l.map(esc).join('<br>')+'</span><em>Clic para ver la ficha de '+esc(p.n)+'</em>';}
   function mover(e){var x=e.clientX+14,y=e.clientY+16,w=tip.offsetWidth,h=tip.offsetHeight;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-12;tip.style.left=Math.max(8,x)+'px';tip.style.top=Math.max(8,y)+'px';}
   if(fino){
-    document.addEventListener('mouseover',function(e){var r=e.target.closest('[data-k]');if(r===cur)return;cur=r;if(!r){tip.classList.remove('on');return;}tip.innerHTML=tipHTML(r.dataset.k);tip.classList.add('on');});
+    document.addEventListener('mouseover',function(e){var r=e.target.closest('[data-tip],[data-k]');if(r===cur)return;cur=r;if(!r){tip.classList.remove('on');return;}if(r.dataset.tip){var t=r.dataset.tip.split('|');tip.innerHTML='<b>'+esc(t[0])+'</b>'+(t[1]?'<span>'+esc(t[1])+'</span>':'');}else tip.innerHTML=tipHTML(r.dataset.k);tip.classList.add('on');});
     document.addEventListener('mousemove',function(e){if(cur)mover(e);});
   }
 
@@ -817,6 +866,44 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
   dlg.addEventListener('click',function(e){if(e.target===dlg)cerrar();});
   document.addEventListener('click',function(e){if(dlg.contains(e.target))return;var r=e.target.closest('[data-k]');if(r)abrir(r.dataset.k);});
   document.addEventListener('keydown',function(e){if((e.key==='Enter'||e.key===' ')&&e.target.matches&&e.target.matches('[data-k]')){e.preventDefault();abrir(e.target.dataset.k);}});
+  /* ----- 09 · vista por desarrolladora ----- */
+  function entN(s){var m=/Q([1-4])\s*(\d{4})/.exec(s||'');return m?+m[2]+(+m[1]-1)/4:null;}
+  function med(a){a=a.filter(function(x){return x!=null&&isFinite(x);}).sort(function(x,y){return x-y;});if(!a.length)return null;var i=(a.length-1)/2;return (a[Math.floor(i)]+a[Math.ceil(i)])/2;}
+  var VK={a:'var(--vk-a)',c:'var(--vk-c)',l:'var(--vk-l)'}, VKC={a:'vk-a',c:'vk-c',l:'vk-l'};
+  var G=orden.map(function(k){var L=P.filter(function(p){return p._f&&p._f.d===k;});
+    var ps=L.map(function(p){return p.p;}).filter(Boolean), es=L.map(function(p){return entN(p._f.ent);}).filter(function(x){return x!=null;});
+    var z={};L.forEach(function(p){var n=p.zc||p.mu||'';if(n)z[n]=(z[n]||0)+1;});
+    return {k:k,d:DV[k],L:L,n:L.length,t:{a:L.filter(function(p){return p.t==='a';}).length,c:L.filter(function(p){return p.t==='c';}).length,l:L.filter(function(p){return p.t==='l';}).length},
+      pmin:ps.length?Math.min.apply(null,ps):null,pmax:ps.length?Math.max.apply(null,ps):null,
+      m2:med(L.map(function(p){return p.p&&p.m1?p.p/p.m1:null;})),emin:es.length?Math.min.apply(null,es):null,
+      ent:(L.slice().sort(function(a,b){return (entN(a._f.ent)||9e9)-(entN(b._f.ent)||9e9);})[0]||{_f:{}})._f.ent,
+      zonas:Object.keys(z).sort(function(a,b){return z[b]-z[a];})};});
+  var vdSort='n', vdAll=false, TOP=10, nmax=Math.max.apply(null,G.map(function(g){return g.n;}).concat([1]));
+  function ordenar(){var f={n:function(a,b){return b.n-a.n||a.d.n.localeCompare(b.d.n);},p:function(a,b){return (a.pmin||9e9)-(b.pmin||9e9);},e:function(a,b){return (a.emin||9e9)-(b.emin||9e9);}}[vdSort];return G.slice().sort(f);}
+  function sing(t,n){return n===1?t.replace(/s$/,''):t;}
+  function vdPintar(){var S=ordenar(), V=vdAll?S:S.slice(0,TOP);
+    $('vd-chart').innerHTML=V.map(function(g){
+      var segs=['a','c','l'].filter(function(t){return g.t[t];}).map(function(t){return '<span style="flex:'+g.t[t]+' 1 0;background:'+VK[t]+'" data-tip="'+esc(g.d.n+'|'+g.t[t]+' '+sing(TIPO[t],g.t[t]).toLowerCase()+' de '+g.n+' proyecto'+(g.n>1?'s':''))+'"></span>';}).join('');
+      var extra=vdSort==='p'?' · desde '+usd(g.pmin):vdSort==='e'?' · '+(g.ent||'—'):'';
+      return '<button type="button" class="vd-row" role="listitem" data-go="'+g.k+'" aria-label="'+esc(g.d.n+': '+g.n+' proyectos ('+g.t.a+' apartamentos, '+g.t.c+' casas, '+g.t.l+' lotes). Ir a su tarjeta')+'"><span class="lb" title="'+esc(g.d.n)+'">'+esc(g.d.n)+'</span><span class="vd-bar"><span class="vd-segs" style="width:'+(g.n/nmax*78).toFixed(2)+'%">'+segs+'</span><b class="num">'+g.n+'</b><span class="note" style="font-size:.68rem;white-space:nowrap">'+esc(extra.replace(/^ · /,''))+'</span></span></button>';}).join('');
+    $('vd-more').textContent=vdAll?'Mostrar solo las '+TOP+' primeras':'Mostrar las '+G.length+' desarrolladoras';
+    $('vd-more').hidden=G.length<=TOP;
+    $('vd-grid').innerHTML=S.map(function(g){var d=g.d, a=[];
+      if(d.wa)a.push('<a href="https://wa.me/'+digits(d.wa)+'" target="_blank" rel="noopener">WhatsApp</a>');
+      if(d.tel)a.push('<a class="g" href="tel:+'+digits(d.tel)+'">'+esc(d.tel)+'</a>');
+      if(d.email)a.push('<a class="g" href="mailto:'+esc(d.email)+'">Correo</a>');
+      if(d.web)a.push('<a class="g" href="'+esc(d.web)+'" target="_blank" rel="noopener">Sitio</a>');
+      var mix=['a','c','l'].filter(function(t){return g.t[t];}).map(function(t){return g.t[t]+' '+sing(TIPO[t],g.t[t]).toLowerCase();}).join(' · ');
+      return '<article class="vd-card" id="vd-'+g.k+'"><div><span class="micro">'+g.n+' proyecto'+(g.n>1?'s':'')+' en planos · '+esc(mix)+'</span><h3>'+esc(d.n)+tag(d.c||'p')+'</h3></div>'
+        +'<div class="fi-meta"><div><span class="micro">Desde</span><b class="num">'+(g.pmin?usd(g.pmin)+(g.pmax!==g.pmin?'<br><span class="note">hasta '+usd(g.pmax)+'</span>':''):'—')+'</b></div><div><span class="micro">$/m² entrada</span><b class="num">'+usd(g.m2)+'</b></div><div><span class="micro">Próxima entrega</span><b>'+esc((g.ent||'—').replace(/\s*\(.*\)/,''))+'</b></div></div>'
+        +(g.zonas.length?'<div class="vd-zonas">'+g.zonas.map(function(z){return '<span class="pill g">'+esc(z)+'</span>';}).join('')+'</div>':'')
+        +(a.length?'<div class="fi-acts">'+a.join('')+'</div>':'<p class="note" style="color:#B25000">Sin contacto propio encontrado.</p>')
+        +'<ul class="vd-list">'+g.L.slice().sort(function(x,y){return (x.p||9e9)-(y.p||9e9);}).map(function(p){return '<li data-k="'+esc(norm(p.n))+'" tabindex="0" role="button" aria-label="Abrir ficha de '+esc(p.n)+'"><i class="'+VKC[p.t]+'"></i><span>'+esc(p.n)+'<em>'+esc((p.zc||p.mu||'')+(p._f.ent?' · '+p._f.ent.replace(/\s*\(.*\)/,''):''))+'</em></span><span class="r num">'+usd(p.p)+'</span></li>';}).join('')+'</ul></article>';}).join('');
+  }
+  vdPintar();
+  $('vd-sort').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;vdSort=b.dataset.s;this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});vdPintar();});
+  $('vd-more').addEventListener('click',function(){vdAll=!vdAll;vdPintar();});
+  $('vd-chart').addEventListener('click',function(e){var r=e.target.closest('[data-go]');if(!r)return;var c=$('vd-'+r.dataset.go);if(!c)return;document.querySelectorAll('.vd-card.hl').forEach(function(x){x.classList.remove('hl');});c.classList.add('hl');c.scrollIntoView({behavior:'smooth',block:'start'});});
 })();
 
 </script>

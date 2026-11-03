@@ -254,8 +254,8 @@ var HERRAMIENTAS = [
   {
     url: '/olympus/termometro-nld',
     area: 'operaciones',
-    nombre: 'Termómetro NLD',
-    etiqueta: 'Termómetro · Tareas en Jira',
+    nombre: 'Gestión de proyectos e iniciativas NLD',
+    etiqueta: 'Gestión · Proyectos e iniciativas en Jira',
     titulo: 'Cómo vamos con las tareas',
     texto: 'Auditoría del espacio NLD en Jira, de lo macro a lo micro: puntaje de salud, flujo mensual, carga por persona, hallazgos y cada tarea abierta ordenada por riesgo. Se actualiza lunes, miércoles y viernes.',
     meta: 'Actualizado: 1 nov 2026'
@@ -324,7 +324,7 @@ var MOMENTOS=[
   var cards={
     bench:'<a class="pc" href="/olympus/benchmark-propi" data-u="/olympus/benchmark-propi" id="pc-bench"><span class="k">Proyectos nuevos en planos'+st(bench&&bench.meta,7)+'</span><span class="v">—</span><span class="d">Leyendo el Competitor Benchmark…</span><span class="go">Abrir el benchmark →</span></a>',
     dev:'<a class="pc" href="/olympus/benchmark-propi#dev" data-u="/olympus/benchmark-propi#dev" id="pc-dev"><span class="k">Desarrolladoras contactadas</span><span class="v">—</span><span class="d">Cargando…</span><span class="go">Proponer alianza →</span></a>',
-    jira:jira?'<a class="pc" href="'+jira.url+'" data-u="'+jira.url+'"><span class="k">Tareas del equipo'+st(jira.meta,7)+'</span><span class="v" style="font-size:22px;line-height:1.2">'+esc(jira.titulo)+'</span><span class="d">'+esc(jira.meta)+'. Puntaje de salud, carga por persona y tareas en riesgo.</span><span class="go">Ver el termómetro →</span></a>':'',
+    jira:jira?'<a class="pc" href="'+jira.url+'" data-u="'+jira.url+'"><span class="k">Proyectos e iniciativas'+st(jira.meta,7)+'</span><span class="v" style="font-size:22px;line-height:1.2">'+esc(jira.titulo)+'</span><span class="d">'+esc(jira.meta)+'. Puntaje de salud, carga por persona y tareas en riesgo.</span><span class="go">Ver la gestión de proyectos →</span></a>':'',
     rem:rem?'<a class="pc" href="'+rem.url+'" data-u="'+rem.url+'"><span class="k">Remesas del BCR'+(edad(rem.meta)>60?'<span class="st w">Datos viejos</span>':'')+'</span><span class="v" style="font-size:22px;line-height:1.2">'+esc(rem.meta)+'</span><span class="d">'+(edad(rem.meta)>60?'Hay que cargar el Excel nuevo del BCR para actualizarlo.':'Remesas por departamento y municipio.')+'</span><span class="go">Abrir remesas →</span></a>':''
   };
   $('pulse').innerHTML=cards.bench+cards.dev+cards.jira+cards.rem;

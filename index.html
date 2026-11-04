@@ -9790,17 +9790,21 @@ window.NLDPlus={openCalc:openCalc,compare:openCmp,state:SS.proj,states:SS};
   document.querySelectorAll('#tourSeg button').forEach(function(b){b.addEventListener('click',function(){pick(b.getAttribute('data-v'),true)})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!modal.hidden)closeTour();});
   if(typeof window.setLang==='function'){var _sl=window.setLang;window.setLang=function(l){_sl.apply(this,arguments);try{paint()}catch(e){}};}
-  /* Aviso: solo a usuarios nuevos, como máximo en 2 visitas, y nunca encima del aviso de almacenamiento local. */
-  if(get('nld_tour_seen')==='1')return;
-  var n=parseInt(get('nld_tour_n')||'0',10)||0;if(n>=2)return;
-  var shown=false;
-  function tryShow(){if(shown)return;
-    var ck=document.getElementById('ckBanner');if(ck&&ck.classList.contains('show')){setTimeout(tryShow,1500);return;}
-    if(!modal.hidden)return;
-    shown=true;set('nld_tour_n',String(n+1));paint();toast.hidden=false;
+  /* Aviso: sale en cada visita a los 3 s de verse la página y se va solo a los 3 s si nadie lo toca.
+     Si el aviso de almacenamiento está abierto, se coloca encima de él en vez de taparlo. */
+  var hideT=null;
+  function armHide(ms){clearTimeout(hideT);hideT=setTimeout(function(){if(!toast.hidden)hideToast();},ms);}
+  function place(){var ck=document.getElementById('ckBanner');
+    if(ck&&ck.classList.contains('show')){var r=ck.getBoundingClientRect();toast.style.bottom=(window.innerHeight-r.top+12)+'px';}else{toast.style.bottom='';}}
+  function show(){if(!modal.hidden)return;paint();place();toast.hidden=false;
     requestAnimationFrame(function(){requestAnimationFrame(function(){toast.classList.add('show')})});
-    setTimeout(function(){if(!toast.hidden)hideToast();},18000);}
-  window.addEventListener('load',function(){setTimeout(tryShow,6000);});
+    armHide(3500);}
+  toast.addEventListener('pointerenter',function(){clearTimeout(hideT)});
+  toast.addEventListener('pointerleave',function(){armHide(3000)});
+  toast.addEventListener('focusin',function(){clearTimeout(hideT)});
+  toast.addEventListener('touchstart',function(){clearTimeout(hideT)},{passive:true});
+  function start(){setTimeout(show,3000);}
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',start);else start();
 })();
 </script>
 </body>

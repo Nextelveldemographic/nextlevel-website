@@ -1384,7 +1384,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 @media (min-width:900px){:root{--gutter:clamp(28px,3.5vw,56px)}}
 .nav-in{max-width:var(--max)}
 </style>
-<script>(function(){var d=document.documentElement;d.lang='es';d.classList.add('js');try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-hero');}catch(e){}try{if(localStorage.getItem('nld_cm_tema')==='oscuro')d.setAttribute('data-tema','oscuro');}catch(e){}})();</script>
+<script>(function(){var d=document.documentElement;d.lang='es';d.classList.add('js');try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-hero');}catch(e){}try{if(localStorage.getItem('nld_olympus_tema')!=='claro')d.setAttribute('data-tema','oscuro');}catch(e){}})();</script>
 <nav class="nav" aria-label="Principal"><div class="nav-in">
   <a href="#inicio" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
   <div class="nav-r">
@@ -1801,7 +1801,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   document.querySelectorAll('[data-cta]').forEach(function(a){a.href=waHref;a.target='_blank';a.rel='noopener';});
 
   /* ===== Tema: claro por defecto, oscuro como opción ===== */
-  var K_TEMA='nld_cm_tema';
+  var K_TEMA='nld_olympus_tema';
   var themeBtn=document.querySelector('[data-theme-btn]');
   function isDark(){return root.getAttribute('data-tema')==='oscuro';}
   function paintTheme(){

@@ -9,7 +9,7 @@
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>
 /* Tema y vista antes del primer pintado */
-(function(){var r=document.documentElement,t='light',v='mobile';try{t=localStorage.getItem('nld-theme')||'light';v=localStorage.getItem('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop');}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+(function(){var r=document.documentElement,t='light',v='mobile';try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop');}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
 </script>
 <style>
 /* Layout: una sola columna que escala completa (tipografía + ancho en rem) según la vista móvil / iPad / navegador. Sistema NLD claro. */
@@ -705,11 +705,11 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
   var root=document.documentElement;
   function store(k,v){try{if(v===undefined)return localStorage.getItem(k);localStorage.setItem(k,v)}catch(e){return null}}
   function setView(v){root.setAttribute('data-view',v);document.querySelectorAll('[data-v]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});store('nld-view-propi',v)}
-  function setTheme(t){root.setAttribute('data-theme',t);document.querySelectorAll('[data-t]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===t)});store('nld-theme',t)}
+  function setTheme(t){root.setAttribute('data-theme',t);document.querySelectorAll('[data-t]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.t===t)});store('nld-theme',t);try{localStorage.setItem('nld_olympus_tema',t==='light'?'claro':'oscuro')}catch(e){}}
   document.querySelectorAll('[data-v]').forEach(function(b){b.addEventListener('click',function(){setView(b.dataset.v)})});
   document.querySelectorAll('[data-t]').forEach(function(b){b.addEventListener('click',function(){setTheme(b.dataset.t)})});
   setView(store('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop'));
-  setTheme(store('nld-theme')||'light');
+  setTheme((function(){try{return localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark'}catch(e){return 'dark'}})());
 })();
 </script>
 <script>

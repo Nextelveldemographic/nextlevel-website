@@ -232,6 +232,7 @@ const MOD=id=>M.find(m=>m.id===id)||M[0];
 const KEY="carisma_v1";
 function loadLocal(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch(e){return{}}}
 let st=Object.assign({theme:"light",view:"",lvl:1,read:{},gen:[],speed:"normal",voice:true,think:false},loadLocal());
+try{st.theme=localStorage.getItem("nld_olympus_tema")==="claro"?"light":"dark"}catch(e){st.theme="dark"}
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(st))}catch(e){}}
 let DB=null,UID=null,G=[],SM=null,SCR="home",CUR=null,CMOD=null,GEN=null,GENCTL=null;
 
@@ -265,7 +266,7 @@ function applyView(){document.documentElement.setAttribute("data-view",(st.view|
 /* Ancho estándar Olympus: en iPad y navegador la app escala hasta llenar la pantalla, sin dejar columnas vacías a los lados */
 function fitView(){var w=document.querySelector(".wrap");if(!w)return;var v=(st.view||defView()),base=v==="desktop"?880:v==="tablet"?780:0;if(!base||!("zoom" in w.style)){w.style.zoom="";return}var g=Math.min(56,Math.max(28,window.innerWidth*.035));var f=Math.min(1.5,Math.max(1,(window.innerWidth-2*g)/base));w.style.zoom=f>1.02?f.toFixed(3):""}
 window.addEventListener("resize",function(){fitView()},{passive:true});
-function setTheme(t){st.theme=t;saveLocal();applyTheme();document.querySelectorAll(".tseg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
+function setTheme(t){st.theme=t;saveLocal();try{if(t==="auto")localStorage.removeItem("nld_olympus_tema");else localStorage.setItem("nld_olympus_tema",t==="light"?"claro":"oscuro")}catch(e){}applyTheme();document.querySelectorAll(".tseg button").forEach(b=>b.classList.toggle("on",b.dataset.t===t))}
 function setView(v){st.view=v;saveLocal();applyView();document.querySelectorAll(".vseg button").forEach(b=>b.classList.toggle("on",b.dataset.v===v))}
 function ctlHTML(){return `<div class="ctl"><div class="seg tseg" role="group" aria-label="Tema">${["light","dark","auto"].map(t=>`<button type="button" data-t="${t}" class="${st.theme===t?"on":""}" aria-label="${LB[t]}" title="${LB[t]}" onclick="setTheme('${t}')">${IC[t]}</button>`).join("")}</div><div class="seg vseg" role="group" aria-label="Vista">${["mobile","tablet","desktop"].map(v=>`<button type="button" data-v="${v}" class="${(st.view||defView())===v?"on":""}" aria-label="${LB[v]}" title="${LB[v]}" onclick="setView('${v}')">${IC[v]}</button>`).join("")}</div></div>`}
 function anim(){[...app().children].forEach((el,i)=>{el.classList.remove("in");void el.offsetWidth;el.style.animationDelay=(i*35)+"ms";el.classList.add("in")})}

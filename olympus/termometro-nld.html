@@ -8,7 +8,7 @@
 <link rel="apple-touch-icon" href="/assets/logo.png">
 <script>
 /* Tema y vista antes del primer pintado: claro por defecto; móvil en el celular, escritorio en lo demás */
-(function(){var r=document.documentElement,t="light",v=null;try{t=localStorage.getItem("tnld-theme")||"light";v=localStorage.getItem("tnld-view2");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
+(function(){var r=document.documentElement,t="light",v=null;try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem("tnld-view2");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
 </script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -411,7 +411,7 @@ $("#foot").innerHTML=`Fuente: Jira, proyecto NLD · ${META.totals.all} tareas en
 
 /* Vista y tema (iconos) */
 function setView(v,save){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save){try{localStorage.setItem("tnld-view2",v)}catch(e){}drawFlow()}}
-function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("tnld-theme",t)}catch(e){}}
+function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("tnld-theme",t);localStorage.setItem("nld_olympus_tema",t==="light"?"claro":"oscuro")}catch(e){}}
 setView(root.dataset.view||(innerWidth<700?"mobile":"desktop"));
 setTheme(root.dataset.theme||"light");
 drawFlow();

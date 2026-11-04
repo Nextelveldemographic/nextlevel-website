@@ -7,7 +7,7 @@
 <meta name="claude:viewport-fit-sides" content="cover">
 <script>
 /* Tema y vista antes del primer pintado: evita que se vea oscuro mientras carga */
-(function(){var r=document.documentElement,t='light',v='web';try{t=localStorage.getItem('nld-dia-theme2')||'light';v=localStorage.getItem('nld-dia-view2')||(window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web');}catch(e){}if(t!=='auto')r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
+(function(){var r=document.documentElement,t='light',v='web';try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem('nld-dia-view2')||(window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web');}catch(e){}if(t!=='auto')r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
 </script>
 <style>
 /* Layout: una sola columna que llena la pantalla; la vista (móvil / iPad / navegador) cambia escala y densidad, nunca agrega marcos. */
@@ -362,7 +362,7 @@ function setView(v, save){ root.setAttribute('data-view', v); document.querySele
 const THEME_ICONS = { light:'<circle cx="12" cy="12" r="4"/><path d="M12 2.5v2M12 19.5v2M4.6 4.6l1.4 1.4M18 18l1.4 1.4M2.5 12h2M19.5 12h2M4.6 19.4L6 18M18 6l1.4-1.4"/>', auto:'<circle cx="12" cy="12" r="8.5"/><path d="M12 3.5v17a8.5 8.5 0 0 0 0-17z" fill="currentColor" stroke="none"/>', dark:'<path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/>' };
 const THEME_LABEL = { light:'Tema claro', auto:'Tema del sistema', dark:'Tema oscuro' };
 let THEME = 'auto';
-function setTheme(t, save){ THEME = t; if(t==='auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', t); $('themeIcon').innerHTML = THEME_ICONS[t]; $('themeBtn').setAttribute('aria-label', THEME_LABEL[t] + ' (toca para cambiar)'); $('themeBtn').title = THEME_LABEL[t]; if(save) store.set('nld-dia-theme2', t); requestAnimationFrame(() => { renderMap(); if(AGG) renderConc(); }); }
+function setTheme(t, save){ THEME = t; if(t==='auto') root.removeAttribute('data-theme'); else root.setAttribute('data-theme', t); $('themeIcon').innerHTML = THEME_ICONS[t]; $('themeBtn').setAttribute('aria-label', THEME_LABEL[t] + ' (toca para cambiar)'); $('themeBtn').title = THEME_LABEL[t]; if(save){ store.set('nld-dia-theme2', t); try{ if(t==='auto') localStorage.removeItem('nld_olympus_tema'); else localStorage.setItem('nld_olympus_tema', t==='light'?'claro':'oscuro'); }catch(e){} } requestAnimationFrame(() => { renderMap(); if(AGG) renderConc(); }); }
 document.querySelectorAll('button[data-view]').forEach(b => b.addEventListener('click', () => setView(b.dataset.view, true)));
 $('themeBtn').addEventListener('click', () => setTheme({light:'dark', dark:'auto', auto:'light'}[THEME], true));
 const mq = window.matchMedia('(prefers-color-scheme: dark)');
@@ -861,7 +861,7 @@ function update(refit){
   aggregate(); buildStateSel(AGG.byState); renderKpis(); renderConc(); renderStates(); renderCities(); renderZips(); mapDataChanged(refit);
 }
 setView(store.get('nld-dia-view2') || (window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web'));
-setTheme(store.get('nld-dia-theme2') || 'light');
+setTheme((function(){try{return localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark'}catch(e){return 'dark'}})());
 buildCountries(); update(false); initMap();
 window.addEventListener('resize', () => { if(S.presenting) fitInitial(false); });
 })();

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
+<head><script>/* Olympus: tema compartido, oscuro por defecto */try{if(localStorage.getItem("nld_olympus_tema")!=="claro")document.documentElement.setAttribute("data-theme","dark")}catch(e){document.documentElement.setAttribute("data-theme","dark")}</script>
 <meta charset="utf-8">
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -202,6 +202,17 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
 .kpi:hover{border-color:var(--line-2);box-shadow:0 10px 28px rgba(0,0,0,.06)}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}.js .rv,.js .kpis.rv .kpi{opacity:1!important;transform:none!important}.sline,.sarea{-webkit-clip-path:none;clip-path:none}}
 
+
+/* ---------- tema oscuro (predeterminado en Olympus) ---------- */
+:root[data-theme="dark"]{
+  --bg:#000000; --panel:#1C1C1E; --panel-2:#2C2C2E; --line:#2C2C2E; --line-2:#3A3A3C;
+  --ink:#F5F5F7; --ink-2:#A1A1A6; --ink-3:#8E8E93; --ink-4:#6E6E73;
+  --teal:#2997FF; --amber:#F5F5F7; --tint:rgba(41,151,255,.14); color-scheme:dark}
+:root[data-theme="dark"] :is(.btn,.dockhint .pinbtn,.ftog,.filters,.chip,select,input[type=text],.kpi,.card.alt,.mini button,#mapwrap,.maptip,.mapctl button,.tablewrap,th,#drop){background:var(--panel)}
+:root[data-theme="dark"] .card{background:#161617}
+:root[data-theme="dark"] :is(#mapwrap:fullscreen){background:#000}
+:root[data-theme="dark"] .geo{stroke:#000000}
+:root[data-theme="dark"] .rankbadge circle{fill:#2997FF;stroke:#000}
 </style>
 </head>
 <body>

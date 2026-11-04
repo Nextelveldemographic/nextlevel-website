@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
-<meta name="theme-color" content="#F5F5F7">
+<meta name="theme-color" content="#000000">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Olympus">
 <title>Olympus · Propuesta de inicio</title>
 <link rel="icon" href="/assets/logo.png">
 <link rel="apple-touch-icon" href="/assets/logo.png">
-<script>try{if(localStorage.getItem('nld_tools_tema')==='oscuro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
+<script>try{if(localStorage.getItem('nld_olympus_tema')!=='claro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
 <style>
 /* Olympus · propuesta de inicio: centro de mando.
    Mismo sistema visual NLD que la portada actual (claro por defecto, oscuro con data-tema). */
@@ -364,7 +364,7 @@ var MOMENTOS=[
   /* tema */
   var root=document.documentElement, meta=document.querySelector('meta[name="theme-color"]');
   function pinta(){var o=root.getAttribute('data-tema')==='oscuro';meta.setAttribute('content',o?'#000000':'#F5F5F7');}
-  $('tema').addEventListener('click',function(){var o=root.getAttribute('data-tema')!=='oscuro';if(o)root.setAttribute('data-tema','oscuro');else root.removeAttribute('data-tema');try{localStorage.setItem('nld_tools_tema',o?'oscuro':'claro');}catch(e){}pinta();});
+  $('tema').addEventListener('click',function(){var o=root.getAttribute('data-tema')!=='oscuro';if(o)root.setAttribute('data-tema','oscuro');else root.removeAttribute('data-tema');try{localStorage.setItem('nld_olympus_tema',o?'oscuro':'claro');}catch(e){}pinta();});
   pinta();
 })();
 </script>

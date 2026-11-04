@@ -64,7 +64,7 @@ button{background:none;border:0;cursor:pointer}
 .ic:hover{background:var(--hover);color:var(--fg)}
 .ic svg{width:19px;height:19px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 .ic .sun{display:none}:root[data-tema="oscuro"] .ic .sun{display:block}:root[data-tema="oscuro"] .ic .moon{display:none}
-@media (max-width:640px){.bar-in{flex-wrap:wrap;height:auto;padding:8px 0}.q{order:3;flex-basis:100%;max-width:none}.acts{margin-left:auto}.q kbd{display:none}}
+@media (max-width:640px){.bar-in{flex-wrap:wrap;height:auto;padding-block:8px}.q{order:3;flex-basis:100%;max-width:none}.acts{margin-left:auto}.q kbd{display:none}}
 /* encabezado */
 main{flex:1;display:flex;flex-direction:column;gap:38px;padding:30px 0 44px}
 .hi .eyebrow{font-size:12.5px;font-weight:700;color:var(--blue);margin-bottom:6px}
@@ -73,7 +73,7 @@ main{flex:1;display:flex;flex-direction:column;gap:38px;padding:30px 0 44px}
 .prop{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--tint);color:var(--fg);border-radius:14px;padding:10px 14px;font-size:13px}
 .prop b{color:var(--blue)}
 .prop a{color:var(--blue);font-weight:700;margin-left:auto}
-.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sec-h{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:10px 12px;margin-bottom:14px}
 .sec-h h2{font-size:20px;letter-spacing:-.015em}
 .sec-h span{font-size:12.5px;color:var(--label)}
 /* hoy */
@@ -96,10 +96,11 @@ main{flex:1;display:flex;flex-direction:column;gap:38px;padding:30px 0 44px}
 .rec a:hover{border-color:var(--blue);color:var(--blue)}
 /* flujo */
 .seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
-.seg button{padding:6px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}
+.seg button{padding:6px 14px;white-space:nowrap;border-radius:999px;font-size:13px;font-weight:600;color:var(--muted)}
 .seg button[aria-pressed="true"]{background:var(--blue);color:var(--on-blue)}
 .flow{display:grid;gap:14px;grid-template-columns:1fr}
 @media (min-width:800px){.flow{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:800px) and (max-width:1249px){.flow>:last-child:nth-child(odd){grid-column:1/-1}.flow>:last-child:nth-child(odd) .tl{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (min-width:1250px){.flow{grid-template-columns:repeat(var(--cols,5),minmax(0,1fr))}}
 .col{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:18px;display:flex;flex-direction:column;gap:12px}
 .col header{display:flex;gap:10px;align-items:flex-start}
@@ -176,7 +177,7 @@ var HERRAMIENTAS = [
   {
     url: '/olympus/mapa-diaspora',
     area: 'marketing',
-    etiqueta: 'Tablero · Censo EE. UU. 2023',
+    etiqueta: 'Tablero · Censo EE. UU. 2023',
     titulo: 'Mapa de la Diáspora',
     texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa 2D y 3D, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
     meta: '19 países · 20,784 códigos postales'
@@ -204,7 +205,7 @@ var HERRAMIENTAS = [
     nombre: 'Propuesta Casa Muñoz',
     etiqueta: 'Presentación · Expansión internacional',
     titulo: 'Casa Muñoz en Estados Unidos',
-    texto: 'La propuesta para que una marca salvadoreña le venda a la diáspora en EE. UU. con gift cards: el mercado, cómo funciona, cómo se vería en redes y cómo trabajamos. Se presenta con las flechas del teclado.',
+    texto: 'La propuesta para que una marca salvadoreña le venda a la diáspora en EE. UU. con gift cards: el mercado, cómo funciona, cómo se vería en redes y cómo trabajamos. Se presenta con las flechas del teclado.',
     meta: 'Actualizada: 1 nov 2026'
   },
   {
@@ -248,7 +249,7 @@ var HERRAMIENTAS = [
     nombre: 'Video Jubilarse en El Salvador',
     etiqueta: 'Video · Jubilación',
     titulo: 'Jubilarse en El Salvador',
-    texto: 'La serie animada completa: ¿Será verdad?, cuatro historias por estado de EE. UU., y El después, los episodios de cada personaje ya viviendo en El Salvador. Narrada, en vertical, horizontal y vista de redes.',
+    texto: 'La serie animada completa: ¿Será verdad?, cuatro historias por estado de EE. UU., y El después, los episodios de cada personaje ya viviendo en El Salvador. Narrada, en vertical, horizontal y vista de redes.',
     meta: '4 historias · 8 episodios'
   },
   {
@@ -276,7 +277,7 @@ var MOMENTOS=[
   {t:'Entender el mercado',d:'Dónde está el comprador y qué hay en oferta.',u:['/olympus/benchmark-propi','/olympus/mapa-diaspora','/olympus/bcr-remesas']},
   {t:'Abrir la puerta con desarrolladoras',d:'A quién llamar y qué presentarle.',u:['/olympus/benchmark-propi#dev','/olympus/propuesta-desarrolladoras','/olympus/propuesta-ambar']},
   {t:'Llegar al comprador',d:'Contenido para la diáspora.',u:['/olympus/jubilacion','/olympus/airbnb']},
-  {t:'Nuevas líneas',d:'Marcas salvadoreñas en EE. UU.',u:['/olympus/propuesta-casa-munoz','/olympus/propuesta-ikatu']},
+  {t:'Nuevas líneas',d:'Marcas salvadoreñas en EE. UU.',u:['/olympus/propuesta-casa-munoz','/olympus/propuesta-ikatu']},
   {t:'Ejecutar y mejorar',d:'Seguimiento del equipo y entrenamiento.',u:['/olympus/termometro-nld','/olympus/carisma']}
 ];
 (function(){

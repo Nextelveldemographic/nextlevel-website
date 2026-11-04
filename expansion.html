@@ -296,12 +296,14 @@ html:not(.js) .seg,html:not(.js) .ic-btn{display:none}
 
 /* ===== Datos ===== */
 .data-bento{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
-.dn{background:var(--card);border-radius:var(--r-xl);padding:34px 30px;display:flex;flex-direction:column;justify-content:space-between;
+.dn{background:var(--card);border-radius:var(--r-xl);padding:34px 30px;display:flex;flex-direction:column;justify-content:flex-start;
   gap:14px;min-height:220px;transition:transform .3s var(--ease);min-width:0}
 .dn:hover,.card:hover{transform:translateY(-4px)}
 .dn-val{font-size:clamp(46px,5.4vw,68px);font-weight:600;letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums;white-space:nowrap}
 .dn-unit{font-size:.42em;font-weight:400;color:var(--blue);margin-left:4px;letter-spacing:-.01em}
 .dn-lbl{font-size:16px;color:var(--muted);line-height:1.35}
+/* Cifras a la misma altura en las tres tarjetas aunque el texto de abajo tenga más líneas */
+.dn>.mono{margin-bottom:clamp(8px,2vw,24px)}
 .note{margin-top:28px;font-size:17px;color:var(--muted);max-width:60ch}
 .note strong{color:var(--fg);font-weight:600}
 
@@ -326,6 +328,8 @@ html:not(.js) .seg,html:not(.js) .ic-btn{display:none}
 
 /* ===== Cómo trabajamos ===== */
 .split{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+/* Sin subtítulo, el título quedaba pegado a las tarjetas: mismo aire que en las secciones con subtítulo */
+.section-h+.split,.section-h+.why-grid{margin-top:clamp(20px,2.4vw,32px)}
 .split-c{border-radius:var(--r-xl);padding:32px 28px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line);min-width:0}
 .split-c.nld{background:var(--blue-soft);box-shadow:inset 0 0 0 1px var(--blue-edge)}
 .split-k{margin-bottom:18px}
@@ -372,7 +376,9 @@ html:not(.js) .seg,html:not(.js) .ic-btn{display:none}
 .ft{border-top:1px solid var(--line);padding-block:40px}
 .ft-in{display:flex;flex-direction:column;gap:14px}
 .ft-d{color:var(--muted);font-size:15px}
-.ft .btn-link{font-size:15px}
+.ft .btn-link{font-size:15px;display:inline}
+/* En dos líneas, el flex dejaba la flecha suelta al borde derecho: en línea, va pegada a la última palabra */
+.ft .btn-link::after{margin-left:4px;vertical-align:-1px}
 .ft-src{font-size:12px;color:var(--muted-2);line-height:1.5;max-width:80ch}
 .ft-c{font-size:12px;color:var(--muted-2)}
 
@@ -516,6 +522,8 @@ html:not(.js) .seg,html:not(.js) .ic-btn{display:none}
 @media (min-width:900px) and (max-width:1099px){
   /* Tres tarjetas angostas: la cifra baja un poco para que el monto de remesas y su unidad quepan */
   .dn-val{font-size:4.9vw}
+  /* Si una fuente ocupa dos líneas, las tres cifras siguen alineadas */
+  .dn>.mono{min-height:2lh}
 }
 @media (max-width:899px){
   .data-bento,.why-grid{grid-template-columns:minmax(0,1fr)}
@@ -648,7 +656,7 @@ try{if(localStorage.getItem('nld_lang')==='en')d.lang='en';}catch(e){}})();
         <p class="dn-lbl" data-i18n="mk_l2">Recibidos de enero a agosto de 2026, 3.8% más que un año antes. El 92.2% vino de Estados&nbsp;Unidos.</p>
       </div>
       <div class="dn">
-        <p class="mono" data-i18n="mk_src3">Remesa promedio · BCR, ene–jul 2026</p>
+        <p class="mono" data-i18n="mk_src3">Remesa promedio · BCR, <span style="white-space:nowrap">ene–jul 2026</span></p>
         <p class="dn-val"><span data-count="337" data-dec="0" data-pre="$">$337</span><span class="dn-unit" data-i18n="mk_u3">por remesa</span></p>
         <p class="dn-lbl" data-i18n="mk_l3">Es el monto promedio de cada remesa que llega a El&nbsp;Salvador.</p>
       </div>
@@ -883,7 +891,7 @@ try{if(localStorage.getItem('nld_lang')==='en')d.lang='en';}catch(e){}})();
     mk_sub:'There’s no demand to create: the diaspora already sends money home every month.',
     mk_src1:'Diaspora · Pew Research, 2021', mk_u1:'million', mk_l1:'People of Salvadoran origin live in the U.S.',
     mk_src2:'Remittances Jan–Aug 2026 · BCR', mk_u2:'M USD', mk_l2:'Received January to August 2026, up 3.8% from a year earlier. 92.2% came from the United&nbsp;States.',
-    mk_src3:'Average remittance · BCR, Jan–Jul 2026', mk_u3:'each', mk_l3:'The average amount of each remittance sent to El&nbsp;Salvador.',
+    mk_src3:'Average remittance · BCR, <span style="white-space:nowrap">Jan–Jul 2026</span>', mk_u3:'each', mk_l3:'The average amount of each remittance sent to El&nbsp;Salvador.',
     mk_note:'They live mostly in California, Texas, Maryland, New York and Virginia. <strong>We know which ZIP codes.</strong>',
     hw_eb:'How it works', hw_h:'Three steps.<br><span class="grey">Your operation doesn’t&nbsp;change.</span>',
     s1_idx:'Step 1 · The ad', s1_h:'Your brand, on the son’s phone.',

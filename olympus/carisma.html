@@ -42,7 +42,7 @@ h2{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
 .legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:14px;font-size:13px;color:var(--gray)}
 .legend i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:1px}
 .lvls{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.lvl{border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:12px;text-align:left;transition:border-color .2s,background .2s}
+.lvl{display:flex;flex-direction:column;justify-content:flex-start;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:12px;text-align:left;transition:border-color .2s,background .2s}
 .lvl b{display:block;font-size:15px}
 .lvl span{display:block;font-size:12px;color:var(--gray);margin-top:3px;line-height:1.3}
 .lvl.on{border-color:var(--blue);background:var(--tint)}
@@ -68,7 +68,7 @@ h2{font-size:13px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
 .chip.b{color:var(--blue);border-color:var(--blue);background:var(--tint);font-weight:700}
 .chipbtn{border:1.5px solid var(--line);background:var(--card);border-radius:980px;padding:8px 13px;font-size:14px}
 .chipbtn.on{border-color:var(--blue);background:var(--tint);color:var(--blue);font-weight:700}
-.ai{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:16px;margin-top:10px}
+.ai{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:16px}
 .ai p{color:var(--gray);font-size:14px;margin-top:4px}
 textarea{width:100%;min-height:84px;border:1.5px solid var(--line);border-radius:14px;padding:12px;background:var(--card);resize:vertical;margin-top:10px}
 .cta{width:100%;border:0;border-radius:980px;padding:15px;font-weight:700;font-size:17px;background:var(--blue);color:#fff}
@@ -738,7 +738,7 @@ keys:[["Cuando dijo «el 2.5 es mucho»","Etiquetó sin aceptar ni rechazar"],["
 frase:"«¿Qué tendría que ver su directorio para que el 2.5 se vea barato?»"});
 
 S({id:"neg2",m:"neg",l:2,t:"El ultimátum del viernes",ctx:"Café con un posible socio para la data del censo",mode:"p",bg:"cafe",
-o:{n:"Rodrigo",g:"m",r:"Quiere licenciar la data de salvadoreños en EE. UU."},
+o:{n:"Rodrigo",g:"m",r:"Quiere licenciar la data de salvadoreños en EE. UU."},
 intro:"Rodrigo quiere la base de datos del censo de NLD. Hoy llegó con prisa y con una amenaza.",
 start:{m:"relax",o:"relax",d:"mid"},
 b:[

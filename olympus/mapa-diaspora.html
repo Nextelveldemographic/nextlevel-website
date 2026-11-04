@@ -150,6 +150,7 @@ main{display:flex;flex-direction:column;gap:18px;padding-block:12px 28px}
 .rbar i.s1{background:var(--accent)}
 .rbar i.s2{background:color-mix(in srgb,var(--accent) 55%,var(--card))}
 .rbar i.s3{background:color-mix(in srgb,var(--accent) 22%,var(--card));color:var(--fg)}
+.rbar i.s2{color:var(--fg)}
 .rlink{grid-column:2;display:block;width:100%;height:56px;margin:3px 0;overflow:visible}
 :root[data-view="movil"] .reach{grid-template-columns:minmax(0,1fr);row-gap:6px}
 :root[data-view="movil"] .rlink{grid-column:1;height:36px;margin-bottom:-2px}
@@ -182,6 +183,9 @@ main{display:flex;flex-direction:column;gap:18px;padding-block:12px 28px}
 .bar .fill{height:100%;background:var(--accent);border-radius:3px;opacity:.85}
 .bar[aria-pressed="true"] .bn{color:var(--accent);font-weight:700}
 .bar[aria-pressed="true"] .fill{opacity:1}
+/* el ancho 100 % de .bar, .search y .legend incluye su padding */
+.bar,.search,.legend{box-sizing:border-box}
+:root[data-view="movil"] .search{flex-basis:100%}
 .more{align-self:flex-start;border:0;background:none;color:var(--accent);font-weight:700;padding:6px 0;cursor:pointer;font-size:.88em}
 
 /* Table */
@@ -210,7 +214,7 @@ footer p{margin:0;max-width:80ch}
 <header>
   <div class="wrap hbar">
     <div class="brand">
-      <span class="eyebrow">NLD · Censo EE. UU. 2023</span>
+      <span class="eyebrow">NLD · Censo EE. UU. 2023</span>
       <h1>Mapa de la Diáspora</h1>
     </div>
     <div class="tools">
@@ -257,7 +261,7 @@ footer p{margin:0;max-width:80ch}
         </div>
       </div>
       <div class="caption" aria-live="polite">
-        <span class="ce" id="capE">Censo EE. UU. 2023</span>
+        <span class="ce" id="capE">Censo EE. UU. 2023</span>
         <span class="big num" id="capN">—</span>
         <span class="cl" id="capL">—</span>
       </div>
@@ -417,7 +421,7 @@ function renderKpis(){
   countTo($('k1'), total, fmt);
   $('k1s').textContent = 'Nacidos en ' + c + ' que viven en ' + place;
   countTo($('k2'), rows.length, fmt);
-  $('k2s').textContent = S.st ? 'ZIP con presencia en ' + sname(S.st) : 'Con presencia, de ' + fmt(TOTAL_ZCTA) + ' en EE. UU.';
+  $('k2s').textContent = S.st ? 'ZIP con presencia en ' + sname(S.st) : 'Con presencia, de ' + fmt(TOTAL_ZCTA) + ' en EE. UU.';
   if(S.st){
     $('k3l').textContent = 'Peso del estado';
     if(natTotal) countTo($('k3'), total/natTotal, x => pct(x)); else $('k3').textContent = '—';
@@ -435,7 +439,7 @@ function renderKpis(){
   const lead = $('lead'); lead.textContent = '';
   const b1 = document.createElement('b'); b1.textContent = fmt(total) + ' personas';
   lead.append('Hay ', b1, ' nacidas en ' + c + ' viviendo en ' + place + ', repartidas en ' + fmt(rows.length) + ' códigos postales.');
-  $('capE').textContent = 'Nacidos en ' + c + ' · Censo EE. UU. 2023';
+  $('capE').textContent = 'Nacidos en ' + c + ' · Censo EE. UU. 2023';
   countTo($('capN'), total, fmt);
   $('capL').textContent = 'personas en ' + fmt(rows.length) + ' códigos postales de ' + place + '.';
   $('clearState').hidden = !S.st;

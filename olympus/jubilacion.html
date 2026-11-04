@@ -33,6 +33,7 @@ body{height:100%;margin:0;background:var(--bg);color:var(--fg);font-family:var(-
 .poster .eyebrow{font-size:13px;font-weight:700;color:var(--accent)}
 .poster .title{font-size:30px;font-weight:700;line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
 .poster .meta{font-size:14px;color:rgba(245,245,247,.78)}
+.poster .eyebrow,.poster .title,.poster .meta{text-shadow:0 1px 3px rgba(0,0,0,.55)}
 .controls{flex:none;display:flex;flex-direction:column;gap:8px;max-width:100%}
 .bar{position:relative;height:24px;display:flex;align-items:center}
 .bar input{-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;position:relative;z-index:1}
@@ -245,11 +246,15 @@ function bubble(c,E,t,o){
   const a=o.a,b=o.b;if(t<a-0.5||t>b)return;
   const size=o.size||33,lh=size*1.3;
   c.save();c.font=F(size);
-  const maxW=Math.min(o.maxW||400,E.W-2*E.M-50);
-  const lines=wrap(c,o.txt,maxW),lw=lines.map(l=>c.measureText(l).width),tw=Math.max.apply(null,lw);
-  const padX=size*1.0,padY=size*0.72,bw=tw+padX*2,bh=(lines.length-1)*lh+size+padY*2;
-  const cx=clamp(o.cx,-E.W/2+E.M*0.4+bw/2+16,E.W/2-E.M*0.4-bw/2-16),cy=o.cy;
-  const out=1-prog(t,b-0.35,b),speech=o.kind==='speech';
+  const speech=o.kind==='speech',padX=size*1.0,padY=size*0.72;
+  /* la nube de pensamiento tiene lóbulos laterales (radio 0.42·alto) que sobresalen del rectángulo: se cuentan al encuadrar */
+  const fit=mw=>{const ls=wrap(c,o.txt,mw),w=ls.map(l=>c.measureText(l).width),h=(ls.length-1)*lh+size+padY*2;return{ls:ls,w:w,h:h,bw:Math.max.apply(null,w)+padX*2,ext:speech?0:Math.max(0,h*0.42-8)};};
+  let maxW=Math.min(o.maxW||400,E.W-2*E.M-50),f=fit(maxW);
+  if(f.bw/2+f.ext+8>E.W/2-E.M*0.4)f=fit(maxW-2*f.ext);
+  const lines=f.ls,lw=f.w,bw=f.bw,bh=f.h,ext=f.ext;
+  const lo=-E.W/2+E.M*0.4+bw/2+ext+8,hi=E.W/2-E.M*0.4-bw/2-ext-8;
+  const cx=lo>hi?0:clamp(o.cx,lo,hi),cy=o.cy;
+  const out=1-prog(t,b-0.35,b);
   if(!speech){for(let i=0;i<3;i++){const ap=prog(t,a-0.48+i*0.13,a-0.3+i*0.13);if(ap<=0)continue;const k=[0.2,0.42,0.62][i];
     const px=lerp(o.ax,cx,k),py=lerp(o.ay,cy+bh/2,k),r=[7,11,15][i]*eb(ap);c.globalAlpha=out;circ(c,px,py+4,r,'rgba(20,24,30,0.16)');circ(c,px,py,r,'#FFFFFF');}}
   const sp=eb(prog(t,a,a+0.42));if(sp<=0.001){c.restore();return;}
@@ -1415,7 +1420,7 @@ function sDeposit(c,E,t){
     circ(c,cxp+40,cyp+40,20,'#0071E3');c.fillStyle='#FFFFFF';c.font=F(18);c.textAlign='center';c.textBaseline='middle';c.fillText('$',cxp+40,cyp+41);
     c.textAlign='left';c.textBaseline='alphabetic';c.fillStyle='#86868B';c.font=F(13);spaced(c,'TU BANCO · AHORA',cxp+72,cyp+36,1.2);
     c.fillStyle='#1D1D1F';c.font=F(21);c.fillText('Depósito recibido',cxp+72,cyp+62);
-    c.fillStyle='#6E6E73';c.font=F(16,400);c.fillText('Beneficio del Seguro Social de EE. UU.',cxp+20,cyp+104);c.restore();}
+    c.fillStyle='#6E6E73';c.font=F(16,400);c.fillText('Beneficio del Seguro Social de EE. UU.',cxp+20,cyp+104);c.restore();}
   caption(c,E,t,0.5,3.4,['PLAYA EL ESPINO, USULUTÁN','8:00 A.M.']);
   const h=topOfHead(o);
   bubble(c,E,t,{a:4.9,b:7.5,txt:'Llega igualito que allá.',ax:h[0],ay:h[1],cx:h[0]+40,cy:390});
@@ -1592,10 +1597,10 @@ const EP={
   md:Object.assign({},STORIES.md,{short:'Marta',label:'Doña Marta',epN:2,epTitle:'Esta sí para',epSub:'Doña Marta, seis meses después de mudarse a El Salvador.',posterT:8.4,endTitle:ENDT,
     sunset:{bg:'lake',cap:['LAGO SUCHITLÁN','5:50 P.M.'],thought:'Ya no me pierdo ni un domingo.',cast:[{me:true,x:-90,face:1},{kid:true,x:80,face:-1}]},
     scenes:[T0,{key:'mhome',name:'Domingo',d:9,f:sMartaHome},{key:'suchi',name:'Suchitoto',d:11,f:sSuchi},{key:'boatlake',name:'Lago Suchitlán',d:10,f:sBoatLake,tin:'slide'},{key:'sunset',name:'Atardecer',d:7,f:sSunset},T9]}),
-  tx:Object.assign({},STORIES.tx,{short:'Chepe',label:'Don Chepe',epN:3,epTitle:'El único aire',epSub:'Don Chepe, seis meses después de mudarse a El Salvador.',posterT:29.0,endTitle:ENDT,
+  tx:Object.assign({},STORIES.tx,{short:'Chepe',label:'Don Chepe',epN:3,epTitle:'El único aire',epSub:'Don Chepe, seis meses después de mudarse a El Salvador.',posterT:30.5,endTitle:ENDT,
     sunset:{bg:'sea',grill:true,cap:['PLAYA EL ESPINO','6:00 P.M.'],thought:'El único aire que necesito.',cast:[{me:true,x:-120,face:1},{spouse:true,x:50,face:-1}]},
     scenes:[T0,{key:'chome',name:'La hamaca',d:9,f:sChepeHome},{key:'mangrove',name:'Manglares',d:10,f:sMangrove},{key:'fish',name:'La pesca',d:10,f:sFish,tin:'slide'},{key:'sunset',name:'Atardecer',d:7,f:sSunset},T9]}),
-  ca:Object.assign({},STORIES.ca,{short:'Rosa',label:'Doña Rosa',epN:4,epTitle:'Mi propia casa',epSub:'Doña Rosa, seis meses después de mudarse a El Salvador.',posterT:16.8,endTitle:ENDT,
+  ca:Object.assign({},STORIES.ca,{short:'Rosa',label:'Doña Rosa',epN:4,epTitle:'Mi propia casa',epSub:'Doña Rosa, seis meses después de mudarse a El Salvador.',posterT:17.6,endTitle:ENDT,
     sunset:{bg:'terrace',cap:['LA LIBERTAD','6:00 P.M.'],thought:'Mi propia casa. Por fin.',cast:[{me:true,x:-100,face:1},{spouse:true,x:70,face:-1}]},
     scenes:[T0,{key:'rhome',name:'Su terraza',d:9,f:sRosaHome},{key:'tunco',name:'El Tunco',d:11,f:sTunco},{key:'suitcase',name:'De viaje',d:10,f:sSuitcase},{key:'sunset',name:'Atardecer',d:7,f:sSunset},T9]})
 };
@@ -1605,7 +1610,7 @@ const VENDE={skin:'#A8714C',top:'#3FA7A3',topStyle:'blouse',pants:'#3A3E45',head
 const NIETO1={skin:'#C9956D',top:'#E46F5C',topStyle:'tee',pants:'#3E5E8C',head:{hs:'kid',hair:'#2A201B'}},NIETA1={skin:'#D6A27C',top:'#9B6BD9',topStyle:'blouse',pants:'#2F3D52',head:{hs:'long',hair:'#3A2A22'}};
 const CALL6={room:'day',remote:{o:CARMEN,bg:'snow'}};
 EP.dc2=Object.assign({},STORIES.dc,{short:'Roberto',label:'Don Roberto',epN:5,epTitle:'Me cuido aquí',epSub:'Don Roberto y su salud, seis meses después.',posterT:6.8,endTitle:ENDT,
-  endNote:'Medicare no cubre atención fuera de EE. UU. Asesórate sobre un seguro médico local o internacional antes de mudarte.',
+  endNote:'Medicare no cubre atención fuera de EE. UU. Asesórate sobre un seguro médico local o internacional antes de mudarte.',
   scenes:[T0,{key:'clinic',name:'Consulta',d:10,f:sClinic},{key:'walk',name:'Caminata',d:11,f:sWalk},
     {key:'call',name:'Llamada a Washington',d:12,ring:true,f:(c,E,t)=>sCall(c,E,t,{room:'night',remote:{o:HIJA,bg:'snow'},cap:['APANECA','8:00 P.M. · LLAMADA A WASHINGTON'],
       lines:[['remote','Papá, ¿y si te enfermás allá?',2.2,5.8],['me','Tengo mi doctor, mi seguro… y hasta caminata.',6.3,11.2]]})},

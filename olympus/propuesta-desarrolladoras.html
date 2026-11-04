@@ -215,6 +215,8 @@ html:not(.js) .ic-btn{display:none}
 .mapcard[data-on="ca"] .mp[data-st="ca"],.mapcard[data-on="tx"] .mp[data-st="tx"],.mapcard[data-on="md"] .mp[data-st="md"],.mapcard[data-on="ny"] .mp[data-st="ny"]{opacity:1;transform:scale(1.35);z-index:2}
 .mapcard[data-on="ca"] .mp[data-st="ca"] b,.mapcard[data-on="tx"] .mp[data-st="tx"] b,.mapcard[data-on="md"] .mp[data-st="md"] b{opacity:1;transform:translate(-50%,0)}
 .mapcard[data-on="ny"] .mp[data-st="ny"] b{opacity:1;transform:none}
+.mp[data-st="ca"] b{left:-6px;transform:translate(0,6px)}
+.mapcard[data-on="ca"] .mp[data-st="ca"] b{transform:none}
 .st-row{cursor:pointer;border-radius:10px;margin:-4px -8px;padding:4px 8px;transition:background .3s}
 .st-row.on{background:var(--tint)}
 .st-row.on span:first-child{color:var(--blue);font-weight:600}
@@ -238,6 +240,7 @@ html:not(.js) .ic-btn{display:none}
 .fc p,.rc p,.ac p{color:var(--muted);font-size:16px;line-height:1.45;text-wrap:pretty}
 .fc .ico{margin-bottom:4px}
 .rc .mono,.ac.nld .mono{color:var(--blue)}
+.rc p.mono,.ac p.mono{font-size:11px;line-height:1.4}
 .ac.nld{background:var(--tint);box-shadow:inset 0 0 0 1px var(--tint-line)}
 .clock{margin-top:auto;padding-top:12px;font-size:13px;font-weight:500;line-height:1.45;letter-spacing:-.005em;color:var(--blue);text-wrap:pretty}
 
@@ -325,9 +328,11 @@ html:not(.js) .ic-btn{display:none}
 .b-hero{background:linear-gradient(135deg,var(--hero-a),var(--hero-b));color:var(--on-blue);box-shadow:none;padding:26px 24px;justify-content:space-between;gap:18px}
 .bento .b-hero:hover{box-shadow:0 16px 36px var(--lift)}
 .b-hero .bt-k{color:var(--hero-soft)}
+.b-hero{background:linear-gradient(135deg,var(--hero-a),var(--hero-b) 130%)}
+.b-hero .bt-hs,.b-hero .bt-pct span{color:var(--on-blue)}
 .bt-hh{font-size:clamp(32px,3.6vw,46px);font-weight:600;letter-spacing:-.03em;line-height:1.04;max-width:12ch;text-wrap:balance}
 .bt-pct{font-size:clamp(44px,4.6vw,60px);font-weight:600;letter-spacing:-.04em;line-height:1;white-space:nowrap}
-.bt-pct span{font-size:.3em;font-weight:500;color:var(--hero-soft);letter-spacing:-.01em;margin-left:4px}
+.bt-pct span{font-size:.3em;font-weight:500;color:var(--hero-soft);letter-spacing:-.01em}
 .bt-hs{margin-top:10px;font-size:15px;line-height:1.4;color:var(--hero-soft);max-width:34ch;text-wrap:pretty}
 .bento-hint{margin-top:16px;font-size:14px;color:var(--muted)}
 
@@ -1611,7 +1616,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
       <a class="bt b-hero" href="#modelo">
         <p class="bt-k">Sin costo fijo</p>
         <p class="bt-hh">Usted solo paga si se vende.</p>
-        <div><p class="bt-pct">2.5&nbsp;%<span>+ IVA al cierre</span></p><p class="bt-hs">Sin anticipo ni planilla. La campaña en EE.&nbsp;UU. la pagamos nosotros.</p></div>
+        <div><p class="bt-pct">2.5&nbsp;%<span> +&nbsp;IVA al cierre</span></p><p class="bt-hs">Sin anticipo ni planilla. La campaña en EE.&nbsp;UU. la pagamos nosotros.</p></div>
       </a>
       <a class="bt b-buyer" href="#mercado">
         <p class="bt-k">Su comprador</p>
@@ -1911,7 +1916,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 <footer class="ft">
   <div class="wrap ft-in">
     <a href="#inicio" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
-    <p class="ft-d">Propuesta para desarrolladoras · Octubre 2026 · Documento confidencial.</p>
+    <p class="ft-d">Propuesta para desarrolladoras · Octubre&nbsp;2026 · Documento confidencial.</p>
     <p class="ft-c">Las pantallas de celular son maquetas ilustrativas: «Su Proyecto» se reemplaza por el nombre de su proyecto y las cifras de los paneles son de ejemplo. © 2026 Next Level Demographic · El Salvador.</p>
   </div>
 </footer>

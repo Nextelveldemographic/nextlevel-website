@@ -96,17 +96,17 @@ input[type=text]::placeholder{color:var(--ink-4)}
 .kpi .k-u{font-size:16px;color:var(--teal);font-weight:700;letter-spacing:0}
 .kpi .k-s{font-size:12px;color:var(--ink-3);margin-top:10px}
 .up{color:var(--teal);font-weight:700} .down{color:var(--rose);font-weight:700}
-.kpi .spark{position:absolute;right:0;bottom:0;opacity:.9}
+.kpi .spark{display:block;margin:10px 0 0 auto;max-width:100%;overflow:visible;opacity:.9}
 
 /* ---------- layout ---------- */
 .grid{display:grid;grid-template-columns:1.32fr 1fr;gap:16px}
 .card{background:var(--panel);border-radius:var(--r);padding:20px 22px 18px}
 .card.alt{background:#FFFFFF;border:1px solid var(--line)}
-.card h2{font-size:16px;font-weight:700;margin:0;letter-spacing:-.01em;color:var(--ink)}
+.card h2{font-size:16px;font-weight:700;margin:0;letter-spacing:-.01em;color:var(--ink);text-wrap:balance}
 .card .hint{font-size:12.5px;color:var(--ink-2);margin-top:5px;max-width:62ch}
 .cardhead{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:16px}
 .mini{display:flex;gap:6px;flex:none;flex-wrap:wrap;max-width:100%}
-@media (max-width:520px){.mini{flex:1 1 100%}.mini button{white-space:normal}}
+@media (max-width:520px){.cardhead{flex-wrap:wrap}.mini{flex:1 1 100%}.mini button{white-space:normal}}
 .mini button{background:#FFFFFF;border:1px solid var(--line-2);border-radius:9px;padding:5px 11px;font-size:12px;color:var(--ink-2);cursor:pointer;white-space:nowrap}
 .mini button.on{color:#FFFFFF;background:var(--teal);border-color:var(--teal);font-weight:700}
 
@@ -176,6 +176,8 @@ footer{margin-top:26px;color:var(--ink-3);font-size:11.5px;line-height:1.7;borde
   .kpis{grid-template-columns:repeat(2,1fr)}
   .kpi .k-v{font-size:26px}
   h1{font-size:21px}
+  .mapnote{position:static;max-width:none;padding:2px 14px 11px}
+  .swatches i{width:22px}
 }
 /* ---------- animaciones ---------- */
 .js .rv{opacity:0;transform:translateY(18px);transition:opacity .9s var(--ease),transform 1s var(--ease)}
@@ -739,10 +741,12 @@ function placeBadges(){
 /* ============================================================
    Serie mensual
    ============================================================ */
+/* Los gráficos se dibujan al ancho real del contenedor (texto a su tamaño) en vez de escalar un lienzo fijo */
+function chartW(id,def){const w=Math.round(($('#'+id).getBoundingClientRect()||{}).width||0);return w?Math.max(280,w):def;}
 function renderSerie(){
   const sc=scopeNodes(), ks=keys(), s=serieOf(sc);
   const nat = ks.map(k=>sumNodes(MUN,k));
-  const W=1280,H=330,ml=64,mr=18,mt=18,mb=34;
+  const W=chartW('serie',1280), nw=W<700, H=nw?260:330,ml=nw?44:64,mr=nw?12:18,mt=18,mb=34;
   const iw=W-ml-mr, ih=H-mt-mb;
   const showCmp = S.cmp && (S.zonas.size||S.deptos.size||S.muns.size);
   const scaleNat = showCmp ? Math.max(...nat) : 0;
@@ -763,15 +767,18 @@ function renderSerie(){
     cmp = `<polyline points="${nl}" fill="none" stroke="var(--blue)" stroke-width="1.4" stroke-dasharray="4 4" opacity=".85"/>`;
   }
   const lbls = MONTHS.slice(S.from,S.to+1).map((m,i)=>{
-    const step = Math.ceil(s.length/14);
+    const step = Math.max(Math.ceil(s.length/14), Math.ceil(s.length*46/iw));
     return i%step? '' : `<text class="ax" x="${X(i)}" y="${H-6}" text-anchor="middle">${m.label}</text>`;
   }).join('');
   const dots = s.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(v)}" r="4" fill="#FFFFFF" stroke="var(--teal)" stroke-width="2"><title>${MONTHS[S.from+i].label}: ${money(v)}</title></circle>`).join('');
+  const vstep = s.length>1 && iw/(s.length-1)<30 ? 2 : 1;
   const vlabels = s.length<=14 ? s.map((v,i)=>{
+    if(i%vstep) return '';
     const an = i===0?'start' : i===s.length-1?'end' : 'middle';
     const dx = i===0?4 : i===s.length-1?-4 : 0;
     return `<text class="barval" x="${X(i)+dx}" y="${Y(v)-14}" text-anchor="${an}">${nf(v,0)}</text>`;
   }).join('') : '';
+  $('#serie').setAttribute('viewBox',`0 0 ${W} ${H}`);
   $('#serie').innerHTML = `<defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1">
       <stop offset="0%" stop-color="#0071E3" stop-opacity=".22"/><stop offset="100%" stop-color="#0071E3" stop-opacity="0"/></linearGradient></defs>
     ${g}<polygon class="sarea" points="${area}" fill="url(#ag)"/>
@@ -801,8 +808,8 @@ function renderRank(){
   const allTot = totalOf(MUN);
   let rows = [...map.entries()].map(([k,ns])=>({k,ns,val:metricValue(ns,allTot)||0}))
              .sort((a,b)=>b.val-a.val).slice(0,S.rank);
-  const W=640, rowH=Math.max(15, Math.min(24, 320/rows.length)), H=rows.length*rowH+18;
-  const ml=(level==='municipio'?190:120), mr=118;
+  const W=chartW('rank',640), nw=W<560, rowH=Math.max(15, Math.min(24, 320/rows.length)), H=rows.length*rowH+18;
+  const ml=(level==='municipio'?(nw?132:190):(nw?100:120)), mr=nw?112:118;
   const mx=Math.max(...rows.map(r=>Math.abs(r.val)))||1;
   const fmt=METRIC_FMT[S.metric];
   const canTot = CANALES.reduce((a,c)=>a+keys().reduce((x,k)=>x+(c.v[k]||0),0),0);
@@ -811,7 +818,8 @@ function renderRank(){
     const y=i*rowH+4, bw=Math.abs(r.val)/mx*(W-ml-mr);
     const t=Math.min(5,Math.floor(Math.abs(r.val)/mx*5.999));
     const col = r.val<0 ? '#C7C7CC' : RAMP[Math.max(2,t)];
-    const short = r.k.length>31 ? r.k.slice(0,30)+'…' : r.k;
+    const cut = nw&&level==='municipio' ? 19 : 31;
+    const short = r.k.length>cut ? r.k.slice(0,cut-1)+'…' : r.k;
     return `<g class="bar" data-k="${esc(r.k)}" style="--i:${i}">
       <text class="barlbl" x="${ml-8}" y="${y+rowH*0.62}" text-anchor="end">${esc(short)}</text>
       <rect x="${ml}" y="${y+2}" width="${bw}" height="${rowH-7}" rx="2.5" fill="${col}"/>
@@ -837,16 +845,23 @@ function renderChan(){
   const ks=keys();
   const rows=CANALES.map(c=>({n:c.name, v:ks.reduce((a,k)=>a+(c.v[k]||0),0)})).sort((a,b)=>b.v-a.v);
   const terr=totalOf(MUN), tot=rows.reduce((a,r)=>a+r.v,0), grand=terr+tot;
-  const W=640,H=200,ml=210,mr=120,rowH=30;
+  const W=chartW('chan',640), nw=W<560;
+  const ml=nw?0:210,mr=120,rowH=nw?40:30,H=nw?rows.length*rowH+52:rows.length*rowH+50;
   const mx=Math.max(...rows.map(r=>r.v))||1;
   const cols=['#0071E3','#2997FF','#9FC6F5','#C7C7CC'];
   const body=rows.map((r,i)=>{
     const y=i*rowH+8, bw=r.v/mx*(W-ml-mr);
+    if(nw) return `<g style="--i:${i}"><text class="barlbl" x="0" y="${y+9}">${esc(r.n)}</text>
+      <rect x="0" y="${y+16}" width="${bw}" height="14" rx="3" fill="${cols[i%4]}" opacity=".85"/>
+      <text class="barval" x="${bw+7}" y="${y+27}">${money(r.v)}<tspan fill="#86868B" font-weight="normal">  ·  ${nf(100*r.v/grand,1)}%</tspan></text></g>`;
     return `<g style="--i:${i}"><text class="barlbl" x="${ml-8}" y="${y+15}" text-anchor="end">${esc(r.n)}</text>
       <rect x="${ml}" y="${y+4}" width="${bw}" height="16" rx="3" fill="${cols[i%4]}" opacity=".85"/>
       <text class="barval" x="${ml+bw+7}" y="${y+16}">${money(r.v)}<tspan fill="#86868B" font-weight="normal">  ·  ${nf(100*r.v/grand,1)}%</tspan></text></g>`;
   }).join('');
-  const foot=`<text class="ax" x="0" y="${H-8}">Suman ${money(tot)} en el período: ${nf(grand?100*tot/grand:0,1)}% de las remesas totales, sin territorio asignado.</text>`;
+  const foot= nw
+    ? `<text class="ax" x="0" y="${H-22}">Suman ${money(tot)} en el período: ${nf(grand?100*tot/grand:0,1)}% de las</text><text class="ax" x="0" y="${H-8}">remesas totales, sin territorio asignado.</text>`
+    : `<text class="ax" x="0" y="${H-8}">Suman ${money(tot)} en el período: ${nf(grand?100*tot/grand:0,1)}% de las remesas totales, sin territorio asignado.</text>`;
+  $('#chan').setAttribute('viewBox',`0 0 ${W} ${H}`);
   $('#chan').innerHTML=body+foot;
 }
 
@@ -1072,6 +1087,7 @@ function render(){
   renderRank(); renderChan(); renderTable();
 }
 indexData(); buildFilters(); render();
+(function(){let w=innerWidth,t;addEventListener('resize',()=>{if(innerWidth===w)return;w=innerWidth;clearTimeout(t);t=setTimeout(()=>{renderSerie();renderRank();renderChan();},150);});})();
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
 </body>

@@ -92,7 +92,7 @@ h2{font-size:20px}
 .person{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px;background:var(--bg)}
 .person .nm{display:flex;align-items:center;gap:10px}
 .av{width:34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:700;font-size:14px;flex:none}
-.person .nums{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:left}
+.person .nums{margin-top:auto;display:grid;grid-template-columns:repeat(3,1fr);gap:6px;text-align:left}
 .person .nums b{display:block;font-size:22px;line-height:1.1}
 .person .nums span{font-size:11px;color:var(--muted);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em}
 .minibar{display:flex;height:6px;border-radius:3px;overflow:hidden;background:var(--sunk)}
@@ -101,9 +101,11 @@ h2{font-size:20px}
 .finds{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
 .find{display:grid;grid-template-columns:4px 1fr;gap:12px;padding:12px 14px 12px 0;border-radius:10px;background:var(--bg);border:1px solid var(--line)}
 .find .stripe{border-radius:0 3px 3px 0}
-.find h3{margin:0 0 3px;font-size:16px}
+.find h3{margin:0 0 3px;font-size:16px;text-wrap:balance}
 .find p{margin:0;font-size:14px;color:var(--muted)}
-.find a{color:var(--accent)}
+.find a{color:var(--accent);white-space:nowrap}
+/* flex en vez de grid: la última fila se reparte el ancho y no queda una tarjeta huérfana */
+.finds{display:flex;flex-wrap:wrap}.finds>.find{flex:1 1 340px;min-width:0}
 /* Lista */
 .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
 .chip{all:unset;cursor:pointer;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted)}
@@ -114,7 +116,7 @@ h2{font-size:20px}
 .task:hover .tt{color:var(--accent)}
 .task .sev{align-self:stretch;border-radius:2px}
 .task .tt{font-size:15px;line-height:1.3}
-.task .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:10px;flex-wrap:wrap}
+.task .sub{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px;display:flex;gap:2px 10px;flex-wrap:wrap}
 .task .tag{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;white-space:nowrap}
 .tag.crit{background:var(--crit-soft);color:var(--crit)}.tag.warn{background:var(--warn-soft);color:var(--warn)}.tag.ok{background:var(--ok-soft);color:var(--ok)}.tag.mut{background:var(--sunk);color:var(--muted)}
 .foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
@@ -122,7 +124,7 @@ h2{font-size:20px}
 .finds{grid-template-columns:repeat(auto-fill,minmax(min(300px,100%),1fr))}
 .people{grid-template-columns:repeat(auto-fill,minmax(min(230px,100%),1fr))}
 :root[data-view="tablet"] .people{grid-template-columns:repeat(2,1fr)}
-:root[data-view="tablet"] .finds{grid-template-columns:repeat(2,1fr)}
+:root[data-view="tablet"] .finds>.find{flex-basis:calc(50% - 5px)}
 /* Vista móvil: todo en una columna, pensado para el pulgar */
 :root[data-view="mobile"] body{font-size:15px;padding-block:8px 32px}
 :root[data-view="mobile"] .wrap{gap:12px}
@@ -143,6 +145,7 @@ h2{font-size:20px}
 :root[data-view="mobile"] .kpi .v{font-size:30px}
 :root[data-view="mobile"] .kpi .s{font-size:12px}
 :root[data-view="mobile"] .people,:root[data-view="mobile"] .finds{grid-template-columns:1fr}
+:root[data-view="mobile"] .finds>.find{flex-basis:100%}
 :root[data-view="mobile"] .find h3{font-size:15px}
 :root[data-view="mobile"] .find p{font-size:13.5px}
 :root[data-view="mobile"] .filters{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding-inline:14px;scrollbar-width:none}
@@ -275,7 +278,7 @@ const ISSUES = [
  ["NLD-239","Ruta de parques (Plaza Principito, Paseo El Carmen)","José Antonio Díaz Reyes","Medium","En curso","2026-06-27","2026-08-28",null,"NLD-231"],
  ["NLD-259","Cuentas de Spotify y Apple Music para el podcast","jose_antodiaz","High","En curso","2026-08-01","2026-08-28","2026-08-07",null],
  ["NLD-274","Visita de espacios para grabar el podcast","Ivette Alvarado","Medium","En curso","2026-08-19","2026-08-30",null,null],
- ["NLD-230","Aliado en EE. UU. que refiera clientes que venden su casa allá","kevinpp-213","Highest","En curso","2026-06-27","2026-09-01","2026-09-30",null],
+ ["NLD-230","Aliado en EE. UU. que refiera clientes que venden su casa allá","kevinpp-213","Highest","En curso","2026-06-27","2026-09-01","2026-09-30",null],
  ["NLD-309","Renovación de matrícula de empresa","Luis Gonzalez","Highest","En curso","2026-09-07","2026-09-07","2026-11-02",null],
  ["NLD-22","Registro de marca en El Salvador","Ivette Alvarado","Highest","En curso","2025-09-07","2026-09-30","2026-11-30",null],
  ["NLD-310","Benchmark de Propi - Compra inmediata","Ivette Alvarado","Medium","Pendiente de Iniciar","2026-10-26","2026-10-26",null,null],
@@ -328,7 +331,7 @@ $("#kpis").innerHTML=kp.map(([l,v,s,c])=>`<div class="kpi ${c}"><span class="lab
 
 /* Flujo */
 function drawFlow(){
-  const mob=root.dataset.view==="mobile", W=mob?340:560, H=230, L=30, B=196, T=14, fs=mob?13:11;
+  const mob=root.dataset.view==="mobile", W=mob?340:560, H=230, L=42, B=196, T=14, fs=mob?13:11;
   $("#flow").setAttribute("viewBox",`0 0 ${W} ${H}`);
   const mx=Math.max(...META.months.flatMap(m=>[m.created,m.resolved]));
   const top=Math.ceil(mx/10)*10, y=v=>B-(v/top)*(B-T), cw=(W-L-8)/META.months.length, bw=Math.min(26,cw/3.2);
@@ -358,7 +361,7 @@ $("#people").innerHTML=people.map(([p,a])=>{
   const ov=a.filter(t=>t.overdue).length, st=a.filter(t=>t.stale>30).length, last=Math.min(...a.map(t=>t.stale));
   const ini=p.replace(/[^A-Za-zÁÉÍÓÚáéíóúñÑ ]/g," ").trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("").toUpperCase();
   const seg=order.map(s=>{const n=a.filter(t=>t.st===s).length;return n?`<b style="width:${n/a.length*100}%;background:${STATUS[s].c}"></b>`:""}).join("");
-  return `<div class="person"><div class="nm"><span class="av">${ini}</span><div><strong>${p}</strong><div class="label" style="letter-spacing:.04em;text-transform:none">último movimiento hace ${last} d</div></div></div>
+  return `<div class="person"><div class="nm"><span class="av">${ini}</span><div><strong>${p}</strong><div class="label" style="letter-spacing:.04em;text-transform:none">último movimiento hace&nbsp;${last}&nbsp;d</div></div></div>
   <div class="nums num"><div><b>${a.length}</b><span>Abiertas</span></div><div><b style="color:${ov?"var(--crit)":"inherit"}">${ov}</b><span>Vencidas</span></div><div><b style="color:${st?"var(--warn)":"inherit"}">${st}</b><span>+30 d</span></div></div>
   <div class="minibar">${seg}</div></div>`}).join("");
 

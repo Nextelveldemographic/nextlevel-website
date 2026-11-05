@@ -64,6 +64,7 @@ header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:col
 .chip{border:1px solid var(--line-strong);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.86em;white-space:nowrap;cursor:pointer;color:var(--fg)}
 .chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent);font-weight:700}
 .frow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+
 .sel{appearance:none;border:1px solid var(--line-strong);background:var(--card);border-radius:12px;padding:8px 34px 8px 12px;font-size:.92em;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 17px) 55%,calc(100% - 12px) 55%;background-size:5px 5px;background-repeat:no-repeat;min-width:0;max-width:100%}
 .pill{display:inline-flex;align-items:center;gap:6px;background:var(--accent-soft);color:var(--accent);border:0;border-radius:999px;padding:6px 10px;font-size:.84em;font-weight:700;cursor:pointer}
 
@@ -207,6 +208,11 @@ footer{padding-block:6px calc(28px + env(safe-area-inset-bottom,0px));color:var(
 footer p{margin:0;max-width:80ch}
 @media (prefers-reduced-motion:reduce){.bars .bar,.rkey{animation:none}.rbar i,.rlink polygon{transition:none}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* filtros de ciudad y ZIP */
+.sel.zipf{background-image:none;padding-right:12px;min-width:0;width:230px;max-width:100%;color:var(--fg)}
+#citySel{max-width:280px}
+:root[data-view="movil"] .frow .sel,:root[data-view="movil"] #citySel{flex:1 1 100%;width:100%;max-width:none}
 </style>
 
 </head>
@@ -232,7 +238,9 @@ footer p{margin:0;max-width:80ch}
   <div class="chips" id="countries" role="group" aria-label="País de nacimiento"></div>
   <div class="frow">
     <select class="sel" id="stateSel" aria-label="Estado"></select>
-    <button class="pill" id="clearState" hidden>Quitar filtro <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    <select class="sel" id="citySel" aria-label="Ciudad"></select>
+    <input class="sel zipf" id="zipF" type="search" inputmode="numeric" autocomplete="off" placeholder="ZIP o prefijo: 20783, 207…" aria-label="Filtrar por código postal o prefijo (varios separados por coma)">
+    <button class="pill" id="clearState" hidden>Quitar filtros <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 2l6 6M8 2L2 8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
   </div>
 </div>
 
@@ -346,7 +354,7 @@ const pct = (x,d=1) => (x*100).toFixed(d) + ' %';
 const $ = id => document.getElementById(id);
 const store = { get(k){ try{ return localStorage.getItem(k); }catch(e){ return null; } }, set(k,v){ try{ localStorage.setItem(k,v); }catch(e){} } };
 
-const S = { country:'El Salvador', st:'', q:'', mode:'2d', mapMode:'groups', presenting:false, stAll:false, cityN:10, zipN:50 };
+const S = { country:'El Salvador', st:'', city:'', zip:'', q:'', mode:'2d', mapMode:'groups', presenting:false, stAll:false, cityN:10, zipN:50 };
 const cache = {};
 function rowsFor(c){
   if(cache[c]) return cache[c];
@@ -354,7 +362,18 @@ function rowsFor(c){
   for(let i=0;i<f.length;i+=2) out.push({i:f[i], v:f[i+1]});
   return cache[c] = out;
 }
-const cur = () => { const r = rowsFor(S.country); return S.st ? r.filter(x => Z[x.i][4] === S.st) : r; };
+/* Filtros territoriales: estado → ciudad → ZIP (exacto o prefijo; varios separados por coma o espacio) */
+const zipTokens = () => S.zip.split(/[\s,;]+/).map(t => t.replace(/\D/g,'')).filter(t => t.length >= 2);
+const hasFilter = () => !!(S.st || S.city || zipTokens().length);
+const byStateRows = () => { const r = rowsFor(S.country); return S.st ? r.filter(x => Z[x.i][4] === S.st) : r; };
+const cur = () => {
+  let r = byStateRows();
+  if(S.city) r = r.filter(x => (Z[x.i][3] + '|' + Z[x.i][4]) === S.city);
+  const tk = zipTokens(); if(tk.length) r = r.filter(x => { const z = Z[x.i][0]; return tk.some(t => t.length >= 5 ? z === t : z.startsWith(t)); });
+  return r;
+};
+const cityLabel = k => { const [ci,st] = k.split('|'); return (CITIES[+ci] || 'Sin ciudad') + (st ? ', ' + st : ''); };
+const placeLabel = () => { const tk = zipTokens(); if(tk.length) return (tk.length === 1 ? (tk[0].length >= 5 ? 'el ZIP ' : 'los ZIP que empiezan con ') + tk[0] : 'los ZIP seleccionados') + (S.city ? ' de ' + cityLabel(S.city) : S.st ? ' de ' + sname(S.st) : ''); if(S.city) return cityLabel(S.city); return S.st ? sname(S.st) : 'Estados Unidos'; };
 
 /* ---------- view + theme ---------- */
 const root = document.documentElement;
@@ -376,7 +395,7 @@ function buildCountries(){
   totals.forEach(([c]) => {
     const b = document.createElement('button'); b.className = 'chip'; b.textContent = cname(c);
     b.setAttribute('aria-pressed', String(c===S.country));
-    b.addEventListener('click', () => { S.country = c; S.st = ''; S.cityN = 10; update(true); });
+    b.addEventListener('click', () => { S.country = c; S.st = ''; S.city = ''; S.cityN = 10; update(true); });
     box.appendChild(b);
   });
 }
@@ -386,8 +405,17 @@ function buildStateSel(byState){
   byState.forEach(([s,v]) => { const op = document.createElement('option'); op.value = s; op.textContent = sname(s) + ' · ' + fmt(v); sel.appendChild(op); });
   sel.value = S.st;
 }
-$('stateSel').addEventListener('change', e => { S.st = e.target.value; S.cityN = 10; update(true); });
-$('clearState').addEventListener('click', () => { S.st = ''; update(true); });
+function buildCitySel(cities){
+  const sel = $('citySel'); sel.textContent = '';
+  const o = document.createElement('option'); o.value = ''; o.textContent = 'Todas las ciudades' + (S.st ? ' de ' + S.st : ''); sel.appendChild(o);
+  cities.slice(0, 400).forEach(([k,v]) => { const op = document.createElement('option'); op.value = k; op.textContent = cityLabel(k) + ' · ' + fmt(v); sel.appendChild(op); });
+  if(S.city && !cities.some(([k]) => k === S.city)){ const op = document.createElement('option'); op.value = S.city; op.textContent = cityLabel(S.city); sel.appendChild(op); }
+  sel.value = S.city;
+}
+$('stateSel').addEventListener('change', e => { S.st = e.target.value; S.city = ''; S.cityN = 10; update(true); });
+$('citySel').addEventListener('change', e => { S.city = e.target.value; update(true); });
+let zipT = 0; $('zipF').addEventListener('input', e => { S.zip = e.target.value; clearTimeout(zipT); zipT = setTimeout(() => update(true), 350); });
+$('clearState').addEventListener('click', () => { S.st = ''; S.city = ''; S.zip = ''; $('zipF').value = ''; update(true); });
 $('stateMore').addEventListener('click', () => { S.stAll = !S.stAll; renderStates(); });
 $('cityMore').addEventListener('click', () => { S.cityN = S.cityN === 10 ? 25 : 10; renderCities(); });
 $('copyN').addEventListener('change', e => { S.zipN = +e.target.value || Infinity; renderZips(); });
@@ -403,7 +431,10 @@ function aggregate(){
   const byState = Object.entries(st).sort((a,b)=>b[1]-a[1]);
   const ct = {}; rows.forEach(r => { const k = Z[r.i][3] + '|' + Z[r.i][4]; ct[k] = (ct[k]||0) + r.v; });
   const byCity = Object.entries(ct).sort((a,b)=>b[1]-a[1]).map(([k,v]) => { const [ci,s] = k.split('|'); return [CITIES[+ci] || 'Sin ciudad', s, v]; });
-  AGG = { all, rows, natTotal, total, byState, byCity };
+  const cs = {}; byStateRows().forEach(r => { const k = Z[r.i][3] + '|' + Z[r.i][4]; cs[k] = (cs[k]||0) + r.v; });
+  const cityOpts = Object.entries(cs).sort((a,b)=>b[1]-a[1]);
+  const byCityKey = Object.entries(ct).sort((a,b)=>b[1]-a[1]).map(([k]) => k);
+  AGG = { all, rows, natTotal, total, byState, byCity, cityOpts, byCityKey };
 }
 
 /* ---------- render: text + KPIs ---------- */
@@ -416,14 +447,14 @@ function countTo(el, to, f){
 }
 function renderKpis(){
   const { rows, natTotal, total, byState } = AGG, c = cname(S.country);
-  const place = S.st ? sname(S.st) : 'Estados Unidos';
-  $('k1l').textContent = S.st ? 'Población en ' + sname(S.st) : 'Población';
+  const fil = hasFilter(), place = placeLabel();
+  $('k1l').textContent = fil ? 'Población en el filtro' : 'Población';
   countTo($('k1'), total, fmt);
   $('k1s').textContent = 'Nacidos en ' + c + ' que viven en ' + place;
   countTo($('k2'), rows.length, fmt);
-  $('k2s').textContent = S.st ? 'ZIP con presencia en ' + sname(S.st) : 'Con presencia, de ' + fmt(TOTAL_ZCTA) + ' en EE. UU.';
-  if(S.st){
-    $('k3l').textContent = 'Peso del estado';
+  $('k2s').textContent = fil ? 'ZIP con presencia en ' + place : 'Con presencia, de ' + fmt(TOTAL_ZCTA) + ' en EE. UU.';
+  if(fil){
+    $('k3l').textContent = S.city || zipTokens().length ? 'Peso del filtro' : 'Peso del estado';
     if(natTotal) countTo($('k3'), total/natTotal, x => pct(x)); else $('k3').textContent = '—';
     $('k3s').textContent = 'Del total nacional de nacidos en ' + c;
   } else {
@@ -442,7 +473,7 @@ function renderKpis(){
   $('capE').textContent = 'Nacidos en ' + c + ' · Censo EE. UU. 2023';
   countTo($('capN'), total, fmt);
   $('capL').textContent = 'personas en ' + fmt(rows.length) + ' códigos postales de ' + place + '.';
-  $('clearState').hidden = !S.st;
+  $('clearState').hidden = !hasFilter();
   document.querySelectorAll('#countries .chip').forEach(b => b.setAttribute('aria-pressed', String(b.textContent === c)));
 }
 
@@ -509,8 +540,8 @@ function renderStates(){
 function renderCities(){
   const { byCity, total } = AGG, box = $('cityBars'); box.textContent = '';
   const list = byCity.slice(0, S.cityN); const mx = byCity.length ? byCity[0][2]/total : 1;
-  list.forEach(([c,s,v],i) => { const b = barRow(c + (s ? ', ' + s : ''), v, v/total, mx, false, null); b.style.animationDelay = Math.min(i,14)*35 + 'ms'; box.appendChild(b); });
-  $('citySub').textContent = 'Top ' + Math.min(S.cityN, byCity.length) + ' ciudades' + (S.st ? ' de ' + sname(S.st) : '') + '. El % es sobre el total filtrado.';
+  list.forEach(([c,s,v],i) => { const key = AGG.byCityKey[i]; const b = barRow(c + (s ? ', ' + s : ''), v, v/total, mx, key === S.city, () => { S.city = (S.city === key ? '' : key); update(true); }); b.style.animationDelay = Math.min(i,14)*35 + 'ms'; box.appendChild(b); });
+  $('citySub').textContent = 'Top ' + Math.min(S.cityN, byCity.length) + ' ciudades' + (S.st ? ' de ' + sname(S.st) : '') + '. El % es sobre el total filtrado. Toca una ciudad para filtrar.';
   $('cityMore').hidden = byCity.length <= 10;
   $('cityMore').textContent = S.cityN === 10 ? 'Ver 25 ciudades' : 'Ver solo top 10';
 }
@@ -755,7 +786,7 @@ function fitView(bounds){
   const cx = (x0 + x1)/2, cy = (y0 + y1)/2 - ((top - bottom)/2)/s;
   return { longitude: cx*360 - 180, latitude: latOf((1 - 2*cy)*Math.PI), zoom };
 }
-function fitInitial(animate){ if(!deckgl || !AGG) return; setVS(fitView(S.st ? boundsFor(AGG.rows) : US_BOUNDS), animate ? 'fly' : null); }
+function fitInitial(animate){ if(!deckgl || !AGG) return; setVS(fitView(hasFilter() && AGG.rows.length ? boundsFor(AGG.rows) : US_BOUNDS), animate ? 'fly' : null); }
 $('resetView').addEventListener('click', () => { hideInfo(); fitInitial(true); });
 $('americas').addEventListener('click', () => { hideInfo(); setVS(fitView(AMERICAS), 'fly'); });
 
@@ -858,7 +889,7 @@ function tooltip(info){
 
 /* ---------- orchestrate ---------- */
 function update(refit){
-  aggregate(); buildStateSel(AGG.byState); renderKpis(); renderConc(); renderStates(); renderCities(); renderZips(); mapDataChanged(refit);
+  aggregate(); buildStateSel(AGG.byState); buildCitySel(AGG.cityOpts); renderKpis(); renderConc(); renderStates(); renderCities(); renderZips(); mapDataChanged(refit);
 }
 setView(store.get('nld-dia-view2') || (window.innerWidth<700?'movil':window.innerWidth<1100?'ipad':'web'));
 setTheme((function(){try{return localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark'}catch(e){return 'dark'}})());

@@ -439,6 +439,8 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
 #n-f button,.seg button[data-f],.seg button[data-s]{width:auto;padding:0 .8rem;font-size:.75rem;font-weight:600;white-space:nowrap}
 
 <!-- FICHAS:FIN -->
+
+.note a,.note a:visited{color:var(--accent)}
 </style>
 </head>
 <body>
@@ -516,12 +518,19 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
       <div class="legend"><span><i class="vk-a"></i>Apartamentos</span><span><i class="vk-c"></i>Casas</span><span><i class="vk-l"></i>Lotes</span></div>
     </div>
     <div class="vd-chart" id="vd-chart" role="list" aria-label="Proyectos en planos por desarrolladora y tipo"></div>
-    <div class="dq-links"><button type="button" class="vd-more" id="vd-more"></button><a href="#desarrolladoras">Tabla proyecto por proyecto</a><a href="#vista-dev">Tarjetas de las 38</a></div>
+    <div class="dq-links"><button type="button" class="vd-more" id="vd-more"></button><a href="#vista-dev">Tarjetas de las 38</a><a href="#desarrolladoras">Tabla proyecto por proyecto</a></div>
     <p class="note">Toca una desarrolladora para ver su tarjeta: contacto, rango de precios, entrega, zonas y proyectos. Cada proyecto abre su ficha con foto y descripción.</p>
+  </section>
+  <!-- 09 · vista por desarrolladora -->
+  <section aria-labelledby="s9" class="full" id="vista-dev">
+    <div class="sh"><span class="dot">02</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
+    <p class="note">Tarjetas de las 38 desarrolladoras, en el orden que elijas en la gráfica de arriba. <a href="#dev-rapido">Volver arriba</a></p>
+    <div class="vd-grid" id="vd-grid"></div>
+    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de arriba tiene los mismos datos proyecto por proyecto.</p>
   </section>
   <!-- 08 · desarrolladoras -->
   <section aria-labelledby="s8" class="full" id="desarrolladoras">
-    <div class="sh"><span class="dot">02</span><div><span class="eyebrow">Proyecto por proyecto · hover para contacto, clic para la ficha</span><h2 id="s8">Los 72 proyectos en planos y quién los desarrolla</h2></div></div>
+    <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Proyecto por proyecto · hover para contacto, clic para la ficha</span><h2 id="s8">Los 72 proyectos en planos y quién los desarrolla</h2></div></div>
     <p class="note" id="dev-lead"></p>
     <div class="devchips" id="dev-chips" role="group" aria-label="Filtrar por desarrolladora"></div>
     <div class="devbar">
@@ -532,13 +541,6 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
     </div>
     <div class="tblw"><table class="tbl dtbl" id="dev-t"></table></div>
     <p class="note">Pasa el cursor sobre un proyecto para ver quién lo desarrolla y cómo contactarlo; haz clic (o toca, en el teléfono) para abrir la ficha. Los contactos se buscaron en los sitios y perfiles propios de cada desarrolladora o proyecto, nunca en Propi. <span class="tag t-seg">Seguro</span> = visto en un canal oficial; <span class="tag t-pro">Probable</span> = sitio del proyecto, directorio o prensa; <span class="tag t-sup">Suposición</span> = sin canal propio encontrado. Conviene confirmar el teléfono antes de la primera llamada. Las fotos y descripciones son las que Propi publica de cada proyecto.</p>
-  </section>
-  <!-- 09 · vista por desarrolladora -->
-  <section aria-labelledby="s9" class="full" id="vista-dev">
-    <div class="sh"><span class="dot">03</span><div><span class="eyebrow">Vista por desarrolladora · desglose</span><h2 id="s9">Qué tiene cada desarrolladora en planos</h2></div></div>
-    <p class="note">Tarjetas de las 38 desarrolladoras, en el orden que elijas en el módulo de arriba. <a href="#dev-rapido">Volver arriba</a></p>
-    <div class="vd-grid" id="vd-grid"></div>
-    <p class="note">Cada barra suma los proyectos en planos de la desarrolladora por tipo; el número al final es el total. Toca un proyecto de la tarjeta para abrir su ficha. “Desde” es el precio de la unidad más barata de cada proyecto; el $/m² de entrada es la mediana de esos precios divididos entre el m² mínimo. La tabla de arriba tiene los mismos datos proyecto por proyecto.</p>
   </section>
   </div>
 <!-- FICHAS:FIN -->

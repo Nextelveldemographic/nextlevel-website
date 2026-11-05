@@ -8900,6 +8900,10 @@ try{Object.keys(W).forEach(function(l){if(I18N[l])I18N[l].hero_btn2=W[l];});}cat
 .np-pmacts .np-chip.on{background:var(--blue);color:#fff;box-shadow:none}
 .np-pmacts .np-chip.fav.on svg{fill:currentColor}
 .np-pmcalc .np-tabs{margin-bottom:14px}
+.np-bh{font-size:var(--fs-17,17px);font-weight:700;letter-spacing:-.01em;margin:0 0 12px;color:var(--dark)}
+.np-blk-air{margin-top:28px;padding-top:24px;border-top:1px solid var(--divider)}
+[data-theme="dark"] .np-bh{color:#F5F5F7}
+[data-theme="dark"] .np-blk-air{border-color:#2C2C2E}
 /* Historia animada Airbnb */
 .np-story{margin-top:18px;border-radius:var(--r-l);background:var(--chalk);padding:8px}
 .np-st{position:relative;background:#fff;border-radius:calc(var(--r-l) - 4px);overflow:hidden;height:clamp(340px,34vw,400px);color:#1D1D1F}
@@ -9389,8 +9393,8 @@ document.addEventListener('keydown',function(e){if(e.key==='Escape'&&CX)closeCx(
    Se monta igual en el panel de "Calculadoras" y dentro de cada ficha.
    Los campos de dinero se muestran con $ y separador de miles. */
 var MONEY={price:1,noche:1,gastos:1,ingreso:1};
-function Calc(root,price){
-  this.root=root;this.tab='buy';this.vals={price:price||0,prima:REF.prima,tasa:REF.tasa,plazo:REF.plazo,ingreso:0,ingresoPct:REF.ingresoPct,noche:REF.noche,ocupacion:REF.ocupacion,plataforma:REF.plataforma,gestion:REF.gestion,gastos:REF.gastos};
+function Calc(root,price,opt){
+  this.root=root;this.tab='buy';this.stacked=!!(opt&&opt.stacked);this.vals={price:price||0,prima:REF.prima,tasa:REF.tasa,plazo:REF.plazo,ingreso:0,ingresoPct:REF.ingresoPct,noche:REF.noche,ocupacion:REF.ocupacion,plataforma:REF.plataforma,gestion:REF.gestion,gastos:REF.gastos};
   this.story=null;var self=this;
   root.addEventListener('input',function(e){var el=e.target;if(!el.matches('[data-c]'))return;
     if(MONEY[el.dataset.c]){var d=el.value.replace(/[^0-9]/g,'');el.value=d?'$'+commas(+d):'';try{el.setSelectionRange(el.value.length,el.value.length);}catch(x){}}
@@ -9406,6 +9410,14 @@ Calc.prototype.field=function(id,lbl,step){
 Calc.prototype.render=function(){
   var t=L(),f=this.field.bind(this);
   if(this.story){this.story.stop();this.story=null;}
+  if(this.stacked){
+    /* Ficha del proyecto: sin pestañas, primero compra y cuota, debajo renta Airbnb. */
+    var hs='<div class="np-blk"><h5 class="np-bh">'+t.tabBuy+'</h5><div class="np-grid">'+f('price',t.propPrice,1000)+f('prima',t.down,1)+f('tasa',t.rate,.1)+f('plazo',t.term,1)+f('ingreso',t.income)+f('ingresoPct',t.incPct,1)+'</div><div class="np-out" data-o="buy"></div><div class="np-note">'+t.noteBuy+'</div></div>'+
+      '<div class="np-blk np-blk-air"><h5 class="np-bh">'+t.tabAir+'</h5><div class="np-grid">'+f('noche',t.night)+f('ocupacion',t.occ,1)+f('plataforma',t.plat,.5)+f('gestion',t.mgmt,1)+f('gastos',t.exp)+'</div><div class="np-out" data-o="air"></div><div class="np-note">'+t.noteAir+'</div><div class="np-story"></div></div>';
+    this.root.innerHTML=hs;
+    this.story=new Story($('.np-story',this.root),this);
+    this.calc();return;
+  }
   var h='<div class="np-tabs" role="tablist"><button type="button" data-tab="buy" class="'+(this.tab==='buy'?'active':'')+'" aria-selected="'+(this.tab==='buy')+'">'+t.tabBuy+'</button><button type="button" data-tab="air" class="'+(this.tab==='air'?'active':'')+'" aria-selected="'+(this.tab==='air')+'">'+t.tabAir+'</button></div>';
   if(this.tab==='air'){
     h+='<div class="np-grid">'+f('price',t.propPrice,1000)+f('noche',t.night)+f('ocupacion',t.occ,1)+f('plataforma',t.plat,.5)+f('gestion',t.mgmt,1)+f('gastos',t.exp)+'</div><div class="np-out"></div><div class="np-note">'+t.noteAir+'</div><div class="np-story"></div>';
@@ -9421,13 +9433,17 @@ Calc.prototype.air=function(){
   return {gross:gross,plat:plat,mg:mg,ex:v.gastos,net:net,price:v.price,occ:v.ocupacion,g:v.gestion,nights:Math.round(30.4*v.ocupacion/100)};
 };
 Calc.prototype.calc=function(){
-  var t=L(),out=$('.np-out',this.root),v=this.vals;if(!out)return;
+  var t=L(),v=this.vals,self=this;
   function ln(k,val,big){return '<div class="np-ln'+(big?' big':'')+'"><span>'+k+'</span><b>'+val+'</b></div>';}
-  if(this.tab==='air'){
+  var oBuy,oAir;
+  if(this.stacked){oBuy=$('.np-out[data-o="buy"]',this.root);oAir=$('.np-out[data-o="air"]',this.root);}
+  else{var o=$('.np-out',this.root);if(this.tab==='air')oAir=o;else oBuy=o;}
+  if(oAir){var out=oAir;
     var a=this.air();
     out.innerHTML=ln(t.gross,money(a.gross))+ln('− '+t.lessPlat,money(a.plat))+ln('− '+t.lessMgmt,money(a.mg))+ln('− '+t.lessExp,money(a.ex))+ln(t.net,money(a.net),1)+ln(t.netY,money(a.net*12))+ln(t.yld,v.price?((a.net*12/v.price)*100).toFixed(1)+'%':t.empty);
     if(this.story)this.story.update();
-  }else{
+  }
+  if(oBuy){var out=oBuy;
     var price=v.price,dp=price*v.prima/100,fin=price-dp,r=v.tasa/100/12,n=v.plazo*12;
     var pay=fin&&n?(r?fin*r/(1-Math.pow(1+r,-n)):fin/n):0;
     var h=price?ln(t.downAmt,money(dp))+ln(t.fin,money(fin))+ln(t.pay,money(pay),1):ln(t.pay,t.empty,1);
@@ -9547,10 +9563,9 @@ function mountPmCalc(){
     if(anchor)scroll.insertBefore(sec,anchor);else scroll.appendChild(sec);
   }
   if(PM_CALC)PM_CALC.stop();
-  var keepTab=PM_CALC&&PM_CALC.card===card?PM_CALC.tab:'buy';
   sec.innerHTML='<h4>'+t.calcPm+'</h4><div class="np-sub" style="margin-bottom:14px">'+t.calcSub+'</div><div class="np-pmcalc"></div>';
-  PM_CALC=new Calc($('.np-pmcalc',sec),card?num(card.getAttribute('data-price')):0);
-  PM_CALC.card=card;if(keepTab!=='buy'){PM_CALC.tab=keepTab;PM_CALC.render();}
+  PM_CALC=new Calc($('.np-pmcalc',sec),card?num(card.getAttribute('data-price')):0,{stacked:true});
+  PM_CALC.card=card;
 }
 var baseOpen=window.openProjModal;
 if(typeof baseOpen==='function')window.openProjModal=function(card){

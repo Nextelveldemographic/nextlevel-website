@@ -807,6 +807,23 @@ html:not(.js) .copy{display:none}
 .fm-sec{padding-block:calc(var(--top-h) + 20px) 44px}
 .fm-head{margin-bottom:clamp(14px,2vw,22px)}
 .fm-head .sec-h{font-size:clamp(26px,3.3vw,42px)}
+/* ===== Video de apertura (historia de expansión) =====
+   Abre la propuesta. Horizontal (16:9) en pantallas medianas y grandes y
+   siempre en modo presentación; 4:5 en el celular. */
+.xv{position:relative;width:min(100%,calc((100svh - var(--top-h) - 240px)*16/9));min-width:min(100%,560px);margin-inline:auto;aspect-ratio:16/9;border-radius:var(--r-xl);overflow:hidden;background:#000;box-shadow:0 1px 2px var(--shade),0 18px 44px var(--lift);container:xv / inline-size}
+@media (max-width:639px){.xv{aspect-ratio:4/5;width:100%;min-width:0}}
+html.pres .xv{aspect-ratio:16/9!important;width:min(100%,calc((100vh - var(--top-h) - 260px)*16/9));min-width:640px}
+.xv-v{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;display:block}
+.xv-go{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;border:0;padding:0;margin:0;background:linear-gradient(180deg,rgba(0,0,0,0) 45%,rgba(0,0,0,.45));cursor:pointer;color:#FFFFFF;font:inherit}
+.xv-go[hidden]{display:none}
+.xv-go .pl{width:84px;height:84px;border-radius:50%;background:var(--blue-btn);display:grid;place-items:center;box-shadow:0 12px 32px rgba(0,113,227,.45);transition:transform .25s var(--ease)}
+.xv-go:hover .pl{transform:scale(1.06)}
+.xv-go .pl svg{width:34px;height:34px;margin-left:4px}
+.xv-go .du{position:absolute;left:20px;bottom:16px;font-size:14px;font-weight:600;letter-spacing:-.01em}
+.xv-go:focus-visible{outline:3px solid var(--blue-btn);outline-offset:-3px}
+.xv-note{margin-top:14px;text-align:center;font-size:14px;color:var(--muted)}
+@media (prefers-reduced-motion:reduce){.xv-go .pl{transition:none}}
+
 
 /* ===== Reproductor ===== */
 .film{position:relative;width:100%;max-width:var(--fm-maxw,100%);margin-inline:auto;container:fmw / inline-size}
@@ -814,7 +831,6 @@ html:not(.js) .copy{display:none}
   background:var(--fm-stage);border-radius:var(--r-xl);box-shadow:inset 0 0 0 1px var(--fm-stage-line),0 18px 50px var(--fm-sh);
   -webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
 @container fmw (max-width:639px){.fm-box{aspect-ratio:4/5}}
-html.pres .fm-box{aspect-ratio:16/9!important}
 .fm-stage{position:absolute;inset:0;cursor:pointer;color:var(--fg);font-family:var(--sf);letter-spacing:-.012em;line-height:1.25;
   --fm-top:12cqh;--fm-bot:22cqh;--fm-px:6cqw;--fm-t:max(11px,3cqmin);--fm-s:max(10px,2.5cqmin)}
 @container fm (min-aspect-ratio:6/5){
@@ -1238,7 +1254,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 </style>
 <script>(function(){var d=document.documentElement;d.lang='es';d.classList.add('js');try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-hero');}catch(e){}try{if(localStorage.getItem('nld_olympus_tema')!=='claro')d.setAttribute('data-tema','oscuro');}catch(e){}})();</script>
 <nav class="nav" aria-label="Principal"><div class="nav-in">
-  <a href="#video" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
+  <a href="#historia" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
   <div class="nav-r">
     <button type="button" class="ic-btn" data-idx-btn aria-label="Índice de la propuesta" title="Índice" aria-expanded="false" aria-controls="idx">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M9 6.5h11M9 12h11M9 17.5h11"/><circle cx="4.6" cy="6.5" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.6" cy="12" r="1.1" fill="currentColor" stroke="none"/><circle cx="4.6" cy="17.5" r="1.1" fill="currentColor" stroke="none"/></svg>
@@ -1275,243 +1291,24 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 </div>
 
 <main>
-<!-- ===== EN DOS MINUTOS: EL VIDEO (apertura) =====
+<!-- ===== LA HISTORIA: DOÑA MARTA (apertura) =====
      Va primero: la presentación arranca contando la historia con personas.
-     En modo presentación siempre se ve en horizontal (16:9).
-     Una venta simulada de principio a fin, en ocho escenas. Todo se dibuja
-     aquí (HTML y SVG) y avanza con una línea de tiempo propia: se puede
-     pausar, adelantar por capítulos y ver en pantalla completa. Las cifras
-     son las de la propuesta; los ejemplos se marcan como ejemplo. -->
-<section class="sec alt fm-sec" id="video" data-scene data-stop>
+     Historia ilustrativa de una salvadoreña de 66 años en Maryland imagina jubilarse en El Salvador; en modo presentación siempre en horizontal.
+     El video de la venta de principio a fin sigue al final. -->
+<section class="sec alt fm-sec" id="historia" data-stop>
   <div class="wrap">
     <header class="head fm-head">
-      <p class="eyebrow">En dos minutos</p>
-      <h2 class="sec-h"><span class="ln">Una venta, de principio a fin.</span> <span class="ln grey">Y lo que usted gana en cada paso.</span></h2>
+      <p class="eyebrow">Antes de empezar</p>
+      <h2 class="sec-h"><span class="ln">Su próximo comprador ya existe.</span> <span class="ln grey">Vive en Maryland y se llama doña&nbsp;Marta.</span></h2>
     </header>
-
-    <div class="film" data-film>
-      <div class="fm-box">
-        <div class="fm-stage" aria-hidden="true">
-          <span class="fm-mark"></span>
-
-          <!-- 1 · Su proyecto -->
-          <div class="fm-sc" data-in="-1" data-d=".01" data-out="10.7" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">1</span>Su proyecto</p>
-            <div class="fm-in fm-s1">
-              <div class="fm-twb fm-twb-1">
-                <svg class="fm-tw fx fx-g" data-in=".2" data-d="1.3" data-tower viewBox="0 0 200 320"></svg>
-                <div class="fm-team fx fx-u" data-in="2.1" data-d=".7"><span class="fm-tl">Su equipo</span><i data-person></i><i data-person></i><i data-person></i></div>
-                <div class="fm-cnt fx fx-u" data-in="2.7" data-d=".6"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>24</b></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 2 · El límite -->
-          <div class="fm-sc" data-in="10.8" data-d=".5" data-out="30.8" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">2</span>El límite</p>
-            <div class="fm-in fm-s2">
-              <div class="fm-zus">
-                <div class="fm-zh">
-                  <p class="fm-zl fx" data-in="11.1" data-d=".5">Estados Unidos</p>
-                  <p class="fm-big fx fx-u" data-in="11.5" data-d=".6"><span class="fm-big-v" data-count23>0.0</span><span class="fm-big-u">millones de salvadoreños</span></p>
-                  <p class="fm-src fx" data-in="12.8" data-d=".6">Censo de EE.&nbsp;UU., ACS 2023</p>
-                </div>
-                <div class="fm-mapw">
-                  <div class="fm-dimw" data-in="22.6" data-d=".7"><div class="fm-mapbox" data-map="s2"></div></div>
-                  <div class="fm-frs" data-chips="s2"></div>
-                </div>
-              </div>
-              <div class="fm-zdiv"><span class="fm-dash fx" data-in="11.3" data-d=".9"></span></div>
-              <div class="fm-zsv">
-                <p class="fm-zl fx" data-in="11.1" data-d=".5">El Salvador</p>
-                <div class="fm-svb">
-                  <div class="fm-twb fm-twb-2">
-                    <svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg>
-                    <div class="fm-team fm-walk" data-walk><i data-person></i><i data-person></i><i data-person></i></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 3 · Lo encontramos -->
-          <div class="fm-sc" data-in="30.9" data-d=".5" data-out="47.8" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">3</span>Lo encontramos</p>
-            <div class="fm-in fm-s3">
-              <div class="fm-mapw">
-                <div class="fm-mapbox" data-map="s3">
-                  <span class="fm-lbl a-ca fx fx-u" data-in="33.0" data-d=".6">California · 32.0&nbsp;%</span>
-                  <span class="fm-lbl a-tx fx fx-u" data-in="33.5" data-d=".6">Texas · 14.8&nbsp;%</span>
-                  <span class="fm-lbl a-md fx fx-u" data-in="34.0" data-d=".6">Maryland · 8.2&nbsp;%</span>
-                  <span class="fm-lbl a-ny fx fx-u" data-in="34.5" data-d=".6">Nueva York · 8.1&nbsp;%</span>
-                </div>
-              </div>
-              <div class="fm-adw">
-                <div class="fm-phw fm-phw-3"><div class="fm-ph fx fx-u" data-in="36.9" data-d=".8"><div class="pf"><div class="phone" data-ph="ph-tt"></div></div></div></div>
-                <div class="fm-zero fx fx-p" data-in="43.2" data-d=".6"><b>$0</b><span>le cuesta a usted la campaña</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 4 · Lo acompañamos -->
-          <div class="fm-sc" data-in="47.9" data-d=".5" data-out="75.9" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">4</span>Lo acompañamos</p>
-            <div class="fm-in fm-s4">
-              <div class="fm-chips" data-chips="s4"></div>
-              <div class="fm-j">
-                <div class="fm-mapw fm-j-map"><div class="fm-mapbox" data-map="s4"></div></div>
-                <div class="fm-j-tw"><div class="fm-twb fm-twb-4"><svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg></div></div>
-                <svg class="fm-ov" data-ov><path class="fm-br-g" data-bridge-g d="M0 0"></path><path class="fm-br" data-bridge d="M0 0"></path></svg>
-                <p class="fm-avl fx" data-in="49.5" data-d=".5" data-out="53.4" data-od=".4">Don Roberto · Houston</p>
-                <div class="fm-av fx fx-p" data-in="49.2" data-d=".6" data-avatar>DR</div>
-                <div class="fm-bub fx" data-in="55.0" data-d=".45" data-out="58.6" data-od=".35" data-bub="0"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12A3.5 3.5 0 0 1 21.5 7v7a3.5 3.5 0 0 1-3.5 3.5h-6.4l-4.8 3.3c-.5.35-1.2 0-1.2-.6v-2.8A3.5 3.5 0 0 1 2.5 14V7A3.5 3.5 0 0 1 6 3.5z"/></svg></span><span><em>8:14 p.&nbsp;m.</em> Le respondimos</span></div>
-                <div class="fm-bub fx" data-in="60.3" data-d=".45" data-out="64.0" data-od=".35" data-bub="1"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/></svg></span><span>Asesoría gratis · 30&nbsp;min</span></div>
-                <div class="fm-bub fx" data-in="65.6" data-d=".45" data-out="69.4" data-od=".35" data-bub="2"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="12" height="12" rx="2.5"/><path d="M15.5 10.5l5-3v9l-5-3"/></svg></span><span>Recorrido virtual 360°</span></div>
-                <div class="fm-bub fx" data-in="71.0" data-d=".45" data-out="75.2" data-od=".35" data-bub="3"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 14l2 2 3.5-3.5"/></svg></span><span>Contrato revisado</span></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 5 · La venta -->
-          <div class="fm-sc" data-in="76.0" data-d=".5" data-out="89.8" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">5</span>La venta</p>
-            <div class="fm-in fm-s5">
-              <div class="fm-docw">
-                <div class="fm-doc fx fx-u" data-in="76.5" data-d=".7">
-                  <div class="fm-doc-h"><span class="fm-av fm-av-s">DR</span><span class="fm-doc-t"><b>Escritura de compraventa</b><span>Su Proyecto · Apto. 5C</span></span></div>
-                  <i class="fm-ln"></i><i class="fm-ln"></i><i class="fm-ln fm-ln-s"></i>
-                  <svg class="fm-sig" viewBox="0 0 230 64" preserveAspectRatio="xMinYMid meet"><path data-sig d="M8 44 C 18 14, 34 10, 30 38 S 20 60, 38 40 C 50 26, 58 24, 60 40 C 62 54, 72 52, 78 40 C 86 26, 96 28, 94 42 C 92 56, 108 52, 116 38 C 122 28, 132 30, 132 42 C 132 52, 144 50, 152 40 L 160 32 M 150 50 C 172 48, 196 42, 222 34"></path></svg>
-                  <p class="fm-doc-f">Firma: Don Roberto, desde Houston</p>
-                  <p class="fm-ok fx fx-p" data-in="79.6" data-d=".5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Firmado a distancia</p>
-                </div>
-              </div>
-              <div class="fm-s5tw">
-                <div class="fm-twb fm-twb-5">
-                  <svg class="fm-tw" data-tower data-halo="6" viewBox="0 0 200 320"></svg>
-                  <p class="fm-sold fx fx-l" data-in="82.9" data-d=".5">Vendido</p>
-                  <div class="fm-cnt fm-cnt-l fm-cnt-5 fx fx-u" data-in="76.8" data-d=".6"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>16</b></div>
-                </div>
-              </div>
-              <div class="fm-coin" data-coin>$</div>
-              <p class="fm-coinl fx" data-in="80.9" data-d=".5" data-out="85.6" data-od=".4" data-coinl>Directo a su cuenta</p>
-            </div>
-          </div>
-
-          <!-- 6 · Cuánto cuesta -->
-          <div class="fm-sc" data-in="89.9" data-d=".5" data-out="111.8" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">6</span>Cuánto cuesta</p>
-            <div class="fm-in fm-s6">
-              <div class="fm-pa">
-                <p class="fm-zl fx" data-in="90.6" data-d=".5">Mientras no vende</p>
-                <div class="fm-mos">
-                  <div class="fm-months">
-                    <div class="fm-mo fx fx-u" data-in="91.3" data-d=".5"><span>Mes 1</span><b>$0</b></div>
-                    <div class="fm-mo fx fx-u" data-in="91.8" data-d=".5"><span>Mes 2</span><b>$0</b></div>
-                    <div class="fm-mo fx fx-u" data-in="92.3" data-d=".5"><span>Mes 3</span><b>$0</b></div>
-                    <div class="fm-mo fx fx-u" data-in="92.8" data-d=".5"><span>Mes 4</span><b>$0</b></div>
-                    <div class="fm-mo fx fx-u" data-in="93.3" data-d=".5"><span>Mes 5</span><b>$0</b></div>
-                    <div class="fm-mo fx fx-u" data-in="93.8" data-d=".5"><span>Mes 6</span><b>$0</b></div>
-                  </div>
-                  <span class="fm-emph" data-in="105.2" data-d=".6"></span>
-                </div>
-                <div class="fm-nos">
-                  <span class="fx fx-u" data-in="94.6" data-d=".45">Sin anticipo</span>
-                  <span class="fx fx-u" data-in="95.0" data-d=".45">Sin costo fijo</span>
-                  <span class="fx fx-u" data-in="95.4" data-d=".45">Sin planilla</span>
-                </div>
-              </div>
-              <div class="fm-pb">
-                <p class="fm-zl fx" data-in="96.9" data-d=".5">Cuando vende</p>
-                <div class="fm-pbb">
-                  <div class="fm-grid" data-grid></div>
-                  <div class="fm-leg">
-                    <p class="fm-leg-h fx fx-u" data-in="97.6" data-d=".5"><span>Una venta de <b>$100,000</b><em>Cada cuadro, $1,000</em></span></p>
-                    <p class="fx fx-u" data-in="100.9" data-d=".5"><i class="fm-sw fm-sw-b"></i><span><b class="fm-acc">$2,500 + IVA</b> son nuestros, al cierre<em class="fm-sm">$2,825 con el 13&nbsp;% de IVA</em></span></p>
-                    <p class="fx fx-u" data-in="102.4" data-d=".5"><i class="fm-sw"></i><span><b>$97,175</b> son para usted</span></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 7 · Y además -->
-          <div class="fm-sc" data-in="111.9" data-d=".5" data-out="127.8" data-od=".5">
-            <p class="fm-k"><span class="fm-kn">7</span>Y además</p>
-            <div class="fm-in fm-s7">
-              <div class="fm-c7 fx fx-u" data-in="112.4" data-d=".7">
-                <div class="fm-c7t"><p class="fm-c7k">Podcast</p><p class="fm-c7h">Su apartamento, en podcast</p><p class="fm-c7s">Un episodio, más de 20 cortos</p></div>
-                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone" data-ph="ph-pod"></div></div></div></div>
-              </div>
-              <div class="fm-c7 fx fx-u" data-in="117.6" data-d=".7">
-                <div class="fm-c7t"><p class="fm-c7k">Inversionista</p><p class="fm-c7h">Un segundo comprador</p><p class="fm-c7s">Compra para rentar en Airbnb</p></div>
-                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone anim-ok" data-ph="ph-inv" data-go="118.2"></div></div></div></div>
-              </div>
-              <div class="fm-c7 fx fx-u" data-in="122.9" data-d=".7">
-                <div class="fm-c7t"><p class="fm-c7k">Resultados</p><p class="fm-c7h">Todo a la vista</p><p class="fm-c7s">Un tablero que revisamos con usted</p></div>
-                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone anim-ok" data-ph="ph-dash" data-go="123.5"></div></div></div></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- 8 · En resumen -->
-          <div class="fm-sc" data-in="127.9" data-d=".5">
-            <p class="fm-k"><span class="fm-kn">8</span>En resumen</p>
-            <div class="fm-in fm-s8">
-              <div class="fm-s8a fx" data-in="127.9" data-d=".3" data-out="133.9" data-od=".5">
-                <div class="fm-s8tw"><div class="fm-twb fm-twb-8"><svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg>
-                  <div class="fm-cnt"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>15</b></div></div></div>
-                <ul class="fm-sum">
-                  <li class="fx fx-r" data-in="128.6" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="16.8" cy="9.5" r="2.6"/><path d="M15.6 14.3c2.6-.3 4.6 1.2 5.4 4.2"/></svg></span>Más compradores.</li>
-                  <li class="fx fx-r" data-in="130.2" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V10l8-6 8 6v11z"/><path d="M8.5 14.5l2.5 2.5 4.5-4.5"/></svg></span>Más ventas cerradas.</li>
-                  <li class="fm-sum-b fx fx-r" data-in="131.8" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.2c-.5-.9-1.5-1.4-2.6-1.4-1.5 0-2.6.8-2.6 2 0 2.8 5.4 1.6 5.4 4.4 0 1.2-1.2 2-2.8 2-1.2 0-2.3-.5-2.8-1.5M12 6.2v1.6M12 16.2v1.6"/></svg></span>Solo paga si se vende.</li>
-                </ul>
-              </div>
-              <div class="fm-endc fx fx-p" data-in="134.3" data-d=".8">
-                <span class="fm-endl"></span>
-                <p class="fm-endh">Empecemos con un piloto.</p>
-                <p class="fm-ends">Una tipología · seis meses · sin costo fijo</p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <video class="fm-vid" data-src-h="video-nld-16x9.mp4" data-src-v="video-nld-4x5.mp4" playsinline webkit-playsinline preload="metadata" disablepictureinpicture aria-label="Video: una venta, de principio a fin"></video>
-
-        <p class="fm-cap" aria-live="polite"></p>
-
-        <button type="button" class="fm-poster" data-fm-start aria-label="Reproducir el video narrado, dura 2 minutos y 20 segundos">
-          <span class="fm-pbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.6v12.8a.9.9 0 0 0 1.37.77l10.2-6.4a.9.9 0 0 0 0-1.54L9.37 4.83A.9.9 0 0 0 8 5.6z"/></svg></span>
-          <span class="fm-pt">Ver el video<span>2:20 · narrado y con subtítulos</span></span>
-        </button>
-
-        <div class="fm-end" hidden>
-          <button type="button" class="fm-again" data-fm-again><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg>Ver de nuevo</button>
-          <a class="btn-blue fm-cta" data-cta href="https://wa.me/50362073860" target="_blank" rel="noopener">Agendar 30 minutos</a>
-        </div>
-      </div>
-
-      <div class="fm-bar">
-        <button type="button" class="ic-btn fm-pp" data-fm-pp aria-label="Reproducir el video" title="Reproducir">
-          <svg class="fm-i-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.6v12.8a.9.9 0 0 0 1.37.77l10.2-6.4a.9.9 0 0 0 0-1.54L9.37 4.83A.9.9 0 0 0 8 5.6z"/></svg>
-          <svg class="fm-i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect fill="currentColor" x="6.5" y="5" width="4" height="14" rx="1.2"/><rect fill="currentColor" x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>
-        </button>
-        <span class="fm-time" data-fm-cur aria-hidden="true">0:00</span>
-        <div class="fm-track" data-fm-track role="slider" tabindex="0" aria-label="Avance del video" aria-valuemin="0" aria-valuemax="140" aria-valuenow="0" aria-valuetext="0:00 de 2:20">
-          <div class="fm-segs"></div>
-          <span class="fm-knob"></span>
-          <span class="fm-tip" hidden></span>
-        </div>
-        <span class="fm-time fm-tot" aria-hidden="true">2:20</span>
-        <button type="button" class="ic-btn fm-snd" data-fm-snd aria-label="Silenciar" title="Silenciar">
-          <svg class="fm-i-snd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/></svg>
-          <svg class="fm-i-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
-        </button>
-        <button type="button" class="ic-btn fm-mx" data-fm-max aria-label="Ver en pantalla completa" title="Pantalla completa">
-          <svg class="fm-i-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15"/></svg>
-          <svg class="fm-i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5V9H4.5M19.5 9H15V4.5M15 19.5V15h4.5M4.5 15H9v4.5"/></svg>
-        </button>
-      </div>
+    <div class="xv" data-xv>
+      <video class="xv-v" data-src-h="historia-marta-16x9.mp4" data-src-v="historia-marta-4x5.mp4" data-poster-h="historia-marta-16x9.jpg" data-poster-v="historia-marta-4x5.jpg" playsinline webkit-playsinline preload="none" aria-label="Video: una salvadoreña de 66 años en Maryland imagina jubilarse en El Salvador"></video>
+      <button type="button" class="xv-go" data-xv-go aria-label="Reproducir el video, dura 1 minuto y 36 segundos">
+        <span class="pl" aria-hidden="true"><svg viewBox="0 0 24 24" fill="#FFFFFF"><path d="M7 4.8v14.4L19 12z"/></svg></span>
+        <span class="du">1:36 · con sonido</span>
+      </button>
     </div>
+    <p class="xv-note">Historia ilustrativa: los personajes y las cifras son de ejemplo.</p>
   </div>
 </section>
 
@@ -1899,6 +1696,243 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   </div>
 </section>
 
+<!-- ===== EN DOS MINUTOS: EL VIDEO =====
+     Una venta simulada de principio a fin, en ocho escenas. Todo se dibuja
+     aquí (HTML y SVG) y avanza con una línea de tiempo propia: se puede
+     pausar, adelantar por capítulos y ver en pantalla completa. Las cifras
+     son las de la propuesta; los ejemplos se marcan como ejemplo. -->
+<section class="sec alt fm-sec" id="video" data-scene data-stop>
+  <div class="wrap">
+    <header class="head fm-head">
+      <p class="eyebrow">En dos minutos</p>
+      <h2 class="sec-h"><span class="ln">Una venta, de principio a fin.</span> <span class="ln grey">Y lo que usted gana en cada paso.</span></h2>
+    </header>
+
+    <div class="film" data-film>
+      <div class="fm-box">
+        <div class="fm-stage" aria-hidden="true">
+          <span class="fm-mark"></span>
+
+          <!-- 1 · Su proyecto -->
+          <div class="fm-sc" data-in="-1" data-d=".01" data-out="10.7" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">1</span>Su proyecto</p>
+            <div class="fm-in fm-s1">
+              <div class="fm-twb fm-twb-1">
+                <svg class="fm-tw fx fx-g" data-in=".2" data-d="1.3" data-tower viewBox="0 0 200 320"></svg>
+                <div class="fm-team fx fx-u" data-in="2.1" data-d=".7"><span class="fm-tl">Su equipo</span><i data-person></i><i data-person></i><i data-person></i></div>
+                <div class="fm-cnt fx fx-u" data-in="2.7" data-d=".6"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>24</b></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 · El límite -->
+          <div class="fm-sc" data-in="10.8" data-d=".5" data-out="30.8" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">2</span>El límite</p>
+            <div class="fm-in fm-s2">
+              <div class="fm-zus">
+                <div class="fm-zh">
+                  <p class="fm-zl fx" data-in="11.1" data-d=".5">Estados Unidos</p>
+                  <p class="fm-big fx fx-u" data-in="11.5" data-d=".6"><span class="fm-big-v" data-count23>0.0</span><span class="fm-big-u">millones de salvadoreños</span></p>
+                  <p class="fm-src fx" data-in="12.8" data-d=".6">Censo de EE.&nbsp;UU., ACS 2023</p>
+                </div>
+                <div class="fm-mapw">
+                  <div class="fm-dimw" data-in="22.6" data-d=".7"><div class="fm-mapbox" data-map="s2"></div></div>
+                  <div class="fm-frs" data-chips="s2"></div>
+                </div>
+              </div>
+              <div class="fm-zdiv"><span class="fm-dash fx" data-in="11.3" data-d=".9"></span></div>
+              <div class="fm-zsv">
+                <p class="fm-zl fx" data-in="11.1" data-d=".5">El Salvador</p>
+                <div class="fm-svb">
+                  <div class="fm-twb fm-twb-2">
+                    <svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg>
+                    <div class="fm-team fm-walk" data-walk><i data-person></i><i data-person></i><i data-person></i></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 · Lo encontramos -->
+          <div class="fm-sc" data-in="30.9" data-d=".5" data-out="47.8" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">3</span>Lo encontramos</p>
+            <div class="fm-in fm-s3">
+              <div class="fm-mapw">
+                <div class="fm-mapbox" data-map="s3">
+                  <span class="fm-lbl a-ca fx fx-u" data-in="33.0" data-d=".6">California · 32.0&nbsp;%</span>
+                  <span class="fm-lbl a-tx fx fx-u" data-in="33.5" data-d=".6">Texas · 14.8&nbsp;%</span>
+                  <span class="fm-lbl a-md fx fx-u" data-in="34.0" data-d=".6">Maryland · 8.2&nbsp;%</span>
+                  <span class="fm-lbl a-ny fx fx-u" data-in="34.5" data-d=".6">Nueva York · 8.1&nbsp;%</span>
+                </div>
+              </div>
+              <div class="fm-adw">
+                <div class="fm-phw fm-phw-3"><div class="fm-ph fx fx-u" data-in="36.9" data-d=".8"><div class="pf"><div class="phone" data-ph="ph-tt"></div></div></div></div>
+                <div class="fm-zero fx fx-p" data-in="43.2" data-d=".6"><b>$0</b><span>le cuesta a usted la campaña</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 4 · Lo acompañamos -->
+          <div class="fm-sc" data-in="47.9" data-d=".5" data-out="75.9" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">4</span>Lo acompañamos</p>
+            <div class="fm-in fm-s4">
+              <div class="fm-chips" data-chips="s4"></div>
+              <div class="fm-j">
+                <div class="fm-mapw fm-j-map"><div class="fm-mapbox" data-map="s4"></div></div>
+                <div class="fm-j-tw"><div class="fm-twb fm-twb-4"><svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg></div></div>
+                <svg class="fm-ov" data-ov><path class="fm-br-g" data-bridge-g d="M0 0"></path><path class="fm-br" data-bridge d="M0 0"></path></svg>
+                <p class="fm-avl fx" data-in="49.5" data-d=".5" data-out="53.4" data-od=".4">Don Roberto · Houston</p>
+                <div class="fm-av fx fx-p" data-in="49.2" data-d=".6" data-avatar>DR</div>
+                <div class="fm-bub fx" data-in="55.0" data-d=".45" data-out="58.6" data-od=".35" data-bub="0"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12A3.5 3.5 0 0 1 21.5 7v7a3.5 3.5 0 0 1-3.5 3.5h-6.4l-4.8 3.3c-.5.35-1.2 0-1.2-.6v-2.8A3.5 3.5 0 0 1 2.5 14V7A3.5 3.5 0 0 1 6 3.5z"/></svg></span><span><em>8:14 p.&nbsp;m.</em> Le respondimos</span></div>
+                <div class="fm-bub fx" data-in="60.3" data-d=".45" data-out="64.0" data-od=".35" data-bub="1"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="3.6"/><path d="M5 20c.8-3.6 3.6-5.6 7-5.6s6.2 2 7 5.6"/></svg></span><span>Asesoría gratis · 30&nbsp;min</span></div>
+                <div class="fm-bub fx" data-in="65.6" data-d=".45" data-out="69.4" data-od=".35" data-bub="2"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="6" width="12" height="12" rx="2.5"/><path d="M15.5 10.5l5-3v9l-5-3"/></svg></span><span>Recorrido virtual 360°</span></div>
+                <div class="fm-bub fx" data-in="71.0" data-d=".45" data-out="75.2" data-od=".35" data-bub="3"><span class="fm-ci"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 14l2 2 3.5-3.5"/></svg></span><span>Contrato revisado</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 · La venta -->
+          <div class="fm-sc" data-in="76.0" data-d=".5" data-out="89.8" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">5</span>La venta</p>
+            <div class="fm-in fm-s5">
+              <div class="fm-docw">
+                <div class="fm-doc fx fx-u" data-in="76.5" data-d=".7">
+                  <div class="fm-doc-h"><span class="fm-av fm-av-s">DR</span><span class="fm-doc-t"><b>Escritura de compraventa</b><span>Su Proyecto · Apto. 5C</span></span></div>
+                  <i class="fm-ln"></i><i class="fm-ln"></i><i class="fm-ln fm-ln-s"></i>
+                  <svg class="fm-sig" viewBox="0 0 230 64" preserveAspectRatio="xMinYMid meet"><path data-sig d="M8 44 C 18 14, 34 10, 30 38 S 20 60, 38 40 C 50 26, 58 24, 60 40 C 62 54, 72 52, 78 40 C 86 26, 96 28, 94 42 C 92 56, 108 52, 116 38 C 122 28, 132 30, 132 42 C 132 52, 144 50, 152 40 L 160 32 M 150 50 C 172 48, 196 42, 222 34"></path></svg>
+                  <p class="fm-doc-f">Firma: Don Roberto, desde Houston</p>
+                  <p class="fm-ok fx fx-p" data-in="79.6" data-d=".5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Firmado a distancia</p>
+                </div>
+              </div>
+              <div class="fm-s5tw">
+                <div class="fm-twb fm-twb-5">
+                  <svg class="fm-tw" data-tower data-halo="6" viewBox="0 0 200 320"></svg>
+                  <p class="fm-sold fx fx-l" data-in="82.9" data-d=".5">Vendido</p>
+                  <div class="fm-cnt fm-cnt-l fm-cnt-5 fx fx-u" data-in="76.8" data-d=".6"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>16</b></div>
+                </div>
+              </div>
+              <div class="fm-coin" data-coin>$</div>
+              <p class="fm-coinl fx" data-in="80.9" data-d=".5" data-out="85.6" data-od=".4" data-coinl>Directo a su cuenta</p>
+            </div>
+          </div>
+
+          <!-- 6 · Cuánto cuesta -->
+          <div class="fm-sc" data-in="89.9" data-d=".5" data-out="111.8" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">6</span>Cuánto cuesta</p>
+            <div class="fm-in fm-s6">
+              <div class="fm-pa">
+                <p class="fm-zl fx" data-in="90.6" data-d=".5">Mientras no vende</p>
+                <div class="fm-mos">
+                  <div class="fm-months">
+                    <div class="fm-mo fx fx-u" data-in="91.3" data-d=".5"><span>Mes 1</span><b>$0</b></div>
+                    <div class="fm-mo fx fx-u" data-in="91.8" data-d=".5"><span>Mes 2</span><b>$0</b></div>
+                    <div class="fm-mo fx fx-u" data-in="92.3" data-d=".5"><span>Mes 3</span><b>$0</b></div>
+                    <div class="fm-mo fx fx-u" data-in="92.8" data-d=".5"><span>Mes 4</span><b>$0</b></div>
+                    <div class="fm-mo fx fx-u" data-in="93.3" data-d=".5"><span>Mes 5</span><b>$0</b></div>
+                    <div class="fm-mo fx fx-u" data-in="93.8" data-d=".5"><span>Mes 6</span><b>$0</b></div>
+                  </div>
+                  <span class="fm-emph" data-in="105.2" data-d=".6"></span>
+                </div>
+                <div class="fm-nos">
+                  <span class="fx fx-u" data-in="94.6" data-d=".45">Sin anticipo</span>
+                  <span class="fx fx-u" data-in="95.0" data-d=".45">Sin costo fijo</span>
+                  <span class="fx fx-u" data-in="95.4" data-d=".45">Sin planilla</span>
+                </div>
+              </div>
+              <div class="fm-pb">
+                <p class="fm-zl fx" data-in="96.9" data-d=".5">Cuando vende</p>
+                <div class="fm-pbb">
+                  <div class="fm-grid" data-grid></div>
+                  <div class="fm-leg">
+                    <p class="fm-leg-h fx fx-u" data-in="97.6" data-d=".5"><span>Una venta de <b>$100,000</b><em>Cada cuadro, $1,000</em></span></p>
+                    <p class="fx fx-u" data-in="100.9" data-d=".5"><i class="fm-sw fm-sw-b"></i><span><b class="fm-acc">$2,500 + IVA</b> son nuestros, al cierre<em class="fm-sm">$2,825 con el 13&nbsp;% de IVA</em></span></p>
+                    <p class="fx fx-u" data-in="102.4" data-d=".5"><i class="fm-sw"></i><span><b>$97,175</b> son para usted</span></p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 7 · Y además -->
+          <div class="fm-sc" data-in="111.9" data-d=".5" data-out="127.8" data-od=".5">
+            <p class="fm-k"><span class="fm-kn">7</span>Y además</p>
+            <div class="fm-in fm-s7">
+              <div class="fm-c7 fx fx-u" data-in="112.4" data-d=".7">
+                <div class="fm-c7t"><p class="fm-c7k">Podcast</p><p class="fm-c7h">Su apartamento, en podcast</p><p class="fm-c7s">Un episodio, más de 20 cortos</p></div>
+                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone" data-ph="ph-pod"></div></div></div></div>
+              </div>
+              <div class="fm-c7 fx fx-u" data-in="117.6" data-d=".7">
+                <div class="fm-c7t"><p class="fm-c7k">Inversionista</p><p class="fm-c7h">Un segundo comprador</p><p class="fm-c7s">Compra para rentar en Airbnb</p></div>
+                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone anim-ok" data-ph="ph-inv" data-go="118.2"></div></div></div></div>
+              </div>
+              <div class="fm-c7 fx fx-u" data-in="122.9" data-d=".7">
+                <div class="fm-c7t"><p class="fm-c7k">Resultados</p><p class="fm-c7h">Todo a la vista</p><p class="fm-c7s">Un tablero que revisamos con usted</p></div>
+                <div class="fm-phw"><div class="fm-ph"><div class="pf"><div class="phone anim-ok" data-ph="ph-dash" data-go="123.5"></div></div></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 8 · En resumen -->
+          <div class="fm-sc" data-in="127.9" data-d=".5">
+            <p class="fm-k"><span class="fm-kn">8</span>En resumen</p>
+            <div class="fm-in fm-s8">
+              <div class="fm-s8a fx" data-in="127.9" data-d=".3" data-out="133.9" data-od=".5">
+                <div class="fm-s8tw"><div class="fm-twb fm-twb-8"><svg class="fm-tw" data-tower viewBox="0 0 200 320"></svg>
+                  <div class="fm-cnt"><span class="fm-cnt-k">Por vender</span><b class="fm-cnt-n" data-left>15</b></div></div></div>
+                <ul class="fm-sum">
+                  <li class="fx fx-r" data-in="128.6" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M3 19c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><circle cx="16.8" cy="9.5" r="2.6"/><path d="M15.6 14.3c2.6-.3 4.6 1.2 5.4 4.2"/></svg></span>Más compradores.</li>
+                  <li class="fx fx-r" data-in="130.2" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 21V10l8-6 8 6v11z"/><path d="M8.5 14.5l2.5 2.5 4.5-4.5"/></svg></span>Más ventas cerradas.</li>
+                  <li class="fm-sum-b fx fx-r" data-in="131.8" data-d=".6"><span class="fm-si"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.5"/><path d="M14.6 9.2c-.5-.9-1.5-1.4-2.6-1.4-1.5 0-2.6.8-2.6 2 0 2.8 5.4 1.6 5.4 4.4 0 1.2-1.2 2-2.8 2-1.2 0-2.3-.5-2.8-1.5M12 6.2v1.6M12 16.2v1.6"/></svg></span>Solo paga si se vende.</li>
+                </ul>
+              </div>
+              <div class="fm-endc fx fx-p" data-in="134.3" data-d=".8">
+                <span class="fm-endl"></span>
+                <p class="fm-endh">Empecemos con un piloto.</p>
+                <p class="fm-ends">Una tipología · seis meses · sin costo fijo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <video class="fm-vid" data-src-h="video-nld-16x9.mp4" data-src-v="video-nld-4x5.mp4" playsinline webkit-playsinline preload="metadata" disablepictureinpicture aria-label="Video: una venta, de principio a fin"></video>
+
+        <p class="fm-cap" aria-live="polite"></p>
+
+        <button type="button" class="fm-poster" data-fm-start aria-label="Reproducir el video narrado, dura 2 minutos y 20 segundos">
+          <span class="fm-pbtn"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.6v12.8a.9.9 0 0 0 1.37.77l10.2-6.4a.9.9 0 0 0 0-1.54L9.37 4.83A.9.9 0 0 0 8 5.6z"/></svg></span>
+          <span class="fm-pt">Ver el video<span>2:20 · narrado y con subtítulos</span></span>
+        </button>
+
+        <div class="fm-end" hidden>
+          <button type="button" class="fm-again" data-fm-again><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3"/><path d="M4.5 4.5v4h4"/></svg>Ver de nuevo</button>
+          <a class="btn-blue fm-cta" data-cta href="https://wa.me/50362073860" target="_blank" rel="noopener">Agendar 30 minutos</a>
+        </div>
+      </div>
+
+      <div class="fm-bar">
+        <button type="button" class="ic-btn fm-pp" data-fm-pp aria-label="Reproducir el video" title="Reproducir">
+          <svg class="fm-i-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5.6v12.8a.9.9 0 0 0 1.37.77l10.2-6.4a.9.9 0 0 0 0-1.54L9.37 4.83A.9.9 0 0 0 8 5.6z"/></svg>
+          <svg class="fm-i-pause" viewBox="0 0 24 24" aria-hidden="true"><rect fill="currentColor" x="6.5" y="5" width="4" height="14" rx="1.2"/><rect fill="currentColor" x="13.5" y="5" width="4" height="14" rx="1.2"/></svg>
+        </button>
+        <span class="fm-time" data-fm-cur aria-hidden="true">0:00</span>
+        <div class="fm-track" data-fm-track role="slider" tabindex="0" aria-label="Avance del video" aria-valuemin="0" aria-valuemax="140" aria-valuenow="0" aria-valuetext="0:00 de 2:20">
+          <div class="fm-segs"></div>
+          <span class="fm-knob"></span>
+          <span class="fm-tip" hidden></span>
+        </div>
+        <span class="fm-time fm-tot" aria-hidden="true">2:20</span>
+        <button type="button" class="ic-btn fm-snd" data-fm-snd aria-label="Silenciar" title="Silenciar">
+          <svg class="fm-i-snd" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M15.5 9a4.2 4.2 0 0 1 0 6M18 6.5a7.6 7.6 0 0 1 0 11"/></svg>
+          <svg class="fm-i-mute" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9.5h3.2L12 5.5v13l-4.8-4H4z" fill="currentColor"/><path d="M16 9.5l5 5M21 9.5l-5 5"/></svg>
+        </button>
+        <button type="button" class="ic-btn fm-mx" data-fm-max aria-label="Ver en pantalla completa" title="Pantalla completa">
+          <svg class="fm-i-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 9V4.5H9M15 4.5h4.5V9M19.5 15v4.5H15M9 19.5H4.5V15"/></svg>
+          <svg class="fm-i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 4.5V9H4.5M19.5 9H15V4.5M15 19.5V15h4.5M4.5 15H9v4.5"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ===== SIGUIENTE PASO ===== -->
 <section class="close" id="contacto" data-scene data-stop>
@@ -1919,7 +1953,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 
 <footer class="ft">
   <div class="wrap ft-in">
-    <a href="#video" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
+    <a href="#historia" class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-tx">Next Level Demographic</span></a>
     <p class="ft-d">Propuesta para desarrolladoras · Octubre&nbsp;2026 · Documento confidencial.</p>
     <p class="ft-c">Las pantallas de celular son maquetas ilustrativas: «Su Proyecto» se reemplaza por el nombre de su proyecto y las cifras de los paneles son de ejemplo. © 2026 Next Level Demographic · El Salvador.</p>
   </div>
@@ -3220,7 +3254,6 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
   var sndBtn=film.querySelector('[data-fm-snd]');
   function wantSrc(){
     if(!vid)return '';
-    if(document.documentElement.classList.contains('pres'))return vid.getAttribute('data-src-h');
     var r=box.getBoundingClientRect(), vert=r.width&&r.height&&r.width/r.height<1.2;
     return vid.getAttribute(vert?'data-src-v':'data-src-h');
   }
@@ -3850,4 +3883,25 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 })();
 </script>
 
+<script>
+/* Video de apertura: elige 16:9 o 4:5 según el espacio (16:9 siempre al presentar)
+   y se pausa si deja de verse. */
+(function(){
+  var box=document.querySelector('[data-xv]');if(!box)return;
+  var v=box.querySelector('video'),go=box.querySelector('[data-xv-go]'),root=document.documentElement;
+  function vert(){return !root.classList.contains('pres')&&box.clientWidth<640&&box.clientHeight>box.clientWidth;}
+  function pick(){
+    if(!v.paused&&!v.ended)return;
+    var k=vert()?'v':'h',src=v.getAttribute('data-src-'+k);
+    if(v.getAttribute('src')!==src){v.setAttribute('src',src);v.setAttribute('poster',v.getAttribute('data-poster-'+k));}
+  }
+  pick();
+  window.addEventListener('resize',pick);
+  try{new MutationObserver(pick).observe(root,{attributes:true,attributeFilter:['class']});}catch(e){}
+  go.addEventListener('click',function(){pick();v.controls=true;go.hidden=true;var p=v.play();if(p&&p.catch)p.catch(function(){go.hidden=false;});});
+  v.addEventListener('ended',function(){v.controls=false;go.hidden=false;try{v.currentTime=0;}catch(e){}});
+  if('IntersectionObserver' in window){new IntersectionObserver(function(es){es.forEach(function(e){if(e.intersectionRatio<.3&&!v.paused)v.pause();});},{threshold:[0,.3]}).observe(box);}
+  document.addEventListener('visibilitychange',function(){if(document.hidden&&!v.paused)v.pause();});
+})();
+</script>
 </body></html>

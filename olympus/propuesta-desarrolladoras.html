@@ -1048,7 +1048,7 @@ html.pres .xv{aspect-ratio:16/9!important;width:min(100%,calc((100vh - var(--top
 .fm-grid{height:100%;max-height:100%;aspect-ratio:1;flex:none;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));grid-template-rows:repeat(10,minmax(0,1fr));gap:max(1.5px,.45cqmin)}
 .fm-grid i{position:relative;display:block;border-radius:max(1px,.3cqmin);background:var(--fm-cell);overflow:hidden}
 .fm-grid i b{position:absolute;inset:0;background:var(--fm-acc);opacity:0}
-.fm-grid i.half b{left:17.5%}
+.fm-grid i.half b{left:61%}
 .fm-leg{display:flex;flex-direction:column;gap:1.6cqmin;min-width:0}
 .fm-leg p{display:flex;align-items:flex-start;gap:1cqmin;font-size:var(--fm-t);line-height:1.25;color:var(--fg)}
 .fm-leg b{font-weight:600}
@@ -1612,7 +1612,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     </div>
     <div class="card big-call">
       <p class="bh">Usted solo paga <em>si se vende.</em></p>
-      <p class="bs">2.5&nbsp;% + IVA sobre el valor de la unidad, pagadero al cierre. Sin anticipo, sin costo fijo y sin planilla que contratar.</p>
+      <p class="bs">3&nbsp;% + IVA sobre el valor de la unidad, pagadero al cierre. Sin anticipo, sin costo fijo y sin planilla que contratar.</p>
     </div>
   </div>
 </section>
@@ -1654,7 +1654,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
       <a class="bt b-hero" href="#modelo">
         <p class="bt-k">Sin costo fijo</p>
         <p class="bt-hh">Usted solo paga si se vende.</p>
-        <div><p class="bt-pct">2.5&nbsp;%<span> +&nbsp;IVA al cierre</span></p><p class="bt-hs">Sin anticipo ni planilla. La campaña en EE.&nbsp;UU. la pagamos nosotros.</p></div>
+        <div><p class="bt-pct">3&nbsp;%<span> +&nbsp;IVA al cierre</span></p><p class="bt-hs">Sin anticipo ni planilla. La campaña en EE.&nbsp;UU. la pagamos nosotros.</p></div>
       </a>
       <a class="bt b-buyer" href="#mercado">
         <p class="bt-k">Su comprador</p>
@@ -1845,8 +1845,8 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
                   <div class="fm-grid" data-grid></div>
                   <div class="fm-leg">
                     <p class="fm-leg-h fx fx-u" data-in="97.6" data-d=".5"><span>Una venta de <b>$100,000</b><em>Cada cuadro, $1,000</em></span></p>
-                    <p class="fx fx-u" data-in="100.9" data-d=".5"><i class="fm-sw fm-sw-b"></i><span><b class="fm-acc">$2,500 + IVA</b> son nuestros, al cierre<em class="fm-sm">$2,825 con el 13&nbsp;% de IVA</em></span></p>
-                    <p class="fx fx-u" data-in="102.4" data-d=".5"><i class="fm-sw"></i><span><b>$97,175</b> son para usted</span></p>
+                    <p class="fx fx-u" data-in="100.9" data-d=".5"><i class="fm-sw fm-sw-b"></i><span><b class="fm-acc">$3,000 + IVA</b> son nuestros, al cierre<em class="fm-sm">$3,390 con el 13&nbsp;% de IVA</em></span></p>
+                    <p class="fx fx-u" data-in="102.4" data-d=".5"><i class="fm-sw"></i><span><b>$96,610</b> son para usted</span></p>
                   </div>
                 </div>
               </div>
@@ -2925,7 +2925,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     [76.4,81.6,'Don Roberto compra, y el dinero va directo a su cuenta.'],
     [82.0,89.6,'Nosotros no tocamos ese dinero. Y usted vendió un apartamento más.'],
     [90.4,96.4,'¿Y cuánto le cuesta? Mientras no vende, nada: ni anticipo, ni costo fijo.'],
-    [96.8,104.6,'Si vende un apartamento de $100,000, $2,500 más IVA son nuestros, al cierre.'],
+    [96.8,104.6,'Si vende un apartamento de $100,000, $3,000 más IVA son nuestros, al cierre.'],
     [105.0,111.6,'Si no se vende, usted no nos paga nada.'],
     [112.4,117.3,'Además, grabamos nuestro podcast en su apartamento modelo.'],
     [117.7,122.6,'Le traemos un segundo comprador: el que compra para rentar.'],
@@ -3009,7 +3009,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 
   /* Cuadrícula de 100 dólares */
   var grid=film.querySelector('[data-grid]'), cells=[];
-  if(grid){for(var q=0;q<100;q++){var ci=document.createElement('i');var cb=document.createElement('b');ci.appendChild(cb);if(q===97)ci.className='half';grid.appendChild(ci);cells.push({i:ci,b:cb,lo:-1,lb:-1});}}
+  if(grid){for(var q=0;q<100;q++){var ci=document.createElement('i');var cb=document.createElement('b');ci.appendChild(cb);if(q===96)ci.className='half';grid.appendChild(ci);cells.push({i:ci,b:cb,lo:-1,lb:-1});}}
 
   /* Barra de capítulos */
   var segs=CH.map(function(ch){
@@ -3198,7 +3198,7 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
     if(isOn(5)&&cells.length){
       cells.forEach(function(c,k){
         var o=r3(eOut(c01((t-(97.0+k*.012))/.3))), b=0;
-        if(k===98)b=c01((t-100.2)/.35); else if(k===99)b=c01((t-100.5)/.35); else if(k===97)b=c01((t-100.8)/.35);
+        if(k===98)b=c01((t-100.2)/.35); else if(k===99)b=c01((t-100.5)/.35); else if(k===97)b=c01((t-100.8)/.35); else if(k===96)b=c01((t-101.1)/.35);
         b=r3(b);
         if(o!==c.lo){c.i.style.opacity=o;c.lo=o;}
         if(b!==c.lb){c.b.style.opacity=b;c.lb=b;}

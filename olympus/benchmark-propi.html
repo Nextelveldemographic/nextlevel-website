@@ -1123,14 +1123,14 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
     var body='Estimado equipo de '+quien+':\n\n'
       +'Les escribo por '+nom+'. Con 87 torres en construcción al mismo tiempo en San Salvador, el comprador local se reparte entre todas. Hay otro que casi nadie atiende: 2.3 millones de salvadoreños en Estados Unidos, muchos con ingresos o pensión en dólares y con ganas de volver.\n\n'
       +'Sabemos qué frena a una desarrolladora con este comprador, y así lo resolvemos:\n\n'
-      +'• «No quiero pagar por leads que no cierran». Solo pagan si se vende: 2.5 % + IVA al cierre. La campaña en EE. UU. la pagamos nosotros; sin anticipo ni costo fijo.\n\n'
+      +'• «No quiero pagar por leads que no cierran». Solo pagan si se vende: 3 % + IVA al cierre. La campaña en EE. UU. la pagamos nosotros; sin anticipo ni costo fijo.\n\n'
       +'• «El comprador de afuera se cae en el cierre». Lo acompañamos hasta la escritura: abogado, firma a distancia con poder apostillado y el pago va directo a su cuenta. Nosotros no tocamos el dinero.\n\n'
       +'• «Un canal externo me va a desordenar la sala de ventas». Sumamos, no competimos: registro de prospectos para no cruzarnos, y su marca solo aparece en piezas que ustedes aprueban.\n\n'
       +'• «No sé si va a funcionar». Proponemos un piloto de seis meses con una sola tipología. Si el tablero no muestra reservas, lo cerramos y no pagaron nada.\n\n'
       +'Además, grabamos un episodio de nuestro podcast en su apartamento modelo'+(air?' y, para el comprador inversionista, le administramos la renta en Airbnb':'')+'.\n\n'
       +'Les adjunto la propuesta comercial. ¿Tienen 30 minutos esta semana o la próxima para revisar su inventario y elegir la tipología del piloto?\n\n'
       +'Saludos cordiales,\n\n'+NLD.nombre+'\n'+NLD.cargo+' · '+NLD.empresa+'\n'+NLD.tel+' · '+NLD.mail+'\n'+NLD.web;
-    var wa='Buen día, equipo de '+quien+'. Soy '+NLD.nombre+', de '+NLD.empresa+'. Ayudamos a vender proyectos como '+(L[0]||'los suyos')+' a salvadoreños en Estados Unidos: la campaña allá la pagamos nosotros, ustedes solo pagan si se vende (2.5 % + IVA al cierre) y acompañamos al comprador hasta la escritura. Les comparto por aquí la propuesta en PDF. ¿Con quién de la gerencia comercial puedo coordinar 30 minutos?';
+    var wa='Buen día, equipo de '+quien+'. Soy '+NLD.nombre+', de '+NLD.empresa+'. Ayudamos a vender proyectos como '+(L[0]||'los suyos')+' a salvadoreños en Estados Unidos: la campaña allá la pagamos nosotros, ustedes solo pagan si se vende (3 % + IVA al cierre) y acompañamos al comprador hasta la escritura. Les comparto por aquí la propuesta en PDF. ¿Con quién de la gerencia comercial puedo coordinar 30 minutos?';
     return {subj:subj,body:body,wa:wa};}
   function estado(k){try{var v=JSON.parse(localStorage.getItem('nld-alianza-'+k)||'null');return v?'Contactada el '+v.f+' por '+v.via:'';}catch(e){return '';}}
   function outreachHTML(k,pn,abierto){var d=DV[k];if(!d)return '';var b=borrador(k,pn), st=estado(k);

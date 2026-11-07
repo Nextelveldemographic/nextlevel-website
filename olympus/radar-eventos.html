@@ -110,7 +110,7 @@ a{color:inherit}
 .rv{animation:rv .7s var(--ease) both}
 @keyframes rv{from{opacity:0;transform:translateY(10px)}}
 @media (max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:700px){.ev{grid-template-columns:4px 60px minmax(0,1fr)}.ev .acts{grid-column:3;flex-direction:row;min-width:0}.next{grid-template-columns:auto minmax(0,1fr)}.next .acts{grid-column:1/-1}}
+@media (max-width:700px){.ev{grid-template-columns:4px 60px minmax(0,1fr);align-items:start}.ev .acts{grid-column:2/-1;flex-direction:row;flex-wrap:wrap;min-width:0}.ev .btn{flex:1 1 auto}.ev .btn.pri{flex-basis:100%}.tag{white-space:normal}.next{grid-template-columns:auto minmax(0,1fr)}.next .acts{grid-column:1/-1}}
 /* Vista iPad */
 :root[data-view="tablet"] .next{grid-template-columns:auto minmax(0,1fr)}
 :root[data-view="tablet"] .next .acts{grid-column:1/-1;flex-direction:row}
@@ -136,8 +136,11 @@ a{color:inherit}
 :root[data-view="mobile"] .ev{grid-template-columns:4px 52px minmax(0,1fr);gap:12px}
 :root[data-view="mobile"] .day b{font-size:28px}
 :root[data-view="mobile"] .body h3{font-size:16px}
-:root[data-view="mobile"] .ev .acts{grid-column:3;flex-direction:row;min-width:0}
-:root[data-view="mobile"] .ev .btn{flex:1;padding:9px 10px;font-size:13px}
+:root[data-view="mobile"] .ev{align-items:start}
+:root[data-view="mobile"] .ev .acts{grid-column:2/-1;flex-direction:row;flex-wrap:wrap;min-width:0}
+:root[data-view="mobile"] .ev .btn{flex:1 1 auto;padding:9px 10px;font-size:13px}
+:root[data-view="mobile"] .ev .btn.pri{flex-basis:100%}
+:root[data-view="mobile"] .tag{white-space:normal}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 

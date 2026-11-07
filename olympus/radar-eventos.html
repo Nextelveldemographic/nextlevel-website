@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="es">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Radar de Eventos NLD</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="icon" href="/assets/logo.png">
+<link rel="apple-touch-icon" href="/assets/logo.png">
+<script>
+/* Tema y vista antes del primer pintado (mismo criterio que el resto de Olympus) */
+(function(){var r=document.documentElement,t="light",v=null;try{var g=localStorage.getItem('nld_olympus_tema');if(g)t=(g==='claro'?'light':'dark');v=localStorage.getItem("radar-vista");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
+<style>
+/* Layout: una sola columna de agenda (fecha | evento | acciones), agrupada por mes; resumen arriba y filtros pegados a la lista */
+:root{
+  --bg:#F3F6FA; --surface:#FFFFFF; --sunk:#E9EEF5; --fg:#0D1626; --muted:#5A6A80; --line:#D8E0EA;
+  --accent:#1F6FEB; --accent-soft:#DCE8FD; --on-accent:#FFFFFF;
+  --ok:#17905F; --warn:#B7790A; --crit:#CF3B3B;
+  --ok-soft:#DDF3EA; --warn-soft:#FBEFD6; --crit-soft:#FBE3E3;
+  --display:"Carlito","Calibri","Segoe UI",system-ui,sans-serif;
+  --mono:"Courier Prime","Courier New",ui-monospace,monospace;
+  --ease:cubic-bezier(.2,.8,.2,1);
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
+  --accent:#4C92FF; --accent-soft:#12264A; --on-accent:#06101F;
+  --ok:#3CC48C; --warn:#E3A73A; --crit:#F06A6A; --ok-soft:#0F2A20; --warn-soft:#2E2410; --crit-soft:#341616; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#060A11; --surface:#0E1520; --sunk:#141D2B; --fg:#E7EDF6; --muted:#8798B0; --line:#1E2A3B;
+  --accent:#4C92FF; --accent-soft:#12264A; --on-accent:#06101F;
+  --ok:#3CC48C; --warn:#E3A73A; --crit:#F06A6A; --ok-soft:#0F2A20; --warn-soft:#2E2410; --crit-soft:#341616; color-scheme:dark}
+html,body{background:var(--bg)}
+body{margin:0;color:var(--fg);font-family:var(--display);font-size:16px;line-height:1.45;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px 48px}
+.wrap{margin:0 auto;display:flex;flex-direction:column;gap:18px;max-width:1500px}
+:root[data-view="mobile"] .wrap{max-width:480px}
+:root[data-view="tablet"] .wrap{max-width:980px}
+.label{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+h1,h2,h3{font-weight:700;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,5vw,44px);letter-spacing:-.01em;line-height:1}
+h2{font-size:20px}
+.num{font-variant-numeric:tabular-nums}
+a{color:inherit}
+/* Encabezado */
+.top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;padding-top:8px}
+.top .meta{display:flex;flex-direction:column;gap:6px;min-width:0}
+.back{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.back:hover{color:var(--accent)}
+.stamp{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.controls{display:flex;gap:6px}
+.seg{display:flex;background:var(--sunk);border-radius:10px;padding:3px;gap:2px}
+.seg button{all:unset;cursor:pointer;width:32px;height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--accent);box-shadow:0 1px 2px rgba(0,0,0,.12)}
+.seg button:focus-visible{outline:2px solid var(--accent)}
+.seg svg{width:16px;height:16px}
+/* Lo próximo que importa */
+.next{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:22px;align-items:center}
+.count{display:flex;flex-direction:column;align-items:center;justify-content:center;width:112px;height:112px;border-radius:50%;background:var(--accent-soft);color:var(--accent);text-align:center}
+.count b{font-size:46px;line-height:1}
+.count span{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase}
+.next .what{display:flex;flex-direction:column;gap:6px;min-width:0}
+.next h2{font-size:24px;line-height:1.15}
+.next p{margin:0;color:var(--muted);font-size:15px;max-width:70ch}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:2px}
+.kpi .v{font-size:34px;font-weight:700;line-height:1.05}
+.kpi .s{font-size:13px;color:var(--muted)}
+/* Filtros */
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;min-width:0}
+.filters{display:flex;flex-direction:column;gap:10px}
+.frow{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.frow .label{width:84px;flex:none}
+.chip{all:unset;cursor:pointer;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* Agenda */
+.month{display:flex;align-items:baseline;gap:10px;padding:18px 0 6px}
+.month h2{font-size:22px;text-transform:capitalize}
+.ev{display:grid;grid-template-columns:4px 74px minmax(0,1fr) auto;gap:16px;align-items:center;padding:14px 0;border-top:1px solid var(--line)}
+.ev .sev{align-self:stretch;border-radius:2px}
+.sev.alta{background:var(--crit)}.sev.media{background:var(--warn)}.sev.baja{background:var(--line)}
+.day{display:flex;flex-direction:column;align-items:center;line-height:1}
+.day b{font-size:34px}
+.day span{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:4px}
+.day em{font-style:normal;font-family:var(--mono);font-size:10.5px;color:var(--accent);margin-top:5px}
+.body{display:flex;flex-direction:column;gap:5px;min-width:0}
+.body h3{font-size:18px;line-height:1.2}
+.sub{font-family:var(--mono);font-size:12px;color:var(--muted);display:flex;gap:2px 12px;flex-wrap:wrap}
+.note{font-size:14px;color:var(--muted);margin:0;max-width:80ch}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:11px;padding:3px 8px;border-radius:6px;white-space:nowrap;background:var(--sunk);color:var(--muted)}
+.tag.gratis{background:var(--ok-soft);color:var(--ok)}
+.tag.pagado{background:var(--warn-soft);color:var(--warn)}
+.tag.alta{background:var(--crit-soft);color:var(--crit)}
+.tag.estado{background:var(--accent-soft);color:var(--accent)}
+.acts{display:flex;flex-direction:column;gap:6px;align-items:stretch;min-width:150px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;font-size:14px;font-weight:700;padding:9px 14px;border-radius:10px;text-decoration:none;white-space:nowrap;transition:transform .2s var(--ease),background .2s}
+.btn svg{width:16px;height:16px;flex:none}
+.btn.pri{background:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{transform:translateY(-1px)}
+.btn.sec{border:1px solid var(--line);color:var(--fg);font-weight:400}
+.btn.sec:hover{border-color:var(--accent);color:var(--accent)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.empty{padding:28px 0;text-align:center;color:var(--muted)}
+.foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);text-align:center;line-height:1.6}
+/* Entrada sobria */
+.rv{animation:rv .7s var(--ease) both}
+@keyframes rv{from{opacity:0;transform:translateY(10px)}}
+@media (max-width:820px){.kpis{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.ev{grid-template-columns:4px 60px minmax(0,1fr)}.ev .acts{grid-column:3;flex-direction:row;min-width:0}.next{grid-template-columns:auto minmax(0,1fr)}.next .acts{grid-column:1/-1}}
+/* Vista iPad */
+:root[data-view="tablet"] .next{grid-template-columns:auto minmax(0,1fr)}
+:root[data-view="tablet"] .next .acts{grid-column:1/-1;flex-direction:row}
+/* Vista móvil: una columna para el pulgar */
+:root[data-view="mobile"] body{font-size:15px;padding-block:8px 32px}
+:root[data-view="mobile"] .wrap{gap:12px}
+:root[data-view="mobile"] .top{flex-direction:column;gap:10px}
+:root[data-view="mobile"] h1{font-size:34px}
+:root[data-view="mobile"] .next{grid-template-columns:1fr;justify-items:center;text-align:center;padding:16px;gap:12px}
+:root[data-view="mobile"] .next .what{align-items:center}
+:root[data-view="mobile"] .next h2{font-size:20px}
+:root[data-view="mobile"] .next .acts{flex-direction:column;width:100%;grid-column:auto}
+:root[data-view="mobile"] .count{width:92px;height:92px}
+:root[data-view="mobile"] .count b{font-size:38px}
+:root[data-view="mobile"] .kpis{grid-template-columns:repeat(2,1fr);gap:8px}
+:root[data-view="mobile"] .kpi{padding:12px}
+:root[data-view="mobile"] .kpi .v{font-size:28px}
+:root[data-view="mobile"] .panel{padding:14px;border-radius:14px}
+:root[data-view="mobile"] .frow{flex-wrap:nowrap;overflow-x:auto;margin-inline:-14px;padding-inline:14px;scrollbar-width:none}
+:root[data-view="mobile"] .frow::-webkit-scrollbar{display:none}
+:root[data-view="mobile"] .frow .label{width:auto;margin-right:4px}
+:root[data-view="mobile"] .chip{flex:none}
+:root[data-view="mobile"] .ev{grid-template-columns:4px 52px minmax(0,1fr);gap:12px}
+:root[data-view="mobile"] .day b{font-size:28px}
+:root[data-view="mobile"] .body h3{font-size:16px}
+:root[data-view="mobile"] .ev .acts{grid-column:3;flex-direction:row;min-width:0}
+:root[data-view="mobile"] .ev .btn{flex:1;padding:9px 10px;font-size:13px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header class="top rv">
+    <div class="meta">
+      <a class="back" href="/olympus#estrategia">&larr; Olympus</a>
+      <h1>Radar de Eventos</h1>
+      <span class="stamp" id="stamp"></span>
+    </div>
+    <div class="controls">
+      <div class="seg" role="group" aria-label="Vista">
+        <button data-v="mobile" aria-label="Vista móvil" title="Móvil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+        <button data-v="tablet" aria-label="Vista iPad" title="iPad"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M11 18h2"/></svg></button>
+        <button data-v="desktop" aria-label="Vista navegador" title="Navegador"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></button>
+      </div>
+      <div class="seg" role="group" aria-label="Tema">
+        <button data-t="light" aria-label="Tema claro" title="Claro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg></button>
+        <button data-t="dark" aria-label="Tema oscuro" title="Oscuro"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg></button>
+      </div>
+    </div>
+  </header>
+
+  <section class="next rv" id="next" style="animation-delay:.08s" aria-label="Próximo evento de prioridad alta"></section>
+
+  <section class="kpis rv" id="kpis" style="animation-delay:.14s" aria-label="Resumen"></section>
+
+  <section class="panel rv" style="animation-delay:.2s" aria-label="Agenda">
+    <div class="filters" id="filters"></div>
+    <div id="agenda"></div>
+  </section>
+
+  <p class="foot" id="foot"></p>
+</div>
+
+<script>
+/* ===== DATOS — la tarea programada "Radar de Eventos NLD" reemplaza solo este bloque ===== */
+const META = {
+  generated: "2026-11-07T11:20:00-06:00",
+  next: "domingo 8 nov · 6:38 a. m.",
+  notion: "https://app.notion.com/p/c7ac5f653a784c91ba5bf3f025321729"
+};
+/* Una fila por evento. ini/fin en hora de El Salvador (YYYY-MM-DDTHH:MM) o solo fecha (YYYY-MM-DD) si es de día completo.
+   costo: Gratis | Pagado | Por confirmar · prio: Alta | Media | Baja · estado: Nuevo | Me interesa | Calendarizado | Asistimos | Descartado */
+const EVENTOS = [
+  { t: "Congreso Anual de Turismo CASATUR 2026", ini: "2026-11-09", fin: "2026-11-10", lugar: "Sede por confirmar", org: "Cámara Salvadoreña de Turismo (CASATUR)", costo: "Por confirmar", precio: "", interes: ["Turismo","Networking general"], prio: "Media", estado: "Nuevo", fuente: "Prensa", url: "https://www.elsalvador.com/turismo/rutas-y-aventuras/el-salvador-turismo-estadias-experiencias-congreso-casatur-2026/1302201/2026/", notas: "Unos 200 líderes del turismo y la ministra Morena Valdez. Sirve para la línea Airbnb y estadías. Confirmar si es abierto o solo para socios." },
+  { t: "Bitcoin Histórico 2026", ini: "2026-11-11T09:00", fin: "2026-11-12T18:00", lugar: "Centro Histórico de San Salvador (Palacio Nacional, Teatro Nacional, BINAES)", org: "Oficina Nacional de Bitcoin y CUBO+", costo: "Por confirmar", precio: "Conferencias pagadas; actividades públicas gratis", interes: ["Inversión y finanzas","Tecnología","Diáspora"], prio: "Media", estado: "Nuevo", fuente: "Prensa", url: "https://www.criptonoticias.com/calendario-eventos/bitcoin-historico-2026/", notas: "Atrae extranjeros e inversionistas de visita en el país: posibles compradores internacionales." },
+  { t: "Estrategias para hacer Negocios con Salvadoreños o Latinos en EEUU", ini: "2026-11-18T08:00", fin: "2026-11-18T12:00", lugar: "Hotel Sheraton Presidente, San Salvador", org: "Por confirmar", costo: "Por confirmar", precio: "", interes: ["Diáspora","Inversión y finanzas"], prio: "Alta", estado: "Nuevo", fuente: "Eventbrite", url: "https://www.eventbrite.com/e/estrategias-para-hacer-negocios-con-salvadorenos-o-latinos-en-eeuu-tickets-2002758490558", notas: "El más alineado con NLD y con la línea de expansión internacional. Hora de cierre estimada." },
+  { t: "Cómo gestionar proyectos en organizaciones con sede en Estados Unidos", ini: "2026-11-19T08:00", fin: "2026-11-19T12:00", lugar: "Hotel Sheraton Presidente, Col. San Benito", org: "Sinergia & BizFin-Pro", costo: "Por confirmar", precio: "", interes: ["Emprendimiento","Diáspora"], prio: "Media", estado: "Nuevo", fuente: "Eventbrite", url: "https://www.eventbrite.com/e/como-gestionar-proyectos-en-organizaciones-con-sede-en-estados-unidos-tickets-2002918863237", notas: "Mismo hotel y formato que el del 18 de noviembre. Reembolso hasta 7 días antes. Choca con IMWeek." },
+  { t: "IMWeek San Salvador 2026 · Influencer Marketing & Creator Economy", ini: "2026-11-19T09:00", fin: "2026-11-19T14:00", lugar: "TECHLAB, Final 41 Av. Norte #18, San Salvador", org: "Influencer Marketing 365", costo: "Por confirmar", precio: "Inscripción aún no abierta", interes: ["Tecnología","Networking general"], prio: "Media", estado: "Nuevo", fuente: "Eventbrite", url: "https://www.eventbrite.es/e/imweek-san-salvador-2026-influencer-marketing-creator-economy-tickets-2004114796305", notas: "Marcas, agencias y creadores de contenido. Útil para la estrategia de redes; buen evento para el equipo de contenido." },
+  { t: "Marketing Tech Summit El Salvador", ini: "2026-11-30T08:00", fin: "2026-11-30T17:30", lugar: "Barceló San Salvador, Av. Las Magnolias", org: "Connecta B2B", costo: "Pagado", precio: "Sin reembolsos", interes: ["Tecnología","Networking general"], prio: "Baja", estado: "Nuevo", fuente: "Eventbrite", url: "https://www.eventbrite.com/e/marketing-tech-summit-el-salvador-tickets-2003148681630", notas: "Día completo con gerentes de marketing de empresas grandes, posibles clientes de expansión internacional. La venta cierra cerca del 17 de noviembre." },
+  { t: "Estrategia de inversión inmobiliaria", ini: "2026-12-01T17:00", fin: "2026-12-01T20:00", lugar: "Barceló San Salvador, Av. Las Magnolias", org: "Fisherman Educación Financiera", costo: "Pagado", precio: "$20 early bird", interes: ["Bienes raíces","Inversión y finanzas"], prio: "Alta", estado: "Nuevo", fuente: "Eventbrite", url: "https://www.eventbrite.com/e/estrategia-de-inversion-inmobiliaria-tickets-1999625277032", notas: "Networking de 5 a 6 p. m. y charla de 6 a 7:30. Compradores, inversionistas y competencia directa en el mismo salón. Sin reembolsos." }
+];
+/* ===== FIN DE DATOS ===== */
+
+const $=s=>document.querySelector(s), root=document.documentElement;
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MES=["enero","febrero","marzo","abril","mayo","junio","julio","agosto","septiembre","octubre","noviembre","diciembre"];
+const DIA=["dom","lun","mar","mié","jue","vie","sáb"];
+/* Fechas: todo en hora de El Salvador (UTC−6, sin horario de verano) */
+const todoDia=e=>e.ini.length===10;
+const parte=s=>{const [d,h]=s.split("T"),[y,m,dd]=d.split("-").map(Number),[hh,mm]=(h||"00:00").split(":").map(Number);return {y,m,d:dd,hh,mm}};
+const aUTC=s=>{const p=parte(s);return Date.UTC(p.y,p.m-1,p.d,p.hh+6,p.mm)};
+const finUTC=e=>{const f=e.fin||e.ini;return todoDia(e)?aUTC(f.slice(0,10))+24*36e5:aUTC(f)};
+const hoyES=()=>{const n=new Date(Date.now()-6*36e5);return Date.UTC(n.getUTCFullYear(),n.getUTCMonth(),n.getUTCDate())};
+const diasPara=e=>{const p=parte(e.ini);return Math.round((Date.UTC(p.y,p.m-1,p.d)-hoyES())/864e5)};
+const hora=s=>{const p=parte(s);const h12=((p.hh+11)%12)+1;return h12+(p.mm?":"+String(p.mm).padStart(2,"0"):"")+(p.hh<12?" a. m.":" p. m.")};
+function cuando(e){
+  const a=parte(e.ini),b=parte(e.fin||e.ini),mismoDia=a.y===b.y&&a.m===b.m&&a.d===b.d;
+  const dw=x=>DIA[new Date(Date.UTC(x.y,x.m-1,x.d)).getUTCDay()];
+  if(todoDia(e)) return mismoDia?`${dw(a)} ${a.d} ${MES[a.m-1].slice(0,3)} · todo el día`:`${dw(a)} ${a.d} al ${dw(b)} ${b.d} ${MES[b.m-1].slice(0,3)}`;
+  if(mismoDia) return `${dw(a)} ${a.d} ${MES[a.m-1].slice(0,3)} · ${hora(e.ini)}${e.fin?" a "+hora(e.fin):""}`;
+  return `${dw(a)} ${a.d} al ${dw(b)} ${b.d} ${MES[b.m-1].slice(0,3)} · desde las ${hora(e.ini)}`;
+}
+const enDias=n=>n<=0?"hoy":n===1?"mañana":`en ${n} días`;
+/* Enlaces para calendarizar */
+const compacto=s=>s.replace(/[-:]/g,"")+(s.length===10?"":"00");
+function sumaDia(s){const p=parte(s),d=new Date(Date.UTC(p.y,p.m-1,p.d+1));return d.toISOString().slice(0,10)}
+function rango(e){
+  if(todoDia(e)) return compacto(e.ini)+"/"+compacto(sumaDia((e.fin||e.ini).slice(0,10)));
+  const fin=e.fin||new Date(aUTC(e.ini)+3*36e5-6*36e5).toISOString().slice(0,16);
+  return compacto(e.ini)+"/"+compacto(fin);
+}
+function gcal(e){
+  const q=new URLSearchParams({action:"TEMPLATE",text:e.t,dates:rango(e),ctz:"America/El_Salvador",location:e.lugar||"",details:"Radar de Eventos NLD. "+(e.notas||"")+" Info: "+(e.url||"")});
+  return "https://calendar.google.com/calendar/render?"+q.toString();
+}
+function ics(e){
+  const st=todoDia(e)?";VALUE=DATE:"+compacto(e.ini):";TZID=America/El_Salvador:"+compacto(e.ini);
+  const en=todoDia(e)?";VALUE=DATE:"+compacto(sumaDia((e.fin||e.ini).slice(0,10))):";TZID=America/El_Salvador:"+rango(e).split("/")[1];
+  const lim=s=>String(s||"").replace(/[\\,;]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+  const txt=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//NLD//Radar de Eventos//ES","BEGIN:VTIMEZONE","TZID:America/El_Salvador","BEGIN:STANDARD","DTSTART:19700101T000000","TZOFFSETFROM:-0600","TZOFFSETTO:-0600","END:STANDARD","END:VTIMEZONE","BEGIN:VEVENT",
+    "UID:"+compacto(e.ini)+"-"+e.t.replace(/\W+/g,"").slice(0,24)+"@nextleveldemographic.com","DTSTAMP:20260101T000000Z","DTSTART"+st,"DTEND"+en,"SUMMARY:"+lim(e.t),"LOCATION:"+lim(e.lugar),"DESCRIPTION:"+lim((e.notas||"")+" "+(e.url||"")),
+    "BEGIN:VALARM","TRIGGER:-P1D","ACTION:DISPLAY","DESCRIPTION:"+lim(e.t),"END:VALARM","END:VEVENT","END:VCALENDAR"].join("\r\n");
+  return "data:text/calendar;charset=utf-8,"+encodeURIComponent(txt);
+}
+const icoCal='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M8 3v4M16 3v4M3.5 10h17M12 13.5v4M10 15.5h4"/></svg>';
+const icoOut='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 4h6v6M20 4l-9 9M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></svg>';
+const icoApple='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v11M7.5 10.5 12 15l4.5-4.5M5 19.5h14"/></svg>';
+
+/* Estado de filtros */
+const filtros={costo:"Todos",prio:"Todas",interes:"Todos"};
+const vigentes=()=>EVENTOS.filter(e=>finUTC(e)>Date.now()&&e.estado!=="Descartado").sort((a,b)=>aUTC(a.ini)-aUTC(b.ini));
+function pasa(e){
+  return (filtros.costo==="Todos"||e.costo===filtros.costo)&&(filtros.prio==="Todas"||e.prio===filtros.prio)&&(filtros.interes==="Todos"||(e.interes||[]).includes(filtros.interes));
+}
+
+function drawNext(){
+  const v=vigentes(), x=v.find(e=>e.prio==="Alta")||v[0], box=$("#next");
+  if(!x){box.innerHTML='<div class="what"><span class="label">Sin eventos por delante</span><h2>No hay eventos próximos en el radar.</h2><p>La búsqueda diaria agrega los nuevos cada mañana.</p></div>';return}
+  const n=diasPara(x);
+  box.innerHTML=`<div class="count" aria-hidden="true">${n<=0?'<b>Hoy</b>':`<b class="num">${n}</b><span>${n===1?"día":"días"}</span>`}</div>
+    <div class="what"><span class="label">${x.prio==="Alta"?"Próximo de prioridad alta":"Próximo evento"} · ${esc(enDias(n))}</span>
+    <h2>${esc(x.t)}</h2><p>${esc(cuando(x))} · ${esc(x.lugar)}</p></div>
+    <div class="acts"><a class="btn pri" href="${esc(gcal(x))}" target="_blank" rel="noopener">${icoCal}Calendarizar</a><a class="btn sec" href="${esc(x.url)}" target="_blank" rel="noopener">${icoOut}Ver evento</a></div>`;
+}
+function drawKpis(){
+  const v=vigentes(), k=[
+    [v.length,"eventos por delante"],
+    [v.filter(e=>e.prio==="Alta").length,"de prioridad alta"],
+    [v.filter(e=>diasPara(e)<=14).length,"en los próximos 14 días"],
+    [v.filter(e=>e.costo==="Gratis").length,"gratis confirmados"]];
+  $("#kpis").innerHTML=k.map(([n,s])=>`<div class="kpi"><span class="v num">${n}</span><span class="s">${s}</span></div>`).join("");
+}
+function drawFilters(){
+  const v=vigentes(), ints=[...new Set(v.flatMap(e=>e.interes||[]))].sort((a,b)=>a.localeCompare(b,"es"));
+  const fila=(clave,etq,opc)=>`<div class="frow" role="group" aria-label="${etq}"><span class="label">${etq}</span>${opc.map(o=>`<button class="chip" data-k="${clave}" data-o="${esc(o)}" aria-pressed="${filtros[clave]===o}">${esc(o)}</button>`).join("")}</div>`;
+  $("#filters").innerHTML=fila("costo","Costo",["Todos","Gratis","Pagado","Por confirmar"])+fila("prio","Prioridad",["Todas","Alta","Media","Baja"])+fila("interes","Interés",["Todos",...ints]);
+  document.querySelectorAll(".chip").forEach(b=>b.onclick=()=>{filtros[b.dataset.k]=b.dataset.o;try{sessionStorage.setItem("radar-filtros",JSON.stringify(filtros))}catch(e){}drawFilters();drawAgenda()});
+}
+function fila(e){
+  const p=parte(e.ini), n=diasPara(e), c=e.costo==="Gratis"?"gratis":e.costo==="Pagado"?"pagado":"";
+  const tags=[`<span class="tag ${c}">${esc(e.costo)}${e.precio?" · "+esc(e.precio):""}</span>`,`<span class="tag ${e.prio==="Alta"?"alta":""}">Prioridad ${esc(e.prio.toLowerCase())}</span>`]
+    .concat((e.interes||[]).map(i=>`<span class="tag">${esc(i)}</span>`)).concat(e.estado&&e.estado!=="Nuevo"?[`<span class="tag estado">${esc(e.estado)}</span>`]:[]);
+  return `<article class="ev"><span class="sev ${e.prio.toLowerCase()}" aria-hidden="true"></span>
+    <div class="day"><b class="num">${p.d}</b><span>${DIA[new Date(Date.UTC(p.y,p.m-1,p.d)).getUTCDay()]}</span><em>${esc(enDias(n))}</em></div>
+    <div class="body"><h3>${esc(e.t)}</h3>
+      <div class="sub"><span>${esc(cuando(e))}</span><span>${esc(e.lugar)}</span>${e.org&&e.org!=="Por confirmar"?`<span>${esc(e.org)}</span>`:""}</div>
+      ${e.notas?`<p class="note">${esc(e.notas)}</p>`:""}
+      <div class="tags">${tags.join("")}</div></div>
+    <div class="acts"><a class="btn pri" href="${esc(gcal(e))}" target="_blank" rel="noopener" title="Agregar a Google Calendar">${icoCal}Calendarizar</a>
+      <a class="btn sec" href="${ics(e)}" download="${esc(e.t.replace(/[^\wáéíóúñÁÉÍÓÚÑ ]+/g,"").slice(0,60))}.ics" title="Para el calendario del iPhone, iPad o Outlook">${icoApple}iPhone / Outlook</a>
+      <a class="btn sec" href="${esc(e.url)}" target="_blank" rel="noopener">${icoOut}Ver evento</a></div></article>`;
+}
+function drawAgenda(){
+  const v=vigentes().filter(pasa); let html="", mes="";
+  v.forEach(e=>{const p=parte(e.ini),k=p.y+"-"+p.m;if(k!==mes){mes=k;const cuantos=v.filter(x=>{const q=parte(x.ini);return q.y===p.y&&q.m===p.m}).length;html+=`<div class="month"><h2>${MES[p.m-1]} ${p.y}</h2><span class="label num">${cuantos} ${cuantos===1?"evento":"eventos"}</span></div>`}html+=fila(e)});
+  $("#agenda").innerHTML=html||'<p class="empty">Ningún evento coincide con estos filtros.</p>';
+}
+/* Encabezado y pie */
+const fmt=new Intl.DateTimeFormat("es-SV",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit",timeZone:"America/El_Salvador"});
+$("#stamp").textContent=`Actualizado: ${fmt.format(new Date(META.generated))} · próxima búsqueda: ${META.next}`;
+const pasados=EVENTOS.filter(e=>finUTC(e)<=Date.now()).length;
+$("#foot").innerHTML=`Fuentes: Eventbrite, Luma, gremios, MITUR y prensa, verificadas evento por evento. Se actualiza todos los días a las 6:38 a. m.${pasados?`<br>${pasados} ${pasados===1?"evento ya pasó y no se muestra":"eventos ya pasaron y no se muestran"}.`:""}${META.notion?`<br><a href="${esc(META.notion)}" target="_blank" rel="noopener">Abrir la base en Notion</a> para marcar “Me interesa” o “Calendarizado”.`:""}`;
+
+/* Vista y tema (iconos) */
+function setView(v,save){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save)try{localStorage.setItem("radar-vista",v)}catch(e){}}
+function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("nld_olympus_tema",t==="light"?"claro":"oscuro")}catch(e){}}
+setView(root.dataset.view||(innerWidth<700?"mobile":"desktop"));
+setTheme(root.dataset.theme||"light");
+document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v,true));
+document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>setTheme(b.dataset.t,true));
+
+try{Object.assign(filtros,JSON.parse(sessionStorage.getItem("radar-filtros")||"{}"))}catch(e){}
+drawNext();drawKpis();drawFilters();drawAgenda();
+</script>

@@ -1251,6 +1251,62 @@ html.fm-lock,html.fm-lock body{overflow:hidden}
 :root{--max:1680px}
 @media (min-width:900px){:root{--gutter:clamp(28px,3.5vw,56px)}}
 .nav-in{max-width:var(--max)}
+/* ===== Flujos: donde los pasos van en orden (1 → 2 → 3…), una línea con flecha une los números
+   para que la secuencia se lea de un vistazo. Solo en listas ordenadas. ===== */
+ol.nl>li{position:relative}
+ol.nl>li:not(:last-child)::after{content:"";position:absolute;left:17px;top:42px;bottom:-15px;width:2px;border-radius:2px;
+  background:linear-gradient(var(--blue-btn),var(--tint-line));pointer-events:none}
+ol.nl>li:not(:last-child)::before{content:"";position:absolute;left:13.5px;bottom:-16px;width:9px;height:9px;box-sizing:border-box;
+  border-right:2px solid var(--blue-btn);border-bottom:2px solid var(--blue-btn);transform:rotate(45deg);opacity:.75;pointer-events:none}
+/* seis pasos en dos columnas: se leen hacia abajo (1-2-3 y 4-5-6), no en zigzag */
+@media (min-width:600px) and (max-width:799px),(min-width:1024px){
+  ol.nl.two{grid-template-rows:repeat(3,auto);grid-auto-flow:column}
+  ol.nl.two>li:nth-child(3)::before,ol.nl.two>li:nth-child(3)::after{display:none}
+}
+.how-steps{counter-reset:paso}
+.how-steps>.step{counter-increment:paso}
+.step-idx{display:flex;align-items:center;gap:10px;font-size:12px}
+.step-idx::before{content:counter(paso);flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;
+  background:var(--blue-btn);color:var(--on-blue);font-family:var(--sf);font-size:14px;font-weight:600;letter-spacing:0}
+.step-idx::after{content:"";flex:none;width:34px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--blue-btn),var(--tint-line))}
+.how-steps>.step:last-child .step-idx::after{display:none}
+
+/* ===== Modo presentación: la diapositiva ya trae su propio margen, así que las secciones
+   sueltan el relleno vertical de la página y el contenido se ve más grande ===== */
+@media (min-width:700px) and (orientation:landscape){
+  html.pres .sec{padding-block:16px}
+}
+@media (min-width:1024px) and (orientation:landscape){
+  /* En resumen (bento): las filas se reparten el alto libre de la pantalla */
+  html.pres #resumen .head{margin-bottom:22px}
+  html.pres #resumen .bento{grid-auto-rows:minmax(162px,calc((100dvh - 392px) / 3));gap:14px}
+  html.pres #resumen .bt-t{font-size:clamp(18px,1.75vw,24px)}
+  html.pres #resumen .bt-d{font-size:clamp(14.5px,1.3vw,18px)}
+  html.pres #resumen .bento-hint{margin-top:12px}
+}
+/* ===== El mercado en modo presentación: cifras a la izquierda y mapa grande a la derecha,
+   para que la diapositiva llene la pantalla en vez de encogerse para caber ===== */
+@media (min-width:700px) and (orientation:landscape){
+  html.pres #mercado .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.9fr);column-gap:16px;align-items:stretch}
+  html.pres #mercado .head,html.pres #mercado .src{grid-column:1/-1}
+  html.pres #mercado .head{margin-bottom:22px;max-width:none}
+  html.pres #mercado .src{margin-top:14px;max-width:none;font-size:11.5px}
+  html.pres #mercado .data{grid-column:1;grid-template-columns:minmax(0,1fr);grid-auto-rows:1fr;gap:12px}
+  html.pres #mercado .dn{padding:16px 20px;gap:8px;justify-content:center}
+  html.pres #mercado .dn-val{font-size:clamp(40px,4.2vw,64px)}
+  html.pres #mercado .dn-lbl{font-size:clamp(14px,1.2vw,17px);line-height:1.38}
+  html.pres #mercado .mapcard{grid-column:2;margin-top:0;grid-template-columns:minmax(0,1fr);gap:12px;padding:14px;align-content:space-between}
+  html.pres #mercado .states-w{padding:2px 8px 6px}
+  html.pres #mercado .states{gap:12px;margin-top:10px}
+  html.pres #mercado .st-row{grid-template-columns:118px minmax(0,1fr) 72px;font-size:clamp(16px,1.35vw,19px)}
+  html.pres #mercado .mp b{font-size:14px;padding:6px 11px}
+}
+/* pantallas apaisadas (portátil, proyector 16:9): los estados pasan a una fila bajo el mapa */
+@media (min-width:700px) and (min-aspect-ratio:3/2){
+  html.pres #mercado .states{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+  html.pres #mercado .st-row{grid-template-columns:minmax(0,1fr) auto;row-gap:8px;column-gap:8px}
+  html.pres #mercado .st-bar{grid-column:1/-1;grid-row:2}
+}
 </style>
 <script>(function(){var d=document.documentElement;d.lang='es';d.classList.add('js');try{if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches)d.classList.add('js-hero');}catch(e){}try{if(localStorage.getItem('nld_olympus_tema')!=='claro')d.setAttribute('data-tema','oscuro');}catch(e){}})();</script>
 <nav class="nav" aria-label="Principal"><div class="nav-in">

@@ -4,11 +4,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Gestión de proyectos e iniciativas NLD</title>
-<link rel="icon" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/icon-180.png">
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
 <script>
 /* Tema y vista antes del primer pintado: claro por defecto; móvil en el celular, escritorio en lo demás */
-(function(){var r=document.documentElement,t="light",v=null;try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem("tnld-view2");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
+(function(){var r=document.documentElement,t="light",v=null;try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem("tnld-view2");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",window.innerWidth<700?"mobile":(v||"desktop"));})();
 </script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,6 +42,7 @@ h2{font-size:20px}
 .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;padding-top:8px}
 .top .meta{display:flex;flex-direction:column;gap:6px}
 .top .stamp{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.top .stamp.stale{color:var(--warn)}
 .controls{display:flex;gap:6px}
 .seg{display:flex;background:var(--sunk);border-radius:10px;padding:3px;gap:2px}
 .seg button{all:unset;cursor:pointer;width:32px;height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
@@ -417,12 +418,26 @@ drawFilters();drawTasks();
 /* Encabezado y pie */
 const fmt=new Intl.DateTimeFormat("es-SV",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit"});
 $("#stamp").textContent=`Corte: ${fmt.format(new Date(META.generated))} · próxima: ${META.next}`;
+/* Si el corte de lunes, miércoles o viernes (6:46 a. m.) no llegó, se avisa: los días "sin mover" y "vencida"
+   se cuentan contra la fecha del corte, así que un corte viejo los muestra de menos. */
+/* Próxima corrida programada después de "desde" (hora de El Salvador, UTC−6 sin horario de verano).
+   dias: 0=domingo … 6=sábado. Si cambia el horario de la tarea programada, cambiarlo aquí también. */
+function proximaCorrida(desde,dias,hh,mm){const sv=new Date(desde.getTime()-6*36e5);
+  for(let i=0;i<8;i++){const d=new Date(Date.UTC(sv.getUTCFullYear(),sv.getUTCMonth(),sv.getUTCDate()+i,hh,mm));if(dias.indexOf(d.getUTCDay())>=0&&d>sv)return new Date(d.getTime()+6*36e5)}return null}
+/* Atrasado = ya pasaron 3 h de la corrida que tocaba y el dato sigue siendo el anterior. */
+function avisoAtraso(gen,dias,hh,mm){const esp=proximaCorrida(gen,dias,hh,mm);if(!esp||Date.now()<esp.getTime()+3*36e5)return "";
+  const d=Math.floor((Date.now()-gen.getTime())/864e5);return d<1?"la actualización de hoy no llegó":d===1?"lleva 1 día sin actualizarse":`lleva ${d} días sin actualizarse`}
+(function(){const a=avisoAtraso(new Date(META.generated),[1,3,5],6,46);if(!a)return;
+  $("#stamp").textContent=`Corte: ${fmt.format(new Date(META.generated))} · ${a}`;$("#stamp").classList.add("stale")})();
 $("#foot").innerHTML=`Fuente: Jira, proyecto NLD · ${META.totals.all} tareas en total, ${META.totals.discarded} descartadas.<br>Termómetro = frescura (40) + puntualidad (35) + ritmo de cierre (25). Se actualiza lunes, miércoles y viernes.`;
 
 /* Vista y tema (iconos) */
-function setView(v,save){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save){try{localStorage.setItem("tnld-view2",v)}catch(e){}drawFlow()}}
+/* La vista elegida se recuerda, pero en pantallas de menos de 700 px se muestra la móvil (las otras no caben). */
+let vistaElegida="desktop";
+function setView(v,save){vistaElegida=v;root.dataset.view=innerWidth<700?"mobile":v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save){try{localStorage.setItem("tnld-view2",v)}catch(e){}drawFlow()}}
+addEventListener("resize",()=>{const real=innerWidth<700?"mobile":vistaElegida;if(root.dataset.view!==real){root.dataset.view=real;drawFlow()}});
 function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("tnld-theme",t);localStorage.setItem("nld_olympus_tema",t==="light"?"claro":"oscuro")}catch(e){}}
-setView(root.dataset.view||(innerWidth<700?"mobile":"desktop"));
+setView((function(){try{return localStorage.getItem("tnld-view2")}catch(e){return null}})()||(innerWidth<700?"mobile":"desktop"));
 setTheme(root.dataset.theme||"light");
 drawFlow();
 document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v,true));

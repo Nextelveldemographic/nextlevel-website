@@ -5,8 +5,8 @@
 <meta name="robots" content="noindex,nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Competitor Benchmark - Inmuebles</title>
-<link rel="icon" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/icon-180.png">
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
 <script>
 /* Tema y vista antes del primer pintado */
 (function(){var r=document.documentElement,t='light',v='mobile';try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem('nld-view-propi')||(window.innerWidth<700?'mobile':'desktop');}catch(e){}r.setAttribute('data-theme',t);r.setAttribute('data-view',v);})();
@@ -15,7 +15,7 @@
 /* Layout: una sola columna que escala completa (tipografía + ancho en rem) según la vista móvil / iPad / navegador. Sistema NLD claro. */
 :root{
   --bg:#FFFFFF; --surface:#F5F5F7; --line:#D2D2D7; --line-soft:#E5E5EA;
-  --ink:#1D1D1F; --muted:#6E6E73; --faint:#86868B;
+  --ink:#1D1D1F; --muted:#6E6E73; --faint:#707075;
   --accent:#0071E3; --accent-soft:#E8F1FE; --on-accent:#FFFFFF;
   --contrast-bg:#000000; --contrast-ink:#F5F5F7; --contrast-muted:#A1A1A6; --contrast-line:#2C2C2E;
   --font:"Helvetica Neue",Arial,system-ui,sans-serif;
@@ -177,6 +177,8 @@ footer{font-size:.7rem;color:var(--faint);line-height:1.6;border-top:1px solid v
 .chip{display:inline-flex;align-items:center;gap:.4rem;font-size:.72rem;font-weight:700;padding:.32rem .65rem;border-radius:999px;background:var(--surface);color:var(--muted)}
 .chip.live{background:var(--accent-soft);color:var(--accent)}
 .chip.live i{width:.45rem;height:.45rem;border-radius:50%;background:var(--accent);display:block}
+.chip.stale{background:rgba(255,159,10,.16);color:#B25000}
+:root[data-theme="dark"] .chip.stale{color:#FFB35C}
 @media (prefers-reduced-motion:no-preference){.chip.live i{animation:pulso 2s ease-in-out infinite}@keyframes pulso{50%{opacity:.25}}}
 .cx ul{margin:.2rem 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:.25rem}
 .cx li{font-size:.82rem;color:var(--contrast-muted);display:flex;justify-content:space-between;gap:.6rem}
@@ -272,6 +274,10 @@ details.arch .archb .note.old{background:var(--surface);border-radius:.7rem;padd
 .devchips button:focus-visible,.dtbl tr[data-k]:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
 .devbar{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;justify-content:space-between}
 .devbar .seg button{width:auto;padding:0 .7rem;font-size:.72rem;font-weight:600}
+/* En teléfono los tres criterios no caben en una línea: el control se desliza por dentro en vez de ensanchar la página. */
+.devbar .seg{max-width:100%;overflow-x:auto;scrollbar-width:none}
+.devbar .seg::-webkit-scrollbar{display:none}
+.devbar .seg button{flex:0 0 auto;white-space:nowrap}
 .devbar input{font:inherit;font-size:.8rem;padding:.4rem .7rem;border-radius:999px;border:1px solid var(--line);background:var(--bg);color:var(--ink);min-width:0;flex:1 1 12rem;max-width:20rem}
 .dtbl tbody tr[data-k],[data-k].fk{cursor:pointer}
 .dtbl tbody tr[data-k]:hover td{background:var(--accent-soft)}
@@ -326,7 +332,7 @@ dialog#ficha::backdrop{background:rgba(0,0,0,.55)}
 .vd-more{all:unset;cursor:pointer;font-size:.78rem;font-weight:600;color:var(--accent);align-self:flex-start}
 .vd-more:focus-visible{outline:2px solid var(--accent)}
 .vd-grid{display:grid;grid-template-columns:1fr;gap:.8rem}
-:root:is([data-view="tablet"],[data-view="desktop"]) .vd-grid{grid-template-columns:repeat(auto-fill,minmax(22rem,1fr))}
+:root:is([data-view="tablet"],[data-view="desktop"]) .vd-grid{grid-template-columns:repeat(auto-fill,minmax(min(22rem,100%),1fr))}
 .vd-card{border:1px solid var(--line);border-radius:1.1rem;padding:.9rem 1rem;display:flex;flex-direction:column;gap:.6rem;scroll-margin-top:5rem;background:var(--bg)}
 .vd-card.hl{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-soft)}
 .vd-card h3{font-size:1.02rem;margin:0;line-height:1.25}
@@ -427,6 +433,7 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
 .tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
 :root[data-view="mobile"] .tabs button{padding:.6rem .6rem;font-size:.85rem}
 :root[data-view="mobile"] .tabs button span{display:none}
+@media (max-width:600px){html:root[data-view] .tabs button{padding:.6rem 8px;font-size:min(.85rem,3.3vw);min-width:0}html:root[data-view] .tabs button span{display:none}}
 [data-nl]{cursor:pointer;border-radius:.6rem;transition:background .15s}
 [data-nl]:hover,[data-nl]:focus-visible{background:var(--bg)}
 [data-nl]:focus-visible{outline:2px solid var(--accent)}
@@ -742,7 +749,13 @@ dialog#fband::backdrop{background:rgba(0,0,0,.55)}
 
   /* ---------- encabezado y fecha ---------- */
   var prox=(function(){var d=new Date(D.actualizado);if(isNaN(d))return '';var dd=new Date(d.getTime()-6*3600e3),w=dd.getUTCDay(),add=w<1?1:w<5?5-w:w<6?3:2;var n=new Date(dd.getTime()+add*864e5);return DIA[n.getUTCDay()]+' '+n.getUTCDate()+' '+MES[n.getUTCMonth()];})();
-  $('stamp').innerHTML='<span class="chip live"><i></i>Actualizado: '+esc(fechaLarga(D.actualizado))+'</span><span class="chip">Próxima lectura: '+esc(prox)+'</span><span class="chip">'+fmt(U.length)+' unidades listas · '+fmt(P.length)+' proyectos en planos</span>';
+  /* Si la lectura de lunes o viernes (6:43 a. m., hora de El Salvador) no llegó, se avisa en vez de prometer una
+     "próxima" que ya pasó. Atrasado = pasaron 3 h de la lectura que tocaba. Si cambia el horario de la tarea, cambiarlo aquí. */
+  var atrasado=(function(){var g=new Date(D.actualizado);if(isNaN(g))return false;var sv=new Date(g.getTime()-6*3600e3);
+    for(var i=0;i<8;i++){var d=new Date(Date.UTC(sv.getUTCFullYear(),sv.getUTCMonth(),sv.getUTCDate()+i,6,43));var w=d.getUTCDay();
+      if((w===1||w===5)&&d>sv)return Date.now()>d.getTime()+6*3600e3+3*3600e3;}return false;})();
+  var diasSinLectura=Math.floor((Date.now()-new Date(D.actualizado).getTime())/864e5);
+  $('stamp').innerHTML=(atrasado?'<span class="chip stale">'+(diasSinLectura<1?'La lectura de hoy no llegó':'Lleva '+diasSinLectura+(diasSinLectura===1?' día':' días')+' sin actualizarse')+' · última lectura: '+esc(fechaLarga(D.actualizado))+'</span>':'<span class="chip live"><i></i>Actualizado: '+esc(fechaLarga(D.actualizado))+'</span><span class="chip">Próxima lectura: '+esc(prox)+'</span>')+'<span class="chip">'+fmt(U.length)+' unidades listas · '+fmt(P.length)+' proyectos en planos</span>';
 
   /* ---------- 01 qué cambió ---------- */
   function k(u){return [u.t,(u.n||'').toLowerCase(),u.zc,u.m||'',u.h||''].join('|');}

@@ -167,8 +167,9 @@ async function sameSecret(a, b) {
 
 function safeNext(value) {
   if (typeof value !== 'string') return '/olympus';
-  if (!value.startsWith('/olympus')) return '/olympus';
-  if (value.includes('//') || value.includes('\\')) return '/olympus';
+  // Solo /olympus o algo dentro de /olympus/: "/olympusotra" y "/olympus/../x" salían del área.
+  if (!/^\/olympus(?:[/?#]|$)/.test(value)) return '/olympus';
+  if (value.includes('//') || value.includes('\\') || value.includes('..')) return '/olympus';
   if (/^\/olympus\/(entrar|salir)\b/.test(value)) return '/olympus';
   return value;
 }
@@ -226,15 +227,15 @@ function loginPage({ destino = '/olympus', correo = '', error = '', status = 401
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="robots" content="noindex,nofollow">
 <title>Olympus · Acceso</title>
-<link rel="icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Olympus">
-<link rel="apple-touch-icon" href="/assets/logo.png">
-<script>try{if(localStorage.getItem('nld_tools_tema')==='oscuro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
+<script>try{if(localStorage.getItem('nld_olympus_tema')!=='claro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){document.documentElement.setAttribute('data-tema','oscuro')}</script>
 <style>
-:root{color-scheme:light;--bg:#F5F5F7;--card:#FFFFFF;--line:#E5E5EA;--line-2:#D2D2D7;--fg:#1D1D1F;--muted:#6E6E73;--label:#86868B;
+:root{color-scheme:light;--bg:#F5F5F7;--card:#FFFFFF;--line:#E5E5EA;--line-2:#D2D2D7;--fg:#1D1D1F;--muted:#6E6E73;--label:#707075;
   --blue:#0071E3;--blue-h:#0077ED;--tint:#E8F1FE;--field:#FFFFFF;--shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px rgba(0,0,0,.06)}
 :root[data-tema="oscuro"]{color-scheme:dark;--bg:#000000;--card:#1C1C1E;--line:#2C2C2E;--line-2:#3A3A3C;--fg:#F5F5F7;--muted:#A1A1A6;--label:#86868B;
   --blue:#2997FF;--blue-h:#5AB0FF;--tint:rgba(41,151,255,.13);--field:#000000;--shadow:none}
@@ -290,6 +291,10 @@ button:focus-visible{outline:2px solid var(--blue);outline-offset:3px}
       'Cache-Control': 'no-store',
       'X-Robots-Tag': 'noindex, nofollow',
       'X-Frame-Options': 'DENY',
+      'Referrer-Policy': 'same-origin',
+      // La pantalla no carga nada de fuera: estilos y script van en la página, el logo es propio.
+      'Content-Security-Policy':
+        "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self'; form-action 'self'; base-uri 'none'; frame-ancestors 'none'",
     },
   });
 }

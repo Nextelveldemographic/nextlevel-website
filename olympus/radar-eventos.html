@@ -5,11 +5,11 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Radar de Eventos NLD</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="icon" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/icon-180.png">
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
 <script>
 /* Tema y vista antes del primer pintado (mismo criterio que el resto de Olympus) */
-(function(){var r=document.documentElement,t="light",v=null;try{var g=localStorage.getItem('nld_olympus_tema');if(g)t=(g==='claro'?'light':'dark');v=localStorage.getItem("radar-vista");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
+(function(){var r=document.documentElement,t="dark",v=null;try{t=(localStorage.getItem('nld_olympus_tema')==='claro'?'light':'dark');v=localStorage.getItem("radar-vista");}catch(e){}r.setAttribute("data-theme",t);r.setAttribute("data-view",v||(window.innerWidth<700?"mobile":"desktop"));})();
 </script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Carlito:wght@400;700&family=Courier+Prime:wght@400;700&display=swap">
@@ -50,6 +50,7 @@ a{color:inherit}
 .back{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);text-decoration:none;display:inline-flex;gap:6px;align-items:center}
 .back:hover{color:var(--accent)}
 .stamp{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.stamp.stale{color:var(--warn)}
 .controls{display:flex;gap:6px}
 .seg{display:flex;background:var(--sunk);border-radius:10px;padding:3px;gap:2px}
 .seg button{all:unset;cursor:pointer;width:32px;height:28px;display:grid;place-items:center;border-radius:8px;color:var(--muted)}
@@ -293,6 +294,16 @@ function drawAgenda(){
 /* Encabezado y pie */
 const fmt=new Intl.DateTimeFormat("es-SV",{weekday:"long",day:"numeric",month:"long",hour:"numeric",minute:"2-digit",timeZone:"America/El_Salvador"});
 $("#stamp").textContent=`Actualizado: ${fmt.format(new Date(META.generated))} · próxima búsqueda: ${META.next}`;
+/* Si la búsqueda diaria (6:38 a. m.) no llegó, se dice: una agenda vieja que parece al día engaña. */
+/* Próxima corrida programada después de "desde" (hora de El Salvador, UTC−6 sin horario de verano).
+   dias: 0=domingo … 6=sábado. Si cambia el horario de la tarea programada, cambiarlo aquí también. */
+function proximaCorrida(desde,dias,hh,mm){const sv=new Date(desde.getTime()-6*36e5);
+  for(let i=0;i<8;i++){const d=new Date(Date.UTC(sv.getUTCFullYear(),sv.getUTCMonth(),sv.getUTCDate()+i,hh,mm));if(dias.indexOf(d.getUTCDay())>=0&&d>sv)return new Date(d.getTime()+6*36e5)}return null}
+/* Atrasado = ya pasaron 3 h de la corrida que tocaba y el dato sigue siendo el anterior. */
+function avisoAtraso(gen,dias,hh,mm){const esp=proximaCorrida(gen,dias,hh,mm);if(!esp||Date.now()<esp.getTime()+3*36e5)return "";
+  const d=Math.floor((Date.now()-gen.getTime())/864e5);return d<1?"la actualización de hoy no llegó":d===1?"lleva 1 día sin actualizarse":`lleva ${d} días sin actualizarse`}
+(function(){const a=avisoAtraso(new Date(META.generated),[0,1,2,3,4,5,6],6,38);if(!a)return;
+  $("#stamp").textContent=`Actualizado: ${fmt.format(new Date(META.generated))} · ${a}`;$("#stamp").classList.add("stale")})();
 const pasados=EVENTOS.filter(e=>finUTC(e)<=Date.now()).length;
 $("#foot").innerHTML=`Fuentes: Eventbrite, Luma, gremios, MITUR y prensa, verificadas evento por evento. Se actualiza todos los días a las 6:38 a. m.${pasados?`<br>${pasados} ${pasados===1?"evento ya pasó y no se muestra":"eventos ya pasaron y no se muestran"}.`:""}${META.notion?`<br><a href="${esc(META.notion)}" target="_blank" rel="noopener">Abrir la base en Notion</a> para marcar “Me interesa” o “Calendarizado”.`:""}`;
 
@@ -300,7 +311,7 @@ $("#foot").innerHTML=`Fuentes: Eventbrite, Luma, gremios, MITUR y prensa, verifi
 function setView(v,save){root.dataset.view=v;document.querySelectorAll("[data-v]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.v===v));if(save)try{localStorage.setItem("radar-vista",v)}catch(e){}}
 function setTheme(t,save){root.dataset.theme=t;document.querySelectorAll("[data-t]").forEach(b=>b.setAttribute("aria-pressed",b.dataset.t===t));if(save)try{localStorage.setItem("nld_olympus_tema",t==="light"?"claro":"oscuro")}catch(e){}}
 setView(root.dataset.view||(innerWidth<700?"mobile":"desktop"));
-setTheme(root.dataset.theme||"light");
+setTheme(root.dataset.theme||"dark");
 document.querySelectorAll("[data-v]").forEach(b=>b.onclick=()=>setView(b.dataset.v,true));
 document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>setTheme(b.dataset.t,true));
 

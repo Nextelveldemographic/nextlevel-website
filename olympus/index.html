@@ -10,8 +10,8 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Olympus">
 <title>Olympus</title>
-<link rel="icon" href="/assets/logo.png">
-<link rel="apple-touch-icon" href="/assets/logo.png">
+<link rel="icon" href="/assets/icon-180.png">
+<link rel="apple-touch-icon" href="/assets/icon-180.png">
 <script>try{if(localStorage.getItem('nld_olympus_tema')!=='claro')document.documentElement.setAttribute('data-tema','oscuro')}catch(e){}</script>
 <style>
 /* Olympus — portada privada del equipo.
@@ -20,7 +20,7 @@
 :root{
   color-scheme:light;
   --bg:#F5F5F7;--card:#FFFFFF;--line:#E5E5EA;--line-2:#D2D2D7;
-  --fg:#1D1D1F;--muted:#6E6E73;--label:#86868B;
+  --fg:#1D1D1F;--muted:#6E6E73;--label:#707075;
   --blue:#0071E3;--blue-h:#0077ED;--tint:#E8F1FE;--on-blue:#FFFFFF;
   --glass:rgba(245,245,247,.82);--hover:rgba(0,0,0,.05);
   --lift:0 1px 2px rgba(0,0,0,.04),0 14px 34px rgba(0,0,0,.07);
@@ -99,6 +99,8 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
 .tool p{font-size:14.5px;line-height:1.5;color:var(--muted)}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .meta{font-size:12px;color:var(--label)}
+.meta.late{color:#B25000;font-weight:700}
+:root[data-tema="oscuro"] .meta.late{color:#FFB35C}
 .open{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700;color:var(--blue);white-space:nowrap}
 .open svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:transform .35s var(--ease)}
 .tool:hover .open svg{transform:translateX(3px)}
@@ -160,6 +162,10 @@ h1{font-size:clamp(30px,7.4vw,44px);line-height:1.08;font-weight:700;letter-spac
       (ejemplo: url: '/olympus/mi-herramienta').
    3. Ponle su área (area: 'marketing', 'ventas', ...). Las áreas
       están en la lista AREAS; un área sin herramientas no se muestra.
+   4. Si una tarea programada la actualiza sola, agrega cadaDias
+      (el hueco más largo entre dos corridas, en días) y deja su
+      meta como "Actualizado: 9 nov 2026": la tarjeta avisa sola
+      cuando esa fecha se queda vieja.
    El candado de acceso la protege sola por estar dentro de /olympus.
    ============================================================ */
 var AREAS = [
@@ -175,7 +181,7 @@ var HERRAMIENTAS = [
     area: 'marketing',
     etiqueta: 'Tablero · Censo EE. UU. 2023',
     titulo: 'Mapa de la Diáspora',
-    texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa 2D y 3D, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
+    texto: 'Dónde viven los nacidos en El Salvador y 18 países más de Latinoamérica, código postal por código postal. Mapa con puntos agrupados, ranking por estado y ciudad, concentración, y lista de ZIP lista para copiar a campañas.',
     meta: '19 países · 20,784 códigos postales'
   },
   {
@@ -228,6 +234,7 @@ var HERRAMIENTAS = [
     etiqueta: 'Benchmark · Inmuebles',
     titulo: 'Competitor Benchmark - Inmuebles',
     texto: 'Propi leído cada lunes y viernes, en tres pestañas: proyectos nuevos en planos (ticket, zonas, entregas y qué cambió), listos y reventa, y desarrolladoras con contacto directo y borrador de alianza.',
+    cadaDias: 4,
     meta: 'Actualizado: 9 nov 2026'
   },
   {
@@ -237,6 +244,7 @@ var HERRAMIENTAS = [
     etiqueta: 'Agenda · Eventos de networking',
     titulo: 'Radar de Eventos',
     texto: 'Los eventos de networking en El Salvador que le sirven a NLD, buscados cada mañana en Eventbrite, Luma, gremios y prensa. Filtros por costo, prioridad e interés, y un botón para calendarizar cada uno.',
+    cadaDias: 1,
     meta: 'Actualizado: 7 nov 2026'
   },
   {
@@ -264,6 +272,7 @@ var HERRAMIENTAS = [
     etiqueta: 'Gestión · Proyectos e iniciativas en Jira',
     titulo: 'Cómo vamos con las tareas',
     texto: 'Auditoría del espacio NLD en Jira, de lo macro a lo micro: puntaje de salud, flujo mensual, carga por persona, hallazgos y cada tarea abierta ordenada por riesgo. Se actualiza lunes, miércoles y viernes.',
+    cadaDias: 3,
     meta: 'Actualizado: 9 nov 2026'
   },
   {
@@ -300,12 +309,23 @@ var HERRAMIENTAS = [
     'gestión':     ic('<rect x="4" y="3.5" width="16" height="17" rx="2.5"/><path d="M8 9l1.5 1.5L12 8M8 15l1.5 1.5L12 14M14.5 9.5H17M14.5 15.5H17"/>'),
     entrenamiento: ic('<path d="M2.5 9.5 12 5l9.5 4.5L12 14z"/><path d="M6.5 11.5V16c0 1.4 2.5 3 5.5 3s5.5-1.6 5.5-3v-4.5M21.5 9.5V15"/>')
   };
+  /* Una herramienta con cadaDias que lleva más de ese hueco (más día y medio de margen) sin fecha nueva está atrasada:
+     la tarea programada no publicó. Se avisa en la tarjeta para que nadie decida con datos viejos sin saberlo. */
+  var MESES = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
+  function diasAtraso(h){
+    if (!h.cadaDias) return 0;
+    var m = /(\d{1,2}) ([a-z]{3})\w* (\d{4})/i.exec(h.meta||''); if (!m) return 0;
+    var mes = MESES.indexOf(m[2].toLowerCase()); if (mes < 0) return 0;
+    var dias = (Date.now() - new Date(+m[3], mes, +m[1]).getTime()) / 864e5;
+    return dias > h.cadaDias + 1.5 ? Math.floor(dias) : 0;
+  }
   function tarjetaTool(h,i){
     var tipo = String(h.etiqueta||'').split('·')[0].trim().toLowerCase();
+    var atraso = diasAtraso(h);
     return '<a class="tool area rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="'+esc(h.url)+'">'+
       '<span class="num ico" aria-hidden="true">'+(TIPOS[tipo]||ICONOS[h.area]||dos(i+1))+'</span>'+
       '<div><p class="tag">'+esc(h.etiqueta)+'</p><h2>'+esc(h.titulo)+'</h2><p class="txt">'+esc(h.texto)+'</p>'+
-      '<div class="foot"><span class="meta">'+esc(h.meta||'')+'</span><span class="open">Abrir'+flecha+'</span></div></div></a>';
+      '<div class="foot"><span class="meta'+(atraso?' late':'')+'">'+esc(h.meta||'')+(atraso?' · '+atraso+' días sin actualizarse':'')+'</span><span class="open">Abrir'+flecha+'</span></div></div></a>';
   }
   function deArea(id){ return HERRAMIENTAS.filter(function(h){ return h.area===id; }); }
   var conTools = AREAS.filter(function(a){ return deArea(a.id).length; });
@@ -322,11 +342,11 @@ var HERRAMIENTAS = [
       back.hidden = true; eb.textContent = 'Herramientas internas'; h1.textContent = 'Lo que usamos en NLD, en un solo lugar.';
       lead.textContent = 'Elige un área para ver sus herramientas. Todo lo que está aquí es privado del equipo.';
       lista.innerHTML = conTools.map(function(a,i){
-        var ts = deArea(a.id), n = ts.length;
+        var ts = deArea(a.id), n = ts.length, tarde = ts.filter(diasAtraso).length;
         return '<a class="tool area rv" style="animation-delay:'+(0.22+i*0.07).toFixed(2)+'s" href="#'+a.id+'">'+
           '<span class="num ico" aria-hidden="true">'+(ICONOS[a.id]||dos(i+1))+'</span>'+
           '<div><p class="tag">'+esc(a.nombre)+'</p><h2>'+esc(a.titulo)+'</h2><p class="txt">'+esc(a.texto)+'</p>'+
-          '<div class="foot"><span class="meta">'+n+(n===1?' herramienta':' herramientas')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';
+          '<div class="foot"><span class="meta'+(tarde?' late':'')+'">'+n+(n===1?' herramienta':' herramientas')+(tarde?' · '+tarde+' sin actualizarse':'')+'</span><span class="open">Ver'+flecha+'</span></div></div></a>';
       }).join('');
       document.title = 'Olympus';
     }

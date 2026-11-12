@@ -1,0 +1,5 @@
+# nextleveldemographic.com
+User-agent: *
+Allow: /
+
+Sitemap: https://www.nextleveldemographic.com/sitemap.xml

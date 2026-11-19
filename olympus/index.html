@@ -804,7 +804,7 @@ var PORTADA = {
   function quieto(m, e){ return Math.abs(m.t - m.v) < e && Math.abs(m.vel) < e*4; }
   function pintar(){
     var sx = 1, sy = 1;
-    if (!QUIETO) { sx = 1 + Math.min(0.3, Math.abs(L.x.vel) / 2400); sy = 1 - (sx - 1) * 0.5; }
+    if (!QUIETO) { sx = 1 + Math.min(0.22, Math.abs(L.x.vel) / 2600); sy = 1 - (sx - 1) * 0.5; }
     lente.style.width = L.w.v.toFixed(2) + 'px';
     lente.style.opacity = Math.max(0, Math.min(1, L.o.v)).toFixed(3);
     lente.style.transform = 'translate3d(' + L.x.v.toFixed(2) + 'px,0,0) scale(' + (L.s.v*sx).toFixed(4) + ',' + (L.s.v*sy).toFixed(4) + ')';
@@ -830,26 +830,42 @@ var PORTADA = {
   }
   function despertar(){ vivoHasta = performance.now() + 650; if (!raf) { prev = performance.now(); raf = requestAnimationFrame(cuadro); } }
 
+  /* la gota siempre se forma completa: aunque el toque dure 30 ms, el vidrio se sostiene al menos
+     PULSO ms y luego se asienta (antes, en toques rápidos la animación no alcanzaba a verse) */
+  var PULSO = QUIETO ? 0 : 320, tFinPulso = 0;
   dock.addEventListener('pointerdown', function(e){
-    if (e.button > 0 || arrastre) return;
-    ponerHov(null); var px = localX(e); arrastre = { id: e.pointerId, px: px, hot: cercano(px) }; inicioX = e.clientX;
+    if (e.button > 0) return;
+    if (arrastre && arrastre.suelto) terminar(); else if (arrastre) return;
+    ponerHov(null); var px = localX(e); arrastre = { id: e.pointerId, px: px, hot: cercano(px), t0: performance.now(), suelto: false }; inicioX = e.clientX;
+    diag('down', e);
     try { dock.setPointerCapture(e.pointerId); } catch(err){}
     dock.classList.add('drag'); arrastre.hot.classList.add('hot'); despertar();
   });
   dock.addEventListener('pointermove', function(e){
-    if (arrastre && e.pointerId === arrastre.id) {
+    if (arrastre && !arrastre.suelto && e.pointerId === arrastre.id) {
       arrastre.px = localX(e); var h = cercano(arrastre.px);
       if (h !== arrastre.hot) { arrastre.hot.classList.remove('hot'); h.classList.add('hot'); arrastre.hot = h; }
       despertar();
-    } else if (e.pointerType === 'mouse' && !e.buttons) {
+    } else if (!arrastre && e.pointerType === 'mouse' && !e.buttons) {
       hovPx = localX(e); ponerHov(cercano(hovPx)); despertar();
     }
   });
   function soltar(e, cancelar){
-    if (!arrastre || e.pointerId !== arrastre.id) return;
-    var a = arrastre.hot; a.classList.remove('hot'); arrastre = null; dock.classList.remove('drag');
-    hovPx = localX(e); ponerHov(e.pointerType === 'mouse' && !cancelar ? a : null);
-    if (!cancelar) { suprimir = true; setTimeout(function(){ suprimir = false; }, 450); ir(a.getAttribute('data-ir')); }
+    if (!arrastre || arrastre.suelto || e.pointerId !== arrastre.id) return;
+    diag(cancelar ? 'cancel' : (e.type === 'pointercancel' ? 'cancel→ir' : 'up'), e);
+    var r = arrastre; r.suelto = true; r.ir = !cancelar; r.mouse = e.pointerType === 'mouse';
+    r.px = r.hot.offsetLeft + r.hot.offsetWidth/2;   /* la gota se centra en el módulo elegido */
+    hovPx = localX(e);
+    if (!cancelar) { suprimir = true; setTimeout(function(){ suprimir = false; }, 450); }
+    clearTimeout(tFinPulso); tFinPulso = setTimeout(terminar, Math.max(0, PULSO - (performance.now() - r.t0)));
+    despertar();
+  }
+  function terminar(){
+    clearTimeout(tFinPulso); var r = arrastre; if (!r) return;
+    arrastre = null; r.hot.classList.remove('hot'); dock.classList.remove('drag');
+    ponerHov(r.mouse && r.ir ? r.hot : null);
+    if (r.ir) ir(r.hot.getAttribute('data-ir'));
+    diag('asentada', null, r);
     despertar();
   }
   dock.addEventListener('pointerup', function(e){ soltar(e, false); });
@@ -875,6 +891,19 @@ var PORTADA = {
     if (b !== activo()) marcar(b);
   }
   window.addEventListener('resize', despertar);
+
+  /* ---------- diagnóstico: abrir /olympus?diag para ver cada gesto en pantalla ---------- */
+  var DIAG = /[?&]diag\b/.test(location.search), panel = null, pico = 1, nG = 0;
+  function diag(tipo, e, r){
+    if (!DIAG) return;
+    if (!panel) { panel = document.createElement('pre'); panel.style.cssText = 'position:fixed;z-index:99;top:calc(60px + env(safe-area-inset-top,0px));left:8px;right:8px;max-height:40vh;overflow:auto;margin:0;padding:10px 12px;border-radius:14px;background:rgba(0,0,0,.82);color:#9fe870;font:11px/1.45 ui-monospace,Menlo,monospace;white-space:pre-wrap;pointer-events:none'; document.body.appendChild(panel); }
+    var t = performance.now(), linea;
+    if (tipo === 'down') { nG++; pico = 1; linea = '#' + nG + ' down  ' + e.pointerType + '  en ' + arrastre.hot.getAttribute('data-a'); }
+    else if (tipo === 'asentada') linea = '   asentada en ' + r.hot.getAttribute('data-a') + '  dur ' + Math.round(t - r.t0) + 'ms  vidrio máx ' + pico.toFixed(2) + (pico < 1.15 ? '  ← NO SE FORMÓ' : '  ✓');
+    else linea = '   ' + tipo + '  ' + Math.round(t - arrastre.t0) + 'ms  movió ' + Math.round(Math.abs(e.clientX - inicioX)) + 'px';
+    panel.textContent = (linea + '\n' + panel.textContent).slice(0, 4000);
+  }
+  if (DIAG) (function medir(){ if (arrastre && L.s.v > pico) pico = L.s.v; requestAnimationFrame(medir); })();
 
   /* ---------- moverse por la página ---------- */
   function ir(id){

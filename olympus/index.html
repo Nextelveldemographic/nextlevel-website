@@ -153,12 +153,31 @@ h3{font-size:22px;line-height:1.18;font-weight:700;letter-spacing:-.02em;margin-
 .dock{position:fixed;z-index:30;left:50%;bottom:max(14px,env(safe-area-inset-bottom,0px));transform:translateX(-50%);
   display:flex;gap:4px;padding:5px;border-radius:99px;background:var(--glass);border:1px solid var(--line);
   -webkit-backdrop-filter:saturate(180%) blur(22px);backdrop-filter:saturate(180%) blur(22px);box-shadow:0 10px 30px rgba(0,0,0,.18)}
-.dock a{height:42px;min-width:42px;border-radius:99px;display:flex;align-items:center;justify-content:center;color:var(--muted);
-  transition:background .35s var(--ease),color .35s var(--ease),padding .35s var(--ease)}
+.dock{touch-action:none;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+.dock a{position:relative;z-index:2;height:42px;min-width:42px;border-radius:99px;display:flex;align-items:center;justify-content:center;color:var(--muted);
+  -webkit-user-drag:none;transition:color .35s var(--ease),padding .35s var(--ease)}
+.dock a svg{transform-origin:50% 50%;transition:transform .35s var(--ease)}
 .dock a span{font-size:13px;font-weight:700;max-width:0;opacity:0;overflow:hidden;white-space:nowrap;transition:max-width .45s var(--ease),opacity .3s,margin .45s var(--ease)}
-.dock a:hover{color:var(--fg);background:var(--hover)}
-.dock a.on{background:var(--blue);color:var(--on-blue);padding:0 14px 0 12px}
+@media (hover:hover){.dock a:hover{color:var(--fg)}}
+.dock a.on{color:var(--on-blue);padding:0 14px 0 12px}
 .dock a.on span{max-width:110px;opacity:1;margin-left:7px}
+/* vidrio líquido: una sola gota que viaja entre módulos (resorte JS) */
+.lens,.lens-hov{position:absolute;top:5px;left:0;height:42px;width:42px;border-radius:99px;pointer-events:none;will-change:transform,width}
+.lens{z-index:1;opacity:0;transition:opacity .35s var(--ease),box-shadow .35s var(--ease)}
+.lens i,.lens b{position:absolute;inset:0;border-radius:inherit}
+.lens i{background:var(--blue);transition:opacity .3s var(--ease)}
+.lens b{opacity:0;transition:opacity .3s var(--ease);
+  background:radial-gradient(120% 90% at 28% 0%,rgba(255,255,255,.7),rgba(255,255,255,0) 55%),
+             radial-gradient(90% 70% at 75% 110%,rgba(255,255,255,.35),rgba(255,255,255,0) 60%)}
+.lens-hov{z-index:1;opacity:0;background:var(--hover)}
+.dock.drag .lens{-webkit-backdrop-filter:blur(1.2px) saturate(2) brightness(1.08);backdrop-filter:blur(1.2px) saturate(2) brightness(1.08);
+  box-shadow:inset 0 1px 1px rgba(255,255,255,.9),inset 0 -1px 2px rgba(255,255,255,.35),inset 0 0 0 .5px rgba(255,255,255,.55),
+             inset 0 0 14px rgba(255,255,255,.18),0 0 0 .5px rgba(0,0,0,.06),0 10px 26px rgba(0,0,0,.22)}
+.dock.drag .lens i{opacity:.14}
+.dock.drag .lens b{opacity:.8}
+.dock.drag a,.dock.drag a.on{color:var(--muted)}
+.dock.drag a.hot{color:var(--blue)}
+.dock.drag a svg{transition:none}
 
 .note{font-size:12px;color:var(--label);margin-top:72px;padding-top:18px;padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .note p{border-top:1px solid var(--line);padding-top:18px;margin-top:-18px;max-width:none}
@@ -745,9 +764,118 @@ var PORTADA = {
   var dock = document.getElementById('dock');
   dock.innerHTML = conTools.map(function(a){ return '<a href="#'+a.id+'" data-ir="'+a.id+'" data-a="'+a.id+'" aria-label="'+esc(a.nombre)+'" title="'+esc(a.nombre)+'">'+(ICONOS[a.id]||ICONO_X)+'<span>'+esc(a.nombre)+'</span></a>'; }).join('');
 
+  /* ---------- barra de áreas: vidrio líquido ----------
+     Una gota (la pastilla azul) viaja entre módulos con un resorte. Al presionar se vuelve vidrio,
+     crece y sigue el dedo (o el cursor arrastrando), se estira según la velocidad y amplía los
+     íconos que tiene debajo; al soltar se asienta en el módulo más cercano. Con cursor sin presionar,
+     un halo suave se pega magnéticamente al módulo bajo el puntero. */
+  var AREAS_EL = [].slice.call(document.querySelectorAll('.area'));
+  var lente = document.createElement('div'); lente.className = 'lens'; lente.setAttribute('aria-hidden','true'); lente.innerHTML = '<i></i><b></b>';
+  var halo = document.createElement('div'); halo.className = 'lens-hov'; halo.setAttribute('aria-hidden','true');
+  dock.insertBefore(halo, dock.firstChild); dock.insertBefore(lente, dock.firstChild);
+  var botones = [].slice.call(dock.querySelectorAll('a'));
+  function M(v){ return { v: v, t: v, vel: 0 }; }
+  var L = { x: M(0), w: M(42), s: M(1), o: M(0) }, H = { x: M(0), w: M(42), o: M(0) };
+  var arrastre = null, inicioX = 0, hovEl = null, hovPx = 0, suprimir = false, listo = false, raf = 0, prev = 0, vivoHasta = 0, aumentados = false;
+
+  function marcar(a){ botones.forEach(function(b){ b.classList.toggle('on', b === a); }); despertar(); }
+  function activo(){ return dock.querySelector('a.on'); }
+  function localX(e){ return e.clientX - dock.getBoundingClientRect().left - dock.clientLeft; }
+  function cercano(px){ var m = null, d = 1e9; botones.forEach(function(b){ var k = Math.abs(px - (b.offsetLeft + b.offsetWidth/2)); if (k < d) { d = k; m = b; } }); return m; }
+
+  function objetivos(){
+    var a = activo();
+    if (arrastre) {
+      var w = Math.max(54, arrastre.hot.offsetWidth + 12);
+      L.x.t = Math.min(Math.max(arrastre.px - w/2, -6), dock.clientWidth - w + 6); L.w.t = w; L.s.t = 1.22; L.o.t = 1;
+    } else if (a) {
+      L.x.t = a.offsetLeft; L.w.t = a.offsetWidth; L.s.t = 1; L.o.t = 1;
+      if (!listo) { L.x.v = L.x.t; L.w.v = L.w.t; listo = true; }
+    } else { L.s.t = 1; L.o.t = 0; }
+    if (hovEl && !arrastre) {
+      var c = hovEl.offsetLeft + hovEl.offsetWidth/2;
+      H.x.t = hovEl.offsetLeft + (hovPx - c) * 0.14; H.w.t = hovEl.offsetWidth;
+      H.o.t = hovEl.classList.contains('on') ? 0 : 1;
+      if (H.o.v < 0.02) { H.x.v = H.x.t; H.w.v = H.w.t; }
+    } else H.o.t = 0;
+  }
+  function paso(m, dt, k, c){ if (QUIETO) { m.v = m.t; m.vel = 0; return; } var acc = k*(m.t - m.v) - c*m.vel; m.vel += acc*dt; m.v += m.vel*dt; }
+  function quieto(m, e){ return Math.abs(m.t - m.v) < e && Math.abs(m.vel) < e*4; }
+  function pintar(){
+    var sx = 1, sy = 1;
+    if (!QUIETO) { sx = 1 + Math.min(0.3, Math.abs(L.x.vel) / 2400); sy = 1 - (sx - 1) * 0.5; }
+    lente.style.width = L.w.v.toFixed(2) + 'px';
+    lente.style.opacity = Math.max(0, Math.min(1, L.o.v)).toFixed(3);
+    lente.style.transform = 'translate3d(' + L.x.v.toFixed(2) + 'px,0,0) scale(' + (L.s.v*sx).toFixed(4) + ',' + (L.s.v*sy).toFixed(4) + ')';
+    halo.style.width = H.w.v.toFixed(2) + 'px';
+    halo.style.opacity = Math.max(0, Math.min(1, H.o.v)).toFixed(3);
+    halo.style.transform = 'translate3d(' + H.x.v.toFixed(2) + 'px,0,0)';
+    /* lupa: los íconos bajo la gota se agrandan mientras se arrastra */
+    var lupa = (L.s.v - 1) / 0.22;
+    if (lupa > 0.01) {
+      var cx = L.x.v + L.w.v/2; aumentados = true;
+      botones.forEach(function(b){ var d = Math.abs(cx - (b.offsetLeft + b.offsetWidth/2)), f = 1 + 0.2 * Math.max(0, 1 - d/48) * lupa;
+        b.firstChild.style.transform = 'scale(' + f.toFixed(3) + ')'; });
+    } else if (aumentados) { aumentados = false; botones.forEach(function(b){ b.firstChild.style.transform = ''; }); }
+  }
+  function cuadro(ts){
+    var dt = Math.min(0.034, (ts - prev) / 1000); prev = ts; objetivos();
+    for (var i = 0; i < 4; i++) { var h = dt/4;
+      paso(L.x, h, 560, 34); paso(L.w, h, 560, 34); paso(L.s, h, 420, 22); paso(L.o, h, 300, 34);
+      paso(H.x, h, 700, 46); paso(H.w, h, 700, 46); paso(H.o, h, 300, 34); }
+    pintar();
+    var calma = quieto(L.x,.2) && quieto(L.w,.2) && quieto(L.s,.002) && quieto(L.o,.004) && quieto(H.x,.2) && quieto(H.o,.004);
+    if (arrastre || hovEl || ts < vivoHasta || !calma) raf = requestAnimationFrame(cuadro); else raf = 0;
+  }
+  function despertar(){ vivoHasta = performance.now() + 650; if (!raf) { prev = performance.now(); raf = requestAnimationFrame(cuadro); } }
+
+  dock.addEventListener('pointerdown', function(e){
+    if (e.button > 0 || arrastre) return;
+    hovEl = null; var px = localX(e); arrastre = { id: e.pointerId, px: px, hot: cercano(px) }; inicioX = e.clientX;
+    try { dock.setPointerCapture(e.pointerId); } catch(err){}
+    dock.classList.add('drag'); arrastre.hot.classList.add('hot'); despertar();
+  });
+  dock.addEventListener('pointermove', function(e){
+    if (arrastre && e.pointerId === arrastre.id) {
+      arrastre.px = localX(e); var h = cercano(arrastre.px);
+      if (h !== arrastre.hot) { arrastre.hot.classList.remove('hot'); h.classList.add('hot'); arrastre.hot = h; }
+      despertar();
+    } else if (e.pointerType === 'mouse' && !e.buttons) {
+      hovEl = e.target.closest ? e.target.closest('a') : null; hovPx = localX(e); despertar();
+    }
+  });
+  function soltar(e, cancelar){
+    if (!arrastre || e.pointerId !== arrastre.id) return;
+    var a = arrastre.hot; a.classList.remove('hot'); arrastre = null; dock.classList.remove('drag');
+    hovEl = e.pointerType === 'mouse' && !cancelar ? a : null; hovPx = localX(e);
+    if (!cancelar) { suprimir = true; setTimeout(function(){ suprimir = false; }, 450); ir(a.getAttribute('data-ir')); }
+    despertar();
+  }
+  dock.addEventListener('pointerup', function(e){ soltar(e, false); });
+  dock.addEventListener('pointercancel', function(e){ soltar(e, true); });
+  dock.addEventListener('pointerleave', function(e){ if (e.pointerType === 'mouse') { hovEl = null; despertar(); } });
+  /* el clic que sigue al soltar ya se atendió arriba; el teclado sigue usando el clic normal */
+  dock.addEventListener('click', function(e){ if (suprimir) { e.preventDefault(); e.stopPropagation(); suprimir = false; } }, true);
+  dock.addEventListener('dragstart', function(e){ e.preventDefault(); });
+
+  /* mientras la página viaja hacia un área elegida, la gota no persigue las áreas intermedias */
+  var bloqueo = 0, tFin = 0;
+  function bloquear(){ bloqueo = Date.now() + 1600; clearTimeout(tFin); tFin = setTimeout(liberar, 260); }
+  function liberar(){ bloqueo = 0; sincronizar(); }
+  window.addEventListener('scroll', function(){ if (bloqueo) { clearTimeout(tFin); tFin = setTimeout(liberar, 160); } }, { passive: true });
+  function sincronizar(){
+    if (arrastre || Date.now() < bloqueo) return;
+    var y = window.innerHeight * 0.455, id = null;
+    AREAS_EL.forEach(function(el){ var r = el.getBoundingClientRect(); if (r.top <= y && r.bottom > y) id = el.id; });
+    var b = id ? dock.querySelector('[data-a="'+id+'"]') : null;
+    if (b !== activo()) marcar(b);
+  }
+  window.addEventListener('resize', despertar);
+
   /* ---------- moverse por la página ---------- */
   function ir(id){
     var el = document.getElementById(id); if (!el) return;
+    var b = dock.querySelector('[data-a="'+id+'"]'); bloquear(); if (b) marcar(b);
     el.scrollIntoView({ behavior: QUIETO ? 'auto' : 'smooth', block: 'start' });
     try { history.replaceState(null, '', '#'+id); } catch(e){}
   }
@@ -770,10 +898,8 @@ var PORTADA = {
     }); }, { threshold: 0.35 });
     mocks.forEach(function(el){ vivo.observe(el); });
     /* área activa en la barra flotante */
-    var espia = new IntersectionObserver(function(es){ es.forEach(function(x){
-      var b = dock.querySelector('[data-a="'+x.target.id+'"]'); if (b) b.classList.toggle('on', x.isIntersecting);
-    }); }, { rootMargin: '-45% 0px -54% 0px' });
-    [].slice.call(document.querySelectorAll('.area')).forEach(function(el){ espia.observe(el); });
+    var espia = new IntersectionObserver(sincronizar, { rootMargin: '-45% 0px -54% 0px' });
+    AREAS_EL.forEach(function(el){ espia.observe(el); });
   } else {
     document.documentElement.className = '';
     if (!QUIETO) mocks.forEach(function(el){ el.classList.add('live','on'); });
